@@ -137,6 +137,7 @@ h1,h2,h3{font-family:var(--serif);font-weight:700;line-height:1.08;letter-spacin
 .hero__media::after{content:"";position:absolute;inset:0;
   background:linear-gradient(180deg,rgba(10,8,4,.15),rgba(10,8,4,.65)),linear-gradient(90deg,rgba(10,8,4,.55),transparent 45%)}
 .hero__frame{position:absolute;inset:10px;border:1px solid rgba(176,137,44,.35);border-radius:3px;z-index:2;pointer-events:none}
+.hero__photo{display:none}
 
 /* ============================================================
    SECTION THEMES / shared
@@ -409,7 +410,16 @@ h1,h2,h3{font-family:var(--serif);font-weight:700;line-height:1.08;letter-spacin
 @media (max-width:760px){
   .nav,.header>.btn{display:none}
   .menu-toggle{display:flex}
-  .mcta{display:flex}
+  /* HERO no mobile: imagem normal em um quadro, sem fundo */
+  .hero-stage{height:auto}
+  .hero{position:relative;min-height:auto;display:block}
+  .hero__bg,.hero__ov{display:none}
+  .hero .wrap{padding-block:clamp(1.8rem,7vw,2.6rem)}
+  .hero__photo{display:block;position:relative;margin:0 0 1.9rem;border-radius:6px;overflow:hidden;
+    border:1px solid var(--line);box-shadow:0 24px 60px -30px rgba(0,0,0,.85)}
+  .hero__photo img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;object-position:center 32%}
+  .hero__photo::after{content:"";position:absolute;inset:9px;border:1px solid rgba(176,137,44,.32);border-radius:3px;pointer-events:none}
+  .hero__text{max-width:none}
   .drow{grid-template-columns:1fr;gap:.5rem;text-align:center}
   .drow .up,.drow .dn{text-align:center}
   .drow .x{margin-inline:auto;transform:rotate(90deg)}
@@ -465,6 +475,9 @@ h1,h2,h3{font-family:var(--serif);font-weight:700;line-height:1.08;letter-spacin
   <div class="hero__bg"></div>
   <div class="hero__ov"></div>
   <div class="wrap">
+    <figure class="hero__photo reveal">
+      <img src="assets/hero3.png" alt="Método REI — Imersão presencial em Miami" />
+    </figure>
     <div class="hero__text">
       <span class="kicker reveal">Prosperidade · Governo · Identidade</span>
       <h1 class="display reveal" data-d="1">Assuma o governo da sua vida.<br><span class="g">Construa riqueza.</span></h1>
@@ -725,12 +738,6 @@ h1,h2,h3{font-family:var(--serif);font-weight:700;line-height:1.08;letter-spacin
   </div>
 </footer>
 
-<!-- STICKY MOBILE CTA -->
-<div class="mcta" id="mcta">
-  <div class="mp">Imersão Miami 2026<b>A partir de US$ 200</b></div>
-  <a href="https://metodorei.com/cart-br" class="btn btn--gold btn--sm">Garantir lugar</a>
-</div>
-
 <!-- LEAD MODAL -->
 <div class="lead-modal" id="leadModal" role="dialog" aria-modal="true" aria-labelledby="leadTitle" aria-hidden="true">
   <div class="lead-modal__backdrop" data-close></div>
@@ -816,13 +823,12 @@ h1,h2,h3{font-family:var(--serif);font-weight:700;line-height:1.08;letter-spacin
 (function(){
   "use strict";
   var reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var header=document.getElementById("header"), mcta=document.getElementById("mcta");
+  var header=document.getElementById("header");
   var heroBg=document.querySelector(".hero__bg"), heroStage=document.querySelector(".hero-stage");
   var ticking=false;
   function render(){
     var y=window.scrollY||window.pageYOffset;
     header.classList.toggle("scrolled",y>30);
-    mcta.classList.toggle("is-visible",y>window.innerHeight*0.85);
     if(heroBg&&heroStage&&!reduce){
       var pin=heroStage.offsetHeight-window.innerHeight;      // trecho em que o hero fica preso
       var top=heroStage.getBoundingClientRect().top;          // <=0 enquanto preso
