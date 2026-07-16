@@ -112,11 +112,10 @@ h1,h2,h3{font-family:var(--serif);font-weight:700;line-height:1.08;letter-spacin
 /* ============================================================
    HERO
    ============================================================ */
-.hero-stage{position:relative;height:180svh}
-.hero{position:sticky;top:0;overflow:hidden;isolation:isolate;min-height:100svh;display:flex;align-items:center}
-.hero__bg{position:absolute;inset:0;z-index:-2;background:url('assets/hero3.png') center 42%/cover no-repeat;filter:contrast(1.06) saturate(1.08) brightness(.95);transform:scale(1.04);transform-origin:center;will-change:transform}
-@media (max-width:760px){.hero-stage{height:150svh}}
-@media (prefers-reduced-motion:reduce){.hero-stage{height:auto}.hero{position:relative;min-height:calc(100svh - 96px)}.hero__bg{transform:none}}
+.hero-stage{position:relative}
+.hero{position:relative;overflow:hidden;isolation:isolate;min-height:100svh;display:flex;align-items:center}
+.hero__bg{position:absolute;inset:0;z-index:-2;background:url('assets/hero3.png') center 42%/cover no-repeat;filter:contrast(1.06) saturate(1.08) brightness(.95)}
+@media (prefers-reduced-motion:reduce){.hero{min-height:calc(100svh - 96px)}}
 .hero__ov{position:absolute;inset:0;z-index:-1;background:
   linear-gradient(90deg,rgba(9,8,6,.9) 0%,rgba(9,8,6,.66) 32%,rgba(9,8,6,.14) 62%,rgba(9,8,6,0) 100%),
   linear-gradient(0deg,rgba(9,8,6,.7),transparent 40%),
@@ -824,17 +823,10 @@ h1,h2,h3{font-family:var(--serif);font-weight:700;line-height:1.08;letter-spacin
   "use strict";
   var reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var header=document.getElementById("header");
-  var heroBg=document.querySelector(".hero__bg"), heroStage=document.querySelector(".hero-stage");
   var ticking=false;
   function render(){
     var y=window.scrollY||window.pageYOffset;
     header.classList.toggle("scrolled",y>30);
-    if(heroBg&&heroStage&&!reduce){
-      var pin=heroStage.offsetHeight-window.innerHeight;      // trecho em que o hero fica preso
-      var top=heroStage.getBoundingClientRect().top;          // <=0 enquanto preso
-      var p=pin>0?Math.min(Math.max(-top/pin,0),1):1;         // 0 ao prender, 1 ao soltar
-      heroBg.style.transform="scale("+(1.04-0.04*p).toFixed(4)+")"; // 1.04 -> 1.0
-    }
     ticking=false;
   }
   function onScroll(){if(!ticking){ticking=true;requestAnimationFrame(render);}}
@@ -863,6 +855,8 @@ h1,h2,h3{font-family:var(--serif);font-weight:700;line-height:1.08;letter-spacin
       leadForm=document.getElementById("leadForm"),
       leadErr=document.getElementById("leadError"),
       pending=null;
+  var LEAD_ENDPOINT="https://contact-blossom-39.lovable.app/api/public/contatos/ck_479abcc9_479abcc9a2f98313db0a19480754dbf7abe9b3cc27b6cd889cd5d06a3d43deef";
+  var LEAD_TAGS=["Método REI - Dallas 2026","MREI280726"];
   function openLead(url,target){
     pending={url:url,target:target};
     if(leadErr)leadErr.style.display="none";
@@ -881,12 +875,27 @@ h1,h2,h3{font-family:var(--serif);font-weight:700;line-height:1.08;letter-spacin
     leadForm.addEventListener("submit",function(e){
       e.preventDefault();
       var nome=document.getElementById("leadNome"),email=document.getElementById("leadEmail"),
-          tel=document.getElementById("leadTel"),area=document.getElementById("leadArea");
+          ddi=document.getElementById("leadDdi"),tel=document.getElementById("leadTel"),
+          area=document.getElementById("leadArea");
       if(!nome.value.trim()||!email.value.trim()||!email.checkValidity()||!tel.value.trim()||!area.value){
         leadErr.style.display="block";return;
       }
-      // Dados capturados (prontos para envio a um backend/CRM, se desejar):
-      // {nome, email, ddi: document.getElementById("leadDdi").value, telefone: tel.value, area: area.value}
+      // Envia os dados capturados para o CRM (fire-and-forget; segue o fluxo mesmo se falhar)
+      var payload={
+        nome:nome.value.trim(),
+        email:email.value.trim(),
+        telefone:(ddi.value+" "+tel.value.trim()).trim(),
+        profissao:area.value,
+        tags:LEAD_TAGS
+      };
+      try{
+        fetch(LEAD_ENDPOINT,{
+          method:"POST",
+          headers:{"Content-Type":"application/json"},
+          body:JSON.stringify(payload),
+          keepalive:true
+        }).catch(function(){});
+      }catch(_){}
       var dest=pending;closeLead();
       if(dest&&dest.url){
         if(dest.target==="_blank"){window.open(dest.url,"_blank","noopener");}
