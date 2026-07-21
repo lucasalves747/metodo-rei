@@ -416,7 +416,7 @@ h1,h2,h3{font-family:var(--serif);font-weight:700;line-height:1.08;letter-spacin
   .hero .wrap{padding-block:clamp(1.8rem,7vw,2.6rem)}
   .hero__photo{display:block;position:relative;margin:0 0 1.9rem;border-radius:6px;overflow:hidden;
     border:1px solid var(--line);box-shadow:0 24px 60px -30px rgba(0,0,0,.85)}
-  .hero__photo img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;object-position:center 32%}
+  .hero__photo img,.hero__photo video{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;object-position:center 32%}
   .hero__photo::after{content:"";position:absolute;inset:9px;border:1px solid rgba(176,137,44,.32);border-radius:3px;pointer-events:none}
   .hero__text{max-width:none}
   .drow{grid-template-columns:1fr;gap:.5rem;text-align:center}
@@ -478,7 +478,10 @@ h1,h2,h3{font-family:var(--serif);font-weight:700;line-height:1.08;letter-spacin
   <div class="hero__ov"></div>
   <div class="wrap">
     <figure class="hero__photo reveal">
-      <img src="assets/hero3.png" alt="Método REI — Imersão presencial em Dallas" />
+      <video autoplay muted loop playsinline preload="auto" poster="assets/hero-video-poster.jpg">
+        <source src="assets/hero-video.webm" type="video/webm">
+        <source src="assets/hero-video.mp4" type="video/mp4">
+      </video>
     </figure>
     <div class="hero__text">
       <span class="kicker reveal">Prosperidade · Governo · Identidade</span>
