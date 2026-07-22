@@ -794,30 +794,8 @@ h1,h2,h3{font-family:var(--serif);font-weight:700;line-height:1.08;letter-spacin
         </div>
       </div>
       <div class="lead-field">
-        <label for="leadArea">Área de atuação</label>
-        <select class="lead-select" id="leadArea" name="area" required>
-          <option value="" disabled selected>Selecione a área de atuação</option>
-          <option>Limpeza residencial e comercial</option>
-          <option>Construção civil</option>
-          <option>Pintura</option>
-          <option>Flooring / pisos</option>
-          <option>Roofing / telhados</option>
-          <option>Landscaping / jardinagem</option>
-          <option>Moving / mudanças</option>
-          <option>Delivery e transporte</option>
-          <option>Restaurantes e alimentação</option>
-          <option>Salões de beleza e estética</option>
-          <option>Real Estate</option>
-          <option>Property management</option>
-          <option>Airbnb / vacation rental</option>
-          <option>Serviços automotivos</option>
-          <option>Contabilidade e tax services</option>
-          <option>Seguros</option>
-          <option>Consultoria migratória e documental</option>
-          <option>Marketing digital</option>
-          <option>Eventos e entretenimento</option>
-          <option>E-commerce</option>
-        </select>
+        <label for="leadArea">Profissão</label>
+        <input class="lead-input" id="leadArea" name="area" type="text" placeholder="Digite sua profissão" autocomplete="organization-title" required>
       </div>
       <p class="lead-error" id="leadError">Por favor, preencha todos os campos corretamente.</p>
       <button class="btn btn--gold btn--block" type="submit">Continuar</button>
