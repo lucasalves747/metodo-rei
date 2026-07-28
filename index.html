@@ -723,7 +723,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
       <article class="sday reveal" data-d="2">
         <span class="sday__tag">Dia 2 · Sábado</span>
         <div class="sday__day">29 de agosto de 2026</div>
-        <div class="sday__time"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2" stroke-linecap="round" stroke-linejoin="round"/></svg>9am às 6pm</div>
+        <div class="sday__time"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2" stroke-linecap="round" stroke-linejoin="round"/></svg>8:30am às 8pm</div>
         <!-- [TROCAR: descrição do Dia 2] -->
         <p class="sday__note">Dia completo de imersão, construção do Plano de 90 Dias e encerramento.</p>
       </article>
@@ -737,7 +737,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
     <div class="head-block center">
       <span class="kicker reveal">Ingressos</span>
       <h2 class="h2 reveal" data-d="1">Garanta seu lugar na <span class="g">próxima edição.</span></h2>
-      <p class="lead reveal" data-d="2">28 e 29 de agosto de 2026 · Sexta 7pm–11pm · Sábado 9am–6pm · Dallas, TX</p>
+      <p class="lead reveal" data-d="2">28 e 29 de agosto de 2026 · Sexta 7pm–11pm · Sábado 8:30am–8pm · Dallas, TX</p>
       <p class="lead reveal" data-d="2" style="margin-top:.4rem">Holiday Inn Express The Colony · 5290 Memorial Drive, The Colony, TX 75056</p>
     </div>
     <div class="tickets">
@@ -745,7 +745,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
         <div class="ticket__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2 2 2 0 0 0 0 4 2 2 0 0 1-2 2H6a2 2 0 0 1-2-2 2 2 0 0 0 0-4Z"/><path d="M14 6.5v11" stroke-linecap="round" stroke-dasharray="1 2.4"/></svg></div>
         <span class="tname">Standard</span>
         <span class="tsub">Acesso completo à transformação.</span>
-        <div class="price"><span class="amt">US$ 197 <span class="validate">Validar</span></span><span class="note">individual · US$ 300 no ingresso duplo (2 pessoas)</span></div>
+        <div class="price"><span class="amt">US$ 197 <span class="validate">Validar</span></span><span class="note">Ingresso individual</span></div>
         <ul>
           <li><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Acesso aos 2 dias de imersão presencial</li>
           <li><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Material de apoio completo</li>
@@ -947,10 +947,18 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
           keepalive:true
         }).catch(function(){});
       }catch(_){}
+      // Meta Pixel: evento de inscrição (Lead padrão + evento custom "Inscricao")
+      try{
+        if(typeof fbq==="function"){
+          var fbData={content_name:LEAD_TAGS[0],content_category:"Inscricao",source:"form-modal"};
+          fbq("track","Lead",fbData);
+          fbq("trackCustom","Inscricao",fbData);
+        }
+      }catch(_){}
       var dest=pending;closeLead();
       if(dest&&dest.url){
         if(dest.target==="_blank"){window.open(dest.url,"_blank","noopener");}
-        else{window.location.href=dest.url;}
+        else{setTimeout(function(){window.location.href=dest.url;},250);}
       }
     });
   }
