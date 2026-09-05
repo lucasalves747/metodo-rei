@@ -6,14 +6,12 @@
 <script>document.documentElement.className += " reveal-on";</script>
 <title>Método REI · Imersão Presencial · Boston 2026</title>
 <meta name="description" content="Uma imersão presencial de 2 dias para pessoas que decidiram enriquecer com inteligência, governar suas decisões e viver acima da mediocridade. Boston, 18 e 19 de setembro de 2026." />
-
 <style>
 /* ============================================================
    Fontes locais (sem depender de internet)
    ============================================================ */
 @font-face{font-family:'Playfair Display';src:url('assets/fonts/playfair.woff2') format('woff2');font-weight:500 900;font-style:normal;font-display:swap}
 @font-face{font-family:'Outfit';src:url('assets/fonts/outfit.woff2') format('woff2');font-weight:100 900;font-style:normal;font-display:swap}
-
 /* ============================================================
    MÉTODO REI — Landing (luxo preto & dourado · Playfair + Outfit)
    ============================================================ */
@@ -46,12 +44,10 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);line-height:
 img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
 ::selection{background:var(--gold);color:#100D06}
-
 /* ---------- layout ---------- */
 .wrap{width:100%;max-width:var(--container);margin-inline:auto;padding-inline:clamp(1.25rem,5vw,3rem)}
 .section{padding-block:clamp(4.5rem,10vw,8.5rem);position:relative}
 .center{text-align:center}
-
 /* ---------- typography ---------- */
 h1,h2,h3{font-family:var(--serif);font-weight:700;line-height:1.08;letter-spacing:-.01em}
 .display{font-family:var(--serif);font-weight:800;font-size:clamp(2.7rem,6.4vw,5rem);line-height:1.04;letter-spacing:-.01em;color:var(--cream)}
@@ -60,13 +56,11 @@ h1,h2,h3{font-family:var(--serif);font-weight:700;line-height:1.08;letter-spacin
 .h2 .gi{color:var(--gold);font-style:italic}
 .lead{font-size:clamp(1.05rem,1.5vw,1.2rem);line-height:1.65;color:var(--muted);max-width:62ch}
 .serif-quote{font-family:var(--serif);font-style:italic;font-weight:500}
-
 .kicker{display:inline-flex;align-items:center;gap:1rem;font-family:var(--sans);font-size:.76rem;font-weight:600;
   letter-spacing:.26em;text-transform:uppercase;color:var(--gold)}
 .kicker::before{content:"";width:clamp(28px,5vw,46px);height:1px;background:var(--gold);opacity:.8}
 .center .kicker::after{content:"";width:clamp(28px,5vw,46px);height:1px;background:var(--gold);opacity:.8}
 .kicker--dot::before{width:8px;height:8px;border-radius:50%;opacity:1}
-
 /* ---------- buttons (retangulares, uppercase) ---------- */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:.7em;font-family:var(--sans);
   font-weight:600;font-size:.82rem;letter-spacing:.16em;text-transform:uppercase;
@@ -79,14 +73,12 @@ h1,h2,h3{font-family:var(--serif);font-weight:700;line-height:1.08;letter-spacin
 .btn--block{width:100%}
 .btn--sm{padding:.9em 1.5em;font-size:.72rem}
 .btn svg{width:1.1em;height:1.1em}
-
 /* ---------- top bar ---------- */
 .topbar{background:linear-gradient(90deg,var(--gold) 0%,var(--gold-bright) 50%,var(--gold) 100%);border-bottom:1px solid rgba(18,14,5,.18);color:#120E05;
   font-size:.74rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
   display:flex;gap:.7rem;justify-content:center;align-items:center;flex-wrap:wrap;padding:.65rem 1rem;position:relative;z-index:var(--z-header)}
 .topbar .sep{color:#120E05;opacity:.45}
 .topbar b{color:#120E05;font-weight:800}
-
 /* ---------- header ---------- */
 .header{position:sticky;top:0;z-index:var(--z-header);display:flex;align-items:center;justify-content:space-between;gap:2rem;
   padding:1.1rem clamp(1.25rem,5vw,3rem);background:rgba(10,10,11,.72);backdrop-filter:blur(14px) saturate(1.2);
@@ -102,13 +94,11 @@ h1,h2,h3{font-family:var(--serif);font-weight:700;line-height:1.08;letter-spacin
 .nav a:hover::after{transform:scaleX(1)}
 .menu-toggle{display:none;background:none;border:0;color:var(--cream);cursor:pointer;flex-direction:column;gap:5px;padding:.4rem}
 .menu-toggle span{display:block;width:26px;height:1.5px;background:currentColor}
-
 .drawer{position:fixed;inset:0;z-index:var(--z-menu);background:var(--bg);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:1.6rem;transform:translateY(-100%);transition:transform .55s var(--ease);visibility:hidden}
 .drawer.is-open{transform:translateY(0);visibility:visible}
 .drawer a{font-family:var(--serif);font-size:1.9rem;color:var(--cream)}
 .drawer a.btn{font-family:var(--sans);font-size:.8rem;color:#120E05}
 .drawer .close{position:absolute;top:1.4rem;right:1.6rem;font-size:2.2rem;background:none;border:0;color:var(--cream);cursor:pointer;line-height:1}
-
 /* ============================================================
    HERO
    ============================================================ */
@@ -137,7 +127,6 @@ h1,h2,h3{font-family:var(--serif);font-weight:700;line-height:1.08;letter-spacin
   background:linear-gradient(180deg,rgba(10,8,4,.15),rgba(10,8,4,.65)),linear-gradient(90deg,rgba(10,8,4,.55),transparent 45%)}
 .hero__frame{position:absolute;inset:10px;border:1px solid rgba(176,137,44,.35);border-radius:3px;z-index:2;pointer-events:none}
 .hero__photo{display:none}
-
 /* ============================================================
    SECTION THEMES / shared
    ============================================================ */
@@ -204,7 +193,6 @@ h1,h2,h3{font-family:var(--serif);font-weight:700;line-height:1.08;letter-spacin
 .head-block .h2{margin-top:1.2rem}
 .head-block .lead{margin-top:1.4rem}
 .center .lead{margin-inline:auto}
-
 /* ---------- PAIN / dichotomies ---------- */
 .dichotomy{margin:clamp(2.6rem,6vw,3.8rem) auto 0;max-width:900px;display:flex;flex-direction:column}
 .drow{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:clamp(1rem,3vw,2.2rem);
@@ -217,7 +205,6 @@ h1,h2,h3{font-family:var(--serif);font-weight:700;line-height:1.08;letter-spacin
 .pain__note{max-width:60ch;margin:clamp(2.5rem,6vw,3.5rem) auto 0;text-align:center;font-family:var(--serif);
   font-size:clamp(1.3rem,2.6vw,1.9rem);line-height:1.35;color:var(--cream)}
 .pain__note b{color:var(--gold);font-weight:700}
-
 /* ---------- R.E.I. pillars ---------- */
 .pillars{margin-top:clamp(2.8rem,6vw,4rem);display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.4rem}
 .pillar{padding:2.4rem 2rem;border:1px solid var(--line-soft);border-radius:4px;background:linear-gradient(180deg,rgba(176,137,44,.04),transparent);transition:border-color .4s ease,transform .4s var(--ease)}
@@ -227,7 +214,6 @@ h1,h2,h3{font-family:var(--serif);font-weight:700;line-height:1.08;letter-spacin
 .pillar .let{font-family:var(--serif);font-weight:700;color:var(--gold);font-size:1rem;letter-spacing:.1em}
 .pillar h3{font-size:1.55rem;margin:.3rem 0 .8rem;color:var(--cream)}
 .pillar p{color:var(--muted);font-size:.98rem;line-height:1.65}
-
 /* ---------- Thesis ladder ---------- */
 .ladder{max-width:780px;margin:clamp(2.8rem,6vw,3.8rem) auto 0;display:flex;flex-direction:column}
 .lrow{display:flex;align-items:baseline;justify-content:space-between;gap:1.5rem;padding:clamp(1.2rem,3vw,1.7rem) 0;border-bottom:1px solid var(--line-soft)}
@@ -235,7 +221,6 @@ h1,h2,h3{font-family:var(--serif);font-weight:700;line-height:1.08;letter-spacin
 .lrow .w{font-family:var(--serif);font-size:clamp(1.5rem,4.5vw,2.4rem);font-weight:700}
 .lrow .d{font-family:var(--serif);font-style:italic;color:var(--muted);font-size:clamp(1rem,2vw,1.2rem)}
 .lrow.l1 .w{color:#6E6A60}.lrow.l2 .w{color:#96907F}.lrow.l3 .w{color:var(--gold)}
-
 /* Tese — "Não é sobre motivação" */
 .thesis{position:relative;overflow:hidden;isolation:isolate;background:var(--bg)}
 .thesis__bg{position:absolute;inset:0;z-index:-2;background:url('assets/tese-bg.png') center/cover no-repeat;background-attachment:fixed}
@@ -262,7 +247,6 @@ h1,h2,h3{font-family:var(--serif);font-weight:700;line-height:1.08;letter-spacin
   font-family:var(--serif);font-size:clamp(1.15rem,2.4vw,1.5rem);line-height:1.5;color:var(--text)}
 .thesis__quote .qmark{position:absolute;top:-.42em;left:50%;transform:translateX(-50%);font-size:3.4rem;line-height:1;color:var(--gold)}
 .thesis__quote .g{color:var(--gold)}
-
 /* ---------- Experience ---------- */
 .exp__head{display:grid;grid-template-columns:1.35fr 1fr;gap:clamp(1.6rem,5vw,4rem);align-items:end}
 .exp__head-r{margin-bottom:.35rem}
@@ -274,7 +258,6 @@ h1,h2,h3{font-family:var(--serif);font-weight:700;line-height:1.08;letter-spacin
 .exp__card figcaption{font-family:var(--sans);font-weight:700;font-size:1.02rem;line-height:1.32;color:var(--cream)}
 .exp__card figcaption span{display:block;font-weight:400;font-size:.9rem;color:var(--muted);margin-top:.3rem}
 .exp__cta{margin-top:clamp(2.6rem,6vw,3.6rem);text-align:center}
-
 /* ---------- Mentors ---------- */
 .mentors{display:flex;justify-content:center;gap:clamp(1.6rem,3vw,2.4rem);margin-top:clamp(2.8rem,6vw,4rem)}
 .mentor{border:1px solid var(--line-soft);border-radius:5px;overflow:hidden;background:var(--bg-2);max-width:520px;width:100%}
@@ -286,7 +269,6 @@ h1,h2,h3{font-family:var(--serif);font-weight:700;line-height:1.08;letter-spacin
 .mentor__body h3{font-size:1.7rem;margin:.4rem 0 .9rem;color:var(--cream);font-weight:700}
 .mentor__body h3 .g{color:var(--gold)}
 .mentor__body p{color:var(--muted);font-size:.95rem;line-height:1.65}
-
 /* ---------- Filter ---------- */
 .filter__cols{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;margin-top:clamp(2.8rem,6vw,4rem)}
 .fcol{border-radius:5px;padding:2.2rem 2rem}
@@ -300,18 +282,16 @@ h1,h2,h3{font-family:var(--serif);font-weight:700;line-height:1.08;letter-spacin
 .fcol .mk{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;margin-top:.14rem}
 .fcol--yes .mk{background:var(--gold);color:#120E05}.fcol--no .mk{background:rgba(255,255,255,.06);color:var(--muted-2)}
 .fcol .mk svg{width:12px;height:12px}
-
 /* ---------- Schedule ---------- */
 .sched{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;max-width:900px;margin:clamp(2.8rem,6vw,4rem) auto 0}
 .sday{position:relative;border-radius:14px;padding:2.4rem 2.2rem;background:linear-gradient(180deg,rgba(176,137,44,.1),rgba(176,137,44,.02));border:1px solid var(--line);text-align:left;overflow:hidden}
 .sday::before{content:"";position:absolute;inset:0 auto 0 0;width:3px;background:linear-gradient(180deg,var(--gold-bright),transparent)}
 .sday__tag{display:inline-flex;align-items:center;gap:.55rem;font-size:.76rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
 .sday__day{margin-top:1rem;font-size:1.4rem;font-weight:600;color:var(--text)}
-.sday__time{display:flex;align-items:center;gap:.7rem;margin-top:1.2rem;font-size:clamp(1.9rem,4vw,2.3rem);font-weight:700;color:var(--gold-bright);letter-spacing:-.01em;line-height:1}
+.sday__time{display:flex;align-items:center;gap:.7rem;margin-top:1.2rem;font-size:clamp(1.6rem,3.4vw,2rem);font-weight:700;color:var(--gold-bright);letter-spacing:-.01em;line-height:1.1}
 .sday__time svg{width:26px;height:26px;flex:none;opacity:.85}
 .sday__note{margin-top:1.15rem;color:var(--muted);font-size:.98rem;line-height:1.55}
 @media(max-width:640px){.sched{grid-template-columns:1fr}}
-
 /* ---------- Tickets ---------- */
 .tickets{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;max-width:1000px;margin:clamp(2.8rem,6vw,3.8rem) auto 0;align-items:stretch}
 .ticket{position:relative;display:flex;flex-direction:column;border-radius:16px;padding:2.7rem 2.3rem 2.3rem;border:1px solid var(--line-soft);
@@ -341,7 +321,6 @@ h1,h2,h3{font-family:var(--serif);font-weight:700;line-height:1.08;letter-spacin
 .ticket .vip-lead .ck{display:none}
 .validate{font-family:var(--sans);font-size:.6rem;font-weight:600;letter-spacing:.1em;color:var(--gold-soft);border:1px solid var(--line);
   background:rgba(176,137,44,.08);border-radius:100px;padding:.28em .75em;text-transform:uppercase;margin-left:.5rem;vertical-align:middle;white-space:nowrap}
-
 /* ---------- Closing ---------- */
 .closing{position:relative;overflow:hidden;isolation:isolate;text-align:center}
 .closing__bg{position:absolute;inset:0;z-index:-2;background-image:url('assets/hero-new.png');background-size:cover;background-position:center 15%;filter:grayscale(.08) contrast(1.05) saturate(1.06) brightness(.92)}
@@ -349,7 +328,6 @@ h1,h2,h3{font-family:var(--serif);font-weight:700;line-height:1.08;letter-spacin
 .closing h2{color:var(--cream);max-width:20ch;margin-inline:auto}
 .closing h2 .gi{color:var(--gold);font-style:italic}
 .closing__p{max-width:56ch;margin:1.7rem auto 2.6rem;color:var(--muted);font-size:clamp(1.05rem,1.7vw,1.3rem);font-family:var(--serif);font-style:italic}
-
 /* ---------- Lead modal ---------- */
 .lead-modal{position:fixed;inset:0;z-index:var(--z-menu);display:none;align-items:center;justify-content:center;padding:1.2rem}
 .lead-modal.is-open{display:flex}
@@ -377,7 +355,6 @@ h1,h2,h3{font-family:var(--serif);font-weight:700;line-height:1.08;letter-spacin
 .lead-phone .lead-input{flex:1;min-width:0}
 .lead-error{color:var(--danger);font-size:.82rem;margin:.2rem 0 .6rem;display:none}
 .lead-modal .btn{width:100%;margin-top:.5rem}
-
 /* ---------- Footer ---------- */
 .footer{background:#070707;border-top:1px solid var(--line-soft);padding-block:3.6rem}
 .footer__top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:2rem;align-items:center}
@@ -385,7 +362,6 @@ h1,h2,h3{font-family:var(--serif);font-weight:700;line-height:1.08;letter-spacin
 .footer nav a{font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);transition:color .25s ease}
 .footer nav a:hover{color:var(--gold)}
 .footer__bottom{margin-top:2.4rem;padding-top:1.6rem;border-top:1px solid var(--line-soft);display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;font-size:.8rem;color:var(--muted-2)}
-
 /* ---------- Sticky mobile CTA ---------- */
 .mcta{position:fixed;left:0;right:0;bottom:0;z-index:var(--z-sticky);display:none;align-items:center;justify-content:space-between;gap:1rem;
   padding:.75rem 1rem;background:rgba(8,8,9,.95);backdrop-filter:blur(12px);border-top:1px solid var(--line-soft);
@@ -393,7 +369,6 @@ h1,h2,h3{font-family:var(--serif);font-weight:700;line-height:1.08;letter-spacin
 .mcta.is-visible{transform:translateY(0)}
 .mcta .mp{font-size:.72rem;color:var(--muted);letter-spacing:.04em}
 .mcta .mp b{display:block;font-family:var(--serif);color:var(--cream);font-size:1rem;font-weight:600}
-
 /* ---------- Reveal ---------- */
 .reveal{transition:opacity .8s var(--ease-q),transform .8s var(--ease)}
 .reveal-on .reveal{opacity:0;transform:translateY(24px)}
@@ -404,7 +379,6 @@ h1,h2,h3{font-family:var(--serif);font-weight:700;line-height:1.08;letter-spacin
   .reveal{transition:opacity .3s ease!important;transform:none!important}
   .reveal-on .reveal{opacity:1!important;transform:none!important}
 }
-
 /* ---------- Responsive ---------- */
 @media (max-width:940px){
   .hero .wrap{grid-template-columns:1fr;min-height:auto;gap:2.5rem}
@@ -463,12 +437,10 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
 <!-- End Meta Pixel Code -->
 </head>
 <body id="top">
-
 <!-- TOP BAR -->
 <div class="topbar">
-  <span>Boston, MA</span><span class="sep">✦</span><b>18 &amp; 19 de Setembro de 2026</b><span class="sep">✦</span><span>Imersão Presencial</span>
+  <span>Waltham, MA</span><span class="sep">✦</span><b>18 &amp; 19 de Setembro de 2026</b><span class="sep">✦</span><span>Imersão Presencial</span>
 </div>
-
 <!-- HEADER -->
 <header class="header" id="header">
   <a href="#top" class="brand" aria-label="Método REI">
@@ -485,7 +457,6 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
   <a href="https://pag.metodorei.com/cart-boston" class="btn btn--gold btn--sm">Inscrever-se</a>
   <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </header>
-
 <div class="drawer" id="drawer" aria-hidden="true">
   <button class="close" id="drawerClose" aria-label="Fechar menu">×</button>
   <a href="#metodo">O Método</a>
@@ -496,9 +467,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
   <a href="#ingressos">Ingressos</a>
   <a href="https://pag.metodorei.com/cart-boston" class="btn btn--gold" style="margin-top:.8rem">Inscrever-se</a>
 </div>
-
 <main>
-
 <!-- HERO -->
 <div class="hero-stage">
 <section class="hero">
@@ -525,14 +494,13 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
       </div>
       <div class="hero__meta reveal" data-d="3">
         <span class="m"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="5" width="18" height="16" rx="1"/><path d="M3 9h18M8 3v4M16 3v4" stroke-linecap="round"/></svg>18–19 de Setembro, 2026</span>
-        <span class="m"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s7-5.5 7-11a7 7 0 0 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>Aloft Seaport · Boston, MA</span>
+        <span class="m"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s7-5.5 7-11a7 7 0 0 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>Best Western Plus · Waltham, MA</span>
         <span class="m"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2" stroke-linecap="round"/></svg>2 dias · presencial</span>
       </div>
     </div>
   </div>
 </section>
 </div>
-
 <!-- PAIN -->
 <section class="section center bg-glow" id="dor">
   <div class="wrap">
@@ -549,7 +517,6 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
     <p class="pain__note reveal" data-d="1">Isso cria algo pior que o fracasso: a <b>mediocridade confortável.</b> Não falta talento. <b>Falta governo.</b></p>
   </div>
 </section>
-
 <!-- R.E.I. -->
 <section class="section rei divider-top" id="metodo">
   <div class="wrap">
@@ -580,7 +547,6 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
     </div>
   </div>
 </section>
-
 <!-- THESIS -->
 <section class="section center divider-top thesis" id="tese">
   <div class="thesis__bg" aria-hidden="true"></div>
@@ -614,7 +580,6 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
     </div>
   </div>
 </section>
-
 <!-- EXPERIENCE -->
 <section class="section divider-top sect-light" id="experiencia">
   <div class="wrap">
@@ -646,7 +611,6 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
     <div class="exp__cta reveal"><a href="https://pag.metodorei.com/cart-boston" class="btn btn--gold">Quero viver essa experiência</a></div>
   </div>
 </section>
-
 <!-- MENTORS -->
 <section class="section divider-top bg-glow" id="mentores">
   <div class="wrap">
@@ -666,7 +630,6 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
     </div>
   </div>
 </section>
-
 <!-- FILTER -->
 <section class="section divider-top sect-light" id="para-quem">
   <div class="wrap">
@@ -695,7 +658,6 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
     </div>
   </div>
 </section>
-
 <!-- SCHEDULE -->
 <section class="section center divider-top" id="programacao">
   <div class="wrap">
@@ -708,29 +670,28 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
       <article class="sday reveal" data-d="1">
         <span class="sday__tag">Dia 1 · Sexta-feira</span>
         <div class="sday__day">18 de setembro de 2026</div>
-        <div class="sday__time"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2" stroke-linecap="round" stroke-linejoin="round"/></svg>7pm às 11pm</div>
+        <div class="sday__time"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2" stroke-linecap="round" stroke-linejoin="round"/></svg>6:30 PM às 11 PM</div>
         <!-- [TROCAR: descrição do Dia 1] -->
         <p class="sday__note">Abertura da imersão e o primeiro bloco de conteúdo do Método REI.</p>
       </article>
       <article class="sday reveal" data-d="2">
         <span class="sday__tag">Dia 2 · Sábado</span>
         <div class="sday__day">19 de setembro de 2026</div>
-        <div class="sday__time"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2" stroke-linecap="round" stroke-linejoin="round"/></svg>9am às 6pm</div>
+        <div class="sday__time"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2" stroke-linecap="round" stroke-linejoin="round"/></svg>8:30 AM às 7:00 PM</div>
         <!-- [TROCAR: descrição do Dia 2] -->
         <p class="sday__note">Dia completo de imersão, construção do Plano de 90 Dias e encerramento.</p>
       </article>
     </div>
   </div>
 </section>
-
 <!-- TICKETS -->
 <section class="section center divider-top bg-glow-2" id="ingressos">
   <div class="wrap">
     <div class="head-block center">
       <span class="kicker reveal">Ingressos</span>
       <h2 class="h2 reveal" data-d="1">Garanta seu lugar na <span class="g">próxima edição.</span></h2>
-      <p class="lead reveal" data-d="2">18 e 19 de setembro de 2026 · Sexta 7pm–11pm · Sábado 9am–6pm · Boston, MA</p>
-      <p class="lead reveal" data-d="2" style="margin-top:.4rem">Aloft Boston Seaport District · 401–403 D Street, Boston, MA 02210 – EUA</p>
+      <p class="lead reveal" data-d="2">18 e 19 de setembro de 2026 · Sexta 6:30 PM–11 PM · Sábado 8:30 AM–7:00 PM</p>
+      <p class="lead reveal" data-d="2" style="margin-top:.4rem">Hotel Best Western Plus · 380 Winter St. Waltham, MA 02451 – EUA</p>
     </div>
     <div class="tickets">
       <article class="ticket reveal" data-d="1">
@@ -766,7 +727,6 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
     </div>
   </div>
 </section>
-
 <!-- CLOSING -->
 <section class="section closing" id="fechamento">
   <div class="closing__bg"></div>
@@ -777,9 +737,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
     <a href="https://pag.metodorei.com/cart-boston" class="btn btn--gold reveal" data-d="1">Decido governar minha vida</a>
   </div>
 </section>
-
 </main>
-
 <!-- FOOTER -->
 <footer class="footer">
   <div class="wrap">
@@ -797,11 +755,10 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
     </div>
     <div class="footer__bottom">
       <span>© 2026 Método REI. Todos os direitos reservados.</span>
-      <span>Imersão presencial · Edição Boston, MA</span>
+      <span>Imersão presencial · Waltham (Boston), MA</span>
     </div>
   </div>
 </footer>
-
 <!-- LEAD MODAL -->
 <div class="lead-modal" id="leadModal" role="dialog" aria-modal="true" aria-labelledby="leadTitle" aria-hidden="true">
   <div class="lead-modal__backdrop" data-close></div>
@@ -860,7 +817,6 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
     </form>
   </div>
 </div>
-
 <script>
 (function(){
   "use strict";
@@ -875,14 +831,12 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
   function onScroll(){if(!ticking){ticking=true;requestAnimationFrame(render);}}
   render();window.addEventListener("scroll",onScroll,{passive:true});
   window.addEventListener("resize",onScroll,{passive:true});
-
   var toggle=document.getElementById("menuToggle"),drawer=document.getElementById("drawer"),closeBtn=document.getElementById("drawerClose");
   function open(){drawer.classList.add("is-open");drawer.setAttribute("aria-hidden","false");toggle.setAttribute("aria-expanded","true");document.body.style.overflow="hidden";}
   function close(){drawer.classList.remove("is-open");drawer.setAttribute("aria-hidden","true");toggle.setAttribute("aria-expanded","false");document.body.style.overflow="";}
   toggle.addEventListener("click",open);closeBtn.addEventListener("click",close);
   drawer.querySelectorAll("a").forEach(function(a){a.addEventListener("click",close);});
   document.addEventListener("keydown",function(e){if(e.key==="Escape")close();});
-
   var reveals=document.querySelectorAll(".reveal");
   if(reduce||!("IntersectionObserver" in window)){reveals.forEach(function(el){el.classList.add("in");});}
   else{
@@ -892,7 +846,6 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
     reveals.forEach(function(el){io.observe(el);});
     window.addEventListener("load",function(){var vh=window.innerHeight;reveals.forEach(function(el){if(!el.classList.contains("in")&&el.getBoundingClientRect().top<vh*0.94)el.classList.add("in");});});
   }
-
   /* ---- Modal de captura antes de encaminhar ---- */
   var modal=document.getElementById("leadModal"),
       leadForm=document.getElementById("leadForm"),
