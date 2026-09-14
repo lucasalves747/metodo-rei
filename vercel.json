@@ -1,4 +1,36 @@
 {
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/cart-vip-boston",
+      "destination": "https://pag.metodorei.com/cart-vip-boston",
+      "permanent": false
+    },
+    {
+      "source": "/cart-boston",
+      "destination": "https://pag.metodorei.com/cart-boston",
+      "permanent": false
+    },
+    {
+      "source": "/cart-miami",
+      "destination": "https://pag.metodorei.com/cart-miami",
+      "permanent": false
+    },
+    {
+      "source": "/cart-vip-miami",
+      "destination": "https://pag.metodorei.com/cart-vip-miami",
+      "permanent": false
+    },
+    {
+      "source": "/cart-dl",
+      "destination": "https://pag.metodorei.com/cart-dl",
+      "permanent": false
+    },
+    {
+      "source": "/cart-vip",
+      "destination": "https://pag.metodorei.com/cart-vip",
+      "permanent": false
+    }
+  ]
 }
