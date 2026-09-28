@@ -23,6 +23,16 @@
       "permanent": false
     },
     {
+      "source": "/cart-orlando",
+      "destination": "https://pag.metodorei.com/cart-orlando",
+      "permanent": false
+    },
+    {
+      "source": "/cart-vip-orlando",
+      "destination": "https://pag.metodorei.com/cart-vip-orlando",
+      "permanent": false
+    },
+    {
       "source": "/cart-dl",
       "destination": "https://pag.metodorei.com/cart-dl",
       "permanent": false
