@@ -276,8 +276,8 @@ h1,h2,h3{font-family:var(--serif);font-weight:700;line-height:1.08;letter-spacin
 .exp__cta{margin-top:clamp(2.6rem,6vw,3.6rem);text-align:center}
 
 /* ---------- Mentors ---------- */
-.mentors{display:flex;justify-content:center;gap:clamp(1.6rem,3vw,2.4rem);margin-top:clamp(2.8rem,6vw,4rem)}
-.mentor{border:1px solid var(--line-soft);border-radius:5px;overflow:hidden;background:var(--bg-2);max-width:520px;width:100%}
+.mentors{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(1.6rem,3vw,2.4rem);margin-top:clamp(2.8rem,6vw,4rem)}
+.mentor{border:1px solid var(--line-soft);border-radius:5px;overflow:hidden;background:var(--bg-2);max-width:520px;width:100%;flex:1 1 340px}
 .mentor__ph{position:relative;aspect-ratio:1/1;overflow:hidden}
 .mentor__ph img{width:100%;height:100%;object-fit:cover;object-position:top center}
 .mentor__ph::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(10,9,7,.75))}
@@ -485,7 +485,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
   <nav class="nav">
     <a href="#metodo">O Método</a>
     <a href="#experiencia">A Experiência</a>
-    <a href="#mentores">O Mentor</a>
+    <a href="#mentores">Os Mentores</a>
     <a href="#para-quem">Para quem é</a>
     <a href="#programacao">Programação</a>
     <a href="#ingressos">Ingressos</a>
@@ -498,7 +498,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
   <button class="close" id="drawerClose" aria-label="Fechar menu">×</button>
   <a href="#metodo">O Método</a>
   <a href="#experiencia">A Experiência</a>
-  <a href="#mentores">O Mentor</a>
+  <a href="#mentores">Os Mentores</a>
   <a href="#para-quem">Para quem é</a>
   <a href="#programacao">Programação</a>
   <a href="#ingressos">Ingressos</a>
@@ -659,8 +659,8 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
 <section class="section divider-top bg-glow" id="mentores">
   <div class="wrap">
     <div class="head-block center">
-      <span class="kicker reveal">O Mentor</span>
-      <h2 class="h2 reveal" data-d="1">Um mentor que vive os resultados que <span class="g">ensina.</span></h2>
+      <span class="kicker reveal">Os Mentores</span>
+      <h2 class="h2 reveal" data-d="1">Mentores que vivem os resultados que <span class="g">ensinam.</span></h2>
     </div>
     <div class="mentors">
       <article class="mentor reveal" data-d="1">
@@ -669,6 +669,14 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
           <span class="mentor__role">Criador &amp; Mentor</span>
           <h3>Hewerton <span class="g">Scheidegger</span></h3>
           <p>Empresário, mentor de negócios, advogado tributarista, contador e atleta de endurance (Ultraman e Ironman). Autor de "1000 Códigos de Sabedoria" e "Método 7D de Vendas". Já mentorou milhares de pessoas provando, na prática, que a verdadeira prosperidade é ganhar sem perder.</p>
+        </div>
+      </article>
+      <article class="mentor reveal" data-d="2">
+        <div class="mentor__ph"><img src="assets/pv/santiago.jpg" alt="Santiago Vecina" loading="lazy" /></div>
+        <div class="mentor__body">
+          <span class="mentor__role">Co-criador &amp; Mentor</span>
+          <h3>Santiago <span class="g">Vecina</span></h3>
+          <p>Médico, nutrólogo, empresário e mentor de alta performance. Baseado em Miami, lidera a Plataforma Global, conectando empresários brasileiros ao ecossistema de alto nível nos EUA. Sua missão é ajudar líderes a pararem de viver abaixo do potencial que Deus criou para eles.</p>
         </div>
       </article>
     </div>
