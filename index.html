@@ -6,299 +6,230 @@
 <script>document.documentElement.className += " reveal-on";</script>
 <title>Método REI · Imersão Presencial · Tour EUA 2026</title>
 <meta name="description" content="Método REI: imersão presencial de 2 dias para quem decidiu enriquecer com inteligência e governar a própria vida. Edições em Miami, Dallas, Orlando e Boston em 2026." />
+<link rel="preload" as="image" href="assets/home/hero.jpg" />
 
 <style>
 /* ============================================================
    Fontes locais
    ============================================================ */
-@font-face{font-family:'Playfair Display';src:url('assets/fonts/playfair.woff2') format('woff2');font-weight:500 900;font-style:normal;font-display:swap}
 @font-face{font-family:'Outfit';src:url('assets/fonts/outfit.woff2') format('woff2');font-weight:100 900;font-style:normal;font-display:swap}
 
 /* ============================================================
-   MÉTODO REI — Página geral (layout inspirado na LifeSurge)
+   MÉTODO REI — Página geral (estrutura da LifeSurge, paleta REI)
    ============================================================ */
 :root{
-  --bg:#09090A;
-  --bg-2:#161209;
-  --bg-3:#1D170D;
+  --navy-950:#0B121C;
+  --navy-900:#121C2B;
+  --navy-800:#1A2537;
+  --navy-700:#22324A;
   --gold:#B0892C;
-  --gold-bright:#D19E22;
-  --gold-soft:#C6AB5F;
+  --gold-bright:#D9B45A;
   --gold-deep:#8A6A1E;
   --pill-1:#F2D27A;
   --pill-2:#D3A12C;
-  --cream:#F5F0E8;
-  --paper:#FBF8F2;
-  --ink:#17140E;
-  --ink-muted:#4E4839;
-  --text:#E7E2D7;
-  --muted:#A7A093;
-  --muted-2:#7E786C;
-  --danger:#B9564F;
-  --line:rgba(176,137,44,.22);
-  --line-soft:rgba(176,137,44,.12);
-  --radius:18px;
-  --serif:'Playfair Display', Georgia, 'Times New Roman', serif;
+  --ink:#121212;
+  --ink-2:#3A3F47;
+  --muted:#6B7280;
+  --grey-bg:#EEF0F3;
+  --line:#E3E6EB;
+  --radius:14px;
   --sans:'Outfit', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --container:1180px;
-  --z-header:200;--z-menu:300;
+  --container:1140px;
   --ease:cubic-bezier(.16,1,.3,1);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{-webkit-text-size-adjust:100%;overflow-x:clip;scroll-behavior:smooth;scroll-padding-top:80px}
+html{-webkit-text-size-adjust:100%;overflow-x:clip;scroll-behavior:smooth;scroll-padding-top:70px}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-body{font-family:var(--sans);background:var(--bg);color:var(--text);line-height:1.6;overflow-x:clip;
-  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body{font-family:var(--sans);background:#fff;color:var(--ink);line-height:1.5;overflow-x:clip;-webkit-font-smoothing:antialiased}
 img,video{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
-::selection{background:var(--gold);color:#100D06}
+::selection{background:var(--gold);color:#fff}
 
-.wrap{width:100%;max-width:var(--container);margin-inline:auto;padding-inline:clamp(1.25rem,5vw,2.5rem)}
-.section{padding-block:clamp(3.8rem,8vw,6.5rem);position:relative;isolation:isolate}
+.wrap{width:100%;max-width:var(--container);margin-inline:auto;padding-inline:clamp(1rem,4vw,2rem)}
+.section{padding-block:clamp(3.2rem,7vw,5.5rem);position:relative;isolation:isolate}
 .center{text-align:center}
+.h2{font-weight:700;text-transform:uppercase;font-size:clamp(1.7rem,3.4vw,2.5rem);line-height:1.1;letter-spacing:.005em}
+.kicker{font-weight:500;text-transform:uppercase;letter-spacing:.45em;padding-left:.45em;font-size:clamp(.9rem,1.5vw,1.1rem)}
+.lede{margin:.7rem auto 0;max-width:56ch;font-size:clamp(1rem,1.6vw,1.15rem);line-height:1.4}
 
-/* ---------- títulos ---------- */
-.h-big{font-weight:800;text-transform:uppercase;line-height:1.02;letter-spacing:.005em;font-size:clamp(2rem,4.8vw,3.4rem)}
-.h-pre{display:block;font-weight:500;text-transform:none;font-size:clamp(1.25rem,2.4vw,1.7rem);line-height:1.2}
-.h-post{display:block;font-weight:600;text-transform:none;font-size:clamp(1.25rem,2.4vw,1.7rem);line-height:1.2}
-.spaced{font-weight:500;text-transform:uppercase;letter-spacing:.5em;padding-left:.5em;font-size:clamp(.95rem,1.6vw,1.15rem)}
-.g{color:var(--gold-bright)}
-
-/* ---------- botões pílula ---------- */
-.pill{display:inline-flex;align-items:center;justify-content:center;font-family:var(--sans);font-weight:800;text-transform:uppercase;
-  letter-spacing:.02em;font-size:clamp(1.15rem,2vw,1.45rem);line-height:1;color:#2A1B02;padding:.85em 1.6em;border-radius:999px;border:0;cursor:pointer;
-  background:linear-gradient(180deg,var(--pill-1) 0%,var(--pill-2) 100%);
-  box-shadow:inset 0 -4px 0 rgba(120,80,0,.35),0 10px 26px -10px rgba(176,137,44,.8);
-  transition:transform .35s var(--ease),box-shadow .35s var(--ease),filter .3s ease}
-.pill:hover{transform:translateY(-2px);filter:brightness(1.06);box-shadow:inset 0 -4px 0 rgba(120,80,0,.35),0 16px 34px -12px rgba(176,137,44,.9)}
-.pill:disabled{opacity:.7;cursor:wait;transform:none}
-.pill--sm{font-size:.86rem;padding:.8em 1.4em;box-shadow:inset 0 -3px 0 rgba(120,80,0,.3)}
+/* ---------- botões ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5em;font-family:var(--sans);font-weight:700;text-transform:uppercase;letter-spacing:.02em;
+  font-size:clamp(1rem,1.6vw,1.2rem);line-height:1;color:#1E1503;padding:.8em 1.5em;border-radius:999px;border:0;cursor:pointer;
+  background:linear-gradient(180deg,var(--pill-1),var(--pill-2));box-shadow:0 8px 22px -10px rgba(176,137,44,.75);
+  transition:transform .3s var(--ease),filter .25s ease,box-shadow .3s var(--ease)}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.05);box-shadow:0 14px 28px -12px rgba(176,137,44,.85)}
+.btn--sm{font-size:.8rem;padding:.65em 1.1em;border-radius:7px}
+.btn--sm::after{content:"";width:0;height:0;border-left:5px solid currentColor;border-top:4px solid transparent;border-bottom:4px solid transparent}
+.btn:disabled{opacity:.7;cursor:wait;transform:none}
 
 /* ---------- header ---------- */
-.header{position:sticky;top:0;z-index:var(--z-header);background:#000;display:flex;align-items:center;justify-content:space-between;gap:2rem;
-  padding:.8rem clamp(1.25rem,5vw,3rem)}
-.brand__logo{height:clamp(32px,4vw,40px);width:auto}
-.nav{display:flex;align-items:center;gap:2rem}
-.nav a{font-size:.82rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#fff;transition:color .25s ease}
-.nav a:hover{color:var(--gold-soft)}
+.header{position:sticky;top:0;z-index:200;background:#000;display:flex;align-items:center;justify-content:space-between;gap:2rem;padding:.75rem clamp(1rem,3vw,1.6rem)}
+.brand img{height:clamp(34px,4vw,44px);width:auto}
+.nav{display:flex;align-items:center;gap:clamp(1.6rem,4vw,4.2rem)}
+.nav a{font-size:.95rem;font-weight:600;text-transform:uppercase;color:#fff;transition:color .25s ease}
+.nav a:hover{color:var(--gold-bright)}
 .menu-toggle{display:none;background:none;border:0;color:#fff;cursor:pointer;flex-direction:column;gap:5px;padding:.4rem}
 .menu-toggle span{display:block;width:26px;height:2px;background:currentColor}
-.drawer{position:fixed;inset:0;z-index:var(--z-menu);background:#000;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:1.5rem;transform:translateY(-100%);transition:transform .55s var(--ease);visibility:hidden}
-.drawer.is-open{transform:translateY(0);visibility:visible}
-.drawer a{font-weight:800;text-transform:uppercase;font-size:1.5rem;color:#fff}
-.drawer .close{position:absolute;top:1.2rem;right:1.5rem;font-size:2.4rem;background:none;border:0;color:#fff;cursor:pointer;line-height:1}
+.drawer{position:fixed;inset:0;z-index:300;background:#000;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:1.5rem;transform:translateY(-100%);transition:transform .5s var(--ease);visibility:hidden}
+.drawer.is-open{transform:none;visibility:visible}
+.drawer a{font-weight:700;text-transform:uppercase;font-size:1.4rem;color:#fff}
+.drawer .close{position:absolute;top:1rem;right:1.3rem;font-size:2.4rem;background:none;border:0;color:#fff;cursor:pointer;line-height:1}
 
 /* ============================================================
-   HERO (montagem de fotos sobre fundo de luz)
+   HERO (foto inteira com duotone navy, texto à esquerda)
    ============================================================ */
-.hero{position:relative;isolation:isolate;overflow:hidden;color:var(--ink);text-align:center;padding:clamp(2.2rem,5vw,3.4rem) 0 clamp(3rem,6vw,4.2rem)}
-.hero__bg{position:absolute;inset:0;z-index:-2;width:100%;height:100%;object-fit:cover;object-position:center 40%}
+.hero{position:relative;isolation:isolate;overflow:hidden;color:#fff;min-height:clamp(520px,78vh,760px);display:flex;align-items:center;padding-block:clamp(3rem,7vw,5rem)}
+.hero__bg{position:absolute;inset:0;z-index:-2;width:100%;height:100%;object-fit:cover;object-position:center 45%;filter:grayscale(1) contrast(1.05)}
 .hero__ov{position:absolute;inset:0;z-index:-1;background:
-  radial-gradient(ellipse 55% 55% at 50% 42%,rgba(255,250,236,.92) 0%,rgba(255,244,214,.72) 45%,rgba(250,230,180,.45) 75%,rgba(214,170,80,.35) 100%),
-  linear-gradient(180deg,rgba(255,248,228,.25),rgba(255,248,228,.55))}
+  linear-gradient(90deg,rgba(11,18,28,.93) 0%,rgba(11,18,28,.78) 42%,rgba(18,28,43,.45) 100%),
+  linear-gradient(0deg,rgba(11,18,28,.65),rgba(11,18,28,0) 40%),
+  rgba(34,50,74,.35)}
+.hero .wrap{max-width:1240px}
+.hero h1{font-weight:700;font-size:clamp(2.3rem,5.6vw,4.6rem);line-height:1.04;letter-spacing:-.01em;max-width:15ch;text-wrap:balance}
+.hero h1 .g{color:var(--gold-bright)}
+.hero__sub{margin-top:1.1rem;max-width:46ch;font-size:clamp(1.02rem,1.7vw,1.22rem);color:#DCE2EA}
+.hero .btn{margin-top:1.6rem}
+.hero__tour{margin-top:1.6rem;display:flex;flex-direction:column;align-items:flex-start;gap:.35rem}
+.hero__tour small{font-size:.86rem;font-weight:600;color:#fff}
+.hero__chip{display:inline-flex;align-items:center;gap:.6rem;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:.6rem .9rem;font-weight:700;font-size:.92rem}
+.hero__chip svg{width:20px;height:16px;color:var(--gold-bright)}
+.hero__chip i{font-style:normal;color:var(--gold-bright)}
 
-.collage{position:relative;width:min(860px,100%);margin:0 auto;aspect-ratio:16/10.2}
-.collage__main{position:absolute;left:22%;right:22%;top:9%;bottom:7%;border-radius:var(--radius);overflow:hidden;background:#000;
-  box-shadow:0 30px 60px -24px rgba(60,40,0,.55);border:3px solid rgba(255,255,255,.75);z-index:2}
-.collage__main .collage__photo{width:100%;height:100%;object-fit:cover;object-position:center 30%}
-.collage__main::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 35%,rgba(0,0,0,.82) 100%)}
-.collage__logo{position:absolute;left:50%;bottom:26%;transform:translateX(-50%);width:86%;height:auto;z-index:3;filter:drop-shadow(0 4px 14px rgba(0,0,0,.7))}
-.collage__seal{position:absolute;left:50%;top:0;transform:translate(-50%,0);width:clamp(64px,11vw,96px);aspect-ratio:1;border-radius:50%;background:#fff;z-index:4;
-  display:grid;place-items:center;box-shadow:0 10px 24px -10px rgba(60,40,0,.6);border:3px solid var(--gold-soft)}
-.collage__seal svg{width:58%;color:var(--gold)}
-.collage__tour{position:absolute;left:18%;right:18%;bottom:0;height:20%;z-index:5;border-radius:14px;overflow:hidden;
-  border:3px solid #fff;box-shadow:0 14px 30px -12px rgba(0,0,0,.6);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.15rem;
-  background:linear-gradient(120deg,#0E0B05 0%,#2A1D05 55%,#5A3E0B 100%)}
-.collage__tour small{font-weight:700;text-transform:uppercase;letter-spacing:.32em;padding-left:.32em;font-size:clamp(.55rem,1.2vw,.78rem);color:var(--pill-1)}
-.collage__tour span{font-weight:800;text-transform:uppercase;color:#fff;letter-spacing:.04em;font-size:clamp(.9rem,2.6vw,1.6rem);line-height:1.05}
-.collage__tour i{font-style:normal;color:var(--gold-bright);margin-inline:.3em}
-.ph{position:absolute;border-radius:14px;overflow:hidden;border:3px solid #fff;box-shadow:0 18px 36px -16px rgba(60,40,0,.6);background:#222}
-.ph img{width:100%;height:100%;object-fit:cover}
-.ph--1{left:5%;top:25%;width:22%;height:46%;z-index:3}
-.ph--1 img{object-position:center 15%}
-.ph--2{left:0;top:62%;width:19%;height:26%;z-index:2}
-.ph--3{right:3%;top:6%;width:30%;height:38%;z-index:1}
-.ph--4{right:0;top:44%;width:21%;height:34%;z-index:3}
-
-.hero__t{margin-top:clamp(1.2rem,3vw,1.8rem);font-weight:800;text-transform:uppercase;font-size:clamp(1.6rem,4.2vw,3rem);line-height:1.05;color:var(--ink)}
-.hero__t .gd{color:var(--gold-deep)}
-.hero__sub{margin:.8rem auto 0;max-width:46ch;font-size:clamp(1.05rem,1.8vw,1.3rem);line-height:1.45;color:var(--ink)}
-.hero .pill{margin-top:1.4rem}
-.hero__note{margin-top:.9rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-size:clamp(.9rem,1.5vw,1.05rem);color:var(--ink)}
-
-/* ---------- faixa de destaques ---------- */
-.facts{background:#fff;color:var(--ink);padding:1rem 0}
-.facts .wrap{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.6rem clamp(1.4rem,4vw,3.2rem)}
-.facts span{display:inline-flex;align-items:center;gap:.55rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;font-size:.82rem}
-.facts svg{width:20px;height:20px;color:var(--gold)}
+/* ---------- faixa (no lugar do "as seen on") ---------- */
+.strip{background:#fff;border-bottom:1px solid var(--line);padding:.9rem 0 1.1rem}
+.strip p{text-align:center;font-size:.72rem;font-weight:600;letter-spacing:.32em;padding-left:.32em;text-transform:uppercase;color:var(--muted)}
+.strip ul{list-style:none;margin-top:.55rem;display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem clamp(1.4rem,4vw,3.4rem)}
+.strip li{display:flex;align-items:center;gap:.5rem;font-weight:700;text-transform:uppercase;font-size:.9rem;color:var(--navy-900)}
+.strip svg{width:20px;height:20px;color:var(--gold)}
 
 /* ============================================================
-   PRÓXIMOS EVENTOS
+   PRÓXIMOS EVENTOS (grade de 2 colunas)
    ============================================================ */
-.events-sec{background:var(--paper);color:var(--ink)}
-.events-sec .h-big{color:var(--ink)}
-.events-sec .lead{margin:.7rem auto 0;max-width:52ch;font-size:clamp(1.02rem,1.7vw,1.2rem);color:var(--ink-muted)}
-.events{list-style:none;margin:clamp(2rem,4vw,2.8rem) auto 0;max-width:1000px;display:grid;gap:clamp(.8rem,1.6vw,1.1rem);text-align:left}
-.event{position:relative;display:grid;grid-template-columns:clamp(150px,20vw,220px) clamp(118px,13vw,150px) 1fr auto;align-items:stretch;background:#fff;border:1px solid rgba(23,20,14,.1);
-  border-radius:var(--radius);overflow:hidden;box-shadow:0 18px 40px -30px rgba(60,40,0,.45);transition:transform .45s var(--ease),box-shadow .45s var(--ease),border-color .3s ease}
-.event:hover{transform:translateY(-3px);border-color:rgba(176,137,44,.5);box-shadow:0 26px 50px -30px rgba(60,40,0,.6)}
-.event__img{position:relative;overflow:hidden;background:#111;min-height:150px}
-.event__img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .9s var(--ease)}
-.event:hover .event__img img{transform:scale(1.05)}
-.event__img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 40%,rgba(0,0,0,.55) 100%)}
-.event__date{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1rem .6rem;border-right:1px solid rgba(23,20,14,.1);text-align:center}
-.event__mon{font-weight:700;text-transform:uppercase;letter-spacing:.18em;padding-left:.18em;font-size:.8rem;color:var(--gold-deep)}
-.event__days{font-weight:800;font-size:clamp(2rem,3.6vw,2.8rem);line-height:1;color:var(--ink);margin-top:.15rem;white-space:nowrap}
-.event__yr{margin-top:.2rem;font-weight:600;font-size:.78rem;white-space:nowrap;color:var(--ink-muted)}
-.event__info{padding:clamp(1rem,2.2vw,1.4rem) clamp(1rem,2.4vw,1.8rem);display:flex;flex-direction:column;justify-content:center;min-width:0}
-.event__city{font-weight:800;text-transform:uppercase;font-size:clamp(1.5rem,2.8vw,2.1rem);line-height:1;color:var(--ink)}
-.event__city small{font-size:.5em;font-weight:700;letter-spacing:.1em;color:var(--gold-deep);margin-left:.4em;vertical-align:middle}
-.event__line{display:flex;align-items:flex-start;gap:.5rem;margin-top:.5rem;font-size:.96rem;line-height:1.35;color:var(--ink-muted)}
-.event__line svg{flex:0 0 16px;width:16px;height:16px;margin-top:.15rem;color:var(--gold)}
-.event__badge{position:absolute;top:.75rem;left:.75rem;z-index:2;background:linear-gradient(90deg,#7A1D14,#A3281B);color:#fff;font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:.4rem .7rem;border-radius:999px}
-.event__badge--gold{background:var(--pill-2);color:#2A1B02}
-.event__cta{display:flex;align-items:center;padding:1rem clamp(1rem,2.4vw,1.8rem) 1rem 0}
-.event__cta .pill{font-size:.95rem;padding:.85em 1.4em;white-space:nowrap}
-.event__cta .pill::after{content:"";position:absolute;inset:0;border-radius:var(--radius)}
-.events__empty{display:none;margin-top:2rem;color:var(--ink-muted)}
+.events-sec{background:var(--grey-bg)}
+.events{list-style:none;margin-top:clamp(1.8rem,3.5vw,2.4rem);display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(.8rem,1.6vw,1.1rem);text-align:left}
+.event{position:relative;display:grid;grid-template-columns:clamp(120px,28%,170px) 1fr;background:#fff;border-radius:var(--radius);overflow:hidden;
+  box-shadow:0 6px 22px -14px rgba(18,28,43,.35);transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
+.event:hover{transform:translateY(-3px);box-shadow:0 18px 34px -18px rgba(18,28,43,.45)}
+.event__img{position:relative;overflow:hidden;background:var(--navy-900);min-height:138px}
+.event__img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
+.event:hover .event__img img{transform:scale(1.06)}
+.event__badge{position:absolute;left:.5rem;top:.5rem;z-index:1;background:#A3281B;color:#fff;font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .55rem;border-radius:999px}
+.event__body{position:static;padding:.95rem 1.1rem 1rem;display:flex;flex-direction:column;justify-content:center;min-width:0}
+.event__date{font-weight:700;text-transform:uppercase;color:var(--gold-deep);font-size:1.02rem;line-height:1.15}
+.event__city{font-weight:800;text-transform:uppercase;font-size:clamp(1.45rem,2.4vw,1.75rem);line-height:1;margin-top:.1rem}
+.event__venue{font-weight:700;text-transform:uppercase;font-size:.74rem;margin-top:.15rem;color:var(--ink)}
+.event__days{margin-top:.35rem;font-size:1.05rem;line-height:1.1}
+.event__time{font-weight:600;font-size:.8rem;text-transform:uppercase}
+.event__cta{position:absolute;right:1rem;bottom:.9rem}
+.events__empty{display:none;margin-top:2rem;color:var(--ink-2)}
 
 /* ============================================================
-   SOBRE
+   O MÉTODO (3 cards altos)
    ============================================================ */
-.about{background:#000 url('assets/pv/bg-sobre.jpg') center/cover}
-.about__grid{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(2rem,5vw,4rem);align-items:center}
-.about__t{font-weight:800;text-transform:uppercase;color:var(--gold-bright);font-size:clamp(1.7rem,3.4vw,2.5rem);line-height:1.05}
-.about__lead{margin-top:1.1rem;font-weight:700;font-size:1.12rem;line-height:1.45;color:#fff}
-.about p{margin-top:.9rem;color:#E9E5DC;font-size:1.04rem}
-.feats{list-style:none;margin-top:1.4rem;display:grid;gap:1.1rem}
-.feats li{display:flex;gap:1rem;align-items:center;font-size:1.06rem;color:#fff}
-.feats li b{font-weight:700}
-.feats svg{flex:0 0 38px;width:38px;height:38px;color:var(--gold-bright)}
-.mosaic{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,clamp(110px,11vw,150px));gap:clamp(.7rem,1.6vw,1.1rem)}
-.mosaic figure{border-radius:var(--radius);overflow:hidden;background:#111}
-.mosaic img{width:100%;height:100%;object-fit:cover}
-.mosaic .a{grid-column:1;grid-row:1}
-.mosaic .b{grid-column:2;grid-row:1/span 2}
-.mosaic .c{grid-column:1;grid-row:2/span 2}
-.mosaic .d{grid-column:2;grid-row:3}
-.video{margin:clamp(2.6rem,5vw,3.6rem) auto 0;max-width:720px;background:#fff;padding:clamp(10px,1.6vw,18px);border-radius:24px}
-.video video{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:10px;background:#000}
-.about .cta{margin-top:clamp(1.6rem,3vw,2.2rem)}
+.method .kicker{color:var(--ink)}
+.method__sub{margin:.6rem auto 0;max-width:46ch;font-weight:700;text-transform:uppercase;color:var(--gold-deep);font-size:clamp(.92rem,1.5vw,1.05rem);line-height:1.25}
+.mcards{margin-top:clamp(1.8rem,3.5vw,2.4rem);display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(.8rem,1.8vw,1.25rem)}
+.mcard{position:relative;isolation:isolate;overflow:hidden;border-radius:26px;background:var(--navy-950);color:#fff;min-height:clamp(380px,36vw,440px);
+  display:flex;flex-direction:column;justify-content:flex-end;padding:clamp(1.3rem,2.4vw,1.8rem);text-align:center}
+.mcard img{position:absolute;left:0;right:0;top:0;width:100%;height:68%;object-fit:cover;z-index:-2}
+.mcard::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(11,18,28,0) 18%,rgba(11,18,28,.75) 48%,var(--navy-950) 66%)}
+.mcard h3{font-weight:800;text-transform:uppercase;font-size:clamp(2rem,3.4vw,2.6rem);line-height:1;margin-top:.2rem}
+.mcard .sub{display:block;margin-top:.35rem;font-weight:600;text-transform:uppercase;color:var(--gold-bright);font-size:clamp(1rem,1.6vw,1.2rem);line-height:1.1}
+.mcard p{margin-top:.6rem;font-weight:500;font-size:.95rem;line-height:1.35;color:#E6EAF0}
+.method__foot{margin:clamp(1.6rem,3vw,2.2rem) auto 0;max-width:70ch;font-size:clamp(1rem,1.5vw,1.1rem);color:var(--ink-2)}
 
 /* ============================================================
-   MISSÃO + PILARES
+   4 ÁREAS (faixa navy, 4 cards)
    ============================================================ */
-.pillars-sec{color:#fff;background:#2F2208 url('assets/pv/bg-pilares.jpg') center bottom/cover}
-.pillars-sec .head{margin-bottom:clamp(2rem,4vw,2.8rem)}
-.pillars-sec .spaced{color:var(--pill-1)}
-.pillars-sec .h-big{margin-top:.6rem;font-size:clamp(1.8rem,4.2vw,3rem);color:#fff;max-width:22ch;margin-inline:auto}
-.pcards{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(.7rem,1.6vw,1rem)}
-.pcard{position:relative;display:flex;min-height:clamp(170px,19vw,210px);border-radius:var(--radius);overflow:hidden;background:#000;text-align:left;isolation:isolate}
-.pcard--wide{grid-column:1/-1}
-.pcard__img{position:absolute;right:0;top:0;bottom:0;width:58%;z-index:-1}
-.pcard__img img{width:100%;height:100%;object-fit:cover}
-.pcard__img::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#000 0%,rgba(0,0,0,.65) 35%,rgba(0,0,0,0) 75%)}
-.pcard__body{padding:clamp(1.2rem,2.4vw,1.6rem) clamp(1.2rem,2.4vw,1.6rem);max-width:68%}
-.pcard--wide .pcard__body{max-width:50%}
-.pcard h3{font-weight:800;text-transform:uppercase;font-size:clamp(1.6rem,3vw,2.2rem);line-height:1}
-.pcard .sub{display:block;margin-top:.3rem;font-weight:700;text-transform:uppercase;color:var(--gold-bright);font-size:clamp(.88rem,1.4vw,1.02rem)}
-.pcard blockquote{margin-top:.55rem;font-style:italic;font-size:clamp(.92rem,1.4vw,1.02rem);line-height:1.4;color:#F1EEE8}
+.areas-sec{color:#fff;background:radial-gradient(ellipse 80% 70% at 50% 0%,var(--navy-700),var(--navy-900) 60%,var(--navy-950))}
+.areas-sec .h2{font-size:clamp(1.6rem,3.4vw,2.5rem)}
+.areas{margin-top:clamp(1.6rem,3vw,2.2rem);display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(.6rem,1.2vw,.8rem)}
+.area{text-align:center}
+.area__ph{position:relative;aspect-ratio:1.18/1;border-radius:10px 10px 0 0;overflow:hidden;background:var(--navy-950)}
+.area__ph img{width:100%;height:100%;object-fit:cover}
+.area__ph::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,28,43,0) 45%,rgba(18,28,43,.92) 92%)}
+.area__ph b{position:absolute;left:0;right:0;bottom:.4rem;z-index:1;font-weight:800;text-transform:uppercase;font-size:clamp(1.5rem,2.8vw,2.3rem);line-height:1}
+.area h3{margin-top:.9rem;font-weight:700;text-transform:uppercase;color:var(--gold-bright);font-size:clamp(.95rem,1.4vw,1.08rem)}
+.area p{margin:.55rem auto 0;max-width:24ch;font-weight:500;font-size:.95rem;line-height:1.35;color:#E6EAF0}
+.area cite{display:block;margin-top:.7rem;font-style:normal;font-weight:700;font-size:.95rem}
 
 /* ============================================================
-   MENTORES
+   MENTORES (tela dividida)
    ============================================================ */
-.mentors-sec{color:#fff;background:
-  radial-gradient(1px 1px at 12% 22%,rgba(230,200,120,.8) 50%,transparent 51%),
-  radial-gradient(1px 1px at 32% 68%,rgba(230,200,120,.6) 50%,transparent 51%),
-  radial-gradient(1.5px 1.5px at 56% 18%,rgba(230,200,120,.7) 50%,transparent 51%),
-  radial-gradient(1px 1px at 74% 52%,rgba(230,200,120,.6) 50%,transparent 51%),
-  radial-gradient(1.5px 1.5px at 88% 30%,rgba(230,200,120,.7) 50%,transparent 51%),
-  radial-gradient(1px 1px at 22% 88%,rgba(230,200,120,.5) 50%,transparent 51%),
-  radial-gradient(1px 1px at 64% 86%,rgba(230,200,120,.5) 50%,transparent 51%),
-  radial-gradient(ellipse 70% 60% at 50% 0%,rgba(176,137,44,.22),transparent 70%),
-  linear-gradient(180deg,#0E0B05,#050505)}
-.mentors-sec .h-big{color:#fff}
-.mentors-sec .sub{margin-top:.6rem;font-size:1.05rem;color:#E9E5DC}
-.mentors{margin-top:clamp(2rem,4vw,2.8rem);display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(1rem,2.4vw,1.6rem);text-align:left}
-.mentor{border-radius:var(--radius);overflow:hidden;background:#15110A;border:1px solid var(--line)}
-.mentor__ph{aspect-ratio:4/3.3;overflow:hidden;background:#111}
-.mentor__ph img{width:100%;height:100%;object-fit:cover;object-position:center 18%}
-.mentor__b{padding:clamp(1.2rem,2.4vw,1.6rem)}
-.mentor__role{font-size:.74rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-bright)}
-.mentor h3{margin:.3rem 0 .6rem;font-weight:800;text-transform:uppercase;font-size:clamp(1.4rem,2.4vw,1.8rem);line-height:1.05}
-.mentor p{font-size:.96rem;line-height:1.6;color:#CFC9BD}
-.mentors-sec .pill{margin-top:clamp(2rem,4vw,2.6rem)}
+.split{display:grid;grid-template-columns:1fr 1fr}
+.half{position:relative;isolation:isolate;overflow:hidden;min-height:clamp(520px,52vw,640px);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:space-between;text-align:center;padding:clamp(1.8rem,3.4vw,2.6rem) clamp(1.2rem,3vw,2.4rem)}
+.half__bg{position:absolute;inset:0;z-index:-2;width:100%;height:100%;object-fit:cover;object-position:center 18%}
+.half::after{content:"";position:absolute;inset:0;z-index:-1}
+.half--a{background:var(--navy-800)}
+.half--a::after{background:linear-gradient(180deg,rgba(18,28,43,.85) 0%,rgba(18,28,43,0) 26%,rgba(18,28,43,0) 50%,rgba(11,18,28,.92) 82%)}
+.half--b{background:#050505}
+.half--b::after{background:linear-gradient(180deg,rgba(5,5,5,.85) 0%,rgba(5,5,5,0) 26%,rgba(5,5,5,0) 50%,rgba(5,5,5,.94) 82%)}
+.half__role{font-weight:700;font-size:.78rem;letter-spacing:.24em;padding-left:.24em;text-transform:uppercase;color:var(--gold-bright)}
+.half h2{font-weight:800;text-transform:uppercase;font-size:clamp(1.5rem,2.8vw,2.1rem);line-height:1.05;margin-top:.3rem}
+.half p{max-width:44ch;margin-inline:auto;font-size:.98rem;line-height:1.45;color:#E6EAF0}
+.half .btn{margin-top:1rem}
 
 /* ============================================================
    A EXPERIÊNCIA
    ============================================================ */
-.exp{color:var(--ink);background:#fff url('assets/pv/bg-experiencia.jpg') center/cover}
-.exp .h-big{color:var(--gold-deep)}
-.exp__sub{margin:.6rem auto 0;max-width:46ch;font-size:clamp(1.05rem,1.8vw,1.25rem);line-height:1.45}
-.row4{margin-top:clamp(1.6rem,3.4vw,2.4rem);display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(.5rem,1.1vw,.8rem)}
-.row4 figure{aspect-ratio:1.7/1;border-radius:var(--radius);overflow:hidden;background:#ddd}
-.row4 img{width:100%;height:100%;object-fit:cover;transition:transform .9s var(--ease)}
+.exp{background:#fff}
+.exp::before{content:"";position:absolute;inset:0;z-index:-1;background:url('assets/pv/bg-experiencia.jpg') center/cover;opacity:.18;filter:grayscale(1)}
+.exp .h2{color:var(--gold-deep)}
+.exp .lede{max-width:44ch;margin-top:.4rem}
+.row4{margin-top:clamp(1.4rem,3vw,2rem);display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(.45rem,1vw,.7rem)}
+.row4 figure{aspect-ratio:1.7/1;border-radius:12px;overflow:hidden;background:#ddd}
+.row4 img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
 .row4 figure:hover img{transform:scale(1.05)}
-.row3{margin-top:clamp(.5rem,1.1vw,.8rem);display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(.5rem,1.1vw,.8rem)}
-.claim{position:relative;aspect-ratio:1.35/1;border-radius:var(--radius);overflow:hidden;isolation:isolate;display:grid;place-items:center;text-align:center;padding:1rem}
+.row3{margin-top:clamp(.45rem,1vw,.7rem);display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(.45rem,1vw,.7rem)}
+.claim{position:relative;aspect-ratio:1.6/1;border-radius:12px;overflow:hidden;isolation:isolate;display:grid;place-items:center;text-align:center;padding:1rem;color:#fff}
 .claim img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
-.claim::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(20,14,4,.45),rgba(20,14,4,.75))}
-.claim b{display:block;font-weight:800;text-transform:uppercase;color:#fff;font-size:clamp(1.3rem,2.6vw,2rem);line-height:1.05;text-shadow:0 2px 18px rgba(0,0,0,.5)}
-.claim span{display:block;margin-top:.3rem;font-size:clamp(1.05rem,2vw,1.5rem);color:var(--pill-1);font-weight:500}
-.exp__close{margin-top:clamp(2rem,4vw,2.8rem)}
-.exp__close .a{font-size:clamp(1.3rem,2.4vw,1.8rem)}
-.exp__close .b{font-weight:800;text-transform:uppercase;color:var(--gold-deep);font-size:clamp(1.5rem,3.2vw,2.3rem);line-height:1.1}
-.exp__close .pill{margin-top:1.3rem}
+.claim::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(11,18,28,.4),rgba(11,18,28,.72))}
+.claim b{display:block;font-weight:800;text-transform:uppercase;font-size:clamp(1.25rem,2.4vw,1.9rem);line-height:1.02}
+.claim span{display:block;margin-top:.2rem;font-size:clamp(1rem,1.8vw,1.35rem);color:var(--pill-1)}
+.exp__close{margin-top:clamp(1.6rem,3vw,2.2rem)}
+.exp__close .a{font-size:clamp(1.25rem,2.2vw,1.6rem);line-height:1.15}
+.exp__close .b{font-weight:800;text-transform:uppercase;color:var(--gold-deep);font-size:clamp(1.35rem,2.6vw,1.9rem);line-height:1.15}
+.exp__close .btn{margin-top:1.1rem;font-size:clamp(1.1rem,1.8vw,1.35rem)}
 
 /* ============================================================
    COMUNIDADE (captura de leads)
    ============================================================ */
-.join-sec{color:#fff;background:#1F1706 url('assets/pv/bg-ingressos.jpg') center/cover}
-.join{display:grid;grid-template-columns:.95fr 1.05fr;gap:clamp(1.6rem,4vw,3.2rem);align-items:center;text-align:left}
-.join__t{font-weight:800;text-transform:uppercase;font-size:clamp(1.8rem,3.8vw,2.8rem);line-height:1.02}
-.join__t .g{color:var(--pill-1)}
-.join__lead{margin-top:1rem;font-size:clamp(1.02rem,1.6vw,1.15rem);color:#E9E5DC;max-width:42ch}
-.join__list{list-style:none;margin-top:1.3rem;display:grid;gap:.6rem}
-.join__list li{display:flex;gap:.7rem;align-items:center;font-size:1.02rem}
-.join__list svg{flex:0 0 18px;width:18px;height:18px;color:var(--pill-1)}
-.join__card{background:linear-gradient(180deg,var(--bg-3),var(--bg-2));border:1px solid rgba(230,200,120,.35);border-radius:22px;padding:clamp(1.5rem,3.4vw,2.2rem);box-shadow:0 40px 90px -40px rgba(0,0,0,.85)}
-.join__card h3{font-weight:800;text-transform:uppercase;font-size:1.3rem;line-height:1.1;color:var(--cream)}
-.join__card .hint{color:var(--muted);font-size:.92rem;margin:.4rem 0 1.3rem}
-.lead-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 1rem}
-.lead-grid .full{grid-column:1/-1}
-.lead-field{margin-bottom:1rem}
-.lead-field label{display:block;font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-soft);margin-bottom:.42rem}
-.lead-field label small{font-weight:500;letter-spacing:.04em;text-transform:none;color:var(--muted-2)}
-.lead-input,.lead-select{width:100%;font-family:var(--sans);font-size:.98rem;color:var(--text);background:rgba(0,0,0,.3);
-  border:1px solid var(--line-soft);border-radius:8px;padding:.72rem .85rem;transition:border-color .3s ease,box-shadow .3s ease}
-.lead-input::placeholder{color:var(--muted-2)}
-.lead-input:focus,.lead-select:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(176,137,44,.16)}
-.lead-select{appearance:none;-webkit-appearance:none;-moz-appearance:none;cursor:pointer;padding-right:2.2rem;
-  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23A7A093' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M6 9l6 6 6-6'/></svg>");
-  background-repeat:no-repeat;background-position:right .8rem center;background-size:1.1rem}
-.lead-select option{background:var(--bg-2);color:var(--text)}
-.lead-phone{display:flex;gap:.5rem}
-.lead-phone .lead-select{flex:0 0 8.4rem}
-.lead-phone .lead-input{flex:1;min-width:0}
-.lead-error{color:#E58A82;font-size:.86rem;margin:.2rem 0 .6rem;display:none}
-.join__card .pill{width:100%;margin-top:.4rem;font-size:1.05rem}
-.join__ok{display:none;text-align:center;padding:1.4rem 0}
-.join__ok svg{width:54px;height:54px;color:var(--pill-1);margin:0 auto 1rem}
-.join__ok h3{margin-bottom:.5rem}
-.join__ok p{color:var(--muted)}
-.join__card.is-done form{display:none}
-.join__card.is-done .join__ok{display:block}
+.join-sec{color:#fff;background:radial-gradient(ellipse 60% 90% at 50% 100%,rgba(217,180,90,.55),rgba(176,137,44,.15) 45%,transparent 70%),linear-gradient(180deg,var(--navy-900),var(--navy-800))}
+.join-sec .h2{font-size:clamp(1.6rem,3.2vw,2.3rem)}
+.join-sec .lede{margin-top:.3rem;font-weight:600;color:#E6EAF0}
+.join{margin:clamp(1.4rem,3vw,1.8rem) auto 0;max-width:560px;text-align:left}
+.join .row{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
+.field{margin-bottom:.7rem}
+.inp,.sel{width:100%;font-family:var(--sans);font-size:.98rem;color:var(--ink);background:#fff;border:1px solid #D7DCE3;border-radius:3px;padding:.62rem .8rem;transition:box-shadow .25s ease}
+.inp::placeholder{color:#7C838D}
+.inp:focus,.sel:focus{outline:none;box-shadow:0 0 0 3px rgba(217,180,90,.55)}
+.sel{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right:2rem;
+  background:#fff url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M6 9l6 6 6-6'/></svg>") no-repeat right .6rem center/1rem}
+.phone{display:flex;gap:.5rem}
+.phone .sel{flex:0 0 7.2rem}
+.phone .inp{flex:1;min-width:0}
+.join__err{display:none;color:#FFD7D2;font-size:.88rem;margin:.1rem 0 .6rem;text-align:center}
+.join__actions{text-align:center;margin-top:.5rem}
+.join__ok{display:none;text-align:center;margin-top:1.4rem}
+.join__ok b{display:block;font-size:1.3rem;text-transform:uppercase}
+.join__ok span{color:#E6EAF0}
+.join.is-done form{display:none}
+.join.is-done .join__ok{display:block}
 
 /* ---------- footer ---------- */
-.footer{background:#000;padding-block:2.2rem;border-top:1px solid var(--line-soft)}
-.footer .wrap{display:flex;flex-wrap:wrap;gap:1.2rem 2rem;align-items:center;justify-content:space-between}
-.footer nav{display:flex;flex-wrap:wrap;gap:1rem 1.4rem}
-.footer nav a,.footer small{font-size:.8rem;color:var(--muted-2);letter-spacing:.04em}
-.footer nav a:hover{color:var(--gold-soft)}
-.footer__cities a{color:var(--muted);font-weight:600;text-transform:uppercase}
+.footer{background:#000;color:#fff;text-align:center;padding:clamp(2.2rem,4vw,3rem) 1rem clamp(2rem,3.5vw,2.6rem)}
+.footer__logo{height:56px;width:auto;margin:0 auto}
+.footer nav{margin-top:1.6rem;display:flex;flex-wrap:wrap;justify-content:center;gap:.7rem 0}
+.footer nav a{font-size:.74rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;padding:0 .9rem;border-right:1px solid rgba(255,255,255,.6);line-height:1;transition:color .2s ease}
+.footer nav a:last-child{border-right:0}
+.footer nav a:hover{color:var(--gold-bright)}
+.footer__social{margin-top:1.6rem;display:flex;justify-content:center;gap:1.2rem}
+.footer__social a{width:32px;height:32px;color:#fff;transition:color .2s ease}
+.footer__social a:hover{color:var(--gold-bright)}
+.footer small{display:block;margin-top:1.4rem;font-size:.8rem;font-weight:500}
 
 /* ---------- reveal ---------- */
-.reveal-on .reveal{opacity:0;transform:translateY(18px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.reveal-on .reveal{opacity:0;transform:translateY(16px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
 .reveal-on .reveal.in{opacity:1;transform:none}
 .reveal-on .reveal[data-d="1"]{transition-delay:.08s}
 .reveal-on .reveal[data-d="2"]{transition-delay:.16s}
@@ -306,36 +237,26 @@ a{color:inherit;text-decoration:none}
 @media (prefers-reduced-motion:reduce){.reveal-on .reveal{opacity:1;transform:none;transition:none}}
 
 /* ---------- responsivo ---------- */
-@media (max-width:1020px){
+@media (max-width:960px){
   .nav{display:none}
   .menu-toggle{display:flex}
-  .header .pill{display:none}
+  .events{grid-template-columns:1fr;max-width:600px;margin-inline:auto}
+  .mcards{grid-template-columns:1fr;max-width:460px;margin-inline:auto}
+  .areas{grid-template-columns:repeat(2,1fr);gap:1.4rem .8rem}
+  .split{grid-template-columns:1fr}
 }
-@media (max-width:860px){
-  .about__grid,.join{grid-template-columns:1fr}
-  .pcards{grid-template-columns:1fr}
-  .pcard--wide .pcard__body{max-width:68%}
-  .mentors{grid-template-columns:1fr;max-width:520px;margin-inline:auto}
+@media (max-width:640px){
   .row4{grid-template-columns:repeat(2,1fr)}
   .row3{grid-template-columns:1fr}
-  .claim{aspect-ratio:2/1}
-  .event{grid-template-columns:110px 1fr}
-  .event__img{grid-column:1/-1;min-height:0;aspect-ratio:16/6}
-  .event__cta{grid-column:1/-1;padding:0 1rem 1rem}
-  .event__cta .pill{width:100%}
+  .claim{aspect-ratio:2.2/1}
+  .event{grid-template-columns:34% 1fr}
+  .event__cta{position:static;margin-top:.7rem}
+  .join .row{grid-template-columns:1fr;gap:0}
+  .hero{min-height:0}
+  .hero__ov{background:linear-gradient(180deg,rgba(11,18,28,.78),rgba(11,18,28,.9)),rgba(34,50,74,.35)}
 }
-@media (max-width:560px){
-  .collage{aspect-ratio:1/1.05}
-  .collage__main{left:12%;right:12%;top:12%;bottom:10%}
-  .collage__tour{left:4%;right:4%;height:18%}
-  .ph--1{left:0;top:18%;width:26%;height:30%}
-  .ph--2{display:none}
-  .ph--3{right:0;top:4%;width:30%;height:22%}
-  .ph--4{right:0;top:28%;width:25%;height:20%}
-  .pcard__body,.pcard--wide .pcard__body{max-width:78%}
-  .lead-grid{grid-template-columns:1fr}
-  .event{grid-template-columns:96px 1fr}
-  .event__date{padding-inline:.6rem}
+@media (max-width:420px){
+  .areas{grid-template-columns:1fr;max-width:340px;margin-inline:auto}
 }
 </style>
 <!-- Microsoft Clarity -->
@@ -367,225 +288,199 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
 <body id="top">
 
 <!-- HEADER -->
-<header class="header" id="header">
-  <a href="#top" class="brand" aria-label="Método REI"><img decoding="async" class="brand__logo" src="assets/logo-metodo-rei.png" alt="Método REI" /></a>
+<header class="header">
+  <a href="#top" class="brand" aria-label="Método REI"><img decoding="async" src="assets/logo-metodo-rei.png" alt="Método REI" /></a>
   <nav class="nav">
     <a href="#eventos">Eventos</a>
-    <a href="#sobre">Sobre</a>
-    <a href="#metodo">Método</a>
+    <a href="#metodo">O Método</a>
     <a href="#mentores">Mentores</a>
     <a href="#experiencia">Experiência</a>
     <a href="#comunidade">Comunidade</a>
   </nav>
-  <a href="#eventos" class="pill pill--sm">Ver eventos</a>
   <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </header>
 
 <div class="drawer" id="drawer" aria-hidden="true">
   <button class="close" id="drawerClose" aria-label="Fechar menu">×</button>
   <a href="#eventos">Eventos</a>
-  <a href="#sobre">Sobre</a>
-  <a href="#metodo">Método</a>
+  <a href="#metodo">O Método</a>
   <a href="#mentores">Mentores</a>
   <a href="#experiencia">Experiência</a>
   <a href="#comunidade">Comunidade</a>
-  <a href="#eventos" class="pill" style="margin-top:.6rem">Ver eventos</a>
 </div>
 
 <main>
 
 <!-- HERO -->
 <section class="hero">
-  <img decoding="async" class="hero__bg" src="assets/pv-hero-bg.jpg" alt="" fetchpriority="high" />
+  <img class="hero__bg" src="assets/home/hero.jpg" alt="" fetchpriority="high" />
   <div class="hero__ov" aria-hidden="true"></div>
   <div class="wrap">
-    <div class="collage reveal" aria-label="Montagem de fotos da imersão Método REI">
-      <figure class="ph ph--3"><img decoding="async" src="assets/pv/evento-5.jpg" alt="Plateia da imersão Método REI" /></figure>
-      <figure class="ph ph--2"><img decoding="async" src="assets/pv/exp1.jpg" alt="Participantes em mesa de trabalho" /></figure>
-      <div class="collage__main">
-        <img decoding="async" class="collage__photo" src="assets/pv-palco.jpg" alt="Hewerton Scheidegger no palco do Método REI com participantes" />
-        <img decoding="async" class="collage__logo" src="assets/logo-metodo-rei.png" alt="Método REI" />
-      </div>
-      <div class="collage__seal" aria-hidden="true"><svg viewBox="0 0 24 20" fill="currentColor"><path d="M1.5 15.5 L3.8 5.5 L8.4 10.8 L12 2.5 L15.6 10.8 L20.2 5.5 L22.5 15.5 Z"/><rect x="1.8" y="16" width="20.4" height="3" rx="1"/></svg></div>
-      <figure class="ph ph--1"><img decoding="async" src="assets/pv/hewerton.jpg" alt="Hewerton Scheidegger" /></figure>
-      <figure class="ph ph--4"><img decoding="async" src="assets/pv/evento-1.jpg" alt="Hewerton Scheidegger e Santiago Vecina no palco" /></figure>
-      <div class="collage__tour"><small>Tour EUA 2026</small><span>Miami<i>•</i>Dallas<i>•</i>Orlando<i>•</i>Boston</span></div>
+    <h1 class="reveal">Uma imersão de 2 dias para <span class="g">governar</span> sua fé, suas finanças &amp; seu futuro</h1>
+    <p class="hero__sub reveal" data-d="1">Para quem decidiu enriquecer com inteligência, governar as próprias decisões e viver definitivamente acima da mediocridade.</p>
+    <a href="#eventos" class="btn reveal" data-d="2">Ver eventos</a>
+    <div class="hero__tour reveal" data-d="3">
+      <small>Tour EUA 2026</small>
+      <span class="hero__chip"><svg viewBox="0 0 24 20" fill="currentColor" aria-hidden="true"><path d="M1.5 15.5 L3.8 5.5 L8.4 10.8 L12 2.5 L15.6 10.8 L20.2 5.5 L22.5 15.5 Z"/><rect x="1.8" y="16" width="20.4" height="3" rx="1"/></svg>Miami <i>·</i> Dallas <i>·</i> Orlando <i>·</i> Boston</span>
     </div>
-    <h1 class="hero__t reveal" data-d="1">Assuma o governo da sua vida.<br><span class="gd">Construa riqueza.</span></h1>
-    <p class="hero__sub reveal" data-d="2">Uma imersão presencial de 2 dias onde empresários e profissionais aprendem a enriquecer com inteligência — sem perder família, saúde, caráter e fé pelo caminho.</p>
-    <a href="#eventos" class="pill reveal" data-d="3">Ver eventos</a>
-    <div class="hero__note reveal" data-d="3">Escolha a edição mais perto de você</div>
   </div>
 </section>
 
-<!-- FAIXA DE DESTAQUES -->
-<div class="facts">
-  <div class="wrap">
-    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-5.5 7-11a7 7 0 0 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>4 cidades nos EUA</span>
-    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="1"/><path d="M3 9h18M8 3v4M16 3v4" stroke-linecap="round"/></svg>2 dias presenciais</span>
-    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6.5 6.5-6.5s6.5 2.9 6.5 6.5M16 4.5a3.5 3.5 0 0 1 0 7M21.5 20c0-3-1.9-5.5-4.5-6.3" stroke-linecap="round"/></svg>Networking de alto nível</span>
-    <span><svg viewBox="0 0 24 20" fill="currentColor"><path d="M1.5 15.5 L3.8 5.5 L8.4 10.8 L12 2.5 L15.6 10.8 L20.2 5.5 L22.5 15.5 Z"/><rect x="1.8" y="16" width="20.4" height="3" rx="1"/></svg>Vagas limitadas</span>
-  </div>
+<!-- FAIXA -->
+<div class="strip">
+  <p>A imersão</p>
+  <ul>
+    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="1"/><path d="M3 9h18M8 3v4M16 3v4" stroke-linecap="round"/></svg>2 dias presenciais</li>
+    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-5.5 7-11a7 7 0 0 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>4 cidades nos EUA</li>
+    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5" stroke-linecap="round"/></svg>Plano de 90 dias</li>
+    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6.5 6.5-6.5s6.5 2.9 6.5 6.5M16 4.5a3.5 3.5 0 0 1 0 7M21.5 20c0-3-1.9-5.5-4.5-6.3" stroke-linecap="round"/></svg>Networking de alto nível</li>
+  </ul>
 </div>
 
 <!-- PRÓXIMOS EVENTOS -->
 <section class="section center events-sec" id="eventos">
   <div class="wrap">
-    <p class="spaced reveal">Agenda 2026</p>
-    <h2 class="h-big reveal" data-d="1">Próximos eventos</h2>
-    <p class="lead reveal" data-d="1">Sexta à noite e sábado o dia todo. Escolha a sua cidade e garanta o seu lugar.</p>
+    <h2 class="h2 reveal">Próximos eventos</h2>
+    <p class="lede reveal" data-d="1">Junte-se a empresários e profissionais em dois dias de profundidade, mentoria de alto nível e networking — para governar a sua vida e construir riqueza com inteligência.</p>
 
     <!-- data-end = último dia do evento (AAAA-MM-DD); o card some sozinho no dia seguinte -->
     <ul class="events">
       <li class="event reveal" data-end="2026-10-24">
-        <div class="event__img"><span class="event__badge event__badge--gold">Próxima edição</span><img decoding="async" src="assets/pv/evento-5.jpg" alt="" loading="lazy" /></div>
-        <div class="event__date"><span class="event__mon">Outubro</span><span class="event__days">23–24</span><span class="event__yr">Sex e Sáb · 2026</span></div>
-        <div class="event__info">
-          <h3 class="event__city">Miami <small>FL</small></h3>
-          <p class="event__line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-5.5 7-11a7 7 0 0 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>Lagoinha Miami Church · 295 NE 59th Terrace</p>
-          <p class="event__line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2" stroke-linecap="round"/></svg>Sex 6:30 PM–11 PM · Sáb 8:30 AM–8 PM</p>
+        <div class="event__img"><img decoding="async" src="assets/home/city-miami.jpg" alt="Skyline de Miami" loading="lazy" /></div>
+        <div class="event__body">
+          <span class="event__date">23–24 de outubro, 2026</span>
+          <h3 class="event__city">Miami</h3>
+          <span class="event__venue">Lagoinha Miami Church</span>
+          <span class="event__days">Sexta · Sábado</span>
+          <span class="event__time">6:30PM–11PM · 8:30AM–8PM</span>
+          <div class="event__cta"><a href="/miami" class="btn btn--sm" data-event="Miami">Ver evento</a></div>
         </div>
-        <div class="event__cta"><a href="/miami" class="pill" data-event="Miami">Ver evento</a></div>
       </li>
-
-      <li class="event reveal" data-end="2026-11-14">
-        <div class="event__img"><span class="event__badge">Pré-venda</span><img decoding="async" src="assets/pv-dallas.jpg" alt="" loading="lazy" /></div>
-        <div class="event__date"><span class="event__mon">Novembro</span><span class="event__days">13–14</span><span class="event__yr">Sex e Sáb · 2026</span></div>
-        <div class="event__info">
-          <h3 class="event__city">Dallas <small>TX</small></h3>
-          <p class="event__line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-5.5 7-11a7 7 0 0 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>Local a definir</p>
-          <p class="event__line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2" stroke-linecap="round"/></svg>Sex 6:30 PM–11 PM · Sáb 8:30 AM–8 PM</p>
+      <li class="event reveal" data-d="1" data-end="2026-11-14">
+        <div class="event__img"><span class="event__badge">Pré-venda</span><img decoding="async" src="assets/home/city-dallas.jpg" alt="Skyline de Dallas" loading="lazy" /></div>
+        <div class="event__body">
+          <span class="event__date">13–14 de novembro, 2026</span>
+          <h3 class="event__city">Dallas</h3>
+          <span class="event__venue">Local a definir</span>
+          <span class="event__days">Sexta · Sábado</span>
+          <span class="event__time">6:30PM–11PM · 8:30AM–8PM</span>
+          <div class="event__cta"><a href="/prevenda-dallas" class="btn btn--sm" data-event="Dallas">Ver evento</a></div>
         </div>
-        <div class="event__cta"><a href="/prevenda-dallas" class="pill" data-event="Dallas">Ver evento</a></div>
       </li>
-
       <li class="event reveal" data-end="2026-11-21">
-        <div class="event__img"><img decoding="async" src="assets/pv/evento-1.jpg" alt="" loading="lazy" /></div>
-        <div class="event__date"><span class="event__mon">Novembro</span><span class="event__days">20–21</span><span class="event__yr">Sex e Sáb · 2026</span></div>
-        <div class="event__info">
-          <h3 class="event__city">Orlando <small>FL</small></h3>
-          <p class="event__line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-5.5 7-11a7 7 0 0 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>Local a definir</p>
-          <p class="event__line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2" stroke-linecap="round"/></svg>Sex 6:30 PM–11 PM · Sáb 8:30 AM–8 PM</p>
+        <div class="event__img"><img decoding="async" src="assets/home/city-orlando.jpg" alt="Skyline de Orlando" loading="lazy" /></div>
+        <div class="event__body">
+          <span class="event__date">20–21 de novembro, 2026</span>
+          <h3 class="event__city">Orlando</h3>
+          <span class="event__venue">Local a definir</span>
+          <span class="event__days">Sexta · Sábado</span>
+          <span class="event__time">6:30PM–11PM · 8:30AM–8PM</span>
+          <div class="event__cta"><a href="/orlando" class="btn btn--sm" data-event="Orlando">Ver evento</a></div>
         </div>
-        <div class="event__cta"><a href="/orlando" class="pill" data-event="Orlando">Ver evento</a></div>
       </li>
-
-      <li class="event reveal" data-end="2026-12-05">
-        <div class="event__img"><img decoding="async" src="assets/pv/exp3.jpg" alt="" loading="lazy" /></div>
-        <div class="event__date"><span class="event__mon">Dezembro</span><span class="event__days">4–5</span><span class="event__yr">Sex e Sáb · 2026</span></div>
-        <div class="event__info">
-          <h3 class="event__city">Boston <small>MA</small></h3>
-          <p class="event__line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-5.5 7-11a7 7 0 0 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>Local a definir</p>
-          <p class="event__line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2" stroke-linecap="round"/></svg>Sex 6:30 PM–11 PM · Sáb 8:30 AM–7 PM</p>
+      <li class="event reveal" data-d="1" data-end="2026-12-05">
+        <div class="event__img"><img decoding="async" src="assets/home/city-boston.jpg" alt="Skyline de Boston" loading="lazy" /></div>
+        <div class="event__body">
+          <span class="event__date">4–5 de dezembro, 2026</span>
+          <h3 class="event__city">Boston</h3>
+          <span class="event__venue">Local a definir</span>
+          <span class="event__days">Sexta · Sábado</span>
+          <span class="event__time">6:30PM–11PM · 8:30AM–7PM</span>
+          <div class="event__cta"><a href="/boston" class="btn btn--sm" data-event="Boston">Ver evento</a></div>
         </div>
-        <div class="event__cta"><a href="/boston" class="pill" data-event="Boston">Ver evento</a></div>
       </li>
     </ul>
-    <p class="events__empty" id="eventsEmpty">Novas datas em breve. <a href="#comunidade" style="color:var(--gold-deep);font-weight:700;text-decoration:underline">Entre na lista</a> para ser avisado primeiro.</p>
+    <p class="events__empty" id="eventsEmpty">Novas datas em breve. <a href="#comunidade" style="color:var(--gold-deep);font-weight:700;text-decoration:underline">Entre para a comunidade</a> e seja avisado primeiro.</p>
   </div>
 </section>
 
-<!-- SOBRE -->
-<section class="section about" id="sobre">
+<!-- O MÉTODO -->
+<section class="section center method" id="metodo">
   <div class="wrap">
-    <div class="about__grid">
-      <div>
-        <h2 class="about__t reveal">Todo REI é rico. Mas nem todo rico é REI.</h2>
-        <p class="about__lead reveal" data-d="1">Dois dias presenciais em que empresários e profissionais se reúnem para aprender por que e como construir riqueza sem perder o que realmente importa.</p>
-        <p class="reveal" data-d="1">Junte-se a pessoas que decidiram viver acima da mediocridade — com família, saúde, caráter e fé alinhados.</p>
-        <p class="reveal" data-d="2" style="margin-top:1.4rem">Através de conteúdo profundo, mentoria de alto nível e networking estratégico, você sai:</p>
-        <ul class="feats reveal" data-d="2">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3Z" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Com <b>clareza</b> sobre o seu momento de vida e propósito</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 19V9m5 10V5m5 14v-8m5 8V7" stroke-linecap="round"/></svg><span>Com <b>inteligência financeira</b> para construir riqueza</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5" stroke-linecap="round"/></svg><span>Com um <b>Plano de 90 Dias</b> estruturado</span></li>
-          <li><svg viewBox="0 0 24 20" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><path d="M1.5 15.5 L3.8 5.5 L8.4 10.8 L12 2.5 L15.6 10.8 L20.2 5.5 L22.5 15.5 Z"/><path d="M1.8 18.5h20.4" stroke-linecap="round"/></svg><span><b>Alinhado</b> entre finanças, família e fé</span></li>
-        </ul>
-      </div>
-      <div class="mosaic reveal" data-d="2">
-        <figure class="a"><img decoding="async" src="assets/pv/exp2.jpg" alt="Mentoria em grupo" loading="lazy" /></figure>
-        <figure class="b"><img decoding="async" src="assets/pv/evento-2.jpg" alt="Santiago Vecina palestrando" loading="lazy" /></figure>
-        <figure class="c"><img decoding="async" src="assets/pv/exp3.jpg" alt="Participantes no lounge da imersão" loading="lazy" /></figure>
-        <figure class="d"><img decoding="async" src="assets/pv/evento-5.jpg" alt="Plateia da imersão" loading="lazy" /></figure>
-      </div>
+    <p class="kicker reveal">O Método</p>
+    <p class="method__sub reveal" data-d="1">Um processo de 3 pilares que se reforçam mutuamente</p>
+    <div class="mcards">
+      <article class="mcard reveal" data-d="1">
+        <img decoding="async" src="assets/pv/palco-azul.jpg" alt="" loading="lazy" style="object-position:center 25%" />
+        <h3>Reinar</h3>
+        <span class="sub">O governo interior</span>
+        <p>Assuma o controle da sua mente, das suas emoções, das suas decisões e dos seus hábitos. Sem governo interior, nenhuma conquista externa se sustenta.</p>
+      </article>
+      <article class="mcard reveal" data-d="2">
+        <img decoding="async" src="assets/pv/exp2.jpg" alt="" loading="lazy" />
+        <h3>Enriquecer</h3>
+        <span class="sub">A inteligência financeira</span>
+        <p>Construir riqueza com estratégia, gerar ativos, tomar decisões financeiras mais inteligentes e acessar o networking correto.</p>
+      </article>
+      <article class="mcard reveal" data-d="3">
+        <img decoding="async" src="assets/pv/exp3.jpg" alt="" loading="lazy" />
+        <h3>Identidade</h3>
+        <span class="sub">A sustentação</span>
+        <p>Alinhamento espiritual, posicionamento inabalável e liderança de vida. A identidade é o que sustenta o que você constrói.</p>
+      </article>
     </div>
-    <div class="video reveal">
-      <video controls playsinline preload="none" poster="assets/pv-palco.jpg">
-        <source src="assets/hero-video.webm" type="video/webm">
-        <source src="assets/hero-video.mp4" type="video/mp4">
-      </video>
-    </div>
-    <div class="center cta reveal"><a href="#eventos" class="pill">Escolher minha cidade</a></div>
+    <p class="method__foot reveal">O Método REI não é uma palestra nem um evento de gritaria. É um processo profundo para instalar um sistema de governo sobre a própria vida.</p>
   </div>
 </section>
 
-<!-- MISSÃO + PILARES R.E.I. -->
-<section class="section center pillars-sec" id="metodo">
+<!-- AS 4 ÁREAS -->
+<section class="section center areas-sec">
   <div class="wrap">
-    <div class="head reveal">
-      <p class="spaced">Nossa missão</p>
-      <h2 class="h-big">Formar pessoas que governam a própria vida e constroem riqueza com inteligência</h2>
-    </div>
-    <div class="pcards">
-      <article class="pcard reveal" data-d="1">
-        <div class="pcard__img"><img decoding="async" src="assets/pv/hero2-pb.jpg" alt="" loading="lazy" /></div>
-        <div class="pcard__body">
-          <h3>Reinar</h3>
-          <span class="sub">O governo interior</span>
-          <blockquote>Melhor é o que controla o seu ânimo do que aquele que toma uma cidade. — Provérbios 16:32</blockquote>
-        </div>
+    <h2 class="h2 reveal">Alinhe as 4 áreas da sua vida</h2>
+    <div class="areas">
+      <article class="area reveal" data-d="1">
+        <div class="area__ph"><img decoding="async" src="assets/pv/hero2.jpg" alt="" loading="lazy" /><b>Finanças</b></div>
+        <h3>Riqueza com inteligência</h3>
+        <p>Lembra-te do Senhor teu Deus, que é o que te dá força para adquirires riqueza.</p>
+        <cite>Deuteronômio 8:18</cite>
       </article>
-      <article class="pcard reveal" data-d="2">
-        <div class="pcard__img"><img decoding="async" src="assets/pv/exp4-pb.jpg" alt="" loading="lazy" /></div>
-        <div class="pcard__body">
-          <h3>Enriquecer</h3>
-          <span class="sub">A inteligência financeira</span>
-          <blockquote>Lembra-te do Senhor teu Deus, que é o que te dá força para adquirires riqueza. — Deuteronômio 8:18</blockquote>
-        </div>
+      <article class="area reveal" data-d="2">
+        <div class="area__ph"><img decoding="async" src="assets/pv/evento-4.jpg" alt="" loading="lazy" /><b>Família</b></div>
+        <h3>O primeiro reino</h3>
+        <p>Eu e a minha casa serviremos ao Senhor.</p>
+        <cite>Josué 24:15</cite>
       </article>
-      <article class="pcard pcard--wide reveal" data-d="3">
-        <div class="pcard__img"><img decoding="async" src="assets/pv/evento-4-pb.jpg" alt="" loading="lazy" /></div>
-        <div class="pcard__body">
-          <h3>Identidade</h3>
-          <span class="sub">A sustentação</span>
-          <blockquote>Vós sois a geração eleita, o sacerdócio real, a nação santa. — 1 Pedro 2:9</blockquote>
-        </div>
+      <article class="area reveal" data-d="3">
+        <div class="area__ph"><img decoding="async" src="assets/pv/evento-2.jpg" alt="" loading="lazy" style="object-position:center 22%" /><b>Saúde</b></div>
+        <h3>O corpo que sustenta</h3>
+        <p>Amado, desejo que te vá bem em todas as coisas, e que tenhas saúde, assim como bem vai a tua alma.</p>
+        <cite>3 João 1:2</cite>
+      </article>
+      <article class="area reveal" data-d="3">
+        <div class="area__ph"><img decoding="async" src="assets/pv/evento-5.jpg" alt="" loading="lazy" /><b>Fé</b></div>
+        <h3>O que governa tudo</h3>
+        <p>Buscai primeiro o Reino de Deus, e a sua justiça, e todas estas coisas vos serão acrescentadas.</p>
+        <cite>Mateus 6:33</cite>
       </article>
     </div>
   </div>
 </section>
 
-<!-- MENTORES -->
-<section class="section center mentors-sec" id="mentores">
-  <div class="wrap">
-    <h2 class="h-big reveal">Ouça quem vive o que ensina</h2>
-    <p class="sub reveal" data-d="1">Os mentores do Método REI</p>
-    <div class="mentors">
-      <article class="mentor reveal" data-d="1">
-        <div class="mentor__ph"><img decoding="async" src="assets/pv/hewerton.jpg" alt="Hewerton Scheidegger" loading="lazy" /></div>
-        <div class="mentor__b">
-          <span class="mentor__role">Criador &amp; Mentor</span>
-          <h3>Hewerton <span class="g">Scheidegger</span></h3>
-          <p>Empresário, mentor de negócios, advogado tributarista, contador e atleta de endurance (Ultraman e Ironman). Autor de "1000 Códigos de Sabedoria" e "Método 7D de Vendas". Já mentorou milhares de pessoas provando que a verdadeira prosperidade é ganhar sem perder.</p>
-        </div>
-      </article>
-      <article class="mentor reveal" data-d="2">
-        <div class="mentor__ph"><img decoding="async" src="assets/pv/santiago.jpg" alt="Santiago Vecina" loading="lazy" /></div>
-        <div class="mentor__b">
-          <span class="mentor__role">Co-criador &amp; Mentor</span>
-          <h3>Santiago <span class="g">Vecina</span></h3>
-          <p>Médico, nutrólogo, empresário e mentor de alta performance. Baseado em Miami, lidera a Plataforma Global, conectando empresários brasileiros ao ecossistema de alto nível nos EUA. Sua missão: ajudar líderes a pararem de viver abaixo do potencial que Deus criou para eles.</p>
-        </div>
-      </article>
+<!-- MENTORES (tela dividida) -->
+<section class="split" id="mentores" aria-label="Mentores">
+  <article class="half half--a">
+    <img class="half__bg" src="assets/hewerton.PNG" alt="Hewerton Scheidegger" loading="lazy" />
+    <div class="reveal"><span class="half__role">Criador &amp; Mentor</span><h2>Hewerton Scheidegger</h2></div>
+    <div class="reveal" data-d="1">
+      <p>Empresário, mentor de negócios, advogado tributarista, contador e atleta de endurance (Ultraman e Ironman). Autor de "1000 Códigos de Sabedoria" e "Método 7D de Vendas".</p>
+      <a href="#eventos" class="btn">Ver eventos</a>
     </div>
-    <a href="#eventos" class="pill reveal">Ver eventos</a>
-  </div>
+  </article>
+  <article class="half half--b">
+    <img class="half__bg" src="assets/santiago.jpg" alt="Santiago Vecina" loading="lazy" />
+    <div class="reveal"><span class="half__role">Co-criador &amp; Mentor</span><h2>Santiago Vecina</h2></div>
+    <div class="reveal" data-d="1">
+      <p>Médico, nutrólogo, empresário e mentor de alta performance baseado em Miami. Conecta líderes ao ecossistema de alto nível nos EUA.</p>
+      <a href="#eventos" class="btn">Ver eventos</a>
+    </div>
+  </article>
 </section>
 
 <!-- A EXPERIÊNCIA -->
 <section class="section center exp" id="experiencia">
   <div class="wrap">
-    <h2 class="h-big reveal">A experiência</h2>
-    <p class="exp__sub reveal" data-d="1">O Método REI não é só mais um evento — são dois dias de profundidade, fé e decisão que mudam a forma como você governa a sua vida.</p>
+    <h2 class="h2 reveal">A experiência</h2>
+    <p class="lede reveal" data-d="1">O Método REI não é só mais um evento — são dois dias de profundidade, fé e decisão que mudam a forma como você governa a sua vida.</p>
     <div class="row4 reveal" data-d="1">
       <figure><img decoding="async" src="assets/pv/evento-1.jpg" alt="Mentores no palco" loading="lazy" /></figure>
       <figure><img decoding="async" src="assets/pv-palco.jpg" alt="Participantes no palco" loading="lazy" /></figure>
@@ -593,11 +488,11 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
       <figure><img decoding="async" src="assets/pv/palco-azul.jpg" alt="Hewerton Scheidegger no palco" loading="lazy" style="object-position:center 30%" /></figure>
     </div>
     <div class="row3 reveal" data-d="2">
-      <div class="claim"><img decoding="async" src="assets/pv/evento-5.jpg" alt="" loading="lazy" /><div><b>Isto é um movimento</b><span>Não um evento</span></div></div>
-      <div class="claim"><img decoding="async" src="assets/pv/evento-3.jpg" alt="" loading="lazy" /><div><b>Isto é transformação</b><span>Não motivação</span></div></div>
-      <div class="claim"><img decoding="async" src="assets/pv/exp4.jpg" alt="" loading="lazy" /><div><b>Isto é comunidade</b><span>Não uma plateia</span></div></div>
+      <div class="claim"><img decoding="async" src="assets/pv/evento-5.jpg" alt="" loading="lazy" /><div><b>Isto é um<br>movimento</b><span>Não um evento</span></div></div>
+      <div class="claim"><img decoding="async" src="assets/pv/evento-3.jpg" alt="" loading="lazy" /><div><b>Isto é<br>transformação</b><span>Não motivação</span></div></div>
+      <div class="claim"><img decoding="async" src="assets/pv/exp4.jpg" alt="" loading="lazy" /><div><b>Isto é<br>comunidade</b><span>Não uma plateia</span></div></div>
     </div>
-    <div class="row4 reveal" data-d="2" style="margin-top:clamp(.5rem,1.1vw,.8rem)">
+    <div class="row4 reveal" data-d="2" style="margin-top:clamp(.45rem,1vw,.7rem)">
       <figure><img decoding="async" src="assets/pv/exp2.jpg" alt="Mentoria em grupo" loading="lazy" /></figure>
       <figure><img decoding="async" src="assets/pv/evento-2.jpg" alt="Santiago Vecina palestrando" loading="lazy" style="object-position:center 25%" /></figure>
       <figure><img decoding="async" src="assets/pv/exp3.jpg" alt="Lounge da imersão" loading="lazy" /></figure>
@@ -606,101 +501,54 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
     <div class="exp__close reveal">
       <p class="a">Não perca o seu momento</p>
       <p class="b">Faça parte da experiência.</p>
-      <a href="#eventos" class="pill">Escolher minha cidade</a>
+      <a href="#eventos" class="btn">Ver eventos</a>
     </div>
   </div>
 </section>
 
-<!-- COMUNIDADE (captura de leads) -->
-<section class="section join-sec" id="comunidade">
+<!-- COMUNIDADE -->
+<section class="section center join-sec" id="comunidade">
   <div class="wrap">
-    <div class="join">
-      <div class="reveal">
-        <p class="spaced" style="padding-left:0">Comunidade REI</p>
-        <h2 class="join__t" style="margin-top:.6rem">Seja o primeiro a saber da <span class="g">próxima edição</span></h2>
-        <p class="join__lead">Deixe seus dados e receba em primeira mão as novas datas, cidades e condições especiais de pré-venda do Método REI.</p>
-        <ul class="join__list">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Aviso antecipado de novas cidades</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Acesso aos preços de pré-venda</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Conteúdos dos mentores</li>
-        </ul>
-      </div>
-
-      <div class="join__card reveal" data-d="2" id="joinCard">
-        <form id="leadForm" novalidate>
-          <h3>Entrar na lista</h3>
-          <p class="hint">Leva menos de 1 minuto.</p>
-          <div class="lead-grid">
-            <div class="lead-field full">
-              <label for="leadNome">Nome</label>
-              <input class="lead-input" id="leadNome" name="nome" type="text" placeholder="Seu nome completo" autocomplete="name" required>
-            </div>
-            <div class="lead-field full">
-              <label for="leadEmail">E-mail</label>
-              <input class="lead-input" id="leadEmail" name="email" type="email" placeholder="voce@email.com" autocomplete="email" required>
-            </div>
-            <div class="lead-field full">
-              <label for="leadTel">Telefone / WhatsApp</label>
-              <div class="lead-phone">
-                <select class="lead-select" id="leadDdi" name="ddi" aria-label="País (código)">
-                  <option value="+1" selected>🇺🇸 Estados Unidos +1</option>
-                  <option value="+55">🇧🇷 Brasil +55</option>
-                  <option value="+351">🇵🇹 Portugal +351</option>
-                  <option value="+1">🇨🇦 Canadá +1</option>
-                  <option value="+54">🇦🇷 Argentina +54</option>
-                  <option value="+598">🇺🇾 Uruguai +598</option>
-                  <option value="+595">🇵🇾 Paraguai +595</option>
-                  <option value="+56">🇨🇱 Chile +56</option>
-                  <option value="+591">🇧🇴 Bolívia +591</option>
-                  <option value="+51">🇵🇪 Peru +51</option>
-                  <option value="+57">🇨🇴 Colômbia +57</option>
-                  <option value="+58">🇻🇪 Venezuela +58</option>
-                  <option value="+593">🇪🇨 Equador +593</option>
-                  <option value="+52">🇲🇽 México +52</option>
-                  <option value="+34">🇪🇸 Espanha +34</option>
-                  <option value="+44">🇬🇧 Reino Unido +44</option>
-                  <option value="+33">🇫🇷 França +33</option>
-                  <option value="+49">🇩🇪 Alemanha +49</option>
-                  <option value="+39">🇮🇹 Itália +39</option>
-                  <option value="+41">🇨🇭 Suíça +41</option>
-                  <option value="+353">🇮🇪 Irlanda +353</option>
-                  <option value="+61">🇦🇺 Austrália +61</option>
-                  <option value="+81">🇯🇵 Japão +81</option>
-                  <option value="+244">🇦🇴 Angola +244</option>
-                  <option value="+258">🇲🇿 Moçambique +258</option>
-                </select>
-                <input class="lead-input" id="leadTel" name="telefone" type="tel" inputmode="tel" placeholder="(000) 000-0000" autocomplete="tel" required>
-              </div>
-            </div>
-            <div class="lead-field">
-              <label for="leadRegiao">Cidade / Estado</label>
-              <input class="lead-input" id="leadRegiao" name="regiao" type="text" placeholder="Ex.: Orlando - FL" autocomplete="address-level2" required>
-            </div>
-            <div class="lead-field">
-              <label for="leadProf">Profissão</label>
-              <input class="lead-input" id="leadProf" name="profissao" type="text" placeholder="Sua profissão" autocomplete="organization-title" required>
-            </div>
-            <div class="lead-field full">
-              <label for="leadEdicao">Edição de interesse <small>(opcional)</small></label>
-              <select class="lead-select" id="leadEdicao" name="edicao">
-                <option value="">Ainda não sei</option>
-                <option value="Miami">Miami · 23–24 out</option>
-                <option value="Dallas">Dallas · 13–14 nov</option>
-                <option value="Orlando">Orlando · 20–21 nov</option>
-                <option value="Boston">Boston · 4–5 dez</option>
-                <option value="Outra cidade">Quero em outra cidade</option>
-              </select>
-            </div>
-          </div>
-          <p class="lead-error" id="leadError" role="alert">Por favor, preencha todos os campos corretamente.</p>
-          <button class="pill" type="submit" id="leadSubmit">Quero ser avisado</button>
-        </form>
-        <div class="join__ok" role="status" aria-live="polite">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <h3>Você está na lista!</h3>
-          <p>Em breve você recebe as novidades do Método REI.</p>
+    <h2 class="h2 reveal">Entre para a comunidade REI</h2>
+    <p class="lede reveal" data-d="1">Seja o primeiro a saber das novas datas, cidades e condições de pré-venda.</p>
+    <div class="join reveal" data-d="2" id="join">
+      <form id="leadForm" novalidate>
+        <div class="field"><input class="inp" id="leadNome" type="text" placeholder="Nome*" autocomplete="name" aria-label="Nome" required></div>
+        <div class="field"><input class="inp" id="leadEmail" type="email" placeholder="E-mail*" autocomplete="email" aria-label="E-mail" required></div>
+        <div class="field phone">
+          <select class="sel" id="leadDdi" aria-label="País (código)">
+            <option value="+1" selected>🇺🇸 +1</option>
+            <option value="+55">🇧🇷 +55</option>
+            <option value="+351">🇵🇹 +351</option>
+            <option value="+1">🇨🇦 +1</option>
+            <option value="+54">🇦🇷 +54</option>
+            <option value="+56">🇨🇱 +56</option>
+            <option value="+57">🇨🇴 +57</option>
+            <option value="+52">🇲🇽 +52</option>
+            <option value="+34">🇪🇸 +34</option>
+            <option value="+44">🇬🇧 +44</option>
+            <option value="+244">🇦🇴 +244</option>
+          </select>
+          <input class="inp" id="leadTel" type="tel" inputmode="tel" placeholder="Telefone / WhatsApp*" autocomplete="tel" aria-label="Telefone" required>
         </div>
-      </div>
+        <div class="row">
+          <div class="field"><input class="inp" id="leadRegiao" type="text" placeholder="Cidade / Estado*" autocomplete="address-level2" aria-label="Cidade e estado" required></div>
+          <div class="field"><input class="inp" id="leadProf" type="text" placeholder="Profissão (opcional)" autocomplete="organization-title" aria-label="Profissão"></div>
+        </div>
+        <div class="field">
+          <select class="sel" id="leadEdicao" aria-label="Edição de interesse">
+            <option value="">Edição de interesse (opcional)</option>
+            <option value="Miami">Miami · 23–24 out</option>
+            <option value="Dallas">Dallas · 13–14 nov</option>
+            <option value="Orlando">Orlando · 20–21 nov</option>
+            <option value="Boston">Boston · 4–5 dez</option>
+            <option value="Outra cidade">Quero em outra cidade</option>
+          </select>
+        </div>
+        <p class="join__err" id="leadError" role="alert">Por favor, preencha os campos obrigatórios.</p>
+        <div class="join__actions"><button class="btn btn--sm" type="submit" id="leadSubmit" style="font-size:.95rem">Quero participar</button></div>
+      </form>
+      <div class="join__ok" role="status" aria-live="polite"><b>Você está na comunidade!</b><span>Em breve você recebe as novidades do Método REI.</span></div>
     </div>
   </div>
 </section>
@@ -708,22 +556,23 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
 </main>
 
 <footer class="footer">
-  <div class="wrap">
-    <a href="#top" class="brand" aria-label="Método REI"><img decoding="async" class="brand__logo" src="assets/logo-metodo-rei.png" alt="Método REI" /></a>
-    <nav class="footer__cities" aria-label="Edições">
-      <a href="/miami">Miami</a>
-      <a href="/prevenda-dallas">Dallas</a>
-      <a href="/orlando">Orlando</a>
-      <a href="/boston">Boston</a>
-    </nav>
-    <nav>
-      <!-- [TROCAR: links de políticas] -->
-      <a href="#">Privacidade</a>
-      <a href="#">Termos do Evento</a>
-      <a href="https://wa.me/13053705595?text=Ol%C3%A1%21%20Tenho%20interesse%20em%20participar%20do%20evento%20M%C3%A9todo%20REI%20e%20gostaria%20de%20receber%20mais%20informa%C3%A7%C3%B5es.%20Pode%20me%20ajudar%3F" target="_blank" rel="noopener">Contato</a>
-    </nav>
-    <small>© 2026 Método REI</small>
+  <img class="footer__logo" src="assets/logo-metodo-rei.png" alt="Método REI" loading="lazy" />
+  <nav aria-label="Rodapé">
+    <a href="#eventos">Próximos eventos</a>
+    <a href="/miami">Miami</a>
+    <a href="/prevenda-dallas">Dallas</a>
+    <a href="/orlando">Orlando</a>
+    <a href="/boston">Boston</a>
+    <a href="#metodo">O Método</a>
+    <!-- [TROCAR: links de políticas] -->
+    <a href="#">Privacidade</a>
+    <a href="#">Termos</a>
+    <a href="https://wa.me/13053705595?text=Ol%C3%A1%21%20Tenho%20interesse%20em%20participar%20do%20evento%20M%C3%A9todo%20REI%20e%20gostaria%20de%20receber%20mais%20informa%C3%A7%C3%B5es.%20Pode%20me%20ajudar%3F" target="_blank" rel="noopener">Contato</a>
+  </nav>
+  <div class="footer__social">
+    <a href="https://wa.me/13053705595" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.700-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.1 5.1 0 0 0 1.1 2.7 11.7 11.7 0 0 0 4.5 4c1.700.7 2.3.8 3.2.6.5-.1 1.500-.6 1.700-1.2s.2-1.100.1-1.200l-.4-.3Z"/></svg></a>
   </div>
+  <small>© 2026 Método REI. Todos os direitos reservados.</small>
 </footer>
 
 <script>
@@ -741,8 +590,8 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
 
   /* ---- Esconde eventos que já passaram ---- */
   var today=new Date();today.setHours(0,0,0,0);
-  var events=document.querySelectorAll(".event[data-end]"),visible=0;
-  events.forEach(function(ev){
+  var visible=0;
+  document.querySelectorAll(".event[data-end]").forEach(function(ev){
     var p=ev.getAttribute("data-end").split("-"),end=new Date(+p[0],+p[1]-1,+p[2]);
     if(end<today){ev.remove();}else{visible++;}
   });
@@ -753,7 +602,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
   var params=new URLSearchParams(window.location.search),utms={};
   UTM_KEYS.forEach(function(k){var v=params.get(k);if(v)utms[k]=v;});
   if(Object.keys(utms).length){
-    document.querySelectorAll("a[data-event], .footer__cities a").forEach(function(a){
+    document.querySelectorAll("a[href^='/']").forEach(function(a){
       var url=new URL(a.getAttribute("href"),window.location.origin);
       Object.keys(utms).forEach(function(k){url.searchParams.set(k,utms[k]);});
       a.setAttribute("href",url.pathname+url.search);
@@ -781,15 +630,15 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
   /* ---- Captura de leads (base geral) ---- */
   var LEAD_ENDPOINT="https://contact-blossom-39.lovable.app/api/public/contatos/ck_11fff2c5_11fff2c5f5084104ca4c6d6407a1a620f0d025e250e4b95c3e6438d41ee107ab";
   var LEAD_TAGS=["Método REI - Lista Geral","site"];
-  var card=document.getElementById("joinCard"),form=document.getElementById("leadForm"),
+  var join=document.getElementById("join"),form=document.getElementById("leadForm"),
       err=document.getElementById("leadError"),btn=document.getElementById("leadSubmit");
   form.addEventListener("submit",function(e){
     e.preventDefault();
     var f=function(id){return document.getElementById(id);};
     var nome=f("leadNome").value.trim(),email=f("leadEmail"),tel=f("leadTel").value.trim(),
         regiao=f("leadRegiao").value.trim(),prof=f("leadProf").value.trim(),edicao=f("leadEdicao").value;
-    if(!nome||!email.value.trim()||!email.checkValidity()||!tel||!regiao||!prof){
-      err.textContent="Por favor, preencha todos os campos corretamente.";err.style.display="block";return;
+    if(!nome||!email.value.trim()||!email.checkValidity()||!tel||!regiao){
+      err.textContent="Por favor, preencha os campos obrigatórios.";err.style.display="block";return;
     }
     err.style.display="none";
     var tags=LEAD_TAGS.slice();
@@ -799,11 +648,11 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
       email:email.value.trim(),
       telefone:(f("leadDdi").value+" "+tel).trim(),
       regiao:regiao,
-      profissao:prof,
       tags:tags,
-      comentario:edicao?"Edição de interesse: "+edicao:"Edição de interesse: ainda não sabe",
+      comentario:edicao?"Edição de interesse: "+edicao:"Edição de interesse: não informada",
       link_origem:window.location.href
     };
+    if(prof)payload.profissao=prof;
     UTM_KEYS.forEach(function(k){if(utms[k])payload[k]=utms[k];});
 
     btn.disabled=true;btn.textContent="Enviando…";
@@ -817,10 +666,10 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
             fbq("trackCustom","Inscricao",fbData);
           }
         }catch(_){}
-        card.classList.add("is-done");
+        join.classList.add("is-done");
       })
       .catch(function(){
-        btn.disabled=false;btn.textContent="Quero ser avisado";
+        btn.disabled=false;btn.textContent="Quero participar";
         err.textContent="Não foi possível enviar agora. Tente novamente em instantes.";err.style.display="block";
       });
   });
