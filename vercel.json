@@ -3,6 +3,11 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/prevenda-dallas",
+      "destination": "/dallas",
+      "permanent": false
+    },
+    {
       "source": "/cart-vip-boston",
       "destination": "https://pag.metodorei.com/cart-vip-boston",
       "permanent": false
