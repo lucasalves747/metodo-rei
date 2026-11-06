@@ -103,7 +103,10 @@ export default async function handler(req, res) {
     qr: `MREI:${ord.id}:${i + 1}:${assinaturaIngresso(ord.id, i + 1)}`,
   }));
 
-  // 4) Salee.ai / GHL (não bloqueia a confirmação se falhar)
+  // 4) webhooks do evento (liberação de e-books, campanhas etc.), por tipo de ingresso
+  await dispararWebhooks(ev, q, t, ord.id, nome, email, telefone, ingressos);
+
+  // 5) Salee.ai / GHL geral (não bloqueia a confirmação se falhar)
   if (process.env.GHL_WEBHOOK_URL) {
     const payload = {
       tipo: "metodo_rei.pedido_pago",
@@ -130,4 +133,38 @@ export default async function handler(req, res) {
   }
 
   json(res, 200, { ok: true, pedido: ord.id, k, link, recibo: pagamento ? pagamento.receipt_url || null : null });
+}
+
+function preencher(v, d) {
+  if (typeof v === "string") return v.replace(/\{(\w+)\}/g, (m, k) => (k in d ? d[k] : m));
+  if (Array.isArray(v)) return v.map((x) => preencher(x, d));
+  if (v && typeof v === "object") return Object.fromEntries(Object.entries(v).map(([k, x]) => [k, preencher(x, d)]));
+  return v;
+}
+async function dispararWebhooks(ev, q, t, orderId, nome, email, telefone, ingressos) {
+  const hooks = (ev.webhooks || []).filter((h) => !h.tiers || h.tiers.includes(q.tier));
+  if (!hooks.length) return;
+  // No modo de teste nunca chama os endpoints reais (liberariam e-books para compras de teste):
+  // manda para WEBHOOK_TESTE, se existir, ou não manda.
+  const teste = config().env !== "production";
+  if (teste && !process.env.WEBHOOK_TESTE) return;
+  // uma pessoa por e-mail: o comprador e cada convidado que recebeu e-mail próprio
+  const pessoas = [{ nome, email, telefone, codigo: ingressos[0].codigo }];
+  for (const i of ingressos.slice(1)) if (i.convidado && i.email && !pessoas.some((p) => p.email === i.email)) pessoas.push({ nome: i.titular, email: i.email, telefone: "", codigo: i.codigo });
+  const envios = [];
+  for (const h of hooks) for (const p of h.para === "comprador" ? pessoas.slice(0, 1) : pessoas) {
+    const partes = p.nome.trim().split(/\s+/);
+    const dados = { id: `${orderId}-${p.codigo.slice(-2)}`, nome: p.nome, primeiro_nome: partes[0], sobrenome: partes.slice(1).join(" "), email: p.email, telefone: p.telefone,
+      cidade: ev.cidade, tipo: q.tier, tipo_nome: t.nome, pedido: orderId, codigo: p.codigo };
+    envios.push((async () => {
+      try {
+        const ctl = new AbortController(); const tm = setTimeout(() => ctl.abort(), 5000);
+        const destino = teste ? process.env.WEBHOOK_TESTE : h.url;
+        const r = await fetch(destino, { method: "POST", headers: { "Content-Type": "application/json", ...(teste ? { "X-Webhook-Original": h.nome } : {}) }, body: JSON.stringify(preencher(h.corpo, dados)), signal: ctl.signal });
+        clearTimeout(tm);
+        if (!r.ok) console.error("webhook", h.nome, r.status);
+      } catch (e) { console.error("webhook", h.nome, e.message); }
+    })());
+  }
+  await Promise.all(envios);
 }

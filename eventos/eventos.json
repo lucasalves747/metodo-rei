@@ -1,5 +1,5 @@
 {
-  "_leia_me": "Edite este arquivo e rode: node eventos/build.mjs  — gera /<slug> de cada evento e atualiza a lista da home. Datas em AAAA-MM-DD. Eventos passados somem da home sozinhos, mas a página continua no ar. Idiomas: o site sai em PT, EN e ES. Todo texto de preletor (funcao, bio, bio_completa, destaque) e de evento (selo, destaque, estado) precisa ter versão em \"en\" e \"es\" — o build para com erro se faltar. Checkout: \"cupons\" (codigo, tipo \"percentual\"|\"fixo\", valor, eventos?, tiers?, valido_ate?, por_ingresso?, somente_teste?) e \"entregas\" (materiais por tipo de ingresso, mostrados na confirmação).",
+  "_leia_me": "Edite este arquivo e rode: node eventos/build.mjs  — gera /<slug> de cada evento e atualiza a lista da home. Datas em AAAA-MM-DD. Eventos passados somem da home sozinhos, mas a página continua no ar. Idiomas: o site sai em PT, EN e ES. Todo texto de preletor (funcao, bio, bio_completa, destaque) e de evento (selo, destaque, estado) precisa ter versão em \"en\" e \"es\" — o build para com erro se faltar. Checkout: \"cupons\" (codigo, tipo \"percentual\"|\"fixo\", valor, eventos?, tiers?, valido_ate?, por_ingresso?, somente_teste?) e \"entregas\" (materiais por tipo de ingresso, mostrados na confirmação). \"webhooks\" (por evento): lista de {nome, url, tiers?, para? (\"todos\"|\"comprador\"), corpo} disparados depois do pagamento, um por participante com e-mail. No corpo, use {id} {nome} {primeiro_nome} {sobrenome} {email} {telefone} {cidade} {tipo} {tipo_nome} {pedido} {codigo}.",
   "site": {
     "url": "https://www.metodorei.com",
     "nome": "Método REI",
@@ -354,7 +354,34 @@
           "nota_ingresso": "Almuerzo con churrasco<br>incluido"
         },
         "estado": "Florida"
-      }
+      },
+      "webhooks": [
+        {
+          "nome": "Campanha Orlando (todos os ingressos)",
+          "url": "https://zaobtetbjpuzibjymhzw.supabase.co/functions/v1/campaign-webhook/ba048aaf-5aa2-4c29-a71f-d73d5fd8516a",
+          "corpo": {
+            "id": "{id}",
+            "name": "{nome}",
+            "email": "{email}",
+            "phone": "{telefone}",
+            "tag": "orlando"
+          }
+        },
+        {
+          "nome": "Orlando - Liberar ebook ingresso Standard",
+          "tiers": [
+            "standard"
+          ],
+          "url": "https://zaobtetbjpuzibjymhzw.supabase.co/functions/v1/campaign-webhook/0f44308d-d0bf-4c0a-8df5-869c6b8d27e5",
+          "corpo": {
+            "nome": "{primeiro_nome}",
+            "email": "{email}",
+            "phone": "{telefone}",
+            "cidade": "Orlando",
+            "ingresso": "Standard"
+          }
+        }
+      ]
     },
     {
       "slug": "boston",

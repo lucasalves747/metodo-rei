@@ -310,6 +310,7 @@ function catalogo() {
       datas_texto: d.texto, tz: ev.fuso || FUSOS[ev.uf] || "America/New_York",
       local: { nome: /a definir/i.test((ev.local || {}).nome || "") ? "" : (ev.local || {}).nome || "", endereco: (ev.local || {}).endereco || "", endereco_exibicao: (ev.local || {}).endereco_exibicao || "", maps_query: (ev.local || {}).maps_query || "" },
       tiers: Object.fromEntries(Object.entries(TIERS).map(([k, nome]) => [k, { nome, preco: pr[k].por }])),
+      webhooks: (ev.webhooks || []).map(({ nome, url, tiers, para, corpo }) => ({ nome, url, tiers: tiers || null, para: para || "todos", corpo })),
     };
   }
   const cupons = (data.cupons || []).map(({ _nota, ...c }) => c);
