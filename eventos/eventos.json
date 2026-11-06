@@ -1,5 +1,12 @@
 {
   "_leia_me": "Edite este arquivo e rode: node eventos/build.mjs  — gera /<slug> de cada evento e atualiza a lista da home. Datas em AAAA-MM-DD. Eventos passados somem da home sozinhos, mas a página continua no ar.",
+  "site": {
+    "url": "https://www.metodorei.com",
+    "nome": "Método REI",
+    "descricao": "Imersão presencial para empresários e profissionais que decidiram enriquecer com inteligência e governar a própria vida — sem sacrificar família, saúde e direção.",
+    "whatsapp": "+1 305-370-5595",
+    "redes": []
+  },
   "preletores_padrao": [
     "hewerton-scheidegger",
     "santiago-vecina"
@@ -172,8 +179,8 @@
         "santiago-vecina",
         "alexandre-morelli",
         "eduardo-itaborahy",
-        "dany-rocha",
         "patricia-belieny",
+        "dany-rocha",
         "jake-belieny"
       ],
       "prevenda": false,

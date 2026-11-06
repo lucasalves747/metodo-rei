@@ -22,3 +22,14 @@ Todas as datas/locais vivem em `eventos.json`. Nunca edite `miami.html`, `dallas
 ## Preletores
 Cada um em `preletores`: `nome`, `titulo_html` (sobrenome em dourado com `<span class="g">`), `funcao`, `foto` (caminho em assets/), `bio`.
 3+ preletores usam a grade compacta de 3 colunas; 1–2 usam a de 2.
+
+## SEO, redes sociais e IA (gerado automaticamente pelo build)
+- Cada página recebe: título, descrição, canonical (www.metodorei.com), Open Graph/Twitter, favicon e dados estruturados (schema.org `Event` com data/hora no fuso certo, local, preços e mentores).
+- A home recebe `Organization`, `WebSite` e a lista de próximos eventos.
+- O build também gera `sitemap.xml`, `robots.txt` e `llms.txt` (resumo para assistentes de IA).
+- Descrição personalizada para um evento: campo `seo_descricao`.
+- Dados da marca (URL, descrição, WhatsApp, redes sociais): bloco `site` em `eventos.json`. Preencha `redes` com os links do Instagram/YouTube etc.
+
+## Imagens de compartilhamento (1200×630)
+Depois do build: `python3 eventos/og.py` (ou `python3 eventos/og.py orlando home`). Gera `assets/og/<slug>.jpg` e `assets/og/home.jpg`.
+Precisa de Playwright + Chrome — o Claude roda isso no ambiente dele.

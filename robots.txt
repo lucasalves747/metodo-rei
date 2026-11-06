@@ -1,0 +1,5 @@
+# Método REI — todos os buscadores e assistentes de IA são bem-vindos
+User-agent: *
+Allow: /
+
+Sitemap: https://www.metodorei.com/sitemap.xml

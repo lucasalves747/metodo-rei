@@ -1,0 +1,74 @@
+{
+  "home": {
+    "cidades": [
+      "Dallas",
+      "Orlando",
+      "Boston"
+    ],
+    "anos": [
+      2026
+    ]
+  },
+  "eventos": [
+    {
+      "slug": "miami",
+      "cidade": "Miami",
+      "uf": "FL",
+      "dias": "Sexta e Sábado",
+      "data": "23 e 24 de Outubro, 2026",
+      "onde": "295 NE 59th Terrace, Miami, FL",
+      "min": 14,
+      "fotos": [
+        "assets/pv/hewerton.jpg",
+        "assets/pv/santiago.jpg"
+      ]
+    },
+    {
+      "slug": "dallas",
+      "cidade": "Dallas",
+      "uf": "TX",
+      "dias": "Sexta e Sábado",
+      "data": "13 e 14 de Novembro, 2026",
+      "onde": "Dallas, TX",
+      "min": 14,
+      "fotos": [
+        "assets/pv/hewerton.jpg",
+        "assets/pv/santiago.jpg",
+        "assets/pv/eliane.jpg",
+        "assets/iram.png"
+      ]
+    },
+    {
+      "slug": "orlando",
+      "cidade": "Orlando",
+      "uf": "FL",
+      "dias": "Sábado",
+      "data": "21 de Novembro, 2026",
+      "onde": "17800 Bali Blvd, Winter Garden, FL",
+      "min": 60,
+      "fotos": [
+        "assets/pv/hewerton.jpg",
+        "assets/pv/santiago.jpg",
+        "assets/alexandre-morelli.JPEG",
+        "assets/pv/eduardo-itaborahy.jpg",
+        "assets/pv/patricia-belieny.jpg",
+        "assets/pv/dany-rocha.jpg",
+        "assets/pv/jake-belieny.jpg"
+      ]
+    },
+    {
+      "slug": "boston",
+      "cidade": "Boston",
+      "uf": "MA",
+      "dias": "Sexta e Sábado",
+      "data": "4 e 5 de Dezembro, 2026",
+      "onde": "Boston, MA",
+      "min": 14,
+      "fotos": [
+        "assets/pv/hewerton.jpg",
+        "assets/pv/santiago.jpg",
+        "assets/bruno.jpg"
+      ]
+    }
+  ]
+}

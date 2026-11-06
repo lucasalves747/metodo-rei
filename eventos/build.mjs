@@ -7,12 +7,14 @@
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { eventoSchema, homeHead, sitemap, robots, llms } from "./seo.mjs";
 
 const DIR = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(DIR, "..");
 const data = JSON.parse(readFileSync(join(DIR, "eventos.json"), "utf8"));
 const template = readFileSync(join(DIR, "template.html"), "utf8");
 const CHECK_ONLY = process.argv.includes("--check");
+data.site = { url: "https://www.metodorei.com", nome: "Método REI", ...(data.site || {}) };
 
 const MESES = ["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
 const MESES_CURTO = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
@@ -167,11 +169,13 @@ function render(ev) {
     mentors: ids.map((id, i) => mentorHtml(id, i, ev)).join("\n"),
     ...vendaVars(ev, d),
   };
+  const seo = eventoSchema(data, ev, d, ids);
+  vars.seo_head = seo.head;
   const out = template.replace(/\{\{(\w+)\}\}/g, (m, k) => {
     if (!(k in vars)) throw new Error(`template usa {{${k}}} mas não há valor`);
     return String(vars[k]);
   });
-  return { html: out, d };
+  return { html: out, d, seo, ids };
 }
 
 function card(ev, i, d) {
@@ -229,7 +233,16 @@ index = between(index, "EDICOES", upcoming.map((r) => `            <option value
 index = between(index, "RODAPE", upcoming.map((r) => `    <a href="/${r.ev.slug}">${r.ev.cidade}</a>`).join("\n"));
 const nomes = [...new Set(upcoming.map((r) => r.ev.cidade))];
 index = between(index, "CHIP", nomes.join(" <i>·</i> "));
-const anos = [...new Set(upcoming.map((r) => r.d.ano))].join(" e ");
-index = index.replace(/(<meta name="description" content="[^"]*?)Edições em [^"]*?\."/, `$1Edições em ${listaCidades(nomes)} em ${anos}."`);
+index = between(index, "SEO", homeHead(data, upcoming));
+writeFileSync(join(ROOT, "sitemap.xml"), sitemap(data, rendered.filter((r) => !r.ev.oculto)));
+writeFileSync(join(ROOT, "robots.txt"), robots(data));
+writeFileSync(join(ROOT, "llms.txt"), llms(data, upcoming, rendered.filter((r) => r.d.fimDate < today && !r.ev.oculto)));
+for (const r of rendered) if (!existsSync(join(ROOT, "assets/og", `${r.ev.slug}.jpg`))) console.warn(`  ! falta a imagem de compartilhamento assets/og/${r.ev.slug}.jpg (rode: python3 eventos/og.py)`);
+console.log("  ✓ sitemap.xml, robots.txt, llms.txt");
+writeFileSync(join(DIR, "og-data.json"), JSON.stringify({
+  home: { cidades: [...new Set(upcoming.map((r) => r.ev.cidade))], anos: [...new Set(upcoming.map((r) => r.d.ano))] },
+  eventos: rendered.map((r) => ({ slug: r.ev.slug, cidade: r.ev.cidade, uf: r.ev.uf, dias: r.d.dias, data: r.d.hero, onde: r.seo.onde, min: r.seo.min,
+    fotos: r.ids.map((id) => data.preletores[id].foto).filter(Boolean) })),
+}, null, 2));
 writeFileSync(join(ROOT, "index.html"), index);
 console.log(`  ✓ home: ${upcoming.length} próximos eventos (${nomes.join(", ")})`);
