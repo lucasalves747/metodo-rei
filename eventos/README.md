@@ -1,5 +1,12 @@
 # Eventos do Método REI
 
+A home (`index.html`) e as páginas de cada cidade são GERADAS. Não edite `index.html`, `orlando.html` etc. à mão.
+
+- `eventos.json` — dados (eventos, preletores, preços, site)
+- `home-template.html` — modelo da home (visual Turnê Real)
+- `template.html` — modelo da página de evento
+- `partes/` — blocos usados nos dois (pilares R.E.I., mural de fotos, "Você não vai apenas assistir…")
+
 Todas as datas/locais vivem em `eventos.json`. Nunca edite `miami.html`, `dallas.html` etc. à mão — eles são gerados.
 
 ## Adicionar ou mudar um evento
@@ -33,3 +40,6 @@ Cada um em `preletores`: `nome`, `titulo_html` (sobrenome em dourado com `<span 
 ## Imagens de compartilhamento (1200×630)
 Depois do build: `python3 eventos/og.py` (ou `python3 eventos/og.py orlando home`). Gera `assets/og/<slug>.jpg` e `assets/og/home.jpg`.
 Precisa de Playwright + Chrome — o Claude roda isso no ambiente dele.
+
+## "No palco" da home
+Montado sozinho a cada build: primeiro os `preletores_fixos` (Hewerton e Santiago — sempre aparecem, em cor), depois todos os preletores dos eventos futuros, em P&B, sem repetir. Quando um evento passa ou é removido, quem só estava nele sai da home; quando um evento novo entra, os preletores dele aparecem.

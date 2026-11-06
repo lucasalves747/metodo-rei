@@ -12,7 +12,10 @@ import { eventoSchema, homeHead, sitemap, robots, llms } from "./seo.mjs";
 const DIR = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(DIR, "..");
 const data = JSON.parse(readFileSync(join(DIR, "eventos.json"), "utf8"));
-const template = readFileSync(join(DIR, "template.html"), "utf8");
+const PARTES = Object.fromEntries(["pilares", "wall", "experiencia"].map((k) => [k, readFileSync(join(DIR, "partes", `${k}.html`), "utf8").trimEnd()]));
+const incluir = (t) => t.replace(/\{\{(pilares|wall|experiencia)\}\}/g, (m, k) => PARTES[k]);
+const template = incluir(readFileSync(join(DIR, "template.html"), "utf8"));
+const homeTemplate = incluir(readFileSync(join(DIR, "home-template.html"), "utf8"));
 const CHECK_ONLY = process.argv.includes("--check");
 data.site = { url: "https://www.metodorei.com", nome: "Método REI", ...(data.site || {}) };
 
@@ -180,18 +183,32 @@ function render(ev) {
 
 function card(ev, i, d) {
   const img = ev.imagem_card || ev.imagem || `assets/home/city-${ev.slug}.jpg`;
-  const badge = ev.selo ? `<span class="event__badge">${ev.selo}</span>` : "";
-  return `      <li class="event reveal"${i % 2 ? ' data-d="1"' : ""} data-end="${ev.fim}">
-        <div class="event__img">${badge}<img decoding="async" src="${img}" alt="Skyline de ${ev.cidade}" loading="lazy" /></div>
-        <div class="event__body">
-          <span class="event__date">${d.card}</span>
-          <h3 class="event__city">${ev.cidade}</h3>
-          <span class="event__venue">${(ev.local && ev.local.nome) || "Local a definir"}</span>
-          <span class="event__days">${d.diasCard}</span>
-          <span class="event__time">${d.horarioCard}</span>
-          <div class="event__cta"><a href="/${ev.slug}" class="btn btn--sm" data-event="${ev.cidade}">Ver evento</a></div>
-        </div>
-      </li>`;
+  const selo = ev.selo || d.diasCard.replace(" · ", " + ");
+  const cls = ev.selo ? (/pr[ée]-?venda/i.test(ev.selo) ? "badge-red" : "badge-gold") : "badge-line";
+  const quando = d.nDias === 1 ? `${d.dias}, ${d.card.replace(/, \d{4}$/, "")}` : d.card.replace(/, \d{4}$/, "");
+  const horas = d.horario.replace(/(am|pm)/gi, (m) => m.toUpperCase());
+  const local = ev.local && ev.local.nome && !/a definir/i.test(ev.local.nome) ? ` · ${ev.local.nome}` : "";
+  return `      <article class="card" data-end="${ev.fim}"><img src="${img}" alt="Skyline de ${ev.cidade}" loading="lazy"><div class="card-shade"></div>
+        <div style="position: relative"><span class="badge ${cls}">${selo}</span><div class="serif" style="font-size: 72px; line-height: .95; margin-top: 16px">${ev.cidade}</div><div style="font-size: 17px; font-weight: 600; margin-top: 10px">${quando}</div><div style="font-size: 14px; color: #9A948A; margin-top: 4px">${horas}${local}</div><a class="btn btn-gold" href="/${ev.slug}" data-event="${ev.cidade}" style="margin-top: 24px; width: 100%">Garantir minha vaga</a></div></article>`;
+}
+
+// "No palco" da home: fixos (sempre, em cor) + quem está em algum evento futuro (P&B), sem repetir.
+function lineup(upcoming) {
+  const fixos = data.preletores_fixos || [];
+  const ids = [...fixos];
+  for (const r of upcoming) for (const id of r.ids) if (!ids.includes(id)) ids.push(id);
+  const faces = ids.map((id) => {
+    const p = data.preletores[id];
+    if (!p) throw new Error(`preletor "${id}" não existe`);
+    const lead = fixos.includes(id);
+    const nome = p.nome_curto || p.nome_palco || p.nome;
+    return lead
+      ? `      <div class="face face-lead"><img src="${p.foto}" alt="${p.nome}" loading="lazy"><div class="face-name"><div class="kick" style="font-size: 10px">${p.destaque || ""}</div><div class="serif" style="font-size: 24px; line-height: 1.05; margin-top: 4px">${nome}</div></div></div>`
+      : `      <div class="face"><img src="${p.foto}" alt="${p.nome}" loading="lazy"><div class="face-name"><div class="serif" style="font-size: 22px; line-height: 1.05">${nome}</div></div></div>`;
+  });
+  const n = ids.length;
+  const cols = n <= 5 ? n : Math.ceil(n / Math.ceil(n / 5));
+  return { html: faces.join("\n"), cols: Math.max(cols, 2) };
 }
 
 function between(html, name, content) {
@@ -227,13 +244,24 @@ for (const r of rendered) {
   console.log(`  ✓ /${r.ev.slug}  (${r.d.texto})`);
 }
 
-let index = readFileSync(join(ROOT, "index.html"), "utf8");
-index = between(index, "EVENTOS", upcoming.map((r, i) => card(r.ev, i, r.d)).join("\n"));
-index = between(index, "EDICOES", upcoming.map((r) => `            <option value="${r.ev.cidade}">${r.ev.cidade} · ${r.d.curta}</option>`).join("\n"));
-index = between(index, "RODAPE", upcoming.map((r) => `    <a href="/${r.ev.slug}">${r.ev.cidade}</a>`).join("\n"));
+const lu = lineup(upcoming);
+const anoHome = upcoming.length ? upcoming[0].d.ano : new Date().getFullYear();
+const homeVars = {
+  seo_head: homeHead(data, upcoming),
+  ano: anoHome,
+  cards: upcoming.map((r, i) => card(r.ev, i, r.d)).join("\n"),
+  cards_cols: Math.min(Math.max(upcoming.length, 1), 3),
+  lineup: lu.html,
+  lineup_cols: lu.cols,
+  edicoes: upcoming.map((r) => `            <option value="${r.ev.cidade}">${r.ev.cidade} · ${r.d.curta}</option>`).join("\n"),
+  rodape: upcoming.map((r) => `<a href="/${r.ev.slug}" style="color: #9A948A; text-decoration: none; font-size: 12px; font-weight: 700; letter-spacing: .14em">${r.ev.cidade.toUpperCase()}</a>`).join(""),
+};
+const index = homeTemplate.replace(/\{\{(\w+)\}\}/g, (m, k) => {
+  if (!(k in homeVars)) throw new Error(`home-template usa {{${k}}} mas não há valor`);
+  return String(homeVars[k]);
+});
 const nomes = [...new Set(upcoming.map((r) => r.ev.cidade))];
-index = between(index, "CHIP", nomes.join(" <i>·</i> "));
-index = between(index, "SEO", homeHead(data, upcoming));
+writeFileSync(join(ROOT, "index.html"), index);
 writeFileSync(join(ROOT, "sitemap.xml"), sitemap(data, rendered.filter((r) => !r.ev.oculto)));
 writeFileSync(join(ROOT, "robots.txt"), robots(data));
 writeFileSync(join(ROOT, "llms.txt"), llms(data, upcoming, rendered.filter((r) => r.d.fimDate < today && !r.ev.oculto)));
@@ -244,5 +272,5 @@ writeFileSync(join(DIR, "og-data.json"), JSON.stringify({
   eventos: rendered.map((r) => ({ slug: r.ev.slug, cidade: r.ev.cidade, uf: r.ev.uf, dias: r.d.dias, data: r.d.hero, onde: r.seo.onde, min: r.seo.min,
     fotos: r.ids.map((id) => data.preletores[id].foto).filter(Boolean) })),
 }, null, 2));
-writeFileSync(join(ROOT, "index.html"), index);
+
 console.log(`  ✓ home: ${upcoming.length} próximos eventos (${nomes.join(", ")})`);

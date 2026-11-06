@@ -6,6 +6,9 @@
 <script>document.documentElement.className += " reveal-on";</script>
 {{seo_head}}
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter+Tight:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
    Fontes locais
@@ -489,6 +492,159 @@ a{color:inherit;text-decoration:none}
 .mentor__more[open] summary::after{content:" –"}
 .mentor__more p{margin-top:.7rem !important}
 .hero__save--destaque{text-transform:none}
+
+/* ===== Visual Turnê Real (G) ===== */
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#080808;font-family:'Inter Tight',system-ui,sans-serif;color:#EEE9E0;-webkit-font-smoothing:antialiased;overflow-x:clip}
+img{max-width:100%}
+a{color:#E3C78A}a:hover{color:#F6E2B0}
+.wrap{max-width:1280px;margin:0 auto;padding:0 40px}
+.serif{font-family:'DM Serif Display',Georgia,serif;font-weight:400}
+.champ{background:linear-gradient(100deg,#8C6A2E 0%,#D7B56E 26%,#F7E6B8 45%,#DDBC77 60%,#A07A36 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.kick{font-size:12px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#D2B272}
+.rule{height:1px;background:linear-gradient(90deg,rgba(201,168,102,0),rgba(227,199,138,.7),rgba(201,168,102,0))}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:56px;padding:0 30px;border-radius:4px;font-weight:700;font-size:13px;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;white-space:nowrap;border:0;cursor:pointer;font-family:inherit;transition:filter .2s,box-shadow .2s,border-color .2s}
+.btn-gold{color:#130D03;background:linear-gradient(180deg,#F6E4B0 0%,#E0BE74 48%,#B98F45 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,.65),inset 0 -2px 0 rgba(110,76,18,.35),0 16px 36px -16px rgba(214,178,104,.85)}
+.btn-gold:hover{filter:brightness(1.06);color:#130D03}
+.btn-line{background:transparent;border:1px solid rgba(227,199,138,.55);color:#EEE9E0}.btn-line:hover{border-color:#E3C78A;color:#fff}
+.btn-dark{background:#080808;color:#F2EEE6}.btn-dark:hover{background:#1E1E1E;color:#fff}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:88px;gap:20px}
+.brandmark{display:flex;align-items:center;gap:14px;text-decoration:none;color:#EEE9E0}
+.brandmark span{font-size:14px;font-weight:700;letter-spacing:.34em}
+.nav-links{display:flex;gap:30px}
+.nav-links a{color:rgba(238,233,224,.82);text-decoration:none;font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+.nav-links a:hover{color:#fff}
+.ghero{position:relative;overflow:hidden;border-bottom:1px solid rgba(201,168,102,.22);text-align:center}
+.hero-glow{position:absolute;left:50%;top:-14%;transform:translateX(-50%);width:1100px;height:720px;max-width:100vw;background:radial-gradient(closest-side,rgba(240,206,130,.22),rgba(8,8,8,0));pointer-events:none}
+.hero-in{position:relative;z-index:2;padding:56px 40px 0}
+.ghero h1{font-size:96px;line-height:.98;letter-spacing:-.015em;margin:26px 0 0}
+.hero-band{position:relative;margin-top:-30px}
+.hero-img{display:block;width:100%;height:auto;min-height:440px;object-fit:cover;object-position:50% 30%}
+.hero-tint{position:absolute;inset:0;background:linear-gradient(180deg,#080808 0%,rgba(8,8,8,0) 26%,rgba(8,8,8,0) 62%,#080808 100%),linear-gradient(90deg,rgba(8,8,8,.75) 0%,rgba(8,8,8,0) 22%,rgba(8,8,8,0) 78%,rgba(8,8,8,.75) 100%)}
+.hero-cap{position:absolute;right:40px;top:46%;z-index:2;font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(238,233,224,.55)}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.card{position:relative;border-radius:8px;overflow:hidden;min-height:540px;display:flex;flex-direction:column;justify-content:flex-end;padding:30px;background:#141414;box-shadow:0 0 0 1px rgba(227,199,138,.2)}
+.card>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.card-shade{position:absolute;inset:0;background:linear-gradient(0deg,#080808 30%,rgba(8,8,8,.1) 75%)}
+.badge{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.16em;padding:6px 10px;border-radius:3px;text-transform:uppercase}
+.badge-red{background:#9B2C2C;color:#fff}
+.badge-gold{color:#130D03;background:linear-gradient(180deg,#F6E4B0,#D9B46A)}
+.badge-line{border:1px solid rgba(238,233,224,.5);color:#EEE9E0}
+.contrast div{display:flex;justify-content:space-between;gap:24px;padding:20px 0;border-top:1px solid rgba(238,233,224,.12);font-size:21px}
+.lineup{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
+.face{position:relative;border-radius:6px;overflow:hidden;aspect-ratio:3/4;background:#141414}
+.face img{width:100%;height:100%;object-fit:cover;object-position:center 15%;display:block;filter:grayscale(1)}
+.face-name{position:absolute;left:0;right:0;bottom:0;padding:44px 14px 14px;background:linear-gradient(0deg,rgba(8,8,8,.96),rgba(8,8,8,0));text-align:left}
+.face-lead{box-shadow:0 0 0 1px #D9B873,0 20px 50px -20px rgba(227,199,138,.55)}
+.face-lead img{filter:none}
+.pillars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.pillar{position:relative;background:#0B0B0B;color:#EEE9E0;border-radius:8px;padding:40px 36px 42px;min-height:560px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 0 0 1px rgba(201,168,102,.25)}
+.pillar::before{content:"";position:absolute;left:-30%;top:-40%;width:160%;height:80%;background:radial-gradient(closest-side,rgba(240,206,130,.16),rgba(0,0,0,0));pointer-events:none}
+.pillar>*{position:relative}
+.tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:18px}
+.tags span{font-size:12px;color:#C8C1B4;border:1px solid rgba(238,233,224,.16);padding:5px 10px;border-radius:999px}
+.journey{display:grid;grid-template-columns:repeat(6,minmax(0,1fr))}
+.step{position:relative;padding:28px 16px 0 0}
+.step::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:rgba(201,168,102,.5)}
+.dot{position:absolute;top:-5px;left:0;width:11px;height:11px;border-radius:50%;background:#E3C78A;box-shadow:0 0 18px rgba(227,199,138,.9)}
+.wall{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.wall img{width:100%;height:320px;object-fit:cover;display:block;filter:grayscale(.35) contrast(1.05)}
+.cta{position:relative;overflow:hidden;padding:110px 0;color:#130D03;background:linear-gradient(115deg,#B98F45 0%,#E2C077 28%,#F8E7B6 47%,#DDBA70 66%,#A9813C 100%)}
+.cta::after{content:"";position:absolute;inset:0;background:radial-gradient(600px 300px at 30% 0%,rgba(255,255,255,.35),rgba(255,255,255,0));pointer-events:none}
+.faq details{border-top:1px solid rgba(238,233,224,.12);padding:22px 0}
+.faq details:last-child{border-bottom:1px solid rgba(238,233,224,.12)}
+.faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:20px;font-family:'DM Serif Display',serif;font-size:26px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";color:#D2B272;font-weight:300;font-size:28px;line-height:1}
+.faq details[open] summary::after{content:"–"}
+.faq p{margin:12px 0 0;font-size:16px;line-height:1.65;color:#B9B2A5}
+.vdlg{border:0;padding:0;background:transparent;max-width:min(1100px,92vw);width:100%}
+.vdlg::backdrop{background:rgba(0,0,0,.85)}
+.vdlg video{width:100%;display:block;border-radius:8px;box-shadow:0 0 0 1px rgba(227,199,138,.35)}
+.vdlg button{position:absolute;top:-44px;right:0;background:none;border:0;color:#EEE9E0;font-size:32px;cursor:pointer}
+
+/* ===== Tema Turnê Real (G) aplicado aos componentes da página de evento ===== */
+:root{--serif:'DM Serif Display',Georgia,serif;--sans:'Inter Tight',system-ui,sans-serif;--bg:#080808;--pill-1:#F6E4B0;--pill-2:#B98F45}
+body{background:#080808;color:#EEE9E0;font-family:var(--sans)}
+.pill{font-family:var(--sans);font-weight:700;letter-spacing:.16em;font-size:14px;padding:0 30px;min-height:56px;border-radius:4px;color:#130D03;
+  background:linear-gradient(180deg,#F6E4B0 0%,#E0BE74 48%,#B98F45 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,.65),inset 0 -2px 0 rgba(110,76,18,.35),0 16px 36px -16px rgba(214,178,104,.85)}
+.pill:hover{transform:none;filter:brightness(1.06)}
+.promo{background:linear-gradient(90deg,#B98F45,#F6E4B0 50%,#B98F45);color:#130D03;font-weight:700;letter-spacing:.06em}
+.promo b{color:#130D03}
+.drawer{background:#080808}.drawer a{font-family:var(--serif);font-weight:400;text-transform:none;font-size:2rem}
+.menu-toggle{color:#EEE9E0}
+@media (max-width:900px){.menu-toggle{display:flex}}
+.ev-head{position:sticky;top:0;z-index:200;background:rgba(8,8,8,.86);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(201,168,102,.14)}
+.ev-head .nav-in{height:76px}
+.ev-date{font-size:34px;margin:18px 0 0;color:#EEE9E0}
+.ev-venue{margin-top:10px;font-size:13px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#D2B272}
+.ev-venue a{color:inherit}
+.ev-offer{margin-top:30px;font-size:12px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#9A948A}
+.ghero .hero__save{margin-top:22px;font-size:17px;font-weight:500;color:#E3C78A;text-transform:none}
+.ghero .hero__save b{color:#F6E4B0}
+.ev-city{position:absolute;left:40px;bottom:22%;z-index:2;display:flex;align-items:center;gap:12px;padding:8px 16px 8px 8px;border-radius:999px;background:rgba(8,8,8,.72);border:1px solid rgba(227,199,138,.35);backdrop-filter:blur(8px)}
+.ev-city img{width:44px;height:44px;border-radius:50%;object-fit:cover}
+.ev-city span{font-family:var(--serif);font-size:20px}
+.ev-facts{display:flex;justify-content:center;flex-wrap:wrap;gap:12px 36px;padding:26px 20px;border-bottom:1px solid rgba(201,168,102,.18)}
+.ev-facts span{display:flex;align-items:center;gap:12px;font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#C8C1B4}
+.ev-facts span::before{content:"";width:7px;height:7px;border-radius:50%;background:#E3C78A;box-shadow:0 0 12px rgba(227,199,138,.9)}
+.ev-about{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;align-items:center}
+.ev-feats{list-style:none;padding:0;margin:26px 0 0}
+.ev-feats li{padding:14px 0;border-top:1px solid rgba(238,233,224,.12);font-size:17px;color:#C8C1B4}
+.ev-feats li:last-child{border-bottom:1px solid rgba(238,233,224,.12)}
+.ev-feats b{color:#EEE9E0;font-weight:600}
+.ev-video{border-radius:8px;overflow:hidden;box-shadow:0 0 0 1px rgba(227,199,138,.3),0 40px 80px -40px rgba(227,199,138,.4)}
+.ev-video video{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:#000}
+.mentors-sec{background:#080808 !important;padding:110px 0 !important;text-align:left !important}
+.mentors-sec .mentor{background:#0E0E0E;border:1px solid rgba(227,199,138,.2);border-radius:8px}
+.mentors-sec .mentor h3{font-family:var(--serif);font-weight:400;text-transform:none;font-size:30px;line-height:1.05}
+.mentors-sec .mentor h3 .g{background:linear-gradient(100deg,#8C6A2E,#D7B56E 26%,#F7E6B8 45%,#DDBC77 60%,#A07A36);-webkit-background-clip:text;background-clip:text;color:transparent}
+.mentors-sec .mentor__role{color:#D2B272;letter-spacing:.2em;font-weight:700}
+.mentors-sec .mentor__b p{color:#B9B2A5}
+.mentor__more summary{color:#E3C78A !important}
+.tickets-sec{background:radial-gradient(900px 500px at 50% 0%,rgba(240,206,130,.14),rgba(8,8,8,0)),#080808 !important}
+.tickets-sec .spaced{font-size:12px;font-weight:700;letter-spacing:.3em;color:#D2B272}
+.tickets-sec .h-mid{font-family:var(--serif);font-weight:400;font-size:clamp(2.6rem,5vw,4.4rem);line-height:1}
+.tickets-sec .rule{background:linear-gradient(90deg,rgba(201,168,102,0),rgba(227,199,138,.7),rgba(201,168,102,0))}
+.ticket{border-radius:8px;background:#0E0E0E;border:1px solid rgba(227,199,138,.25)}
+.ticket--rei{background:linear-gradient(180deg,#141007 0%,#2A1F0B 100%);border-color:#D9B873;box-shadow:0 30px 70px -30px rgba(227,199,138,.55)}
+.ticket__n{font-family:var(--serif);font-weight:400;text-transform:none;font-size:clamp(2.4rem,3.6vw,3rem)}
+.ticket__x{font-size:11px;letter-spacing:.4em;color:#D2B272}
+.ticket__amt{font-family:var(--serif);font-weight:400;font-size:clamp(2.6rem,4vw,3.4rem);background:linear-gradient(100deg,#B98F45,#F7E6B8 45%,#C99A48);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ticket__note{color:#E3C78A;border-color:rgba(227,199,138,.3)}
+.ticket li svg{color:#E3C78A}
+.ticket__badge{background:linear-gradient(180deg,#F6E4B0,#D9B46A);color:#130D03}
+.bonus h3,.legacy h4{font-family:var(--serif);font-weight:400;color:#0A0A0A}
+.bonus__tag{font-family:var(--serif);font-weight:400;text-transform:none}
+.lead-modal__card{background:#0E0E0E;border-color:rgba(227,199,138,.3);border-radius:8px}
+.lead-modal h3{font-family:var(--serif);font-weight:400;text-transform:none;font-size:30px}
+@media (max-width:900px){
+ .ev-about{grid-template-columns:1fr;gap:36px}
+ .ev-city{left:20px;bottom:14%}
+ .ev-date{font-size:26px}
+ .mentors-sec{padding:72px 0 !important}
+}
+@media (max-width:900px){
+ .wrap{padding:0 20px}
+ .nav-links{display:none}
+ .hero-in{padding:32px 20px 0}
+ .ghero h1{font-size:50px}
+ .hero-img{height:320px;min-height:0;object-position:50% 25%}
+ .hero-cap{display:none}
+ .brandmark span{font-size:12px;letter-spacing:.22em}
+ .brandmark svg{width:30px;height:21px}
+ .cards,.pillars{grid-template-columns:1fr !important}
+ .card{min-height:440px}
+ .pillar{min-height:0}
+ .lineup,.wall{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
+ .wall img{height:180px}
+ .journey{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 0}
+ .h2{font-size:48px !important}
+ .huge{font-size:44px !important}
+ .split{flex-direction:column !important;align-items:flex-start !important}
+ .two{grid-template-columns:1fr !important;gap:36px !important}
+}
 </style>
 <!-- Microsoft Clarity -->
 <script type="text/javascript">
@@ -518,193 +674,113 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
 </head>
 <body id="top">
 
-<!-- HEADER -->
-<header class="header" id="header">
-  <a href="#top" class="brand" aria-label="Método REI"><img decoding="async" class="brand__logo" src="assets/logo-metodo-rei.png" alt="Método REI" /></a>
-  <nav class="nav">
-    <a href="#sobre">Sobre</a>
-    <a href="#mentores">Mentores</a>
-    <a href="#experiencia">Experiência</a>
-    <a href="#ingressos">Ingressos</a>
-    <a href="#bonus">Bônus</a>
-  </nav>
-  <a href="#ingressos" class="pill pill--sm">Garantir ingresso</a>
-  <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button>
+<header class="ev-head">
+  <div class="wrap nav-in">
+    <a href="/" class="brandmark" aria-label="Método REI — início"><svg viewBox="0 0 64 44" width="38" height="26" fill="none" stroke="#E3C78A" stroke-width="2" aria-hidden="true"><path d="M6 34 L10 10 L22 24 L32 4 L42 24 L54 10 L58 34 Z" stroke-linejoin="round"/><path d="M7 40 H57" stroke-linecap="round"/><circle cx="10" cy="8" r="2.4" fill="#E3C78A" stroke="none"/><circle cx="32" cy="2.6" r="2.4" fill="#E3C78A" stroke="none"/><circle cx="54" cy="8" r="2.4" fill="#E3C78A" stroke="none"/></svg><span>MÉTODO REI</span></a>
+    <nav class="nav-links" aria-label="Principal"><a href="#sobre">Sobre</a><a href="#metodo">O Método</a><a href="#mentores">No palco</a><a href="#ingressos">Ingressos</a><a href="#bonus">Bônus</a></nav>
+    <div style="display: flex; align-items: center; gap: 10px">
+      <a href="#ingressos" class="btn btn-gold" style="min-height: 44px; padding: 0 20px; font-size: 11px">Garantir ingresso</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
 </header>
 
 <div class="drawer" id="drawer" aria-hidden="true">
   <button class="close" id="drawerClose" aria-label="Fechar menu">×</button>
   <a href="#sobre">Sobre</a>
-  <a href="#mentores">Mentores</a>
-  <a href="#experiencia">Experiência</a>
+  <a href="#metodo">O Método</a>
+  <a href="#mentores">No palco</a>
   <a href="#ingressos">Ingressos</a>
   <a href="#bonus">Bônus</a>
-  <a href="#ingressos" class="pill" style="margin-top:.6rem">Garantir ingresso</a>
+  <a href="/">Todas as edições</a>
 </div>
 
-<!-- BARRA DE PRÉ-VENDA -->
 {{promo_bar}}
 
 <main>
 
-<!-- HERO -->
-<section class="hero">
-  <img decoding="async" class="hero__bg" src="assets/pv-hero-bg.jpg" alt="" fetchpriority="high" />
-  <div class="hero__ov" aria-hidden="true"></div>
+<section class="ghero hero-g" style="position: relative; overflow: hidden; border-bottom: 1px solid rgba(201,168,102,.22); text-align: center">
+  <div class="hero-glow"></div>
   <div class="wrap">
-    <div class="collage reveal" aria-label="Montagem de fotos da imersão Método REI">
-      <figure class="ph ph--3"><img decoding="async" src="assets/pv/evento-5.jpg" alt="Plateia da imersão Método REI" /></figure>
-      <figure class="ph ph--2"><img decoding="async" src="assets/pv/exp1.jpg" alt="Participantes em mesa de trabalho" /></figure>
-      <div class="collage__main">
-        <img decoding="async" class="collage__photo" src="assets/evento-1.jpg" alt="Hewerton Scheidegger e Santiago Vecina no palco do Método REI" />
-        <img decoding="async" class="collage__logo" src="assets/logo-metodo-rei.png" alt="Método REI" />
+    <div class="hero-in">
+      <div class="kick">Método REI · Imersão presencial</div>
+      <h1 class="serif">Método REI<br><span class="champ">{{cidade}}</span></h1>
+      <p class="serif ev-date">{{dias}} · {{datas_hero}}</p>
+      <div class="ev-venue">{{hero_local}}</div>
+      <p style="font-size: 19px; line-height: 1.6; font-weight: 300; max-width: 620px; margin: 24px auto 0; color: rgba(238,233,224,.86)">Uma imersão para quem deseja governar a própria vida, prosperar com propósito e construir um legado — <strong style="color: #fff; font-weight: 600">ganhar sem perder.</strong></p>
+      <div class="ev-offer">{{hero_offer}}</div>
+      <div style="display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; justify-content: center">
+        <a class="btn btn-gold" href="#ingressos">Garantir minha vaga</a>
+        <a class="btn btn-line" href="#video"><svg viewBox="0 0 24 24" width="16" height="16" fill="#E3C78A" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg>Assistir ao vídeo</a>
       </div>
-      <div class="collage__seal" aria-hidden="true"><svg viewBox="0 0 24 20" fill="currentColor"><path d="M1.5 15.5 L3.8 5.5 L8.4 10.8 L12 2.5 L15.6 10.8 L20.2 5.5 L22.5 15.5 Z"/><rect x="1.8" y="16" width="20.4" height="3" rx="1"/></svg></div>
-      <figure class="ph ph--1"><img decoding="async" src="assets/pv/hewerton.jpg" alt="Hewerton Scheidegger" /></figure>
-      <figure class="ph ph--4"><img decoding="async" src="assets/pv/evento-2.jpg" alt="Santiago Vecina palestrando" /></figure>
-      <div class="collage__city"><img decoding="async" src="{{imagem}}" alt="" /><span>{{cidade}}</span></div>
+      {{hero_save}}
     </div>
-    <h1 class="hero__date reveal" data-d="1"><span>{{dias}}</span><span class="dot">•</span><span>{{datas_hero}}</span></h1>
-    <div class="hero__venue reveal" data-d="1">{{hero_local}}</div>
-    <p class="hero__sub reveal" data-d="2">Uma imersão presencial onde empresários e profissionais aprendem a enriquecer com inteligência e governar a própria vida.</p>
-    <div class="hero__offer reveal" data-d="2">{{hero_offer}}</div>
-    <a href="#ingressos" class="pill reveal" data-d="3">Garantir ingresso</a>
-    {{hero_save}}
+  </div>
+  <div class="hero-band">
+    <img class="hero-img" src="assets/hero-duo.jpg" alt="Hewerton Scheidegger e Dr. Santiago Vecina no palco do Método REI" fetchpriority="high">
+    <div class="hero-tint"></div>
+    <div class="ev-city"><img src="{{imagem}}" alt=""><span>{{cidade}}, {{uf}}</span></div>
+    <div class="hero-cap">Hewerton Scheidegger &amp; Dr. Santiago Vecina</div>
   </div>
 </section>
 
-<!-- FAIXA DE DESTAQUES -->
-<div class="facts">
-  <div class="wrap">
-    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="1"/><path d="M3 9h18M8 3v4M16 3v4" stroke-linecap="round"/></svg>{{dur_facts}}</span>
-    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-5.5 7-11a7 7 0 0 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>{{cidade}}, {{estado}}</span>
-    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6.5 6.5-6.5s6.5 2.9 6.5 6.5M16 4.5a3.5 3.5 0 0 1 0 7M21.5 20c0-3-1.9-5.5-4.5-6.3" stroke-linecap="round"/></svg>Networking de alto nível</span>
-    <span><svg viewBox="0 0 24 20" fill="currentColor"><path d="M1.5 15.5 L3.8 5.5 L8.4 10.8 L12 2.5 L15.6 10.8 L20.2 5.5 L22.5 15.5 Z"/><rect x="1.8" y="16" width="20.4" height="3" rx="1"/></svg>Vagas limitadas</span>
-  </div>
+<div class="ev-facts">
+  <span>{{dur_facts}}</span><span>{{cidade}}, {{estado}}</span><span>Networking de alto nível</span><span>Vagas limitadas</span>
 </div>
 
-<!-- SOBRE -->
-<section class="section about" id="sobre">
-  <div class="wrap">
-    <div class="about__grid">
-      <div>
-        <h2 class="about__t reveal">Assuma o governo da sua vida</h2>
-        <p class="about__lead reveal" data-d="1">{{dur_about}} em que empresários e profissionais se reúnem para aprender por que e como construir riqueza sem perder o que realmente importa.</p>
-        <p class="reveal" data-d="1">Junte-se a pessoas que decidiram viver acima da mediocridade — com família, saúde, caráter e fé alinhados.</p>
-        <p class="reveal" data-d="2" style="margin-top:1.4rem">Através de conteúdo profundo, mentoria de alto nível e networking estratégico, você sai:</p>
-        <ul class="feats reveal" data-d="2">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3Z" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Com <b>clareza</b> sobre o seu momento de vida e propósito</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 19V9m5 10V5m5 14v-8m5 8V7" stroke-linecap="round"/></svg><span>Com <b>inteligência financeira</b> para construir riqueza</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5" stroke-linecap="round"/></svg><span>Com um <b>Plano de 90 Dias</b> estruturado</span></li>
-          <li><svg viewBox="0 0 24 20" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><path d="M1.5 15.5 L3.8 5.5 L8.4 10.8 L12 2.5 L15.6 10.8 L20.2 5.5 L22.5 15.5 Z"/><path d="M1.8 18.5h20.4" stroke-linecap="round"/></svg><span><b>Alinhado</b> entre finanças, família e fé</span></li>
-        </ul>
-      </div>
-      <div class="mosaic reveal" data-d="2">
-        <figure class="a"><img decoding="async" src="assets/pv/exp2.jpg" alt="Mentoria em grupo" loading="lazy" /></figure>
-        <figure class="b"><img decoding="async" src="assets/pv/evento-2.jpg" alt="Santiago Vecina palestrando" loading="lazy" /></figure>
-        <figure class="c"><img decoding="async" src="assets/pv/exp3.jpg" alt="Participantes no lounge da imersão" loading="lazy" /></figure>
-        <figure class="d"><img decoding="async" src="assets/pv/evento-5.jpg" alt="Plateia da imersão" loading="lazy" /></figure>
-      </div>
+<section id="sobre" style="padding: 110px 0">
+  <div class="wrap ev-about">
+    <div>
+      <div class="kick">A imersão</div>
+      <h2 class="serif h2" style="font-size: 64px; line-height: 1.02; margin: 18px 0 0">Assuma o <span class="champ">governo</span> da sua vida.</h2>
+      <p style="font-size: 18px; line-height: 1.7; font-weight: 300; color: #B9B2A5; margin: 24px 0 0">{{dur_about}} em que empresários e profissionais se reúnem para aprender por que e como construir riqueza sem perder o que realmente importa — com família, saúde, caráter e fé alinhados.</p>
+      <ul class="ev-feats">
+        <li>Com <b>clareza</b> sobre o seu momento de vida e propósito</li>
+        <li>Com <b>inteligência financeira</b> para construir riqueza</li>
+        <li>Com um <b>Plano de 90 Dias</b> estruturado</li>
+        <li><b>Alinhado</b> entre finanças, família e fé</li>
+      </ul>
     </div>
-    <div class="video reveal">
+    <div class="ev-video" id="video">
       <video controls playsinline preload="none" poster="assets/evento-1.jpg">
         <source src="assets/hero-video.webm" type="video/webm">
         <source src="assets/hero-video.mp4" type="video/mp4">
       </video>
     </div>
-    <div class="center cta reveal"><a href="#ingressos" class="pill">Garantir ingresso</a></div>
   </div>
 </section>
 
-<!-- PILARES R.E.I. -->
-<section class="section center pillars-sec" id="metodo">
+<section id="metodo" style="background: #F2EEE6; color: #0A0A0A; padding: 110px 0">
   <div class="wrap">
-    <div class="head reveal">
-      <span class="h-pre">Aprenda os</span>
-      <h2 class="h-big">Três pilares do REI</h2>
-      <span class="h-post">para governar a sua vida</span>
-    </div>
-    <div class="pcards">
-      <article class="pcard reveal" data-d="1">
-        <div class="pcard__img"><img decoding="async" src="assets/pv/hero2-pb.jpg" alt="" loading="lazy" /></div>
-        <div class="pcard__body">
-          <h3>Reinar</h3>
-          <span class="sub">O governo interior</span>
-          <blockquote>Melhor é o que controla o seu ânimo do que aquele que toma uma cidade. — Provérbios 16:32</blockquote>
-        </div>
-      </article>
-      <article class="pcard reveal" data-d="2">
-        <div class="pcard__img"><img decoding="async" src="assets/pv/exp4-pb.jpg" alt="" loading="lazy" /></div>
-        <div class="pcard__body">
-          <h3>Enriquecer</h3>
-          <span class="sub">A inteligência financeira</span>
-          <blockquote>Lembra-te do Senhor teu Deus, que é o que te dá força para adquirires riqueza. — Deuteronômio 8:18</blockquote>
-        </div>
-      </article>
-      <article class="pcard pcard--wide reveal" data-d="3">
-        <div class="pcard__img"><img decoding="async" src="assets/pv/evento-5.jpg" alt="" loading="lazy" /></div>
-        <div class="pcard__body">
-          <h3>Identidade</h3>
-          <span class="sub">A sustentação</span>
-          <blockquote>Vós sois a geração eleita, o sacerdócio real, a nação santa. — 1 Pedro 2:9</blockquote>
-        </div>
-      </article>
-    </div>
+    <div class="kick" style="color: #7A5C16">Os 3 pilares de todo Rei</div>
+    <h2 class="serif h2" style="font-size: 96px; line-height: .95; margin: 16px 0 48px">R.E.I.</h2>
+{{pilares}}
   </div>
 </section>
 
-<!-- ESCOLHA SUA EXPERIÊNCIA -->
-<section class="section center choose">
+<section class="mentors-sec" id="mentores">
   <div class="wrap">
-    <p class="choose__pre reveal">Não importa a sua fase ou a sua história, existe um lugar para você aqui.</p>
-    <h2 class="choose__t reveal" data-d="1">Escolha sua experiência</h2>
-    <div class="tiles">
-      <a href="#ingressos" class="tile reveal" data-d="1"><img decoding="async" src="assets/pv/evento-5.jpg" alt="Plateia da imersão" loading="lazy" /><span class="tile__b"><span class="tile__n">Standard</span><span class="tile__m">Saiba mais</span></span></a>
-      <a href="#ingressos" class="tile reveal" data-d="2"><img decoding="async" src="assets/pv/exp3.jpg" alt="Participantes no lounge" loading="lazy" /><span class="tile__b"><span class="tile__n">VIP</span><span class="tile__m">Saiba mais</span></span></a>
-      <a href="#ingressos" class="tile reveal" data-d="3"><img decoding="async" src="assets/pv/evento-1.jpg" alt="Mentores no palco" loading="lazy" /><span class="tile__b"><span class="tile__n">REI</span><span class="tile__m">Saiba mais</span></span></a>
+    <div class="split" style="display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; margin-bottom: 8px">
+      <h2 class="serif h2" style="font-size: 88px; line-height: .95; margin: 0">No palco em <span class="champ">{{cidade}}</span></h2>
+      <p style="max-width: 380px; margin: 0; font-size: 17px; line-height: 1.6; color: #9A948A">Quem vive o que ensina.</p>
     </div>
-  </div>
-</section>
-
-<!-- MENTORES -->
-<section class="section center mentors-sec" id="mentores">
-  <div class="wrap">
-    <h2 class="h-big reveal">Ouça quem vive o que ensina</h2>
-    <p class="sub reveal" data-d="1">Os mentores do Método REI</p>
     <div class="{{mentors_class}}">
 {{mentors}}
     </div>
-    <a href="#ingressos" class="pill reveal">Garantir ingresso</a>
   </div>
 </section>
 
-<!-- A EXPERIÊNCIA -->
-<section class="section center exp" id="experiencia">
-  <div class="wrap">
-    <h2 class="h-big reveal">A experiência</h2>
-    <p class="exp__sub reveal" data-d="1">O Método REI não é só mais um evento — {{dur_exp}} de profundidade, fé e decisão que {{dur_verbo}} a forma como você governa a sua vida.</p>
-    <div class="row4 reveal" data-d="1">
-      <figure><img decoding="async" src="assets/pv/evento-1.jpg" alt="Mentores no palco" loading="lazy" /></figure>
-      <figure><img decoding="async" src="assets/pv/hero2.jpg" alt="Hewerton Scheidegger palestrando" loading="lazy" /></figure>
-      <figure><img decoding="async" src="assets/pv/exp1.jpg" alt="Mesa de trabalho" loading="lazy" /></figure>
-      <figure><img decoding="async" src="assets/pv/palco-azul.jpg" alt="Hewerton Scheidegger no palco" loading="lazy" style="object-position:center 30%" /></figure>
-    </div>
-    <div class="row3 reveal" data-d="2">
-      <div class="claim"><img decoding="async" src="assets/pv/evento-5.jpg" alt="" loading="lazy" /><div><b>Isto é um movimento</b><span>Não um evento</span></div></div>
-      <div class="claim"><img decoding="async" src="assets/pv/evento-3.jpg" alt="" loading="lazy" /><div><b>Isto é transformação</b><span>Não motivação</span></div></div>
-      <div class="claim"><img decoding="async" src="assets/pv/exp4.jpg" alt="" loading="lazy" /><div><b>Isto é comunidade</b><span>Não uma plateia</span></div></div>
-    </div>
-    <div class="row4 reveal" data-d="2" style="margin-top:clamp(.5rem,1.1vw,.8rem)">
-      <figure><img decoding="async" src="assets/pv/exp2.jpg" alt="Mentoria em grupo" loading="lazy" /></figure>
-      <figure><img decoding="async" src="assets/pv/evento-2.jpg" alt="Santiago Vecina palestrando" loading="lazy" style="object-position:center 25%" /></figure>
-      <figure><img decoding="async" src="assets/pv/exp3.jpg" alt="Lounge da imersão" loading="lazy" /></figure>
-      <figure><img decoding="async" src="assets/pv/evento-5.jpg" alt="Hewerton com participantes" loading="lazy" /></figure>
-    </div>
-    <div class="exp__close reveal">
-      <p class="a">Não perca o seu momento</p>
-      <p class="b">Faça parte da experiência.</p>
-      <a href="#ingressos" class="pill">Garantir ingresso</a>
-    </div>
+<section id="experiencia">
+{{wall}}
+  <div class="wrap" style="padding-top: 100px; padding-bottom: 100px">
+{{experiencia}}
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap split" style="position: relative; display: flex; justify-content: space-between; align-items: center; gap: 40px">
+    <h2 class="serif h2 huge" style="font-size: 76px; line-height: 1; margin: 0; max-width: 800px">Você não foi criado apenas para vencer. <em>Foi criado para reinar.</em></h2>
+    <div style="max-width: 340px"><p style="font-size: 18px; line-height: 1.55; margin: 0 0 24px; font-weight: 500">{{datas_texto}} · {{cidade}}, {{uf}}</p><a class="btn btn-dark" href="#ingressos">Garantir minha vaga</a></div>
   </div>
 </section>
 
@@ -837,13 +913,11 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
 
 </main>
 
-<footer class="footer">
-  <div class="wrap">
-    <a href="#top" class="brand" aria-label="Método REI"><img decoding="async" class="brand__logo" src="assets/logo-metodo-rei.png" alt="Método REI" /></a>
-    <nav>
-      <a href="https://wa.me/13053705595?text=Ol%C3%A1%21%20Tenho%20interesse%20em%20participar%20do%20evento%20M%C3%A9todo%20REI%20e%20gostaria%20de%20receber%20mais%20informa%C3%A7%C3%B5es.%20Pode%20me%20ajudar%3F" target="_blank" rel="noopener">Contato</a>
-    </nav>
-    <small>© 2026 Método REI · Edição {{cidade}}, {{uf}}</small>
+<footer style="border-top: 1px solid rgba(238,233,224,.1); padding: 44px 0">
+  <div class="wrap split" style="display: flex; justify-content: space-between; align-items: center; gap: 20px">
+    <a href="/" class="brandmark" aria-label="Método REI — todas as edições"><span>MÉTODO REI</span></a>
+    <span class="serif champ" style="font-style: italic; font-size: 20px">Todo Rei é rico. Mas nem todo rico é Rei.</span>
+    <nav style="display: flex; gap: 22px; flex-wrap: wrap; align-items: center" aria-label="Rodapé"><a href="/" style="color: #9A948A; text-decoration: none; font-size: 12px; font-weight: 700; letter-spacing: .14em">TODAS AS EDIÇÕES</a><a href="https://wa.me/13053705595?text=Ol%C3%A1%21%20Tenho%20interesse%20em%20participar%20do%20evento%20M%C3%A9todo%20REI%20e%20gostaria%20de%20receber%20mais%20informa%C3%A7%C3%B5es.%20Pode%20me%20ajudar%3F" target="_blank" rel="noopener" style="color: #9A948A; text-decoration: none; font-size: 12px; font-weight: 700; letter-spacing: .14em">WHATSAPP</a><small style="color: #5F5B54; font-size: 12px">© {{ano}} · Edição {{cidade}}, {{uf}}</small></nav>
   </div>
 </footer>
 

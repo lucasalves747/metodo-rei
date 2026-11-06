@@ -3,8 +3,13 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/dallas",
+      "destination": "/",
+      "permanent": false
+    },
+    {
       "source": "/prevenda-dallas",
-      "destination": "/dallas",
+      "destination": "/",
       "permanent": false
     },
     {

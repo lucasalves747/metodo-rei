@@ -1,7 +1,6 @@
 {
   "home": {
     "cidades": [
-      "Dallas",
       "Orlando",
       "Boston"
     ],
@@ -21,21 +20,6 @@
       "fotos": [
         "assets/pv/hewerton.jpg",
         "assets/pv/santiago.jpg"
-      ]
-    },
-    {
-      "slug": "dallas",
-      "cidade": "Dallas",
-      "uf": "TX",
-      "dias": "Sexta e Sábado",
-      "data": "13 e 14 de Novembro, 2026",
-      "onde": "Dallas, TX",
-      "min": 14,
-      "fotos": [
-        "assets/pv/hewerton.jpg",
-        "assets/pv/santiago.jpg",
-        "assets/pv/eliane.jpg",
-        "assets/iram.png"
       ]
     },
     {

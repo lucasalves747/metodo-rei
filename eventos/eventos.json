@@ -11,20 +11,41 @@
     "hewerton-scheidegger",
     "santiago-vecina"
   ],
+  "preletores_fixos": [
+    "hewerton-scheidegger",
+    "santiago-vecina"
+  ],
+  "precos_padrao": {
+    "standard": {
+      "de": 87,
+      "por": 14
+    },
+    "vip": {
+      "de": 127,
+      "por": 47
+    },
+    "rei": {
+      "de": 397,
+      "por": 197
+    }
+  },
   "preletores": {
     "hewerton-scheidegger": {
       "nome": "Hewerton Scheidegger",
       "titulo_html": "Hewerton <span class=\"g\">Scheidegger</span>",
       "funcao": "Criador &amp; Mentor",
       "foto": "assets/pv/hewerton.jpg",
-      "bio": "Empresário, advogado, contador e consultor financeiro. Criador do Método REI e autor de 1000 Códigos de Sabedoria e Método 7D para Milhões em Vendas. Une gestão, finanças, liderança e propósito em uma visão de prosperidade que não precisa custar sua família e sua direção. Realizou provas de Ironman e Ultraman."
+      "bio": "Empresário, advogado, contador e consultor financeiro. Criador do Método REI e autor de 1000 Códigos de Sabedoria e Método 7D para Milhões em Vendas. Une gestão, finanças, liderança e propósito em uma visão de prosperidade que não precisa custar sua família e sua direção. Realizou provas de Ironman e Ultraman.",
+      "destaque": "Criador"
     },
     "santiago-vecina": {
       "nome": "Santiago Vecina",
       "titulo_html": "Dr. Santiago <span class=\"g\">Vecina</span>",
       "funcao": "Médico, nutrólogo, empresário e mentor",
       "foto": "assets/pv/santiago.jpg",
-      "bio": "Médico e nutrólogo com foco em alta performance. Atleta de alta performance (Ultraman). Conecta saúde, clareza, liderança, negócios e legado na abordagem da Performance Integral. Sua trajetória reúne a perspectiva médica e a experiência empresarial para olhar para a vida como um todo."
+      "bio": "Médico e nutrólogo com foco em alta performance. Atleta de alta performance (Ultraman). Conecta saúde, clareza, liderança, negócios e legado na abordagem da Performance Integral. Sua trajetória reúne a perspectiva médica e a experiência empresarial para olhar para a vida como um todo.",
+      "destaque": "Co-criador",
+      "nome_curto": "Dr. Santiago Vecina"
     },
     "eliane-martins": {
       "nome": "Eliane Martins",
@@ -131,35 +152,6 @@
       ]
     },
     {
-      "slug": "dallas",
-      "cidade": "Dallas",
-      "uf": "TX",
-      "estado": "Texas",
-      "inicio": "2026-11-13",
-      "fim": "2026-11-14",
-      "horarios": [
-        "6:30pm–11pm",
-        "8:30am–8pm"
-      ],
-      "local": {
-        "nome": "Local a definir"
-      },
-      "selo": "Pré-venda",
-      "imagem_hero": "assets/pv-dallas.jpg",
-      "imagem_card": "assets/home/city-dallas.jpg",
-      "checkout": {
-        "standard": "https://pag.metodorei.com/cart-pre",
-        "vip": "https://pag.metodorei.com/cart-pre-vip",
-        "rei": "https://pag.metodorei.com/cart-pre-rei"
-      },
-      "preletores": [
-        "hewerton-scheidegger",
-        "santiago-vecina",
-        "eliane-martins",
-        "airam-da-silva"
-      ]
-    },
-    {
       "slug": "orlando",
       "cidade": "Orlando",
       "uf": "FL",
@@ -199,7 +191,8 @@
         "curto": "🥩 Almoço com churrasco <b>incluso em todos os ingressos</b>",
         "nota_ingresso": "Almoço com churrasco<br>incluso"
       },
-      "lead_codigo": "MREI201126"
+      "lead_codigo": "MREI201126",
+      "selo": "Churrasco incluso"
     },
     {
       "slug": "boston",
@@ -221,19 +214,5 @@
         "bruno-rodrigues"
       ]
     }
-  ],
-  "precos_padrao": {
-    "standard": {
-      "de": 87,
-      "por": 14
-    },
-    "vip": {
-      "de": 127,
-      "por": 47
-    },
-    "rei": {
-      "de": 397,
-      "por": 197
-    }
-  }
+  ]
 }
