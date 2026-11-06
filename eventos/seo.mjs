@@ -53,10 +53,10 @@ export function precosDe(data, ev) {
 
 function favicons() {
   return `<link rel="icon" href="/favicon.ico" sizes="32x32" />
-<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <link rel="manifest" href="/site.webmanifest" />
-<meta name="theme-color" content="#0B121C" />`;
+<meta name="theme-color" content="#080808" />`;
 }
 
 function social({ url, titulo, descricao, imagem, alt, tipo = "website", site, lang, caminho }) {

@@ -42,7 +42,7 @@ def page_evento(e, t):
     faces = "".join(f'<img src="{f}">' for f in e["fotos"][:7])
     return f"""<html><head><style>{CSS}</style></head><body>
 <img class="bg" src="assets/hero2.jpg"><div class="ov"></div>
-<div class="in"><div class="brand">{CROWN}MÉTODO REI</div>
+<div class="in"><div class="brand"><img src="assets/logo-metodo-rei.png" style="height:54px"></div>
 <div class="city">{e['cidade']}</div>
 <div class="date">{e['dias']} · {e['data']}</div>
 <div class="where">{t['imersao']} · {e['onde']}</div>
@@ -53,8 +53,7 @@ def page_home(h, t):
     anos = "–".join(str(a) for a in h["anos"])
     return f"""<html><head><style>{CSS}</style></head><body class="home">
 <img class="bg" src="assets/evento-1.jpg" style="object-position:60% 30%"><div class="ov"></div>
-<div class="in"><div class="brand">{CROWN}{t['tour']} {anos}</div>
-<h1>Método REI</h1><div class="tag">{t['tag']}</div>
+<div class="in"><img src="assets/logo-metodo-rei.png" style="height:120px;align-self:flex-start;margin-top:auto"><div class="cities" style="margin-top:22px;color:#E9CC7E">{t['tour']} {anos}</div><div class="tag">{t['tag']}</div>
 <div class="cities">{cid}</div></div></body></html>"""
 
 async def main():

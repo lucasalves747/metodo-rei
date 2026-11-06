@@ -28,6 +28,9 @@ a{color:#E3C78A}a:hover{color:#F6E2B0}
 .nav-in{display:flex;align-items:center;justify-content:space-between;height:88px;gap:20px}
 .brandmark{display:flex;align-items:center;gap:14px;text-decoration:none;color:#EEE9E0}
 .brandmark span{font-size:14px;font-weight:700;letter-spacing:.34em}
+.logo-h{display:block;height:44px;width:auto}
+.logo-foot{height:36px}
+@media (max-width:600px){.logo-h{height:30px}}
 .lang{display:flex;gap:2px;align-items:center;font-size:12px;font-weight:700;letter-spacing:.12em;border:1px solid rgba(227,199,138,.45);border-radius:6px;padding:3px;background:rgba(20,18,14,.6)}
 .lang svg{width:16px;height:16px;margin:0 4px 0 6px;color:#E3C78A;flex:none}
 .lang a{color:#C8C1B4;text-decoration:none;padding:8px 10px;border-radius:4px;line-height:1}
@@ -148,7 +151,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
 
 <header class="wrap">
   <div class="nav-in">
-    <a href="#top" class="brandmark" aria-label="Método REI — início"><svg viewBox="0 0 64 44" width="38" height="26" fill="none" stroke="#E3C78A" stroke-width="2" aria-hidden="true"><path d="M6 34 L10 10 L22 24 L32 4 L42 24 L54 10 L58 34 Z" stroke-linejoin="round"/><path d="M7 40 H57" stroke-linecap="round"/><circle cx="10" cy="8" r="2.4" fill="#E3C78A" stroke="none"/><circle cx="32" cy="2.6" r="2.4" fill="#E3C78A" stroke="none"/><circle cx="54" cy="8" r="2.4" fill="#E3C78A" stroke="none"/></svg><span>MÉTODO REI</span></a>
+    <a href="#top" class="brandmark" aria-label="Método REI — início"><img src="assets/logo-h-96.webp" alt="Método REI" width="258" height="44" class="logo-h"></a>
     <nav class="nav-links" aria-label="Principal"><a href="#tour">Tour</a><a href="#lineup">No palco</a><a href="#metodo">O Método</a><a href="#faq">FAQ</a></nav>
     <div style="display: flex; align-items: center; gap: 12px">{{idiomas}}<a class="btn btn-gold" href="#tour" style="min-height: 44px; padding: 0 20px; font-size: 11px">Ingressos</a></div>
   </div>
@@ -292,7 +295,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
 
 <footer style="border-top: 1px solid rgba(238,233,224,.1); padding: 44px 0">
   <div class="wrap split" style="display: flex; justify-content: space-between; align-items: center; gap: 20px">
-    <span style="font-size: 13px; font-weight: 700; letter-spacing: .34em">MÉTODO REI</span>
+    <img src="assets/logo-h-96.webp" alt="Método REI" width="211" height="36" class="logo-h logo-foot">
     <span class="serif champ" style="font-style: italic; font-size: 20px">Todo Rei é rico. Mas nem todo rico é Rei.</span>
     <nav style="display: flex; gap: 22px; flex-wrap: wrap; align-items: center" aria-label="Rodapé">{{rodape}}<a href="https://wa.me/13053705595" target="_blank" rel="noopener" style="color: #9A948A; text-decoration: none; font-size: 12px; font-weight: 700; letter-spacing: .14em">WHATSAPP</a><span style="color: #5F5B54; font-size: 12px">© {{ano}}</span></nav>
   </div>
