@@ -124,7 +124,7 @@ a{color:#E3C78A}a:hover{color:#F6E2B0}
 @media (max-width:900px){.lang{font-size:11px}.lang svg{display:none}.lang a{padding:8px 7px}}
 @media (max-width:600px){header.wrap .btn{display:none}.ev-head .nav-in > div > .btn{display:none}.brandmark span{white-space:nowrap;letter-spacing:.16em}}
 .nav-links{display:flex;gap:30px}
-.nav-links a{color:rgba(238,233,224,.82);text-decoration:none;font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+.nav-links a{white-space:nowrap;color:rgba(238,233,224,.82);text-decoration:none;font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
 .nav-links a:hover{color:#fff}
 .hero{position:relative;overflow:hidden;border-bottom:1px solid rgba(201,168,102,.22);text-align:center}
 .hero-glow{position:absolute;left:50%;top:-14%;transform:translateX(-50%);width:1100px;height:720px;max-width:100vw;background:radial-gradient(closest-side,rgba(240,206,130,.22),rgba(8,8,8,0));pointer-events:none}
@@ -205,6 +205,7 @@ a{color:#E3C78A}a:hover{color:#F6E2B0}
  .split{flex-direction:column !important;align-items:flex-start !important}
  .two{grid-template-columns:1fr !important;gap:36px !important}
 }
+@media (max-width:1000px){header .nav-links{display:none}}
 </style>
 <!-- Microsoft Clarity -->
 <script type="text/javascript">
@@ -272,9 +273,9 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
     </div>
     <div class="cards" style="grid-template-columns: repeat(2, minmax(0,1fr))">
       <article class="card" data-end="2026-11-21"><img src="/assets/home/city-orlando.jpg" alt="Skyline de Orlando" loading="lazy"><div class="card-shade"></div>
-        <div style="position: relative"><span class="badge badge-gold">Churrasco incluido</span><div class="serif" style="font-size: 72px; line-height: .95; margin-top: 16px">Orlando</div><div style="font-size: 17px; font-weight: 600; margin-top: 10px">Sábado, 21 de noviembre</div><div style="font-size: 14px; color: #9A948A; margin-top: 4px">Sáb 8:30AM–5:30PM · Winter Garden, FL</div><a class="btn btn-gold" href="/es/orlando" data-event="Orlando" style="margin-top: 24px; width: 100%">Asegurar mi lugar</a></div></article>
+        <div style="position: relative"><span class="badge badge-gold">Churrasco incluido</span><div class="serif" style="font-size: 72px; line-height: .95; margin-top: 16px">Orlando</div><div style="font-size: 17px; font-weight: 600; margin-top: 10px">Sábado, 21 de noviembre</div><div style="font-size: 14px; color: #9A948A; margin-top: 4px">Sáb 8:30AM–5:30PM · Winter Garden, FL</div><div style="font-size: 15px; font-weight: 700; color: #E3C78A; margin-top: 14px">Desde US$60</div><a class="btn btn-gold" href="/es/orlando" data-event="Orlando" style="margin-top: 18px; width: 100%">Ver evento y entradas</a></div></article>
       <article class="card" data-end="2026-12-05"><img src="/assets/home/city-boston.jpg" alt="Skyline de Boston" loading="lazy"><div class="card-shade"></div>
-        <div style="position: relative"><span class="badge badge-line">Viernes + Sábado</span><div class="serif" style="font-size: 72px; line-height: .95; margin-top: 16px">Boston</div><div style="font-size: 17px; font-weight: 600; margin-top: 10px">4–5 de diciembre</div><div style="font-size: 14px; color: #9A948A; margin-top: 4px">Vie 6:30PM–11PM · Sáb 8:30AM–7PM</div><a class="btn btn-gold" href="/es/boston" data-event="Boston" style="margin-top: 24px; width: 100%">Asegurar mi lugar</a></div></article>
+        <div style="position: relative"><span class="badge badge-line">Viernes + Sábado</span><div class="serif" style="font-size: 72px; line-height: .95; margin-top: 16px">Boston</div><div style="font-size: 17px; font-weight: 600; margin-top: 10px">4–5 de diciembre</div><div style="font-size: 14px; color: #9A948A; margin-top: 4px">Vie 6:30PM–11PM · Sáb 8:30AM–7PM</div><div style="font-size: 15px; font-weight: 700; color: #E3C78A; margin-top: 14px">Desde US$14</div><a class="btn btn-gold" href="/es/boston" data-event="Boston" style="margin-top: 18px; width: 100%">Ver evento y entradas</a></div></article>
     </div>
     <p class="events__empty" id="eventsEmpty">Nuevas fechas muy pronto. <a href="#comunidade">Únete a la comunidad</a> y entérate primero.</p>
   </div>
@@ -360,7 +361,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
 <section class="cta">
   <div class="wrap split" style="position: relative; display: flex; justify-content: space-between; align-items: center; gap: 40px">
     <h2 class="serif h2 huge" style="font-size: 84px; line-height: 1; margin: 0; max-width: 820px">No fuiste creado solo para vencer. <em>Fuiste creado para reinar.</em></h2>
-    <div style="max-width: 340px"><p style="font-size: 18px; line-height: 1.55; margin: 0 0 24px; font-weight: 500">Si solo buscas motivación, esto no es para ti. Si buscas transformación, bienvenido al Método REI.</p><a class="btn btn-dark" href="#tour">Asegurar mi lugar</a></div>
+    <div style="max-width: 340px"><p style="font-size: 18px; line-height: 1.55; margin: 0 0 24px; font-weight: 500">Si solo buscas motivación, esto no es para ti. Si buscas transformación, bienvenido al Método REI.</p><a class="btn btn-dark" href="#tour">Elegir mi fecha</a></div>
   </div>
 </section>
 

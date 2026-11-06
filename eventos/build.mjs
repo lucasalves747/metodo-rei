@@ -177,7 +177,16 @@ function vendaVars(ev, d, lang) {
     titulo_sufixo: T.tituloSufixo(prevenda),
     preco_min: Math.min(...["standard", "vip", "rei"].map((k) => precos[k].por)),
     promo_bar: prevenda ? T.promo : "",
-    hero_offer: T.heroOffer(prevenda),
+    hero_offer: T.aPartir(Math.min(...["standard", "vip", "rei"].map((k) => precos[k].por))),
+    cta_topo: T.ctaTopo(Math.min(...["standard", "vip", "rei"].map((k) => precos[k].por))),
+    cta_ver: T.verIngressos,
+    cta_standard: T.comprar("Standard"),
+    cta_vip: T.comprar("VIP"),
+    cta_rei: T.comprar("REI"),
+    lead_standard: `Standard · US$${precos.standard.por} · ${ev.cidade}, ${d.curta}`,
+    lead_vip: `VIP · US$${precos.vip.por} · ${ev.cidade}, ${d.curta}`,
+    lead_rei: `REI · US$${precos.rei.por} · ${ev.cidade}, ${d.curta}`,
+    buybar: `<div class="buybar"><div><b>${ev.cidade} · ${d.curta}</b><span>${T.aPartir(Math.min(...["standard", "vip", "rei"].map((k) => precos[k].por)))}</span></div><a class="btn btn-gold" href="#ingressos">${T.comprarCurto}</a></div>`,
     hero_save: heroSave,
     dur_facts: T.durFacts(d.nDias),
     dur_about: T.durAbout(d.nDias),
@@ -237,6 +246,8 @@ function render(ev0, lang) {
 
 function card(ev, d, lang) {
   const T = L[lang];
+  const pr = { ...data.precos_padrao, ...(ev.precos || {}) };
+  const min = Math.min(pr.standard.por, pr.vip.por, pr.rei.por);
   const img = ev.imagem_card || ev.imagem || `assets/home/city-${ev.slug}.jpg`;
   const selo = ev.selo || d.diasCard.replace(" · ", " + ");
   const cls = ev.selo ? (/pr[ée]-?vent|pre-?sale/i.test(ev.selo) ? "badge-red" : "badge-gold") : "badge-line";
@@ -244,7 +255,7 @@ function card(ev, d, lang) {
   const horas = d.horario.replace(/(am|pm)/gi, (m) => m.toUpperCase());
   const local = ev.local && !localDefinir(ev.local) ? ` · ${ev.local.nome}` : "";
   return `      <article class="card" data-end="${ev.fim}"><img src="${img}" alt="${T.skyline(ev.cidade)}" loading="lazy"><div class="card-shade"></div>
-        <div style="position: relative"><span class="badge ${cls}">${selo}</span><div class="serif" style="font-size: 72px; line-height: .95; margin-top: 16px">${ev.cidade}</div><div style="font-size: 17px; font-weight: 600; margin-top: 10px">${quando}</div><div style="font-size: 14px; color: #9A948A; margin-top: 4px">${horas}${local}</div><a class="btn btn-gold" href="/${ev.slug}" data-event="${ev.cidade}" style="margin-top: 24px; width: 100%">${T.garantirVaga}</a></div></article>`;
+        <div style="position: relative"><span class="badge ${cls}">${selo}</span><div class="serif" style="font-size: 72px; line-height: .95; margin-top: 16px">${ev.cidade}</div><div style="font-size: 17px; font-weight: 600; margin-top: 10px">${quando}</div><div style="font-size: 14px; color: #9A948A; margin-top: 4px">${horas}${local}</div><div style="font-size: 15px; font-weight: 700; color: #E3C78A; margin-top: 14px">${T.aPartir(min)}</div><a class="btn btn-gold" href="/${ev.slug}" data-event="${ev.cidade}" style="margin-top: 18px; width: 100%">${T.verEvento}</a></div></article>`;
 }
 
 // "No palco" da home: fixos (sempre, em cor) + quem está em algum evento futuro (P&B), sem repetir.

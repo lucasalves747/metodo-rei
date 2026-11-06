@@ -658,7 +658,7 @@ a{color:#E3C78A}a:hover{color:#F6E2B0}
 .lang a:hover{color:#fff;background:rgba(227,199,138,.12)}
 .lang a[aria-current]{color:#130D03;background:linear-gradient(180deg,#F6E4B0,#D9B46A)}
 @media (max-width:900px){.lang{font-size:11px}.lang svg{display:none}.lang a{padding:8px 7px}}
-@media (max-width:600px){.ev-head .nav-in > div > .btn{display:none}.brandmark span{white-space:nowrap;letter-spacing:.16em}}
+@media (max-width:900px){.ev-head .nav-in > div > .btn{display:none}}@media (max-width:600px){.brandmark span{white-space:nowrap;letter-spacing:.16em}}
 .nav-links{display:flex;gap:30px}
 .nav-links a{color:rgba(238,233,224,.82);text-decoration:none;font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
 .nav-links a:hover{color:#fff}
@@ -844,6 +844,24 @@ body{background:#080808;color:#EEE9E0;font-family:var(--sans)}
  .elenco .row > div:last-child{grid-column:1 / -1}
  .elenco h3{font-size:28px}
 }
+
+/* ===== Ajustes de UX: e-books recolhidos, barra de compra no celular, menu ===== */
+.ebooks summary{cursor:pointer;list-style:none;font-weight:600}
+.ebooks summary::-webkit-details-marker{display:none}
+.ebooks summary::after{content:" +";color:#E3C78A}
+.ebooks[open] summary::after{content:" –"}
+.ebooks ul{margin:.5rem 0 0;padding:0;list-style:none}
+.ebooks li.sub{font-size:.85em;opacity:.8;padding:.15rem 0 .15rem 0 !important}
+.nav-links a{white-space:nowrap}
+@media (max-width:1100px){.ev-head .nav-links{display:none}.ev-head .menu-toggle{display:flex}}
+.buybar{display:none}
+@media (max-width:900px){
+ .buybar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:60;align-items:center;justify-content:space-between;gap:12px;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:rgba(8,8,8,.94);backdrop-filter:blur(10px);border-top:1px solid rgba(227,199,138,.35)}
+ .buybar b{display:block;font-family:var(--serif);font-weight:400;font-size:18px;color:#F2EEE6;line-height:1.1}
+ .buybar span{font-size:12px;color:#B9B2A5}
+ .buybar .btn{min-height:44px;padding:0 18px;font-size:11px}
+ body{padding-bottom:76px}
+}
 </style>
 <!-- Microsoft Clarity -->
 <script type="text/javascript">
@@ -876,10 +894,10 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
 <header class="ev-head">
   <div class="wrap nav-in">
     <a href="/en" class="brandmark" aria-label="Método REI — home"><img src="/assets/logo-h-96.webp" alt="Método REI" width="258" height="44" class="logo-h"></a>
-    <nav class="nav-links" aria-label="Main"><a href="#sobre">About</a><a href="#metodo">The Method</a><a href="#mentores">On stage</a><a href="#ingressos">Tickets</a><a href="#bonus">Bonus</a></nav>
+    <nav class="nav-links" aria-label="Main"><a href="#sobre">About</a><a href="#metodo">The Method</a><a href="#mentores">On stage</a><a href="#bonus">Bonus</a></nav>
     <div style="display: flex; align-items: center; gap: 10px">
       <nav class="lang" aria-label="Idioma / Language"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></svg><a href="/miami" hreflang="pt-BR" lang="pt-BR" title="Português">PT</a><a href="/en/miami" hreflang="en" lang="en" title="English" aria-current="page">EN</a><a href="/es/miami" hreflang="es" lang="es" title="Español">ES</a></nav>
-      <a href="#ingressos" class="btn btn-gold" style="min-height: 44px; padding: 0 20px; font-size: 11px">Get tickets</a>
+      <a href="#ingressos" class="btn btn-gold" style="min-height: 44px; padding: 0 20px; font-size: 11px">Tickets · US$14</a>
       <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </div>
@@ -896,6 +914,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
 </div>
 
 <div class="promo"><b>Special pre-sale!</b>Save on every ticket</div>
+<div class="buybar"><div><b>Miami · Oct 23–24</b><span>From US$14</span></div><a class="btn btn-gold" href="#ingressos">Buy</a></div>
 
 <main>
 
@@ -908,9 +927,9 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
       <p class="serif ev-date">Friday & Saturday · October 23–24, 2026</p>
       <div class="ev-venue"><a href="https://www.google.com/maps/search/?api=1&amp;query=Lagoinha+Miami+Church+295+NE+59th+Terrace+Miami+FL+33137" target="_blank" rel="noopener">295 NE 59th Terrace, Miami, FL</a></div>
       <p style="font-size: 19px; line-height: 1.6; font-weight: 300; max-width: 620px; margin: 24px auto 0; color: rgba(238,233,224,.86)">An immersion for those who want to govern their own lives, prosper with purpose and build a legacy — <strong style="color: #fff; font-weight: 600">win without losing.</strong></p>
-      <div class="ev-offer">Lock in the pre-sale offer</div>
+      <div class="ev-offer">From US$14</div>
       <div style="display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; justify-content: center">
-        <a class="btn btn-gold" href="#ingressos">Secure my spot</a>
+        <a class="btn btn-gold" href="#ingressos">See tickets</a>
         <a class="btn btn-line" href="#video"><svg viewBox="0 0 24 24" width="16" height="16" fill="#E3C78A" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg>Watch the video</a>
       </div>
       <div class="hero__save reveal" data-d="3">Save up to <b>84% OFF!</b></div>
@@ -1015,7 +1034,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
 <section class="cta">
   <div class="wrap split" style="position: relative; display: flex; justify-content: space-between; align-items: center; gap: 40px">
     <h2 class="serif h2 huge" style="font-size: 76px; line-height: 1; margin: 0; max-width: 800px">You weren't created just to win. <em>You were created to reign.</em></h2>
-    <div style="max-width: 340px"><p style="font-size: 18px; line-height: 1.55; margin: 0 0 24px; font-weight: 500">October 23–24, 2026 · Miami, FL</p><a class="btn btn-dark" href="#ingressos">Secure my spot</a></div>
+    <div style="max-width: 340px"><p style="font-size: 18px; line-height: 1.55; margin: 0 0 24px; font-weight: 500">October 23–24, 2026 · Miami, FL</p><a class="btn btn-dark" href="#ingressos">See tickets</a></div>
   </div>
 </section>
 
@@ -1045,7 +1064,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
             <li class="sub">2. Guia para Performance Integral</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Building your 90-Day Plan</li>
           </ul>
-          <a href="https://pag.metodorei.com/cart-miami" class="pill pill--block">Buy ticket</a>
+          <a href="https://pag.metodorei.com/cart-miami" class="pill pill--block" data-label="Standard · US$14 · Miami, Oct 23–24">Buy Standard</a>
         </div>
       </article>
 
@@ -1064,20 +1083,9 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Método REI support materials</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Building your 90-Day Plan</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Bonus e-book · instant download</li>
-            <li class="bh">E-books</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>A Mente de um Reinante</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Guia para Performance Integral</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>O negócio que trabalha para você</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>05 pilares para construção de riqueza</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Gestão do Fluxo de Caixa</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Desenvolvimento profissional e Digital</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>07 erros que estão sugando sua energia</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Checklist para diagnóstico de Burnout</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Protocolo da máquina de alta performance</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Protocolo para um sono perfeito</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Guia clínico de suplementos e fitoterápicos</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg><details class="ebooks"><summary>11 Método REI e-books</summary><ul><li class="sub">A Mente de um Reinante</li><li class="sub">Guia para Performance Integral</li><li class="sub">O negócio que trabalha para você</li><li class="sub">05 pilares para construção de riqueza</li><li class="sub">Gestão do Fluxo de Caixa</li><li class="sub">Desenvolvimento profissional e Digital</li><li class="sub">07 erros que estão sugando sua energia</li><li class="sub">Checklist para diagnóstico de Burnout</li><li class="sub">Protocolo da máquina de alta performance</li><li class="sub">Protocolo para um sono perfeito</li><li class="sub">Guia clínico de suplementos e fitoterápicos</li></ul></details></li>
           </ul>
-          <a href="https://pag.metodorei.com/cart-vip-miami" class="pill pill--block">Buy ticket</a>
+          <a href="https://pag.metodorei.com/cart-vip-miami" class="pill pill--block" data-label="VIP · US$47 · Miami, Oct 23–24">Buy VIP</a>
         </div>
       </article>
 
@@ -1099,23 +1107,12 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>6 months of access to the Legacy platform, with complete courses on longevity, sales, marketing, finance, social media and more. Expand your knowledge and build the skills to reign over your health, your business and every other area of your life.</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Building your 90-Day Plan</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Bonus e-book · instant download</li>
-            <li class="bh">E-books</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>A Mente de um Reinante</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Guia para Performance Integral</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>O negócio que trabalha para você</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>05 pilares para construção de riqueza</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Gestão do Fluxo de Caixa</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Desenvolvimento profissional e Digital</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>07 erros que estão sugando sua energia</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Checklist para diagnóstico de Burnout</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Protocolo da máquina de alta performance</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Protocolo para um sono perfeito</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Guia clínico de suplementos e fitoterápicos</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg><details class="ebooks"><summary>11 Método REI e-books</summary><ul><li class="sub">A Mente de um Reinante</li><li class="sub">Guia para Performance Integral</li><li class="sub">O negócio que trabalha para você</li><li class="sub">05 pilares para construção de riqueza</li><li class="sub">Gestão do Fluxo de Caixa</li><li class="sub">Desenvolvimento profissional e Digital</li><li class="sub">07 erros que estão sugando sua energia</li><li class="sub">Checklist para diagnóstico de Burnout</li><li class="sub">Protocolo da máquina de alta performance</li><li class="sub">Protocolo para um sono perfeito</li><li class="sub">Guia clínico de suplementos e fitoterápicos</li></ul></details></li>
             <li class="bh">Bonus</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>One-on-one call with the speakers</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Exclusive breakfast</li>
           </ul>
-          <a href="https://pag.metodorei.com/cart-miami-rei" class="pill pill--block">Buy ticket</a>
+          <a href="https://pag.metodorei.com/cart-miami-rei" class="pill pill--block" data-label="REI · US$197 · Miami, Oct 23–24">Buy REI</a>
         </div>
       </article>
     </div>
@@ -1211,10 +1208,6 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
           <input class="lead-input" id="leadTel" name="telefone" type="tel" inputmode="tel" placeholder="(000) 000-0000" autocomplete="tel" required>
         </div>
       </div>
-      <div class="lead-field">
-        <label for="leadArea">Profession</label>
-        <input class="lead-input" id="leadArea" name="area" type="text" placeholder="Enter your profession" autocomplete="organization-title" required>
-      </div>
       <p class="lead-error" id="leadError">Please fill in all fields correctly.</p>
       <button class="pill" type="submit">Continue</button>
     </form>
@@ -1250,8 +1243,10 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
       pending=null;
   var LEAD_ENDPOINT="https://contact-blossom-39.lovable.app/api/public/contatos/ck_479abcc9_479abcc9a2f98313db0a19480754dbf7abe9b3cc27b6cd889cd5d06a3d43deef";
   var LEAD_TAGS=["Método REI - Miami 2026","MREI231026","Idioma: EN"];
-  function openLead(url,target){
+  var leadTitleEl=document.getElementById("leadTitle"),leadTitleDef=leadTitleEl?leadTitleEl.textContent:"";
+  function openLead(url,target,label){
     pending={url:url,target:target};
+    if(leadTitleEl)leadTitleEl.textContent=label||leadTitleDef;
     if(leadErr)leadErr.style.display="none";
     modal.classList.add("is-open");modal.setAttribute("aria-hidden","false");document.body.style.overflow="hidden";
     var n=document.getElementById("leadNome");if(n)setTimeout(function(){n.focus();},60);
@@ -1261,7 +1256,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
   }
   if(modal&&leadForm){
     document.querySelectorAll("a.pill[href^='https://pag.']").forEach(function(a){
-      a.addEventListener("click",function(e){e.preventDefault();openLead(a.getAttribute("href"),a.getAttribute("target"));});
+      a.addEventListener("click",function(e){e.preventDefault();openLead(a.getAttribute("href"),a.getAttribute("target"),a.getAttribute("data-label"));});
     });
     modal.querySelectorAll("[data-close]").forEach(function(el){el.addEventListener("click",closeLead);});
     document.addEventListener("keydown",function(e){if(e.key==="Escape"&&modal.classList.contains("is-open"))closeLead();});
@@ -1269,8 +1264,8 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
       e.preventDefault();
       var nome=document.getElementById("leadNome"),email=document.getElementById("leadEmail"),
           ddi=document.getElementById("leadDdi"),tel=document.getElementById("leadTel"),
-          area=document.getElementById("leadArea");
-      if(!nome.value.trim()||!email.value.trim()||!email.checkValidity()||!tel.value.trim()||!area.value.trim()){
+          area=null;
+      if(!nome.value.trim()||!email.value.trim()||!email.checkValidity()||!tel.value.trim()){
         leadErr.style.display="block";return;
       }
       // Envia os dados capturados para o CRM (fire-and-forget; segue o fluxo mesmo se falhar)
@@ -1278,7 +1273,6 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
         nome:nome.value.trim(),
         email:email.value.trim(),
         telefone:(ddi.value+" "+tel.value.trim()).trim(),
-        profissao:area.value.trim(),
         tags:LEAD_TAGS
       };
       try{
@@ -1298,7 +1292,14 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
         }
       }catch(_){}
       var dest=pending;closeLead();
+      // Leva nome, e-mail e telefone para o checkout já preenchido (e repassa UTMs)
       if(dest&&dest.url){
+        try{
+          var u=new URL(dest.url),q=new URLSearchParams(window.location.search);
+          q.forEach(function(v,k){if(/^utm_|^fbclid$|^gclid$/.test(k))u.searchParams.set(k,v);});
+          u.searchParams.set("name",payload.nome);u.searchParams.set("email",payload.email);u.searchParams.set("phone",(ddi.value+tel.value.replace(/\D/g,"")));
+          dest.url=u.toString();
+        }catch(_){}
         if(dest.target==="_blank"){window.open(dest.url,"_blank","noopener");}
         else{setTimeout(function(){window.location.href=dest.url;},250);}
       }
