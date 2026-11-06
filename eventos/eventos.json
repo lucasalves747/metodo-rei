@@ -354,34 +354,7 @@
           "nota_ingresso": "Almuerzo con churrasco<br>incluido"
         },
         "estado": "Florida"
-      },
-      "webhooks": [
-        {
-          "nome": "Campanha Orlando (todos os ingressos)",
-          "url": "https://zaobtetbjpuzibjymhzw.supabase.co/functions/v1/campaign-webhook/ba048aaf-5aa2-4c29-a71f-d73d5fd8516a",
-          "corpo": {
-            "id": "{id}",
-            "name": "{nome}",
-            "email": "{email}",
-            "phone": "{telefone}",
-            "tag": "orlando"
-          }
-        },
-        {
-          "nome": "Orlando - Liberar ebook ingresso Standard",
-          "tiers": [
-            "standard"
-          ],
-          "url": "https://zaobtetbjpuzibjymhzw.supabase.co/functions/v1/campaign-webhook/0f44308d-d0bf-4c0a-8df5-869c6b8d27e5",
-          "corpo": {
-            "nome": "{primeiro_nome}",
-            "email": "{email}",
-            "phone": "{telefone}",
-            "cidade": "Orlando",
-            "ingresso": "Standard"
-          }
-        }
-      ]
+      }
     },
     {
       "slug": "boston",

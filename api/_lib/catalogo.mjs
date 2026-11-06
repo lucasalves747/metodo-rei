@@ -68,36 +68,7 @@ export const CATALOGO = {
           "preco": 197
         }
       },
-      "webhooks": [
-        {
-          "nome": "Campanha Orlando (todos os ingressos)",
-          "url": "https://zaobtetbjpuzibjymhzw.supabase.co/functions/v1/campaign-webhook/ba048aaf-5aa2-4c29-a71f-d73d5fd8516a",
-          "tiers": null,
-          "para": "todos",
-          "corpo": {
-            "id": "{id}",
-            "name": "{nome}",
-            "email": "{email}",
-            "phone": "{telefone}",
-            "tag": "orlando"
-          }
-        },
-        {
-          "nome": "Orlando - Liberar ebook ingresso Standard",
-          "url": "https://zaobtetbjpuzibjymhzw.supabase.co/functions/v1/campaign-webhook/0f44308d-d0bf-4c0a-8df5-869c6b8d27e5",
-          "tiers": [
-            "standard"
-          ],
-          "para": "todos",
-          "corpo": {
-            "nome": "{primeiro_nome}",
-            "email": "{email}",
-            "phone": "{telefone}",
-            "cidade": "Orlando",
-            "ingresso": "Standard"
-          }
-        }
-      ]
+      "webhooks": []
     },
     "boston": {
       "slug": "boston",

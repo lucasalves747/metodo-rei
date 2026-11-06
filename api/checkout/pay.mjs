@@ -1,5 +1,6 @@
 // Cria o pedido na Square, cobra o pagamento e avisa o Salee.ai (GHL).
 import crypto from "node:crypto";
+import { montarPayload } from "../_lib/payload.mjs";
 import { config, square, cotar, corpo, json, limpa, emailOk, chavePedido, codigoIngresso, assinaturaIngresso } from "../_lib/square.mjs";
 
 const ERROS_CARTAO = {
@@ -106,26 +107,11 @@ export default async function handler(req, res) {
   // 4) webhooks do evento (liberação de e-books, campanhas etc.), por tipo de ingresso
   await dispararWebhooks(ev, q, t, ord.id, nome, email, telefone, ingressos);
 
-  // 5) Salee.ai / GHL geral (não bloqueia a confirmação se falhar)
+  // 5) Salee.ai (GHL) — um aviso com tudo: comprador, pedido, pagamento, evento e ingresso
   if (process.env.GHL_WEBHOOK_URL) {
-    const payload = {
-      tipo: "metodo_rei.pedido_pago",
-      pedido_id: ord.id,
-      pagamento_id: pagamento ? pagamento.id : null,
-      recibo_url: pagamento ? pagamento.receipt_url || null : null,
-      ambiente: cfg.env,
-      idioma: lang,
-      link_confirmacao: link,
-      evento: { slug: ev.slug, cidade: ev.cidade, uf: ev.uf, data: ev.datas_texto, inicio: ev.inicio, fim: ev.fim, local: ev.local },
-      ingresso: { tipo: q.tier, nome: t.nome, quantidade: q.qty, valor_unitario: q.unit / 100, subtotal: q.subtotal / 100, desconto: q.desconto / 100, total: q.total / 100, moeda: "USD", cupom: q.cupom ? q.cupom.codigo : null },
-      comprador: { nome, email, telefone },
-      convidados: ingressos.filter((x) => x.n > 1 && x.convidado).map((x) => ({ nome: x.titular, email: x.email, codigo: x.codigo })),
-      ingressos: ingressos.map(({ n, codigo, titular, email }) => ({ n, codigo, titular, email })),
-      utm: b.utm || {},
-      tags: ["Método REI - Comprou", `Método REI - ${ev.cidade} ${ev.ano}`, `Ingresso ${t.nome}`, `Idioma: ${lang.toUpperCase()}`],
-    };
+    const payload = montarPayload({ cfg, ev, q, t, ord, pagamento, nome, email, telefone, lang, link, ingressos, utm: b.utm || {} });
     try {
-      const ctl = new AbortController(); const tm = setTimeout(() => ctl.abort(), 4000);
+      const ctl = new AbortController(); const tm = setTimeout(() => ctl.abort(), 5000);
       const r = await fetch(process.env.GHL_WEBHOOK_URL, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload), signal: ctl.signal });
       clearTimeout(tm);
       if (!r.ok) console.error("ghl", r.status);
