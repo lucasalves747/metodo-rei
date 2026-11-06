@@ -789,6 +789,58 @@ body{background:#080808;color:#EEE9E0;font-family:var(--sans)}
  .split{flex-direction:column !important;align-items:flex-start !important}
  .two{grid-template-columns:1fr !important;gap:36px !important}
 }
+
+/* ===== NO PALCO — C (holofote, 4+ mentores) e B (elenco, até 3) ===== */
+.palco{margin-top:48px}
+.palco .kick{font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#D2B272}
+.palco h3{font-family:var(--serif);font-weight:400;text-transform:none;margin:0;color:#F2EEE6}
+.palco h3 .g{background:linear-gradient(100deg,#8C6A2E,#D7B56E 26%,#F7E6B8 45%,#DDBC77 60%,#A07A36);-webkit-background-clip:text;background-clip:text;color:transparent}
+.palco .role{font-size:14px;font-weight:600;color:#B9B2A5;letter-spacing:.04em;line-height:1.5}
+.palco p{font-weight:300;color:#B3AC9F}
+.palco .mentor__more summary{font-size:11px;letter-spacing:.18em}
+.spot{display:grid;grid-template-columns:minmax(0,460px) minmax(0,1fr);gap:56px;border-radius:12px;overflow:hidden;background:radial-gradient(120% 140% at 0% 0%,rgba(240,206,130,.12),rgba(8,8,8,0) 60%),#0D0C0A;box-shadow:0 0 0 1px rgba(217,184,115,.4)}
+.spot[hidden]{display:none}
+.spot__ph img{width:100%;height:100%;min-height:560px;max-height:640px;object-fit:cover;object-position:center 15%;display:block}
+.spot__b{padding:56px 64px 44px 0;display:flex;flex-direction:column}
+.spot h3{font-size:64px;line-height:1;margin:16px 0 12px}
+.spot p{font-size:18px;line-height:1.75;margin:28px 0 0;max-width:640px}
+.spot .mentor__more p{font-size:16px;margin-top:14px !important}
+.spot__nav{margin-top:auto;display:flex;align-items:center;gap:18px;padding-top:32px}
+.spot__nav button{all:unset;cursor:pointer;min-height:44px;display:inline-flex;align-items:center;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#E3C78A}
+.spot__nav button:hover{color:#F6E2B0}
+.spot__nav button:focus-visible{outline:2px solid #E3C78A;outline-offset:4px}
+.spot__pos{font-size:13px;color:#77726A}
+.thumbs{display:grid;grid-template-columns:repeat(var(--cols,7),minmax(0,1fr));gap:14px;margin-top:22px}
+.thumb{all:unset;cursor:pointer;display:flex;flex-direction:column;gap:10px;border-radius:8px;min-width:0}
+.thumb img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:center 15%;border-radius:8px;display:block;filter:grayscale(1) brightness(.7);transition:filter .25s,box-shadow .25s}
+.thumb span{font-family:var(--serif);font-size:17px;line-height:1.1;color:#8F8A80}
+.thumb:hover img{filter:grayscale(.3) brightness(.95)}
+.thumb.on img{filter:none;box-shadow:0 0 0 2px #E3C78A,0 18px 40px -18px rgba(227,199,138,.7)}
+.thumb.on span{color:#F2EEE6}
+.thumb:focus-visible img{box-shadow:0 0 0 2px #fff}
+.elenco{border-bottom:1px solid rgba(238,233,224,.12)}
+.elenco .row{display:grid;grid-template-columns:64px 200px minmax(0,320px) minmax(0,1fr);gap:40px;align-items:start;padding:36px 0;border-top:1px solid rgba(238,233,224,.12)}
+.elenco .row img{width:200px;height:200px;object-fit:cover;object-position:center 15%;border-radius:8px;display:block;filter:grayscale(1)}
+.elenco .row.lead img{filter:none;box-shadow:0 0 0 1px #D9B873,0 20px 50px -24px rgba(227,199,138,.6)}
+.elenco .num{font-family:var(--serif);font-size:40px;line-height:1;color:#5E5A53}
+.elenco .row.lead .num{color:#D7B56E}
+.elenco h3{font-size:38px;line-height:1.05;margin:0 0 10px}
+.elenco p{font-size:16px;line-height:1.7;margin:0}
+@media (max-width:900px){
+ .spot{grid-template-columns:1fr;gap:0}
+ .spot__ph img{min-height:0;height:380px}
+ .spot__b{padding:28px 24px 20px}
+ .spot h3{font-size:40px}
+ .spot p{font-size:16px;margin-top:18px}
+ .thumbs{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px}
+ .thumb{flex:0 0 96px;scroll-snap-align:start}
+ .thumb span{font-size:14px}
+ .elenco .row{grid-template-columns:96px minmax(0,1fr);gap:18px 20px;padding:28px 0}
+ .elenco .num{display:none}
+ .elenco .row img{width:96px;height:96px}
+ .elenco .row > div:last-child{grid-column:1 / -1}
+ .elenco h3{font-size:28px}
+}
 </style>
 <!-- Microsoft Clarity -->
 <script type="text/javascript">
@@ -913,20 +965,26 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
       <h2 class="serif h2" style="font-size: 88px; line-height: .95; margin: 0">No palco em <span class="champ">Miami</span></h2>
       <p style="max-width: 380px; margin: 0; font-size: 17px; line-height: 1.6; color: #9A948A">Quem vive o que ensina.</p>
     </div>
-    <div class="mentors mentors--2">
-      <article class="mentor reveal" data-d="1">
-        <div class="mentor__ph"><img decoding="async" src="/assets/pv/hewerton.jpg" alt="Hewerton Scheidegger" loading="lazy" /></div>
-        <div class="mentor__b">
-          <span class="mentor__role">Criador &amp; Mentor</span>
+    <div class="palco elenco">
+      <article class="row lead">
+        <div class="num">01</div>
+        <img src="/assets/pv/hewerton.jpg" alt="Hewerton Scheidegger" loading="lazy" decoding="async">
+        <div><div class="kick" style="margin-bottom: 10px">Criador</div>
           <h3>Hewerton <span class="g">Scheidegger</span></h3>
+          <div class="role">Criador &amp; Mentor</div>
+        </div>
+        <div>
           <p>Empresário, advogado, contador e consultor financeiro. Criador do Método REI e autor de 1000 Códigos de Sabedoria e Método 7D para Milhões em Vendas. Une gestão, finanças, liderança e propósito em uma visão de prosperidade que não precisa custar sua família e sua direção. Realizou provas de Ironman e Ultraman.</p>
         </div>
       </article>
-      <article class="mentor reveal" data-d="2">
-        <div class="mentor__ph"><img decoding="async" src="/assets/pv/santiago.jpg" alt="Santiago Vecina" loading="lazy" /></div>
-        <div class="mentor__b">
-          <span class="mentor__role">Médico, nutrólogo, empresário e mentor</span>
+      <article class="row lead">
+        <div class="num">02</div>
+        <img src="/assets/pv/santiago.jpg" alt="Santiago Vecina" loading="lazy" decoding="async">
+        <div><div class="kick" style="margin-bottom: 10px">Co-criador</div>
           <h3>Dr. Santiago <span class="g">Vecina</span></h3>
+          <div class="role">Médico, nutrólogo, empresário e mentor</div>
+        </div>
+        <div>
           <p>Médico e nutrólogo com foco em alta performance. Atleta de alta performance (Ultraman). Conecta saúde, clareza, liderança, negócios e legado na abordagem da Performance Integral. Sua trajetória reúne a perspectiva médica e a experiência empresarial para olhar para a vida como um todo.</p>
         </div>
       </article>
@@ -1243,6 +1301,26 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
       }
     });
   }
+})();
+</script>
+<script>
+(function(){
+  var roots=document.querySelectorAll("[data-palco]");
+  for(var r=0;r<roots.length;r++)(function(root){
+    var tabs=[].slice.call(root.querySelectorAll("[role=tab]")),panels=[].slice.call(root.querySelectorAll("[role=tabpanel]")),cur=0;
+    function show(i,focus){
+      i=(i+tabs.length)%tabs.length;cur=i;
+      tabs.forEach(function(t,k){var on=k===i;t.setAttribute("aria-selected",on?"true":"false");t.tabIndex=on?0:-1;t.classList.toggle("on",on);panels[k].hidden=!on;});
+      if(focus)tabs[i].focus();
+      if(tabs[i].scrollIntoView&&window.innerWidth<=900)tabs[i].scrollIntoView({block:"nearest",inline:"center",behavior:"smooth"});
+    }
+    tabs.forEach(function(t,k){t.addEventListener("click",function(){show(k);});});
+    root.querySelector("[role=tablist]").addEventListener("keydown",function(e){
+      if(e.key==="ArrowRight"){e.preventDefault();show(cur+1,true);}
+      else if(e.key==="ArrowLeft"){e.preventDefault();show(cur-1,true);}
+    });
+    [].forEach.call(root.querySelectorAll("[data-step]"),function(b){b.addEventListener("click",function(){show(cur+(+b.getAttribute("data-step")));});});
+  })(roots[r]);
 })();
 </script>
 </body>

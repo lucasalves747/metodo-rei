@@ -815,6 +815,58 @@ body{background:#080808;color:#EEE9E0;font-family:var(--sans)}
  .split{flex-direction:column !important;align-items:flex-start !important}
  .two{grid-template-columns:1fr !important;gap:36px !important}
 }
+
+/* ===== NO PALCO — C (holofote, 4+ mentores) e B (elenco, até 3) ===== */
+.palco{margin-top:48px}
+.palco .kick{font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#D2B272}
+.palco h3{font-family:var(--serif);font-weight:400;text-transform:none;margin:0;color:#F2EEE6}
+.palco h3 .g{background:linear-gradient(100deg,#8C6A2E,#D7B56E 26%,#F7E6B8 45%,#DDBC77 60%,#A07A36);-webkit-background-clip:text;background-clip:text;color:transparent}
+.palco .role{font-size:14px;font-weight:600;color:#B9B2A5;letter-spacing:.04em;line-height:1.5}
+.palco p{font-weight:300;color:#B3AC9F}
+.palco .mentor__more summary{font-size:11px;letter-spacing:.18em}
+.spot{display:grid;grid-template-columns:minmax(0,460px) minmax(0,1fr);gap:56px;border-radius:12px;overflow:hidden;background:radial-gradient(120% 140% at 0% 0%,rgba(240,206,130,.12),rgba(8,8,8,0) 60%),#0D0C0A;box-shadow:0 0 0 1px rgba(217,184,115,.4)}
+.spot[hidden]{display:none}
+.spot__ph img{width:100%;height:100%;min-height:560px;max-height:640px;object-fit:cover;object-position:center 15%;display:block}
+.spot__b{padding:56px 64px 44px 0;display:flex;flex-direction:column}
+.spot h3{font-size:64px;line-height:1;margin:16px 0 12px}
+.spot p{font-size:18px;line-height:1.75;margin:28px 0 0;max-width:640px}
+.spot .mentor__more p{font-size:16px;margin-top:14px !important}
+.spot__nav{margin-top:auto;display:flex;align-items:center;gap:18px;padding-top:32px}
+.spot__nav button{all:unset;cursor:pointer;min-height:44px;display:inline-flex;align-items:center;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#E3C78A}
+.spot__nav button:hover{color:#F6E2B0}
+.spot__nav button:focus-visible{outline:2px solid #E3C78A;outline-offset:4px}
+.spot__pos{font-size:13px;color:#77726A}
+.thumbs{display:grid;grid-template-columns:repeat(var(--cols,7),minmax(0,1fr));gap:14px;margin-top:22px}
+.thumb{all:unset;cursor:pointer;display:flex;flex-direction:column;gap:10px;border-radius:8px;min-width:0}
+.thumb img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:center 15%;border-radius:8px;display:block;filter:grayscale(1) brightness(.7);transition:filter .25s,box-shadow .25s}
+.thumb span{font-family:var(--serif);font-size:17px;line-height:1.1;color:#8F8A80}
+.thumb:hover img{filter:grayscale(.3) brightness(.95)}
+.thumb.on img{filter:none;box-shadow:0 0 0 2px #E3C78A,0 18px 40px -18px rgba(227,199,138,.7)}
+.thumb.on span{color:#F2EEE6}
+.thumb:focus-visible img{box-shadow:0 0 0 2px #fff}
+.elenco{border-bottom:1px solid rgba(238,233,224,.12)}
+.elenco .row{display:grid;grid-template-columns:64px 200px minmax(0,320px) minmax(0,1fr);gap:40px;align-items:start;padding:36px 0;border-top:1px solid rgba(238,233,224,.12)}
+.elenco .row img{width:200px;height:200px;object-fit:cover;object-position:center 15%;border-radius:8px;display:block;filter:grayscale(1)}
+.elenco .row.lead img{filter:none;box-shadow:0 0 0 1px #D9B873,0 20px 50px -24px rgba(227,199,138,.6)}
+.elenco .num{font-family:var(--serif);font-size:40px;line-height:1;color:#5E5A53}
+.elenco .row.lead .num{color:#D7B56E}
+.elenco h3{font-size:38px;line-height:1.05;margin:0 0 10px}
+.elenco p{font-size:16px;line-height:1.7;margin:0}
+@media (max-width:900px){
+ .spot{grid-template-columns:1fr;gap:0}
+ .spot__ph img{min-height:0;height:380px}
+ .spot__b{padding:28px 24px 20px}
+ .spot h3{font-size:40px}
+ .spot p{font-size:16px;margin-top:18px}
+ .thumbs{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px}
+ .thumb{flex:0 0 96px;scroll-snap-align:start}
+ .thumb span{font-size:14px}
+ .elenco .row{grid-template-columns:96px minmax(0,1fr);gap:18px 20px;padding:28px 0}
+ .elenco .num{display:none}
+ .elenco .row img{width:96px;height:96px}
+ .elenco .row > div:last-child{grid-column:1 / -1}
+ .elenco h3{font-size:28px}
+}
 </style>
 <!-- Microsoft Clarity -->
 <script type="text/javascript">
@@ -939,36 +991,43 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
       <h2 class="serif h2" style="font-size: 88px; line-height: .95; margin: 0">On stage in <span class="champ">Orlando</span></h2>
       <p style="max-width: 380px; margin: 0; font-size: 17px; line-height: 1.6; color: #9A948A">People who live what they teach.</p>
     </div>
-    <div class="mentors mentors--grid">
-      <article class="mentor reveal" data-d="1">
-        <div class="mentor__ph"><img decoding="async" src="/assets/pv/hewerton.jpg" alt="Hewerton Scheidegger" loading="lazy" /></div>
-        <div class="mentor__b">
-          <span class="mentor__role">Creator &amp; Mentor</span>
+    <div class="palco" data-palco>
+      <article class="spot" id="pv-orlando-hewerton-scheidegger" role="tabpanel" aria-labelledby="pv-orlando-tab-hewerton-scheidegger">
+        <div class="spot__ph"><img src="/assets/pv/hewerton.jpg" alt="Hewerton Scheidegger" loading="eager" decoding="async"></div>
+        <div class="spot__b">
+          <div class="kick">Creator</div>
           <h3>Hewerton <span class="g">Scheidegger</span></h3>
+          <div class="role">Creator &amp; Mentor</div>
           <p>Business owner, lawyer, accountant and financial advisor. Creator of Método REI and author of <i>1000 Códigos de Sabedoria</i> and <i>Método 7D para Milhões em Vendas</i>. He brings management, finance, leadership and purpose together in a vision of prosperity that doesn't have to cost you your family or your direction. He has completed Ironman and Ultraman races.</p>
+          <div class="spot__nav"><button type="button" data-step="-1" aria-label="Previous mentor">← Previous</button><span class="spot__pos">01 / 07</span><button type="button" data-step="1" aria-label="Next mentor">Next →</button></div>
         </div>
       </article>
-      <article class="mentor reveal" data-d="2">
-        <div class="mentor__ph"><img decoding="async" src="/assets/pv/santiago.jpg" alt="Santiago Vecina" loading="lazy" /></div>
-        <div class="mentor__b">
-          <span class="mentor__role">Physician, nutrition specialist, business owner and mentor</span>
+      <article class="spot" id="pv-orlando-santiago-vecina" role="tabpanel" aria-labelledby="pv-orlando-tab-santiago-vecina" hidden>
+        <div class="spot__ph"><img src="/assets/pv/santiago.jpg" alt="Santiago Vecina" loading="lazy" decoding="async"></div>
+        <div class="spot__b">
+          <div class="kick">Co-creator</div>
           <h3>Dr. Santiago <span class="g">Vecina</span></h3>
+          <div class="role">Physician, nutrition specialist, business owner and mentor</div>
           <p>Physician and nutrition specialist focused on high performance, and a high-performance athlete himself (Ultraman). He connects health, clarity, leadership, business and legacy through the Integral Performance approach, bringing a doctor's perspective and a business owner's experience to life as a whole.</p>
+          <div class="spot__nav"><button type="button" data-step="-1" aria-label="Previous mentor">← Previous</button><span class="spot__pos">02 / 07</span><button type="button" data-step="1" aria-label="Next mentor">Next →</button></div>
         </div>
       </article>
-      <article class="mentor reveal" data-d="3">
-        <div class="mentor__ph"><img decoding="async" src="/assets/alexandre-morelli.JPEG" alt="Alexandre Morelli" loading="lazy" /></div>
-        <div class="mentor__b">
-          <span class="mentor__role">Business owner, author, mentor and international speaker</span>
+      <article class="spot" id="pv-orlando-alexandre-morelli" role="tabpanel" aria-labelledby="pv-orlando-tab-alexandre-morelli" hidden>
+        <div class="spot__ph"><img src="/assets/alexandre-morelli.JPEG" alt="Alexandre Morelli" loading="lazy" decoding="async"></div>
+        <div class="spot__b">
+          <div class="kick">Guest this edition</div>
           <h3>Alexandre <span class="g">Morelli</span></h3>
+          <div class="role">Business owner, author, mentor and international speaker</div>
           <p>An entrepreneur for over 30 years, he is a business administrator, author of three books and a triathlete with three Ironman finishes. Founder of Plenitude Corp in Orlando, he trains business owners and builds strategies to scale companies profitably. Having impacted more than 50,000 people and generated R$10 million in revenue over the last seven years, he combines faith, knowledge and practice to promote Freedom, Profit and Legacy.</p>
+          <div class="spot__nav"><button type="button" data-step="-1" aria-label="Previous mentor">← Previous</button><span class="spot__pos">03 / 07</span><button type="button" data-step="1" aria-label="Next mentor">Next →</button></div>
         </div>
       </article>
-      <article class="mentor reveal" data-d="1">
-        <div class="mentor__ph"><img decoding="async" src="/assets/pv/eduardo-itaborahy.jpg" alt="Eduardo Itaborahy" loading="lazy" /></div>
-        <div class="mentor__b">
-          <span class="mentor__role">PhD, D.Div., DCC · Pastor, professor and theologian</span>
+      <article class="spot" id="pv-orlando-eduardo-itaborahy" role="tabpanel" aria-labelledby="pv-orlando-tab-eduardo-itaborahy" hidden>
+        <div class="spot__ph"><img src="/assets/pv/eduardo-itaborahy.jpg" alt="Eduardo Itaborahy" loading="lazy" decoding="async"></div>
+        <div class="spot__b">
+          <div class="kick">Guest this edition</div>
           <h3>Eduardo <span class="g">Itaborahy</span></h3>
+          <div class="role">PhD, D.Div., DCC · Pastor, professor and theologian</div>
           <p>Pastor, university professor of Theology, writer, chaplain and business owner with an international academic background. An award-winning tenor in international competitions, he also works as a conductor and composer. Founder of Ministério Entre Nós USA, devoted to couples and families, he is Vice President and General Administrator of Belong Church JAX in Florida.</p>
           <details class="mentor__more"><summary>Read full bio</summary>
             <p>With an international academic background and a multidisciplinary career, Eduardo Itaborahy brings solid experience in theology, higher education, ministry leadership, writing, business management, chaplaincy and classical music.</p>
@@ -978,39 +1037,45 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
             <p>He is also trained in chaplaincy, pastoral counseling and emergency management, including courses from FEMA's Emergency Management Institute in the United States.</p>
             <p>His career is marked by the integration of academic knowledge, international experience, leadership, intellectual work and entrepreneurial vision, with a commitment to developing people, strengthening marriages, raising leaders and building lasting institutions.</p>
           </details>
+          <div class="spot__nav"><button type="button" data-step="-1" aria-label="Previous mentor">← Previous</button><span class="spot__pos">04 / 07</span><button type="button" data-step="1" aria-label="Next mentor">Next →</button></div>
         </div>
       </article>
-      <article class="mentor reveal" data-d="2">
-        <div class="mentor__ph"><img decoding="async" src="/assets/pv/patricia-belieny.jpg" alt="Patrícia Belieny" loading="lazy" /></div>
-        <div class="mentor__b">
-          <span class="mentor__role">Entrepreneur, author and mentor to women</span>
+      <article class="spot" id="pv-orlando-patricia-belieny" role="tabpanel" aria-labelledby="pv-orlando-tab-patricia-belieny" hidden>
+        <div class="spot__ph"><img src="/assets/pv/patricia-belieny.jpg" alt="Patrícia Belieny" loading="lazy" decoding="async"></div>
+        <div class="spot__b">
+          <div class="kick">Guest this edition</div>
           <h3>Patrícia <span class="g">Belieny</span></h3>
+          <div class="role">Entrepreneur, author and mentor to women</div>
           <p>A creative entrepreneur, author and mentor to women, she brings faith, knowledge, education and technology together to turn ideas into purposeful projects. Founder of the Mulheres Embelezadas movement and creator of the Ser, Ver e Ter (Be, See and Have) method, she has co-authored three books and uses artificial intelligence to open new income opportunities for women entrepreneurs.</p>
           <details class="mentor__more"><summary>Read full bio</summary>
             <p>A mother of three and soon-to-be grandmother, Patrícia Belieny founded the Mulheres Embelezadas movement and created the Ser, Ver e Ter (Be, See and Have) method, grounded in the three dimensions of the human being: body, soul and spirit.</p>
             <p>Co-author of three books, she is training in Psychoanalysis at Instituto Faz a Diferença, deepening her study of human behavior.</p>
             <p>An enthusiast of artificial intelligence applied to women's entrepreneurship, she uses technology to create digital content, educational materials (homeschool), videos, visual identities, study methods and digital products, creating new income opportunities.</p>
           </details>
+          <div class="spot__nav"><button type="button" data-step="-1" aria-label="Previous mentor">← Previous</button><span class="spot__pos">05 / 07</span><button type="button" data-step="1" aria-label="Next mentor">Next →</button></div>
         </div>
       </article>
-      <article class="mentor reveal" data-d="3">
-        <div class="mentor__ph"><img decoding="async" src="/assets/pv/dany-rocha.jpg" alt="Dany Rocha" loading="lazy" /></div>
-        <div class="mentor__b">
-          <span class="mentor__role">Communicator, mentor and business owner</span>
+      <article class="spot" id="pv-orlando-dany-rocha" role="tabpanel" aria-labelledby="pv-orlando-tab-dany-rocha" hidden>
+        <div class="spot__ph"><img src="/assets/pv/dany-rocha.jpg" alt="Dany Rocha" loading="lazy" decoding="async"></div>
+        <div class="spot__b">
+          <div class="kick">Guest this edition</div>
           <h3>Dany <span class="g">Rocha</span></h3>
+          <div class="role">Communicator, mentor and business owner</div>
           <p>Communicator, mentor, business owner, producer and content director with more than 25 years of experience in radio, television, journalism, production, directing and hosting. Her work helps people communicate with impact through five pillars: communication, identity, positioning, purpose and spirituality.</p>
           <details class="mentor__more"><summary>Read full bio</summary>
             <p>Her career is built on one conviction: communication transforms how people see themselves, position themselves and take their place in the world.</p>
             <p>Today her work connects five major pillars:</p>
             <p><b>Communication:</b> learning to share ideas, stories and messages with impact.<br><b>Identity:</b> recognizing who you are and what makes your voice unique.<br><b>Positioning:</b> building authority and presence online.<br><b>Purpose:</b> connecting talents, experiences and life mission.<br><b>Spirituality:</b> seeing communication as a tool for transformation and for expressing what God has placed in each person.</p>
           </details>
+          <div class="spot__nav"><button type="button" data-step="-1" aria-label="Previous mentor">← Previous</button><span class="spot__pos">06 / 07</span><button type="button" data-step="1" aria-label="Next mentor">Next →</button></div>
         </div>
       </article>
-      <article class="mentor reveal" data-d="1">
-        <div class="mentor__ph"><img decoding="async" src="/assets/pv/jake-belieny.jpg" alt="Jake Belieny" loading="lazy" /></div>
-        <div class="mentor__b">
-          <span class="mentor__role">Mentor, author and entrepreneur</span>
+      <article class="spot" id="pv-orlando-jake-belieny" role="tabpanel" aria-labelledby="pv-orlando-tab-jake-belieny" hidden>
+        <div class="spot__ph"><img src="/assets/pv/jake-belieny.jpg" alt="Jake Belieny" loading="lazy" decoding="async"></div>
+        <div class="spot__b">
+          <div class="kick">Guest this edition</div>
           <h3>Jake <span class="g">Belieny</span></h3>
+          <div class="role">Mentor, author and entrepreneur</div>
           <p>Mentor, author and entrepreneur with 30 years of hands-on technology work. He has collaborated with the United Nations, run companies in the US for more than two decades and taught computer science through Microsoft's TEALS program. Today he works as an AI Transformation Consultant, helping companies turn scattered AI experiments into measurable results.</p>
           <details class="mentor__more"><summary>Read full bio</summary>
             <p>Jake has spent three decades building technology the unglamorous way: shipping it, breaking it, fixing it and running the businesses that depend on it. Not stage theory — systems that had to work on Monday morning.</p>
@@ -1019,8 +1084,18 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
             <p>Today all of that experience converges in one role: AI Transformation Consultant. He helps US service businesses turn scattered AI experiments into reliable, measurable workflows, and builds his own ecosystem of companies, products and events in the open, most of it accelerated with AI.</p>
             <p>The thread running through all of it — engineering, operations and behavior — is the same: find the structure that's out of alignment, fix that first, and let the results compound.</p>
           </details>
+          <div class="spot__nav"><button type="button" data-step="-1" aria-label="Previous mentor">← Previous</button><span class="spot__pos">07 / 07</span><button type="button" data-step="1" aria-label="Next mentor">Next →</button></div>
         </div>
       </article>
+      <div class="thumbs" role="tablist" aria-label="Mentors at this edition" style="--cols: 7">
+        <button type="button" class="thumb on" role="tab" id="pv-orlando-tab-hewerton-scheidegger" aria-controls="pv-orlando-hewerton-scheidegger" aria-selected="true" tabindex="0"><img src="/assets/pv/hewerton.jpg" alt="" decoding="async"><span>Hewerton Scheidegger</span></button>
+        <button type="button" class="thumb" role="tab" id="pv-orlando-tab-santiago-vecina" aria-controls="pv-orlando-santiago-vecina" aria-selected="false" tabindex="-1"><img src="/assets/pv/santiago.jpg" alt="" decoding="async"><span>Dr. Santiago Vecina</span></button>
+        <button type="button" class="thumb" role="tab" id="pv-orlando-tab-alexandre-morelli" aria-controls="pv-orlando-alexandre-morelli" aria-selected="false" tabindex="-1"><img src="/assets/alexandre-morelli.JPEG" alt="" decoding="async"><span>Alexandre Morelli</span></button>
+        <button type="button" class="thumb" role="tab" id="pv-orlando-tab-eduardo-itaborahy" aria-controls="pv-orlando-eduardo-itaborahy" aria-selected="false" tabindex="-1"><img src="/assets/pv/eduardo-itaborahy.jpg" alt="" decoding="async"><span>Eduardo Itaborahy</span></button>
+        <button type="button" class="thumb" role="tab" id="pv-orlando-tab-patricia-belieny" aria-controls="pv-orlando-patricia-belieny" aria-selected="false" tabindex="-1"><img src="/assets/pv/patricia-belieny.jpg" alt="" decoding="async"><span>Patrícia Belieny</span></button>
+        <button type="button" class="thumb" role="tab" id="pv-orlando-tab-dany-rocha" aria-controls="pv-orlando-dany-rocha" aria-selected="false" tabindex="-1"><img src="/assets/pv/dany-rocha.jpg" alt="" decoding="async"><span>Dany Rocha</span></button>
+        <button type="button" class="thumb" role="tab" id="pv-orlando-tab-jake-belieny" aria-controls="pv-orlando-jake-belieny" aria-selected="false" tabindex="-1"><img src="/assets/pv/jake-belieny.jpg" alt="" decoding="async"><span>Jake Belieny</span></button>
+      </div>
     </div>
   </div>
 </section>
@@ -1331,6 +1406,26 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
       }
     });
   }
+})();
+</script>
+<script>
+(function(){
+  var roots=document.querySelectorAll("[data-palco]");
+  for(var r=0;r<roots.length;r++)(function(root){
+    var tabs=[].slice.call(root.querySelectorAll("[role=tab]")),panels=[].slice.call(root.querySelectorAll("[role=tabpanel]")),cur=0;
+    function show(i,focus){
+      i=(i+tabs.length)%tabs.length;cur=i;
+      tabs.forEach(function(t,k){var on=k===i;t.setAttribute("aria-selected",on?"true":"false");t.tabIndex=on?0:-1;t.classList.toggle("on",on);panels[k].hidden=!on;});
+      if(focus)tabs[i].focus();
+      if(tabs[i].scrollIntoView&&window.innerWidth<=900)tabs[i].scrollIntoView({block:"nearest",inline:"center",behavior:"smooth"});
+    }
+    tabs.forEach(function(t,k){t.addEventListener("click",function(){show(k);});});
+    root.querySelector("[role=tablist]").addEventListener("keydown",function(e){
+      if(e.key==="ArrowRight"){e.preventDefault();show(cur+1,true);}
+      else if(e.key==="ArrowLeft"){e.preventDefault();show(cur-1,true);}
+    });
+    [].forEach.call(root.querySelectorAll("[data-step]"),function(b){b.addEventListener("click",function(){show(cur+(+b.getAttribute("data-step")));});});
+  })(roots[r]);
 })();
 </script>
 </body>

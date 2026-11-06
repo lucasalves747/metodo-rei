@@ -85,26 +85,54 @@ function loc(obj, lang, campos, quem) {
 }
 const pv = (id, lang) => loc(data.preletores[id], lang, CAMPOS_PRELETOR, `preletor ${id}`);
 
-function mentorHtml(id, i, ev, lang) {
-  if (!data.preletores[id]) throw new Error(`[${ev.slug}] preletor "${id}" não existe em "preletores"`);
-  const p = pv(id, lang);
-  if (p.foto && !existsSync(join(ROOT, p.foto))) console.warn(`  ! foto não encontrada: ${p.foto} (${id})`);
-  const titulo = p.titulo_html || p.nome;
-  const foto = p.foto
-    ? `<img decoding="async" src="${p.foto}" alt="${p.nome}" loading="lazy" />`
-    : `<span class="mentor__initials">${p.nome.split(" ").map((w) => w[0]).slice(0, 2).join("")}</span>`;
-  return `      <article class="mentor reveal" data-d="${(i % 3) + 1}">
-        <div class="mentor__ph">${foto}</div>
-        <div class="mentor__b">
-          <span class="mentor__role">${p.funcao}</span>
-          <h3>${titulo}</h3>
-          <p>${p.bio}</p>${
-            p.bio_completa && p.bio_completa.length
-              ? `\n          <details class="mentor__more"><summary>${L[lang].lerBio}</summary>\n${p.bio_completa.map((x) => `            <p>${x}</p>`).join("\n")}\n          </details>`
-              : ""
-          }
+// "No palco" da página do evento.
+// 4+ mentores → C (holofote: um em destaque + fileira de fotos clicáveis); até 3 → B (elenco em lista).
+const PALCO_MIN_HOLOFOTE = 4;
+function palcoHtml(ev, ids, lang) {
+  const T = L[lang];
+  const fixos = data.preletores_fixos || [];
+  const ps = ids.map((id) => {
+    if (!data.preletores[id]) throw new Error(`[${ev.slug}] preletor "${id}" não existe em "preletores"`);
+    const p = pv(id, lang);
+    if (p.foto && !existsSync(join(ROOT, p.foto))) console.warn(`  ! foto não encontrada: ${p.foto} (${id})`);
+    return { id, ...p, lead: fixos.includes(id), titulo: p.titulo_html || p.nome };
+  });
+  const mais = (p) => p.bio_completa && p.bio_completa.length
+    ? `\n          <details class="mentor__more"><summary>${T.lerBio}</summary>\n${p.bio_completa.map((x) => `            <p>${x}</p>`).join("\n")}\n          </details>`
+    : "";
+  const n = ps.length, nn = (i) => String(i + 1).padStart(2, "0");
+  if (n < PALCO_MIN_HOLOFOTE) {
+    return `    <div class="palco elenco">
+${ps.map((p, i) => `      <article class="row${p.lead ? " lead" : ""}">
+        <div class="num">${nn(i)}</div>
+        <img src="${p.foto}" alt="${p.nome}" loading="lazy" decoding="async">
+        <div>${p.lead && p.destaque ? `<div class="kick" style="margin-bottom: 10px">${p.destaque}</div>` : ""}
+          <h3>${p.titulo}</h3>
+          <div class="role">${p.funcao}</div>
         </div>
-      </article>`;
+        <div>
+          <p>${p.bio}</p>${mais(p)}
+        </div>
+      </article>`).join("\n")}
+    </div>`;
+  }
+  const base = `pv-${ev.slug}`;
+  const cols = n <= 8 ? n : Math.ceil(n / 2);
+  return `    <div class="palco" data-palco>
+${ps.map((p, i) => `      <article class="spot" id="${base}-${p.id}" role="tabpanel" aria-labelledby="${base}-tab-${p.id}"${i ? " hidden" : ""}>
+        <div class="spot__ph"><img src="${p.foto}" alt="${p.nome}" loading="${i ? "lazy" : "eager"}" decoding="async"></div>
+        <div class="spot__b">
+          <div class="kick">${p.lead && p.destaque ? p.destaque : T.convidado}</div>
+          <h3>${p.titulo}</h3>
+          <div class="role">${p.funcao}</div>
+          <p>${p.bio}</p>${mais(p)}
+          <div class="spot__nav"><button type="button" data-step="-1" aria-label="${T.anteriorAria}">← ${T.anterior}</button><span class="spot__pos">${nn(i)} / ${String(n).padStart(2, "0")}</span><button type="button" data-step="1" aria-label="${T.proximoAria}">${T.proximo} →</button></div>
+        </div>
+      </article>`).join("\n")}
+      <div class="thumbs" role="tablist" aria-label="${T.mentoresAria}" style="--cols: ${cols}">
+${ps.map((p, i) => `        <button type="button" class="thumb${i ? "" : " on"}" role="tab" id="${base}-tab-${p.id}" aria-controls="${base}-${p.id}" aria-selected="${i ? "false" : "true"}" tabindex="${i ? -1 : 0}"><img src="${p.foto}" alt="" decoding="async"><span>${p.nome_curto || p.nome}</span></button>`).join("\n")}
+      </div>
+    </div>`;
 }
 
 const localDefinir = (l, lang) => !l.nome || /a definir/i.test(l.nome);
@@ -196,8 +224,7 @@ function render(ev0, lang) {
     checkout_rei: checkout(ev, "rei"),
     lead_tag: ev.lead_tag || `Método REI - ${ev.cidade} ${d.ano}`,
     lead_codigo: ev.lead_codigo || datas(ev, "pt").codigo,
-    mentors_class: ids.length >= 3 ? "mentors mentors--grid" : "mentors mentors--2",
-    mentors: ids.map((id, i) => mentorHtml(id, i, ev, lang)).join("\n"),
+    palco: palcoHtml(ev, ids, lang),
     idiomas: seletor(lang, `/${ev.slug}`),
     tag_idioma: x.tag_idioma,
     nota_idioma: x.nota_idioma_txt ? `<span>${x.nota_idioma_txt}</span>` : "",

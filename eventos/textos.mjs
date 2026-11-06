@@ -16,6 +16,8 @@ export const L = {
       if (mesmoMes) return { texto: `${d1} e ${d2} de ${M[m1]} de ${y}`, hero: `${d1} e ${d2} de ${cap(M[m1])}, ${y}`, card: `${d1}–${d2} de ${M[m1]}`, curta: `${d1}–${d2} ${C[m1]}` };
       return { texto: `${d1} de ${M[m1]} e ${d2} de ${M[m2]} de ${y}`, hero: `${d1} de ${cap(M[m1])} e ${d2} de ${cap(M[m2])}, ${y}`, card: `${d1} ${C[m1]} – ${d2} ${C[m2]}`, curta: `${d1} ${C[m1]}–${d2} ${C[m2]}` };
     },
+    convidado: "Convidado desta edição",
+    anterior: "Anterior", proximo: "Próximo", anteriorAria: "Mentor anterior", proximoAria: "Próximo mentor", mentoresAria: "Mentores desta edição",
     lerBio: "Ler bio completa",
     localDefinir: "Local a definir",
     prevendaPreco: "Preço de pré-venda!",
@@ -56,6 +58,8 @@ export const L = {
       if (mesmoMes) return { texto: `${M[m1]} ${d1}–${d2}, ${y}`, hero: `${M[m1]} ${d1}–${d2}, ${y}`, card: `${M[m1]} ${d1}–${d2}`, curta: `${C[m1]} ${d1}–${d2}` };
       return { texto: `${M[m1]} ${d1} – ${M[m2]} ${d2}, ${y}`, hero: `${M[m1]} ${d1} – ${M[m2]} ${d2}, ${y}`, card: `${C[m1]} ${d1} – ${C[m2]} ${d2}`, curta: `${C[m1]} ${d1}–${C[m2]} ${d2}` };
     },
+    convidado: "Guest this edition",
+    anterior: "Previous", proximo: "Next", anteriorAria: "Previous mentor", proximoAria: "Next mentor", mentoresAria: "Mentors at this edition",
     lerBio: "Read full bio",
     localDefinir: "Venue to be announced",
     prevendaPreco: "Pre-sale price!",
@@ -95,6 +99,8 @@ export const L = {
       if (mesmoMes) return { texto: `${d1} y ${d2} de ${M[m1]} de ${y}`, hero: `${d1} y ${d2} de ${M[m1]} de ${y}`, card: `${d1}–${d2} de ${M[m1]}`, curta: `${d1}–${d2} ${C[m1]}` };
       return { texto: `${d1} de ${M[m1]} y ${d2} de ${M[m2]} de ${y}`, hero: `${d1} de ${M[m1]} y ${d2} de ${M[m2]} de ${y}`, card: `${d1} ${C[m1]} – ${d2} ${C[m2]}`, curta: `${d1} ${C[m1]}–${d2} ${C[m2]}` };
     },
+    convidado: "Invitado de esta edición",
+    anterior: "Anterior", proximo: "Siguiente", anteriorAria: "Mentor anterior", proximoAria: "Siguiente mentor", mentoresAria: "Mentores de esta edición",
     lerBio: "Leer biografía completa",
     localDefinir: "Lugar por confirmar",
     prevendaPreco: "¡Precio de preventa!",
