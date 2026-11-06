@@ -649,11 +649,12 @@ a{color:#E3C78A}a:hover{color:#F6E2B0}
 .nav-in{display:flex;align-items:center;justify-content:space-between;height:88px;gap:20px}
 .brandmark{display:flex;align-items:center;gap:14px;text-decoration:none;color:#EEE9E0}
 .brandmark span{font-size:14px;font-weight:700;letter-spacing:.34em}
-.lang{display:flex;gap:2px;align-items:center;font-size:11px;font-weight:700;letter-spacing:.12em}
-.lang a{color:rgba(238,233,224,.55);text-decoration:none;padding:6px 6px;border-radius:6px}
-.lang a:hover{color:#fff}
-.lang a[aria-current]{color:#E3C78A}
-@media (max-width:900px){.lang{font-size:10px}.lang a{padding:6px 4px}}
+.lang{display:flex;gap:2px;align-items:center;font-size:12px;font-weight:700;letter-spacing:.12em;border:1px solid rgba(227,199,138,.45);border-radius:6px;padding:3px;background:rgba(20,18,14,.6)}
+.lang svg{width:16px;height:16px;margin:0 4px 0 6px;color:#E3C78A;flex:none}
+.lang a{color:#C8C1B4;text-decoration:none;padding:8px 10px;border-radius:4px;line-height:1}
+.lang a:hover{color:#fff;background:rgba(227,199,138,.12)}
+.lang a[aria-current]{color:#130D03;background:linear-gradient(180deg,#F6E4B0,#D9B46A)}
+@media (max-width:900px){.lang{font-size:11px}.lang svg{display:none}.lang a{padding:8px 7px}}
 @media (max-width:600px){.ev-head .nav-in > div > .btn{display:none}.brandmark span{white-space:nowrap;letter-spacing:.16em}}
 .nav-links{display:flex;gap:30px}
 .nav-links a{color:rgba(238,233,224,.82);text-decoration:none;font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
@@ -822,7 +823,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
     <a href="/es" class="brandmark" aria-label="Método REI — inicio"><svg viewBox="0 0 64 44" width="38" height="26" fill="none" stroke="#E3C78A" stroke-width="2" aria-hidden="true"><path d="M6 34 L10 10 L22 24 L32 4 L42 24 L54 10 L58 34 Z" stroke-linejoin="round"/><path d="M7 40 H57" stroke-linecap="round"/><circle cx="10" cy="8" r="2.4" fill="#E3C78A" stroke="none"/><circle cx="32" cy="2.6" r="2.4" fill="#E3C78A" stroke="none"/><circle cx="54" cy="8" r="2.4" fill="#E3C78A" stroke="none"/></svg><span>MÉTODO REI</span></a>
     <nav class="nav-links" aria-label="Principal"><a href="#sobre">Sobre</a><a href="#metodo">El Método</a><a href="#mentores">En escena</a><a href="#ingressos">Entradas</a><a href="#bonus">Bonos</a></nav>
     <div style="display: flex; align-items: center; gap: 10px">
-      <nav class="lang" aria-label="Idioma / Language"><a href="/miami" hreflang="pt-BR" lang="pt-BR" title="Português">PT</a><a href="/en/miami" hreflang="en" lang="en" title="English">EN</a><a href="/es/miami" hreflang="es" lang="es" title="Español" aria-current="page">ES</a></nav>
+      <nav class="lang" aria-label="Idioma / Language"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></svg><a href="/miami" hreflang="pt-BR" lang="pt-BR" title="Português">PT</a><a href="/en/miami" hreflang="en" lang="en" title="English">EN</a><a href="/es/miami" hreflang="es" lang="es" title="Español" aria-current="page">ES</a></nav>
       <a href="#ingressos" class="btn btn-gold" style="min-height: 44px; padding: 0 20px; font-size: 11px">Comprar entrada</a>
       <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
