@@ -4,8 +4,8 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <script>document.documentElement.className += " reveal-on";</script>
-<title>Método REI {{cidade}} {{ano}} · Pré-venda</title>
-<meta name="description" content="Pré-venda especial da imersão presencial Método REI em {{cidade}}, {{uf}} — {{datas_texto}}. Ingressos a partir de US$ 14." />
+<title>Método REI {{cidade}} {{ano}} · {{titulo_sufixo}}</title>
+<meta name="description" content="{{meta_intro}} Método REI em {{cidade}}, {{uf}} — {{datas_texto}}. Ingressos a partir de US$ {{preco_min}}." />
 
 <style>
 /* ============================================================
@@ -479,6 +479,15 @@ a{color:inherit;text-decoration:none}
     font-size: 14px;
   }
 }
+
+/* Bio completa (expansível) */
+.mentor__more{margin-top:.9rem}
+.mentor__more summary{cursor:pointer;list-style:none;font-size:12px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold-bright,#D9B45A)}
+.mentor__more summary::-webkit-details-marker{display:none}
+.mentor__more summary::after{content:" +"}
+.mentor__more[open] summary::after{content:" –"}
+.mentor__more p{margin-top:.7rem !important}
+.hero__save--destaque{text-transform:none}
 </style>
 <!-- Microsoft Clarity -->
 <script type="text/javascript">
@@ -533,7 +542,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
 </div>
 
 <!-- BARRA DE PRÉ-VENDA -->
-<div class="promo"><b>Pré-venda especial!</b>Economize em todos os ingressos</div>
+{{promo_bar}}
 
 <main>
 
@@ -557,16 +566,16 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
     <h1 class="hero__date reveal" data-d="1"><span>{{dias}}</span><span class="dot">•</span><span>{{datas_hero}}</span></h1>
     <div class="hero__venue reveal" data-d="1">{{hero_local}}</div>
     <p class="hero__sub reveal" data-d="2">Uma imersão presencial onde empresários e profissionais aprendem a enriquecer com inteligência e governar a própria vida.</p>
-    <div class="hero__offer reveal" data-d="2">Garanta a oferta de pré-venda</div>
+    <div class="hero__offer reveal" data-d="2">{{hero_offer}}</div>
     <a href="#ingressos" class="pill reveal" data-d="3">Garantir ingresso</a>
-    <div class="hero__save reveal" data-d="3">Economize até <b>84% OFF!</b></div>
+    {{hero_save}}
   </div>
 </section>
 
 <!-- FAIXA DE DESTAQUES -->
 <div class="facts">
   <div class="wrap">
-    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="1"/><path d="M3 9h18M8 3v4M16 3v4" stroke-linecap="round"/></svg>2 dias presenciais</span>
+    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="1"/><path d="M3 9h18M8 3v4M16 3v4" stroke-linecap="round"/></svg>{{dur_facts}}</span>
     <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-5.5 7-11a7 7 0 0 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>{{cidade}}, {{estado}}</span>
     <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6.5 6.5-6.5s6.5 2.9 6.5 6.5M16 4.5a3.5 3.5 0 0 1 0 7M21.5 20c0-3-1.9-5.5-4.5-6.3" stroke-linecap="round"/></svg>Networking de alto nível</span>
     <span><svg viewBox="0 0 24 20" fill="currentColor"><path d="M1.5 15.5 L3.8 5.5 L8.4 10.8 L12 2.5 L15.6 10.8 L20.2 5.5 L22.5 15.5 Z"/><rect x="1.8" y="16" width="20.4" height="3" rx="1"/></svg>Vagas limitadas</span>
@@ -579,7 +588,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
     <div class="about__grid">
       <div>
         <h2 class="about__t reveal">Assuma o governo da sua vida</h2>
-        <p class="about__lead reveal" data-d="1">Dois dias presenciais em que empresários e profissionais se reúnem para aprender por que e como construir riqueza sem perder o que realmente importa.</p>
+        <p class="about__lead reveal" data-d="1">{{dur_about}} em que empresários e profissionais se reúnem para aprender por que e como construir riqueza sem perder o que realmente importa.</p>
         <p class="reveal" data-d="1">Junte-se a pessoas que decidiram viver acima da mediocridade — com família, saúde, caráter e fé alinhados.</p>
         <p class="reveal" data-d="2" style="margin-top:1.4rem">Através de conteúdo profundo, mentoria de alto nível e networking estratégico, você sai:</p>
         <ul class="feats reveal" data-d="2">
@@ -672,7 +681,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
 <section class="section center exp" id="experiencia">
   <div class="wrap">
     <h2 class="h-big reveal">A experiência</h2>
-    <p class="exp__sub reveal" data-d="1">O Método REI não é só mais um evento — são dois dias de profundidade, fé e decisão que mudam a forma como você governa a sua vida.</p>
+    <p class="exp__sub reveal" data-d="1">O Método REI não é só mais um evento — {{dur_exp}} de profundidade, fé e decisão que {{dur_verbo}} a forma como você governa a sua vida.</p>
     <div class="row4 reveal" data-d="1">
       <figure><img decoding="async" src="assets/pv/evento-1.jpg" alt="Mentores no palco" loading="lazy" /></figure>
       <figure><img decoding="async" src="assets/pv/hero2.jpg" alt="Hewerton Scheidegger palestrando" loading="lazy" /></figure>
@@ -711,12 +720,10 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
         <div class="ticket__img"><img decoding="async" src="assets/pv/evento-5.jpg" alt="" loading="lazy" /></div>
         <div class="ticket__head"><span class="ticket__n">Standard</span><span class="ticket__x">Experiência</span></div>
         <div class="ticket__b">
-          <div class="ticket__pre">Preço de pré-venda!</div>
-          <div class="ticket__price"><span class="ticket__old">US$87</span><span class="ticket__now">Agora<br>só</span><span class="ticket__amt">US$14</span></div>
-          <div class="ticket__note">84% OFF<br>por tempo limitado</div>
+{{preco_standard}}
           <ul>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Assento no setor Standard</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Acesso aos 2 dias de imersão</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>{{acesso}}</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Apostila oficial do Método REI</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Material de apoio do Método REI</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>E-book bônus · download imediato</li>
@@ -733,12 +740,10 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
         <div class="ticket__img"><span class="ticket__badge">Mais escolhido</span><img decoding="async" src="assets/pv/exp3.jpg" alt="" loading="lazy" /></div>
         <div class="ticket__head"><span class="ticket__n">VIP</span><span class="ticket__x">Experiência</span></div>
         <div class="ticket__b">
-          <div class="ticket__pre">Preço de pré-venda!</div>
-          <div class="ticket__price"><span class="ticket__old">US$127</span><span class="ticket__now">Agora<br>só</span><span class="ticket__amt">US$47</span></div>
-          <div class="ticket__note">63% OFF<br>por tempo limitado</div>
+{{preco_vip}}
           <ul>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Assento no setor VIP</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Acesso aos 2 dias de imersão</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>{{acesso}}</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Apostila oficial do Método REI</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Material de apoio Método REI</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Construção do Plano de 90 Dias</li>
@@ -765,13 +770,11 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
         <div class="ticket__img"><img decoding="async" src="assets/pv/evento-1.jpg" alt="" loading="lazy" /></div>
         <div class="ticket__head"><span class="ticket__n">REI</span><span class="ticket__x">Experiência</span></div>
         <div class="ticket__b">
-          <div class="ticket__pre">Preço de pré-venda!</div>
-          <div class="ticket__price"><span class="ticket__old">US$397</span><span class="ticket__now">Agora<br>só</span><span class="ticket__amt">US$197</span></div>
-          <div class="ticket__note">50% OFF<br>por tempo limitado</div>
+{{preco_rei}}
           <ul>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Os melhores lugares</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Entrada prioritária</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Acesso aos 2 dias de imersão</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>{{acesso}}</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Apostila oficial do Método REI</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Material de apoio Método REI</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Acesso direto aos mentores</li>
@@ -848,7 +851,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
   <div class="lead-modal__backdrop" data-close></div>
   <div class="lead-modal__card">
     <button class="lead-modal__close" type="button" aria-label="Fechar" data-close>&times;</button>
-    <h3 id="leadTitle">Garanta seu preço de pré-venda</h3>
+    <h3 id="leadTitle">{{lead_titulo}}</h3>
     <p class="lead-modal__sub">Preencha seus dados e vamos te encaminhar para concluir.</p>
     <form id="leadForm" novalidate>
       <div class="lead-field">

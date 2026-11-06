@@ -61,7 +61,8 @@ function datas(ev) {
   const horario = umDia
     ? `${DIAS_CURTO[a.getUTCDay()]} ${h[0] || ""}`
     : `${DIAS_CURTO[a.getUTCDay()]} ${h[0] || ""} · ${DIAS_CURTO[b.getUTCDay()]} ${h[1] || ""}`;
-  return { texto, hero, card, curta, codigo, dias, diasCard, horario, horarioCard: h.join(" · ").toUpperCase(), ano: y, fimDate: b };
+  const nDias = Math.round((b - a) / 86400000) + 1;
+  return { texto, hero, card, curta, codigo, dias, diasCard, horario, horarioCard: h.join(" · ").toUpperCase(), ano: y, fimDate: b, nDias };
 }
 
 function mentorHtml(id, i, ev) {
@@ -77,7 +78,11 @@ function mentorHtml(id, i, ev) {
         <div class="mentor__b">
           <span class="mentor__role">${p.funcao}</span>
           <h3>${titulo}</h3>
-          <p>${p.bio}</p>
+          <p>${p.bio}</p>${
+            p.bio_completa && p.bio_completa.length
+              ? `\n          <details class="mentor__more"><summary>Ler bio completa</summary>\n${p.bio_completa.map((x) => `            <p>${x}</p>`).join("\n")}\n          </details>`
+              : ""
+          }
         </div>
       </article>`;
 }
@@ -96,6 +101,46 @@ function checkout(ev, tipo) {
   if (c[tipo]) return c[tipo];
   const base = "https://pag.metodorei.com/";
   return { standard: `${base}cart-${ev.slug}`, vip: `${base}cart-vip-${ev.slug}`, rei: `${base}cart-${ev.slug}-rei` }[tipo];
+}
+
+// Textos que dependem de duração (1 dia × 2+ dias), pré-venda e preços.
+function vendaVars(ev, d) {
+  const prevenda = ev.prevenda !== undefined ? ev.prevenda : true;
+  const precos = { ...data.precos_padrao, ...(ev.precos || {}) };
+  const umDia = ev.inicio === ev.fim;
+  const destaque = ev.destaque || null; // { curto: "...", nota_ingresso: "..." }
+  const pct = (p) => (p.de && p.de > p.por ? Math.round((1 - p.por / p.de) * 100) : 0);
+  const maxPct = Math.max(...["standard", "vip", "rei"].map((k) => pct(precos[k])));
+  const ticket = (k) => {
+    const p = precos[k];
+    if (prevenda && p.de) {
+      return `          <div class="ticket__pre">Preço de pré-venda!</div>
+          <div class="ticket__price"><span class="ticket__old">US$${p.de}</span><span class="ticket__now">Agora<br>só</span><span class="ticket__amt">US$${p.por}</span></div>
+          <div class="ticket__note">${pct(p)}% OFF<br>por tempo limitado</div>`;
+    }
+    const nota = destaque && destaque.nota_ingresso ? `\n          <div class="ticket__note">${destaque.nota_ingresso}</div>` : "";
+    return `          <div class="ticket__price"><span class="ticket__amt">US$${p.por}</span></div>${nota}`;
+  };
+  let heroSave = "";
+  if (destaque && destaque.curto) heroSave = `<div class="hero__save hero__save--destaque reveal" data-d="3">${destaque.curto}</div>`;
+  else if (prevenda && maxPct) heroSave = `<div class="hero__save reveal" data-d="3">Economize até <b>${maxPct}% OFF!</b></div>`;
+  return {
+    titulo_sufixo: prevenda ? "Pré-venda" : "Ingressos",
+    meta_intro: prevenda ? "Pré-venda especial da imersão presencial" : "Imersão presencial",
+    preco_min: Math.min(...["standard", "vip", "rei"].map((k) => precos[k].por)),
+    promo_bar: prevenda ? `<div class="promo"><b>Pré-venda especial!</b>Economize em todos os ingressos</div>` : "",
+    hero_offer: prevenda ? "Garanta a oferta de pré-venda" : "Garanta seu lugar",
+    hero_save: heroSave,
+    dur_facts: umDia ? "1 dia presencial" : `${d.nDias} dias presenciais`,
+    dur_about: umDia ? "Um dia presencial" : "Dois dias presenciais",
+    dur_exp: umDia ? "é um dia" : "são dois dias",
+    dur_verbo: umDia ? "muda" : "mudam",
+    acesso: umDia ? "Acesso ao dia completo de imersão" : "Acesso aos 2 dias de imersão",
+    preco_standard: ticket("standard"),
+    preco_vip: ticket("vip"),
+    preco_rei: ticket("rei"),
+    lead_titulo: prevenda ? "Garanta seu preço de pré-venda" : "Garanta seu ingresso",
+  };
 }
 
 function render(ev) {
@@ -120,6 +165,7 @@ function render(ev) {
     lead_codigo: ev.lead_codigo || d.codigo,
     mentors_class: ids.length >= 3 ? "mentors mentors--grid" : "mentors mentors--2",
     mentors: ids.map((id, i) => mentorHtml(id, i, ev)).join("\n"),
+    ...vendaVars(ev, d),
   };
   const out = template.replace(/\{\{(\w+)\}\}/g, (m, k) => {
     if (!(k in vars)) throw new Error(`template usa {{${k}}} mas não há valor`);

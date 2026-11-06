@@ -10,7 +10,7 @@
       "titulo_html": "Hewerton <span class=\"g\">Scheidegger</span>",
       "funcao": "Criador &amp; Mentor",
       "foto": "assets/pv/hewerton.jpg",
-      "bio": "Advogado, contador e atleta de alta performance (Ironman e Ultraman). Criador do Método REI e autor de 1000 Códigos de Sabedoria e Método 7D para Milhões em Vendas. Une organização, finanças, liderança e propósito em uma visão de prosperidade que não precisa custar sua família e sua direção."
+      "bio": "Empresário, advogado, contador e consultor financeiro. Criador do Método REI e autor de 1000 Códigos de Sabedoria e Método 7D para Milhões em Vendas. Une gestão, finanças, liderança e propósito em uma visão de prosperidade que não precisa custar sua família e sua direção. Realizou provas de Ironman e Ultraman."
     },
     "santiago-vecina": {
       "nome": "Santiago Vecina",
@@ -46,6 +46,48 @@
       "funcao": "Empresário e mentor",
       "foto": "assets/bruno.jpg",
       "bio": "Engenheiro mecânico, empreendedor e imigrante nos EUA, lidera negócios de HVAC e desenvolve projetos em nanotecnologia com eletrofiação. Maratonista, Ironman e piloto de helicóptero em formação, combina excelência técnica e superação pessoal em uma jornada dedicada à autogovernança, liderança e crescimento com propósito."
+    },
+    "eduardo-itaborahy": {
+      "nome": "Eduardo Itaborahy",
+      "titulo_html": "Eduardo <span class=\"g\">Itaborahy</span>",
+      "funcao": "PhD, D.Div., DCC · Pastor, professor e teólogo",
+      "foto": "assets/pv/eduardo-itaborahy.jpg",
+      "bio": "Pastor, professor universitário de Teologia, escritor, capelão e empresário, com formação acadêmica internacional. Tenor premiado em concursos internacionais, também atua como maestro e compositor. Fundador do Ministério Entre Nós USA, dedicado a casais e famílias, e Vice-Presidente e Administrador Geral da Belong Church JAX, na Flórida.",
+      "bio_completa": [
+        "Pastor | Professor Universitário | Teólogo | Escritor | Capelão | Empresário | Maestro | Cantor Lírico.",
+        "Com formação acadêmica internacional e uma trajetória multidisciplinar, Eduardo Itaborahy reúne sólida experiência nas áreas de teologia, ensino superior, liderança ministerial, produção literária, gestão empresarial, capelania e música erudita.",
+        "Professor de Teologia, escritor, conferencista e formador de líderes, desenvolveu uma expressiva carreira artística internacional como cantor lírico (tenor), conquistando premiações em concursos internacionais de canto. Sua trajetória musical inclui ainda atuações como maestro, regente e compositor.",
+        "Com ampla experiência em administração e empreendedorismo no Brasil e nos Estados Unidos, esteve à frente de empresas e organizações, destacando-se em planejamento estratégico, gestão institucional, desenvolvimento organizacional e liderança de equipes.",
+        "Foi fundador e pastor sênior da Alliance Ministry USA. É fundador e presidente do Ministério Entre Nós USA, dedicado ao fortalecimento de casais e famílias. Atualmente, exerce a função de Vice-Presidente e Administrador Geral da Belong Church JAX, na Flórida, Estados Unidos.",
+        "Possui ainda formação em capelania, aconselhamento pastoral e gestão de emergências, incluindo capacitações pelo Emergency Management Institute da FEMA, nos Estados Unidos.",
+        "Sua trajetória é marcada pela integração entre conhecimento acadêmico, experiência internacional, liderança, produção intelectual e visão empreendedora, com dedicação à formação de pessoas, ao fortalecimento de relacionamentos conjugais, ao desenvolvimento de líderes e à consolidação de instituições."
+      ]
+    },
+    "dany-rocha": {
+      "nome": "Dany Rocha",
+      "titulo_html": "Dany <span class=\"g\">Rocha</span>",
+      "funcao": "Comunicadora, mentora e empresária",
+      "foto": "assets/pv/dany-rocha.jpg",
+      "bio": "Comunicadora, mentora, empresária, produtora e diretora de conteúdo, com mais de 25 anos de experiência em rádio, televisão, jornalismo, produção, direção e apresentação. Seu trabalho ajuda pessoas a comunicar com impacto a partir de cinco pilares: comunicação, identidade, posicionamento, propósito e espiritualidade.",
+      "bio_completa": [
+        "Sua trajetória é construída em torno de uma convicção: a comunicação transforma a maneira como as pessoas se enxergam, se posicionam e ocupam seu espaço no mundo.",
+        "Hoje, seu trabalho conecta cinco grandes pilares:",
+        "<b>Comunicação:</b> aprender a comunicar ideias, histórias e mensagens com impacto.<br><b>Identidade:</b> reconhecer quem você é e o que torna sua voz única.<br><b>Posicionamento:</b> construir autoridade e presença no ambiente digital.<br><b>Propósito:</b> conectar talentos, experiências e missão de vida.<br><b>Espiritualidade:</b> compreender a comunicação também como instrumento de transformação e expressão daquilo que Deus colocou em cada pessoa."
+      ]
+    },
+    "jake-belieny": {
+      "nome": "Jake Belieny",
+      "titulo_html": "Jake <span class=\"g\">Belieny</span>",
+      "funcao": "Mentor, autor e empreendedor",
+      "foto": "assets/pv/jake-belieny.jpg",
+      "bio": "Mentor, autor e empreendedor, com 30 anos de tecnologia construída na prática. Colaborou com as Nações Unidas, dirigiu empresas nos EUA por mais de duas décadas e ensinou ciência da computação pelo programa TEALS da Microsoft. Autor de quatro livros, hoje atua como Consultor de Transformação com IA, ajudando empresas a transformar experimentos soltos de IA em resultados mensuráveis.",
+      "bio_completa": [
+        "Passei três décadas construindo tecnologia do jeito sem glamour: colocando no ar, quebrando, consertando, e tocando os negócios que dependem dela. Não teoria de palco: sistemas que precisavam funcionar na segunda de manhã.",
+        "No caminho, colaborei com as Nações Unidas, dirigi empresas nos Estados Unidos por mais de duas décadas, e fechei negócios e projetos acima de US$ 1 milhão. Já sentei dos dois lados da mesa: o engenheiro que constrói o sistema e o dono que precisa pagar a folha com ele.",
+        "Ensinei ciência da computação em escolas americanas pelo programa TEALS da Microsoft, porque acredito que a capacidade de pensar em sistemas deve ser transmitida, não guardada a sete chaves. Essa mesma convicção virou quatro livros publicados e um trabalho de mentoria em três idiomas (inglês, português e espanhol) que já alcançou pessoas em sete países.",
+        "Hoje toda essa experiência converge em um papel: Consultor de Transformação com IA. Ajudo empresas de serviços nos EUA a transformar experimentos soltos de IA em fluxos de trabalho confiáveis e mensuráveis, e construo de forma aberta através do meu próprio ecossistema de empresas, produtos e eventos, a maioria acelerada com IA.",
+        "O fio condutor de tudo isso (engenharia, operações e comportamento) é o mesmo: encontrar a estrutura que está desalinhada, consertar isso primeiro, e deixar os resultados se acumularem."
+      ]
     }
   },
   "eventos": [
@@ -104,20 +146,41 @@
       "cidade": "Orlando",
       "uf": "FL",
       "estado": "Flórida",
-      "inicio": "2026-11-20",
+      "inicio": "2026-11-21",
       "fim": "2026-11-21",
       "horarios": [
-        "6:30pm–11pm",
-        "8:30am–8pm"
+        "8:30am–5:30pm"
       ],
       "local": {
-        "nome": "Local a definir"
+        "nome": "Winter Garden, FL",
+        "endereco": "17800 Bali Blvd, Winter Garden, FL 34787",
+        "maps_query": "17800+Bali+Blvd+Winter+Garden+FL+34787"
       },
       "preletores": [
         "hewerton-scheidegger",
         "santiago-vecina",
-        "alexandre-morelli"
-      ]
+        "alexandre-morelli",
+        "eduardo-itaborahy",
+        "dany-rocha",
+        "jake-belieny"
+      ],
+      "prevenda": false,
+      "precos": {
+        "standard": {
+          "por": 60
+        },
+        "vip": {
+          "por": 97
+        },
+        "rei": {
+          "por": 197
+        }
+      },
+      "destaque": {
+        "curto": "🥩 Almoço com churrasco <b>incluso em todos os ingressos</b>",
+        "nota_ingresso": "Almoço com churrasco<br>incluso"
+      },
+      "lead_codigo": "MREI201126"
     },
     {
       "slug": "boston",
@@ -139,5 +202,19 @@
         "bruno-rodrigues"
       ]
     }
-  ]
+  ],
+  "precos_padrao": {
+    "standard": {
+      "de": 87,
+      "por": 14
+    },
+    "vip": {
+      "de": 127,
+      "por": 47
+    },
+    "rei": {
+      "de": 397,
+      "por": 197
+    }
+  }
 }
