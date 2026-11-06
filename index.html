@@ -7,10 +7,16 @@
 <title>Método REI · Imersão Presencial · Tour EUA 2026</title>
 <meta name="description" content="Imersão presencial para empresários e profissionais que decidiram enriquecer com inteligência e governar a própria vida. Próximas edições: Orlando e Boston." />
 <link rel="canonical" href="https://www.metodorei.com/" />
+<link rel="alternate" hreflang="pt-BR" href="https://www.metodorei.com/" />
+<link rel="alternate" hreflang="en" href="https://www.metodorei.com/en" />
+<link rel="alternate" hreflang="es" href="https://www.metodorei.com/es" />
+<link rel="alternate" hreflang="x-default" href="https://www.metodorei.com/" />
 <meta name="robots" content="index, follow, max-image-preview:large" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Método REI" />
 <meta property="og:locale" content="pt_BR" />
+<meta property="og:locale:alternate" content="en_US" />
+<meta property="og:locale:alternate" content="es_ES" />
 <meta property="og:url" content="https://www.metodorei.com/" />
 <meta property="og:title" content="Método REI · Imersão Presencial · Tour EUA 2026" />
 <meta property="og:description" content="Imersão presencial para empresários e profissionais que decidiram enriquecer com inteligência e governar a própria vida. Próximas edições: Orlando e Boston." />
@@ -44,7 +50,8 @@
         "contactType": "customer service",
         "availableLanguage": [
           "Portuguese",
-          "English"
+          "English",
+          "Spanish"
         ]
       }
     },
@@ -53,7 +60,11 @@
       "@id": "https://www.metodorei.com/#site",
       "url": "https://www.metodorei.com/",
       "name": "Método REI",
-      "inLanguage": "pt-BR",
+      "inLanguage": [
+        "pt-BR",
+        "en",
+        "es"
+      ],
       "publisher": {
         "@id": "https://www.metodorei.com/#org"
       }
@@ -79,7 +90,7 @@
   ]
 }
 </script>
-<link rel="preload" as="image" href="assets/hero-duo.jpg" />
+<link rel="preload" as="image" href="/assets/hero-duo.jpg" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter+Tight:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -102,6 +113,12 @@ a{color:#E3C78A}a:hover{color:#F6E2B0}
 .nav-in{display:flex;align-items:center;justify-content:space-between;height:88px;gap:20px}
 .brandmark{display:flex;align-items:center;gap:14px;text-decoration:none;color:#EEE9E0}
 .brandmark span{font-size:14px;font-weight:700;letter-spacing:.34em}
+.lang{display:flex;gap:2px;align-items:center;font-size:11px;font-weight:700;letter-spacing:.12em}
+.lang a{color:rgba(238,233,224,.55);text-decoration:none;padding:6px 6px;border-radius:6px}
+.lang a:hover{color:#fff}
+.lang a[aria-current]{color:#E3C78A}
+@media (max-width:900px){.lang{font-size:10px}.lang a{padding:6px 4px}}
+@media (max-width:600px){header.wrap .btn{padding:0 14px !important}.ev-head .nav-in > div > .btn{display:none}.brandmark span{white-space:nowrap;letter-spacing:.16em}}
 .nav-links{display:flex;gap:30px}
 .nav-links a{color:rgba(238,233,224,.82);text-decoration:none;font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
 .nav-links a:hover{color:#fff}
@@ -217,7 +234,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
   <div class="nav-in">
     <a href="#top" class="brandmark" aria-label="Método REI — início"><svg viewBox="0 0 64 44" width="38" height="26" fill="none" stroke="#E3C78A" stroke-width="2" aria-hidden="true"><path d="M6 34 L10 10 L22 24 L32 4 L42 24 L54 10 L58 34 Z" stroke-linejoin="round"/><path d="M7 40 H57" stroke-linecap="round"/><circle cx="10" cy="8" r="2.4" fill="#E3C78A" stroke="none"/><circle cx="32" cy="2.6" r="2.4" fill="#E3C78A" stroke="none"/><circle cx="54" cy="8" r="2.4" fill="#E3C78A" stroke="none"/></svg><span>MÉTODO REI</span></a>
     <nav class="nav-links" aria-label="Principal"><a href="#tour">Tour</a><a href="#lineup">No palco</a><a href="#metodo">O Método</a><a href="#faq">FAQ</a></nav>
-    <a class="btn btn-gold" href="#tour" style="min-height: 44px; padding: 0 20px; font-size: 11px">Ingressos</a>
+    <div style="display: flex; align-items: center; gap: 12px"><nav class="lang" aria-label="Idioma / Language"><a href="/" hreflang="pt-BR" lang="pt-BR" title="Português" aria-current="page">PT</a><a href="/en" hreflang="en" lang="en" title="English">EN</a><a href="/es" hreflang="es" lang="es" title="Español">ES</a></nav><a class="btn btn-gold" href="#tour" style="min-height: 44px; padding: 0 20px; font-size: 11px">Ingressos</a></div>
   </div>
 </header>
 
@@ -236,7 +253,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
     </div>
   </div>
   <div class="hero-band">
-    <img class="hero-img" src="assets/hero-duo.jpg" alt="Hewerton Scheidegger e Dr. Santiago Vecina no palco do Método REI" fetchpriority="high">
+    <img class="hero-img" src="/assets/hero-duo.jpg" alt="Hewerton Scheidegger e Dr. Santiago Vecina no palco do Método REI" fetchpriority="high">
     <div class="hero-tint"></div>
     <div class="hero-cap">Hewerton Scheidegger &amp; Dr. Santiago Vecina</div>
   </div>
@@ -250,9 +267,9 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
       <p style="max-width: 380px; margin: 0; font-size: 17px; line-height: 1.6; color: #9A948A">Alto impacto. Alta profundidade. Escolha onde começar a reinar.</p>
     </div>
     <div class="cards" style="grid-template-columns: repeat(2, minmax(0,1fr))">
-      <article class="card" data-end="2026-11-21"><img src="assets/home/city-orlando.jpg" alt="Skyline de Orlando" loading="lazy"><div class="card-shade"></div>
+      <article class="card" data-end="2026-11-21"><img src="/assets/home/city-orlando.jpg" alt="Skyline de Orlando" loading="lazy"><div class="card-shade"></div>
         <div style="position: relative"><span class="badge badge-gold">Churrasco incluso</span><div class="serif" style="font-size: 72px; line-height: .95; margin-top: 16px">Orlando</div><div style="font-size: 17px; font-weight: 600; margin-top: 10px">Sábado, 21 de novembro</div><div style="font-size: 14px; color: #9A948A; margin-top: 4px">Sáb 8:30AM–5:30PM · Winter Garden, FL</div><a class="btn btn-gold" href="/orlando" data-event="Orlando" style="margin-top: 24px; width: 100%">Garantir minha vaga</a></div></article>
-      <article class="card" data-end="2026-12-05"><img src="assets/home/city-boston.jpg" alt="Skyline de Boston" loading="lazy"><div class="card-shade"></div>
+      <article class="card" data-end="2026-12-05"><img src="/assets/home/city-boston.jpg" alt="Skyline de Boston" loading="lazy"><div class="card-shade"></div>
         <div style="position: relative"><span class="badge badge-line">Sexta + Sábado</span><div class="serif" style="font-size: 72px; line-height: .95; margin-top: 16px">Boston</div><div style="font-size: 17px; font-weight: 600; margin-top: 10px">4–5 de dezembro</div><div style="font-size: 14px; color: #9A948A; margin-top: 4px">Sex 6:30PM–11PM · Sáb 8:30AM–7PM</div><a class="btn btn-gold" href="/boston" data-event="Boston" style="margin-top: 24px; width: 100%">Garantir minha vaga</a></div></article>
     </div>
     <p class="events__empty" id="eventsEmpty">Novas datas em breve. <a href="#comunidade">Entre para a comunidade</a> e seja avisado primeiro.</p>
@@ -285,14 +302,14 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
       <p style="max-width: 380px; margin: 0; font-size: 17px; line-height: 1.6; color: #9A948A">Quem vive o que ensina. Os mentores variam por edição — confira a página de cada cidade.</p>
     </div>
     <div class="lineup" style="grid-template-columns: repeat(4, minmax(0,1fr))">
-      <div class="face face-lead"><img src="assets/pv/hewerton.jpg" alt="Hewerton Scheidegger" loading="lazy"><div class="face-name"><div class="kick" style="font-size: 10px">Criador</div><div class="serif" style="font-size: 24px; line-height: 1.05; margin-top: 4px">Hewerton Scheidegger</div></div></div>
-      <div class="face face-lead"><img src="assets/pv/santiago.jpg" alt="Santiago Vecina" loading="lazy"><div class="face-name"><div class="kick" style="font-size: 10px">Co-criador</div><div class="serif" style="font-size: 24px; line-height: 1.05; margin-top: 4px">Dr. Santiago Vecina</div></div></div>
-      <div class="face"><img src="assets/alexandre-morelli.JPEG" alt="Alexandre Morelli" loading="lazy"><div class="face-name"><div class="serif" style="font-size: 22px; line-height: 1.05">Alexandre Morelli</div></div></div>
-      <div class="face"><img src="assets/pv/eduardo-itaborahy.jpg" alt="Eduardo Itaborahy" loading="lazy"><div class="face-name"><div class="serif" style="font-size: 22px; line-height: 1.05">Eduardo Itaborahy</div></div></div>
-      <div class="face"><img src="assets/pv/patricia-belieny.jpg" alt="Patrícia Belieny" loading="lazy"><div class="face-name"><div class="serif" style="font-size: 22px; line-height: 1.05">Patrícia Belieny</div></div></div>
-      <div class="face"><img src="assets/pv/dany-rocha.jpg" alt="Dany Rocha" loading="lazy"><div class="face-name"><div class="serif" style="font-size: 22px; line-height: 1.05">Dany Rocha</div></div></div>
-      <div class="face"><img src="assets/pv/jake-belieny.jpg" alt="Jake Belieny" loading="lazy"><div class="face-name"><div class="serif" style="font-size: 22px; line-height: 1.05">Jake Belieny</div></div></div>
-      <div class="face"><img src="assets/bruno.jpg" alt="Bruno Rodrigues" loading="lazy"><div class="face-name"><div class="serif" style="font-size: 22px; line-height: 1.05">Bruno Rodrigues</div></div></div>
+      <div class="face face-lead"><img src="/assets/pv/hewerton.jpg" alt="Hewerton Scheidegger" loading="lazy"><div class="face-name"><div class="kick" style="font-size: 10px">Criador</div><div class="serif" style="font-size: 24px; line-height: 1.05; margin-top: 4px">Hewerton Scheidegger</div></div></div>
+      <div class="face face-lead"><img src="/assets/pv/santiago.jpg" alt="Santiago Vecina" loading="lazy"><div class="face-name"><div class="kick" style="font-size: 10px">Co-criador</div><div class="serif" style="font-size: 24px; line-height: 1.05; margin-top: 4px">Dr. Santiago Vecina</div></div></div>
+      <div class="face"><img src="/assets/alexandre-morelli.JPEG" alt="Alexandre Morelli" loading="lazy"><div class="face-name"><div class="serif" style="font-size: 22px; line-height: 1.05">Alexandre Morelli</div></div></div>
+      <div class="face"><img src="/assets/pv/eduardo-itaborahy.jpg" alt="Eduardo Itaborahy" loading="lazy"><div class="face-name"><div class="serif" style="font-size: 22px; line-height: 1.05">Eduardo Itaborahy</div></div></div>
+      <div class="face"><img src="/assets/pv/patricia-belieny.jpg" alt="Patrícia Belieny" loading="lazy"><div class="face-name"><div class="serif" style="font-size: 22px; line-height: 1.05">Patrícia Belieny</div></div></div>
+      <div class="face"><img src="/assets/pv/dany-rocha.jpg" alt="Dany Rocha" loading="lazy"><div class="face-name"><div class="serif" style="font-size: 22px; line-height: 1.05">Dany Rocha</div></div></div>
+      <div class="face"><img src="/assets/pv/jake-belieny.jpg" alt="Jake Belieny" loading="lazy"><div class="face-name"><div class="serif" style="font-size: 22px; line-height: 1.05">Jake Belieny</div></div></div>
+      <div class="face"><img src="/assets/bruno.jpg" alt="Bruno Rodrigues" loading="lazy"><div class="face-name"><div class="serif" style="font-size: 22px; line-height: 1.05">Bruno Rodrigues</div></div></div>
     </div>
   </div>
 </section>
@@ -321,10 +338,10 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
 
 <section id="experiencia">
   <div class="wall">
-    <img src="assets/pv/evento-1.jpg" alt="Mentores no palco do Método REI" loading="lazy">
-    <img src="assets/pv/exp1.jpg" alt="Participantes em mesa de trabalho" loading="lazy">
-    <img src="assets/pv/evento-5.jpg" alt="Plateia do Método REI" loading="lazy">
-    <img src="assets/pv/exp3.jpg" alt="Networking no lounge" loading="lazy">
+    <img src="/assets/pv/evento-1.jpg" alt="Mentores no palco do Método REI" loading="lazy">
+    <img src="/assets/pv/exp1.jpg" alt="Participantes em mesa de trabalho" loading="lazy">
+    <img src="/assets/pv/evento-5.jpg" alt="Plateia do Método REI" loading="lazy">
+    <img src="/assets/pv/exp3.jpg" alt="Networking no lounge" loading="lazy">
   </div>
   <div class="wrap" style="padding-top: 100px; padding-bottom: 100px">
     <h2 class="serif h2" style="font-size: 76px; line-height: 1.02; margin: 0; max-width: 1040px">Você não vai apenas assistir. Vai ser <span class="champ">confrontado, alinhado e posicionado.</span></h2>
@@ -392,7 +409,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
 
 <dialog class="vdlg" id="videoDlg" aria-label="Vídeo do Método REI">
   <button type="button" id="videoClose" aria-label="Fechar vídeo">×</button>
-  <video id="videoEl" controls playsinline preload="none" poster="assets/evento-1.jpg"><source src="assets/hero-video.webm" type="video/webm"><source src="assets/hero-video.mp4" type="video/mp4"></video>
+  <video id="videoEl" controls playsinline preload="none" poster="/assets/evento-1.jpg"><source src="/assets/hero-video.webm" type="video/webm"><source src="/assets/hero-video.mp4" type="video/mp4"></video>
 </dialog>
 
 <script>

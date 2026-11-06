@@ -512,6 +512,12 @@ a{color:#E3C78A}a:hover{color:#F6E2B0}
 .nav-in{display:flex;align-items:center;justify-content:space-between;height:88px;gap:20px}
 .brandmark{display:flex;align-items:center;gap:14px;text-decoration:none;color:#EEE9E0}
 .brandmark span{font-size:14px;font-weight:700;letter-spacing:.34em}
+.lang{display:flex;gap:2px;align-items:center;font-size:11px;font-weight:700;letter-spacing:.12em}
+.lang a{color:rgba(238,233,224,.55);text-decoration:none;padding:6px 6px;border-radius:6px}
+.lang a:hover{color:#fff}
+.lang a[aria-current]{color:#E3C78A}
+@media (max-width:900px){.lang{font-size:10px}.lang a{padding:6px 4px}}
+@media (max-width:600px){.ev-head .nav-in > div > .btn{display:none}.brandmark span{white-space:nowrap;letter-spacing:.16em}}
 .nav-links{display:flex;gap:30px}
 .nav-links a{color:rgba(238,233,224,.82);text-decoration:none;font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
 .nav-links a:hover{color:#fff}
@@ -679,6 +685,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
     <a href="/" class="brandmark" aria-label="Método REI — início"><svg viewBox="0 0 64 44" width="38" height="26" fill="none" stroke="#E3C78A" stroke-width="2" aria-hidden="true"><path d="M6 34 L10 10 L22 24 L32 4 L42 24 L54 10 L58 34 Z" stroke-linejoin="round"/><path d="M7 40 H57" stroke-linecap="round"/><circle cx="10" cy="8" r="2.4" fill="#E3C78A" stroke="none"/><circle cx="32" cy="2.6" r="2.4" fill="#E3C78A" stroke="none"/><circle cx="54" cy="8" r="2.4" fill="#E3C78A" stroke="none"/></svg><span>MÉTODO REI</span></a>
     <nav class="nav-links" aria-label="Principal"><a href="#sobre">Sobre</a><a href="#metodo">O Método</a><a href="#mentores">No palco</a><a href="#ingressos">Ingressos</a><a href="#bonus">Bônus</a></nav>
     <div style="display: flex; align-items: center; gap: 10px">
+      {{idiomas}}
       <a href="#ingressos" class="btn btn-gold" style="min-height: 44px; padding: 0 20px; font-size: 11px">Garantir ingresso</a>
       <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
@@ -725,7 +732,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
 </section>
 
 <div class="ev-facts">
-  <span>{{dur_facts}}</span><span>{{cidade}}, {{estado}}</span><span>Networking de alto nível</span><span>Vagas limitadas</span>
+  <span>{{dur_facts}}</span><span>{{cidade}}, {{estado}}</span><span>Networking de alto nível</span><span>Vagas limitadas</span>{{nota_idioma}}
 </div>
 
 <section id="sobre" style="padding: 110px 0">
@@ -1008,7 +1015,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
       leadErr=document.getElementById("leadError"),
       pending=null;
   var LEAD_ENDPOINT="https://contact-blossom-39.lovable.app/api/public/contatos/ck_479abcc9_479abcc9a2f98313db0a19480754dbf7abe9b3cc27b6cd889cd5d06a3d43deef";
-  var LEAD_TAGS=["{{lead_tag}}","{{lead_codigo}}"];
+  var LEAD_TAGS=["{{lead_tag}}","{{lead_codigo}}"{{tag_idioma}}];
   function openLead(url,target){
     pending={url:url,target:target};
     if(leadErr)leadErr.style.display="none";

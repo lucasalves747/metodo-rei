@@ -7,10 +7,16 @@
 <title>Método REI Orlando · 21 de novembro de 2026</title>
 <meta name="description" content="Um dia de imersão presencial em 17800 Bali Blvd, Winter Garden, FL (sábado, 21 de novembro de 2026) para enriquecer com inteligência e governar a própria vida. Com Hewerton Scheidegger, Santiago Vecina e mais 5 mentores. Ingressos a partir de US$60." />
 <link rel="canonical" href="https://www.metodorei.com/orlando" />
+<link rel="alternate" hreflang="pt-BR" href="https://www.metodorei.com/orlando" />
+<link rel="alternate" hreflang="en" href="https://www.metodorei.com/en/orlando" />
+<link rel="alternate" hreflang="es" href="https://www.metodorei.com/es/orlando" />
+<link rel="alternate" hreflang="x-default" href="https://www.metodorei.com/orlando" />
 <meta name="robots" content="index, follow, max-image-preview:large" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Método REI" />
 <meta property="og:locale" content="pt_BR" />
+<meta property="og:locale:alternate" content="en_US" />
+<meta property="og:locale:alternate" content="es_ES" />
 <meta property="og:url" content="https://www.metodorei.com/orlando" />
 <meta property="og:title" content="Método REI Orlando · 21 de novembro de 2026" />
 <meta property="og:description" content="Um dia de imersão presencial em 17800 Bali Blvd, Winter Garden, FL (sábado, 21 de novembro de 2026) para enriquecer com inteligência e governar a própria vida. Com Hewerton Scheidegger, Santiago Vecina e mais 5 mentores. Ingressos a partir de US$60." />
@@ -44,7 +50,8 @@
         "contactType": "customer service",
         "availableLanguage": [
           "Portuguese",
-          "English"
+          "English",
+          "Spanish"
         ]
       }
     },
@@ -169,8 +176,8 @@
 /* ============================================================
    Fontes locais
    ============================================================ */
-@font-face{font-family:'Playfair Display';src:url('assets/fonts/playfair.woff2') format('woff2');font-weight:500 900;font-style:normal;font-display:swap}
-@font-face{font-family:'Outfit';src:url('assets/fonts/outfit.woff2') format('woff2');font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:'Playfair Display';src:url('/assets/fonts/playfair.woff2') format('woff2');font-weight:500 900;font-style:normal;font-display:swap}
+@font-face{font-family:'Outfit';src:url('/assets/fonts/outfit.woff2') format('woff2');font-weight:100 900;font-style:normal;font-display:swap}
 
 /* ============================================================
    MÉTODO REI — Pré-venda Orlando (layout inspirado na LifeSurge)
@@ -302,7 +309,7 @@ a{color:inherit;text-decoration:none}
 /* ============================================================
    SOBRE
    ============================================================ */
-.about{background:#000 url('assets/pv/bg-sobre.jpg') center/cover}
+.about{background:#000 url('/assets/pv/bg-sobre.jpg') center/cover}
 .about__grid{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(2rem,5vw,4rem);align-items:center}
 .about__t{font-weight:800;text-transform:uppercase;color:var(--gold-bright);font-size:clamp(1.7rem,3.4vw,2.5rem);line-height:1.05}
 .about__lead{margin-top:1.1rem;font-weight:700;font-size:1.12rem;line-height:1.45;color:#fff}
@@ -326,7 +333,7 @@ a{color:inherit;text-decoration:none}
    PILARES
    ============================================================ */
 .pillars-sec{color:#fff}
-.pillars-sec{background:#2F2208 url('assets/pv/bg-pilares.jpg') center bottom/cover}
+.pillars-sec{background:#2F2208 url('/assets/pv/bg-pilares.jpg') center bottom/cover}
 .pillars-sec .head{margin-bottom:clamp(2rem,4vw,2.8rem)}
 .pillars-sec .h-big{font-size:clamp(2.4rem,5.6vw,4rem);color:#fff}
 .pcards{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(.7rem,1.6vw,1rem)}
@@ -386,7 +393,7 @@ a{color:inherit;text-decoration:none}
    A EXPERIÊNCIA
    ============================================================ */
 .exp{color:var(--ink)}
-.exp{background:#fff url('assets/pv/bg-experiencia.jpg') center/cover}
+.exp{background:#fff url('/assets/pv/bg-experiencia.jpg') center/cover}
 .exp .h-big{color:var(--gold-deep)}
 .exp__sub{margin:.6rem auto 0;max-width:46ch;font-size:clamp(1.05rem,1.8vw,1.25rem);line-height:1.45}
 .row4{margin-top:clamp(1.6rem,3.4vw,2.4rem);display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(.5rem,1.1vw,.8rem)}
@@ -408,7 +415,7 @@ a{color:inherit;text-decoration:none}
    INGRESSOS
    ============================================================ */
 .tickets-sec{color:#fff}
-.tickets-sec{background:#1F1706 url('assets/pv/bg-ingressos.jpg') center/cover}
+.tickets-sec{background:#1F1706 url('/assets/pv/bg-ingressos.jpg') center/cover}
 .tickets-sec .h-mid{font-weight:600;font-size:clamp(1.6rem,3.4vw,2.5rem);line-height:1.15;margin-top:.4rem}
 .tickets-sec .rule{width:min(880px,100%);height:1px;background:rgba(255,255,255,.35);margin:1rem auto 0}
 .tickets-sec .when{margin-top:.9rem;color:#E9E5DC}
@@ -668,6 +675,12 @@ a{color:#E3C78A}a:hover{color:#F6E2B0}
 .nav-in{display:flex;align-items:center;justify-content:space-between;height:88px;gap:20px}
 .brandmark{display:flex;align-items:center;gap:14px;text-decoration:none;color:#EEE9E0}
 .brandmark span{font-size:14px;font-weight:700;letter-spacing:.34em}
+.lang{display:flex;gap:2px;align-items:center;font-size:11px;font-weight:700;letter-spacing:.12em}
+.lang a{color:rgba(238,233,224,.55);text-decoration:none;padding:6px 6px;border-radius:6px}
+.lang a:hover{color:#fff}
+.lang a[aria-current]{color:#E3C78A}
+@media (max-width:900px){.lang{font-size:10px}.lang a{padding:6px 4px}}
+@media (max-width:600px){.ev-head .nav-in > div > .btn{display:none}.brandmark span{white-space:nowrap;letter-spacing:.16em}}
 .nav-links{display:flex;gap:30px}
 .nav-links a{color:rgba(238,233,224,.82);text-decoration:none;font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
 .nav-links a:hover{color:#fff}
@@ -835,6 +848,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
     <a href="/" class="brandmark" aria-label="Método REI — início"><svg viewBox="0 0 64 44" width="38" height="26" fill="none" stroke="#E3C78A" stroke-width="2" aria-hidden="true"><path d="M6 34 L10 10 L22 24 L32 4 L42 24 L54 10 L58 34 Z" stroke-linejoin="round"/><path d="M7 40 H57" stroke-linecap="round"/><circle cx="10" cy="8" r="2.4" fill="#E3C78A" stroke="none"/><circle cx="32" cy="2.6" r="2.4" fill="#E3C78A" stroke="none"/><circle cx="54" cy="8" r="2.4" fill="#E3C78A" stroke="none"/></svg><span>MÉTODO REI</span></a>
     <nav class="nav-links" aria-label="Principal"><a href="#sobre">Sobre</a><a href="#metodo">O Método</a><a href="#mentores">No palco</a><a href="#ingressos">Ingressos</a><a href="#bonus">Bônus</a></nav>
     <div style="display: flex; align-items: center; gap: 10px">
+      <nav class="lang" aria-label="Idioma / Language"><a href="/orlando" hreflang="pt-BR" lang="pt-BR" title="Português" aria-current="page">PT</a><a href="/en/orlando" hreflang="en" lang="en" title="English">EN</a><a href="/es/orlando" hreflang="es" lang="es" title="Español">ES</a></nav>
       <a href="#ingressos" class="btn btn-gold" style="min-height: 44px; padding: 0 20px; font-size: 11px">Garantir ingresso</a>
       <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
@@ -873,9 +887,9 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
     </div>
   </div>
   <div class="hero-band">
-    <img class="hero-img" src="assets/hero-duo.jpg" alt="Hewerton Scheidegger e Dr. Santiago Vecina no palco do Método REI" fetchpriority="high">
+    <img class="hero-img" src="/assets/hero-duo.jpg" alt="Hewerton Scheidegger e Dr. Santiago Vecina no palco do Método REI" fetchpriority="high">
     <div class="hero-tint"></div>
-    <div class="ev-city"><img src="assets/home/city-orlando.jpg" alt=""><span>Orlando, FL</span></div>
+    <div class="ev-city"><img src="/assets/home/city-orlando.jpg" alt=""><span>Orlando, FL</span></div>
     <div class="hero-cap">Hewerton Scheidegger &amp; Dr. Santiago Vecina</div>
   </div>
 </section>
@@ -898,9 +912,9 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
       </ul>
     </div>
     <div class="ev-video" id="video">
-      <video controls playsinline preload="none" poster="assets/evento-1.jpg">
-        <source src="assets/hero-video.webm" type="video/webm">
-        <source src="assets/hero-video.mp4" type="video/mp4">
+      <video controls playsinline preload="none" poster="/assets/evento-1.jpg">
+        <source src="/assets/hero-video.webm" type="video/webm">
+        <source src="/assets/hero-video.mp4" type="video/mp4">
       </video>
     </div>
   </div>
@@ -926,7 +940,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
     </div>
     <div class="mentors mentors--grid">
       <article class="mentor reveal" data-d="1">
-        <div class="mentor__ph"><img decoding="async" src="assets/pv/hewerton.jpg" alt="Hewerton Scheidegger" loading="lazy" /></div>
+        <div class="mentor__ph"><img decoding="async" src="/assets/pv/hewerton.jpg" alt="Hewerton Scheidegger" loading="lazy" /></div>
         <div class="mentor__b">
           <span class="mentor__role">Criador &amp; Mentor</span>
           <h3>Hewerton <span class="g">Scheidegger</span></h3>
@@ -934,7 +948,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
         </div>
       </article>
       <article class="mentor reveal" data-d="2">
-        <div class="mentor__ph"><img decoding="async" src="assets/pv/santiago.jpg" alt="Santiago Vecina" loading="lazy" /></div>
+        <div class="mentor__ph"><img decoding="async" src="/assets/pv/santiago.jpg" alt="Santiago Vecina" loading="lazy" /></div>
         <div class="mentor__b">
           <span class="mentor__role">Médico, nutrólogo, empresário e mentor</span>
           <h3>Dr. Santiago <span class="g">Vecina</span></h3>
@@ -942,7 +956,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
         </div>
       </article>
       <article class="mentor reveal" data-d="3">
-        <div class="mentor__ph"><img decoding="async" src="assets/alexandre-morelli.JPEG" alt="Alexandre Morelli" loading="lazy" /></div>
+        <div class="mentor__ph"><img decoding="async" src="/assets/alexandre-morelli.JPEG" alt="Alexandre Morelli" loading="lazy" /></div>
         <div class="mentor__b">
           <span class="mentor__role">Empresário, escritor, mentor e palestrante internacional</span>
           <h3>Alexandre <span class="g">Morelli</span></h3>
@@ -950,7 +964,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
         </div>
       </article>
       <article class="mentor reveal" data-d="1">
-        <div class="mentor__ph"><img decoding="async" src="assets/pv/eduardo-itaborahy.jpg" alt="Eduardo Itaborahy" loading="lazy" /></div>
+        <div class="mentor__ph"><img decoding="async" src="/assets/pv/eduardo-itaborahy.jpg" alt="Eduardo Itaborahy" loading="lazy" /></div>
         <div class="mentor__b">
           <span class="mentor__role">PhD, D.Div., DCC · Pastor, professor e teólogo</span>
           <h3>Eduardo <span class="g">Itaborahy</span></h3>
@@ -966,7 +980,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
         </div>
       </article>
       <article class="mentor reveal" data-d="2">
-        <div class="mentor__ph"><img decoding="async" src="assets/pv/patricia-belieny.jpg" alt="Patrícia Belieny" loading="lazy" /></div>
+        <div class="mentor__ph"><img decoding="async" src="/assets/pv/patricia-belieny.jpg" alt="Patrícia Belieny" loading="lazy" /></div>
         <div class="mentor__b">
           <span class="mentor__role">Empreendedora, autora e mentora de mulheres</span>
           <h3>Patrícia <span class="g">Belieny</span></h3>
@@ -979,7 +993,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
         </div>
       </article>
       <article class="mentor reveal" data-d="3">
-        <div class="mentor__ph"><img decoding="async" src="assets/pv/dany-rocha.jpg" alt="Dany Rocha" loading="lazy" /></div>
+        <div class="mentor__ph"><img decoding="async" src="/assets/pv/dany-rocha.jpg" alt="Dany Rocha" loading="lazy" /></div>
         <div class="mentor__b">
           <span class="mentor__role">Comunicadora, mentora e empresária</span>
           <h3>Dany <span class="g">Rocha</span></h3>
@@ -992,7 +1006,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
         </div>
       </article>
       <article class="mentor reveal" data-d="1">
-        <div class="mentor__ph"><img decoding="async" src="assets/pv/jake-belieny.jpg" alt="Jake Belieny" loading="lazy" /></div>
+        <div class="mentor__ph"><img decoding="async" src="/assets/pv/jake-belieny.jpg" alt="Jake Belieny" loading="lazy" /></div>
         <div class="mentor__b">
           <span class="mentor__role">Mentor, autor e empreendedor</span>
           <h3>Jake <span class="g">Belieny</span></h3>
@@ -1012,10 +1026,10 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
 
 <section id="experiencia">
   <div class="wall">
-    <img src="assets/pv/evento-1.jpg" alt="Mentores no palco do Método REI" loading="lazy">
-    <img src="assets/pv/exp1.jpg" alt="Participantes em mesa de trabalho" loading="lazy">
-    <img src="assets/pv/evento-5.jpg" alt="Plateia do Método REI" loading="lazy">
-    <img src="assets/pv/exp3.jpg" alt="Networking no lounge" loading="lazy">
+    <img src="/assets/pv/evento-1.jpg" alt="Mentores no palco do Método REI" loading="lazy">
+    <img src="/assets/pv/exp1.jpg" alt="Participantes em mesa de trabalho" loading="lazy">
+    <img src="/assets/pv/evento-5.jpg" alt="Plateia do Método REI" loading="lazy">
+    <img src="/assets/pv/exp3.jpg" alt="Networking no lounge" loading="lazy">
   </div>
   <div class="wrap" style="padding-top: 100px; padding-bottom: 100px">
     <h2 class="serif h2" style="font-size: 76px; line-height: 1.02; margin: 0; max-width: 1040px">Você não vai apenas assistir. Vai ser <span class="champ">confrontado, alinhado e posicionado.</span></h2>
@@ -1044,7 +1058,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
     <div class="tickets">
       <!-- [VALIDAR: benefícios e preço Standard] -->
       <article class="ticket reveal" data-d="1">
-        <div class="ticket__img"><img decoding="async" src="assets/pv/evento-5.jpg" alt="" loading="lazy" /></div>
+        <div class="ticket__img"><img decoding="async" src="/assets/pv/evento-5.jpg" alt="" loading="lazy" /></div>
         <div class="ticket__head"><span class="ticket__n">Standard</span><span class="ticket__x">Experiência</span></div>
         <div class="ticket__b">
           <div class="ticket__price"><span class="ticket__amt">US$60</span></div>
@@ -1065,7 +1079,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
 
       <!-- [VALIDAR: benefícios e preço VIP] -->
       <article class="ticket reveal" data-d="2">
-        <div class="ticket__img"><span class="ticket__badge">Mais escolhido</span><img decoding="async" src="assets/pv/exp3.jpg" alt="" loading="lazy" /></div>
+        <div class="ticket__img"><span class="ticket__badge">Mais escolhido</span><img decoding="async" src="/assets/pv/exp3.jpg" alt="" loading="lazy" /></div>
         <div class="ticket__head"><span class="ticket__n">VIP</span><span class="ticket__x">Experiência</span></div>
         <div class="ticket__b">
           <div class="ticket__price"><span class="ticket__amt">US$97</span></div>
@@ -1096,7 +1110,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
 
       <!-- [VALIDAR: benefícios e preço REI] -->
       <article class="ticket ticket--rei reveal" data-d="3">
-        <div class="ticket__img"><img decoding="async" src="assets/pv/evento-1.jpg" alt="" loading="lazy" /></div>
+        <div class="ticket__img"><img decoding="async" src="/assets/pv/evento-1.jpg" alt="" loading="lazy" /></div>
         <div class="ticket__head"><span class="ticket__n">REI</span><span class="ticket__x">Experiência</span></div>
         <div class="ticket__b">
           <div class="ticket__price"><span class="ticket__amt">US$197</span></div>
@@ -1138,20 +1152,20 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
       <h3>E-books exclusivos do Método REI</h3>
       <p>Ao garantir seu ingresso hoje, você recebe acesso imediato aos e-books do Método REI, feitos para preparar, inspirar e ativar você antes mesmo da imersão começar.</p>
       <div class="books">
-        <figure><img decoding="async" loading="lazy" src="assets/pv/ebooks/mente-reinante.jpg" alt="Capa do e-book A Mente de um Reinante" width="360" height="509" /><figcaption>A Mente de um Reinante</figcaption></figure>
-        <figure><img decoding="async" loading="lazy" src="assets/pv/ebooks/performance-integral.jpg" alt="Capa do e-book Guia para Performance Integral" width="360" height="509" /><figcaption>Guia para Performance Integral</figcaption></figure>
-        <figure><img decoding="async" loading="lazy" src="assets/pv/ebooks/negocio-trabalha.jpg" alt="Capa do e-book O negócio que trabalha para você" width="360" height="509" /><figcaption>O negócio que trabalha para você</figcaption></figure>
-        <figure><img decoding="async" loading="lazy" src="assets/pv/ebooks/5-pilares.jpg" alt="Capa do e-book 05 pilares para construção de riqueza" width="360" height="509" /><figcaption>05 pilares para construção de riqueza</figcaption></figure>
-        <figure><img decoding="async" loading="lazy" src="assets/pv/ebooks/fluxo-caixa.jpg" alt="Capa do e-book Gestão do Fluxo de Caixa" width="360" height="509" /><figcaption>Gestão do Fluxo de Caixa</figcaption></figure>
-        <figure><img decoding="async" loading="lazy" src="assets/pv/ebooks/desenvolvimento.jpg" alt="Capa do e-book Desenvolvimento profissional e Digital" width="360" height="509" /><figcaption>Desenvolvimento profissional e Digital</figcaption></figure>
-        <figure><img decoding="async" loading="lazy" src="assets/pv/ebooks/7-erros.jpg" alt="Capa do e-book 07 erros que estão sugando sua energia" width="360" height="509" /><figcaption>07 erros que estão sugando sua energia</figcaption></figure>
-        <figure><img decoding="async" loading="lazy" src="assets/pv/ebooks/burnout.jpg" alt="Capa do e-book Checklist para diagnóstico de Burnout" width="360" height="509" /><figcaption>Checklist para diagnóstico de Burnout</figcaption></figure>
-        <figure><img decoding="async" loading="lazy" src="assets/pv/ebooks/alta-performance.jpg" alt="Capa do e-book Protocolo da máquina de alta performance" width="360" height="509" /><figcaption>Protocolo da máquina de alta performance</figcaption></figure>
-        <figure><img decoding="async" loading="lazy" src="assets/pv/ebooks/sono.jpg" alt="Capa do e-book Protocolo para um sono perfeito" width="360" height="509" /><figcaption>Protocolo para um sono perfeito</figcaption></figure>
-        <figure><img decoding="async" loading="lazy" src="assets/pv/ebooks/suplementos.jpg" alt="Capa do e-book Guia clínico de suplementos e fitoterápicos" width="360" height="509" /><figcaption>Guia clínico de suplementos e fitoterápicos</figcaption></figure>
+        <figure><img decoding="async" loading="lazy" src="/assets/pv/ebooks/mente-reinante.jpg" alt="Capa do e-book A Mente de um Reinante" width="360" height="509" /><figcaption>A Mente de um Reinante</figcaption></figure>
+        <figure><img decoding="async" loading="lazy" src="/assets/pv/ebooks/performance-integral.jpg" alt="Capa do e-book Guia para Performance Integral" width="360" height="509" /><figcaption>Guia para Performance Integral</figcaption></figure>
+        <figure><img decoding="async" loading="lazy" src="/assets/pv/ebooks/negocio-trabalha.jpg" alt="Capa do e-book O negócio que trabalha para você" width="360" height="509" /><figcaption>O negócio que trabalha para você</figcaption></figure>
+        <figure><img decoding="async" loading="lazy" src="/assets/pv/ebooks/5-pilares.jpg" alt="Capa do e-book 05 pilares para construção de riqueza" width="360" height="509" /><figcaption>05 pilares para construção de riqueza</figcaption></figure>
+        <figure><img decoding="async" loading="lazy" src="/assets/pv/ebooks/fluxo-caixa.jpg" alt="Capa do e-book Gestão do Fluxo de Caixa" width="360" height="509" /><figcaption>Gestão do Fluxo de Caixa</figcaption></figure>
+        <figure><img decoding="async" loading="lazy" src="/assets/pv/ebooks/desenvolvimento.jpg" alt="Capa do e-book Desenvolvimento profissional e Digital" width="360" height="509" /><figcaption>Desenvolvimento profissional e Digital</figcaption></figure>
+        <figure><img decoding="async" loading="lazy" src="/assets/pv/ebooks/7-erros.jpg" alt="Capa do e-book 07 erros que estão sugando sua energia" width="360" height="509" /><figcaption>07 erros que estão sugando sua energia</figcaption></figure>
+        <figure><img decoding="async" loading="lazy" src="/assets/pv/ebooks/burnout.jpg" alt="Capa do e-book Checklist para diagnóstico de Burnout" width="360" height="509" /><figcaption>Checklist para diagnóstico de Burnout</figcaption></figure>
+        <figure><img decoding="async" loading="lazy" src="/assets/pv/ebooks/alta-performance.jpg" alt="Capa do e-book Protocolo da máquina de alta performance" width="360" height="509" /><figcaption>Protocolo da máquina de alta performance</figcaption></figure>
+        <figure><img decoding="async" loading="lazy" src="/assets/pv/ebooks/sono.jpg" alt="Capa do e-book Protocolo para um sono perfeito" width="360" height="509" /><figcaption>Protocolo para um sono perfeito</figcaption></figure>
+        <figure><img decoding="async" loading="lazy" src="/assets/pv/ebooks/suplementos.jpg" alt="Capa do e-book Guia clínico de suplementos e fitoterápicos" width="360" height="509" /><figcaption>Guia clínico de suplementos e fitoterápicos</figcaption></figure>
       </div>
       <div class="legacy">
-        <div class="legacy__ph"><img decoding="async" loading="lazy" src="assets/pv/legacy.jpg" alt="Comunidade Legacy" width="1200" height="675" /></div>
+        <div class="legacy__ph"><img decoding="async" loading="lazy" src="/assets/pv/legacy.jpg" alt="Comunidade Legacy" width="1200" height="675" /></div>
         <div>
           <span class="legacy__k">Plataforma de cursos</span>
           <h4>Comunidade Legacy</h4>

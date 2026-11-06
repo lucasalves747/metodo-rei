@@ -1,58 +1,176 @@
 {
-  "home": {
-    "cidades": [
-      "Orlando",
-      "Boston"
-    ],
-    "anos": [
-      2026
+  "pt": {
+    "home": {
+      "cidades": [
+        "Orlando",
+        "Boston"
+      ],
+      "anos": [
+        2026
+      ]
+    },
+    "eventos": [
+      {
+        "slug": "miami",
+        "cidade": "Miami",
+        "uf": "FL",
+        "dias": "Sexta e Sábado",
+        "data": "23 e 24 de Outubro, 2026",
+        "onde": "295 NE 59th Terrace, Miami, FL",
+        "min": 14,
+        "fotos": [
+          "assets/pv/hewerton.jpg",
+          "assets/pv/santiago.jpg"
+        ]
+      },
+      {
+        "slug": "orlando",
+        "cidade": "Orlando",
+        "uf": "FL",
+        "dias": "Sábado",
+        "data": "21 de Novembro, 2026",
+        "onde": "17800 Bali Blvd, Winter Garden, FL",
+        "min": 60,
+        "fotos": [
+          "assets/pv/hewerton.jpg",
+          "assets/pv/santiago.jpg",
+          "assets/alexandre-morelli.JPEG",
+          "assets/pv/eduardo-itaborahy.jpg",
+          "assets/pv/patricia-belieny.jpg",
+          "assets/pv/dany-rocha.jpg",
+          "assets/pv/jake-belieny.jpg"
+        ]
+      },
+      {
+        "slug": "boston",
+        "cidade": "Boston",
+        "uf": "MA",
+        "dias": "Sexta e Sábado",
+        "data": "4 e 5 de Dezembro, 2026",
+        "onde": "Boston, MA",
+        "min": 14,
+        "fotos": [
+          "assets/pv/hewerton.jpg",
+          "assets/pv/santiago.jpg",
+          "assets/bruno.jpg"
+        ]
+      }
     ]
   },
-  "eventos": [
-    {
-      "slug": "miami",
-      "cidade": "Miami",
-      "uf": "FL",
-      "dias": "Sexta e Sábado",
-      "data": "23 e 24 de Outubro, 2026",
-      "onde": "295 NE 59th Terrace, Miami, FL",
-      "min": 14,
-      "fotos": [
-        "assets/pv/hewerton.jpg",
-        "assets/pv/santiago.jpg"
+  "en": {
+    "home": {
+      "cidades": [
+        "Orlando",
+        "Boston"
+      ],
+      "anos": [
+        2026
       ]
     },
-    {
-      "slug": "orlando",
-      "cidade": "Orlando",
-      "uf": "FL",
-      "dias": "Sábado",
-      "data": "21 de Novembro, 2026",
-      "onde": "17800 Bali Blvd, Winter Garden, FL",
-      "min": 60,
-      "fotos": [
-        "assets/pv/hewerton.jpg",
-        "assets/pv/santiago.jpg",
-        "assets/alexandre-morelli.JPEG",
-        "assets/pv/eduardo-itaborahy.jpg",
-        "assets/pv/patricia-belieny.jpg",
-        "assets/pv/dany-rocha.jpg",
-        "assets/pv/jake-belieny.jpg"
+    "eventos": [
+      {
+        "slug": "miami",
+        "cidade": "Miami",
+        "uf": "FL",
+        "dias": "Friday & Saturday",
+        "data": "October 23–24, 2026",
+        "onde": "295 NE 59th Terrace, Miami, FL",
+        "min": 14,
+        "fotos": [
+          "assets/pv/hewerton.jpg",
+          "assets/pv/santiago.jpg"
+        ]
+      },
+      {
+        "slug": "orlando",
+        "cidade": "Orlando",
+        "uf": "FL",
+        "dias": "Saturday",
+        "data": "November 21, 2026",
+        "onde": "17800 Bali Blvd, Winter Garden, FL",
+        "min": 60,
+        "fotos": [
+          "assets/pv/hewerton.jpg",
+          "assets/pv/santiago.jpg",
+          "assets/alexandre-morelli.JPEG",
+          "assets/pv/eduardo-itaborahy.jpg",
+          "assets/pv/patricia-belieny.jpg",
+          "assets/pv/dany-rocha.jpg",
+          "assets/pv/jake-belieny.jpg"
+        ]
+      },
+      {
+        "slug": "boston",
+        "cidade": "Boston",
+        "uf": "MA",
+        "dias": "Friday & Saturday",
+        "data": "December 4–5, 2026",
+        "onde": "Boston, MA",
+        "min": 14,
+        "fotos": [
+          "assets/pv/hewerton.jpg",
+          "assets/pv/santiago.jpg",
+          "assets/bruno.jpg"
+        ]
+      }
+    ]
+  },
+  "es": {
+    "home": {
+      "cidades": [
+        "Orlando",
+        "Boston"
+      ],
+      "anos": [
+        2026
       ]
     },
-    {
-      "slug": "boston",
-      "cidade": "Boston",
-      "uf": "MA",
-      "dias": "Sexta e Sábado",
-      "data": "4 e 5 de Dezembro, 2026",
-      "onde": "Boston, MA",
-      "min": 14,
-      "fotos": [
-        "assets/pv/hewerton.jpg",
-        "assets/pv/santiago.jpg",
-        "assets/bruno.jpg"
-      ]
-    }
-  ]
+    "eventos": [
+      {
+        "slug": "miami",
+        "cidade": "Miami",
+        "uf": "FL",
+        "dias": "Viernes y Sábado",
+        "data": "23 y 24 de octubre de 2026",
+        "onde": "295 NE 59th Terrace, Miami, FL",
+        "min": 14,
+        "fotos": [
+          "assets/pv/hewerton.jpg",
+          "assets/pv/santiago.jpg"
+        ]
+      },
+      {
+        "slug": "orlando",
+        "cidade": "Orlando",
+        "uf": "FL",
+        "dias": "Sábado",
+        "data": "21 de noviembre de 2026",
+        "onde": "17800 Bali Blvd, Winter Garden, FL",
+        "min": 60,
+        "fotos": [
+          "assets/pv/hewerton.jpg",
+          "assets/pv/santiago.jpg",
+          "assets/alexandre-morelli.JPEG",
+          "assets/pv/eduardo-itaborahy.jpg",
+          "assets/pv/patricia-belieny.jpg",
+          "assets/pv/dany-rocha.jpg",
+          "assets/pv/jake-belieny.jpg"
+        ]
+      },
+      {
+        "slug": "boston",
+        "cidade": "Boston",
+        "uf": "MA",
+        "dias": "Viernes y Sábado",
+        "data": "4 y 5 de diciembre de 2026",
+        "onde": "Boston, MA",
+        "min": 14,
+        "fotos": [
+          "assets/pv/hewerton.jpg",
+          "assets/pv/santiago.jpg",
+          "assets/bruno.jpg"
+        ]
+      }
+    ]
+  }
 }

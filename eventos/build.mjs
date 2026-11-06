@@ -4,10 +4,12 @@
 //       node eventos/build.mjs --check  (só valida o JSON)
 // Sem dependências. As páginas geradas são HTML estático normal (a Vercel não precisa de build).
 
-import { readFileSync, writeFileSync, existsSync } from "node:fs";
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { eventoSchema, homeHead, sitemap, robots, llms } from "./seo.mjs";
+import { IDIOMAS, dicionarios, traduzirModelo, localizarPagina, seletor, prefixo } from "./i18n.mjs";
+import { L } from "./textos.mjs";
 
 const DIR = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(DIR, "..");
@@ -17,23 +19,32 @@ const incluir = (t) => t.replace(/\{\{(pilares|wall|experiencia)\}\}/g, (m, k) =
 const template = incluir(readFileSync(join(DIR, "template.html"), "utf8"));
 const homeTemplate = incluir(readFileSync(join(DIR, "home-template.html"), "utf8"));
 const CHECK_ONLY = process.argv.includes("--check");
+
+// Modelos em cada idioma. Texto sem tradução em eventos/i18n/<lang>.json para o build.
+const DIC = dicionarios(DIR);
+const MODELOS = { pt: { evento: template, home: homeTemplate } };
+const semTraducao = [];
+for (const lang of IDIOMAS.filter((l) => l !== "pt")) {
+  const falta = new Set();
+  MODELOS[lang] = { evento: traduzirModelo(template, DIC[lang], falta), home: traduzirModelo(homeTemplate, DIC[lang], falta) };
+  for (const t of falta) semTraducao.push(`  [${lang}] ${JSON.stringify(t)}`);
+}
+if (semTraducao.length) {
+  console.error(`\n✗ Texto sem tradução (adicione em eventos/i18n/<lang>.json):\n${semTraducao.join("\n")}\n`);
+  process.exit(1);
+}
 data.site = { url: "https://www.metodorei.com", nome: "Método REI", ...(data.site || {}) };
 
-const MESES = ["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
-const MESES_CURTO = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
-const DIAS = ["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"];
-const DIAS_CURTO = ["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"];
-const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 const pad = (n) => String(n).padStart(2, "0");
-
 function parseDate(iso, slug, field) {
   const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || "");
   if (!m) throw new Error(`[${slug}] "${field}" precisa ser AAAA-MM-DD (recebi: ${iso})`);
   return new Date(Date.UTC(+m[1], +m[2] - 1, +m[3]));
 }
 
-// Monta todos os formatos de data a partir de inicio/fim.
-function datas(ev) {
+// Monta todos os formatos de data a partir de inicio/fim, no idioma pedido.
+function datas(ev, lang) {
+  const T = L[lang];
   const a = parseDate(ev.inicio, ev.slug, "inicio");
   const b = parseDate(ev.fim, ev.slug, "fim");
   if (b < a) throw new Error(`[${ev.slug}] "fim" é antes de "inicio"`);
@@ -42,37 +53,41 @@ function datas(ev) {
   const y = b.getUTCFullYear();
   const mesmoMes = m1 === m2 && a.getUTCFullYear() === y;
   const umDia = +a === +b;
-  const dias = umDia ? DIAS[a.getUTCDay()] : `${DIAS[a.getUTCDay()]} e ${DIAS[b.getUTCDay()]}`;
-  let texto, hero, card, curta;
-  if (umDia) {
-    texto = `${d1} de ${MESES[m1]} de ${y}`;
-    hero = `${d1} de ${cap(MESES[m1])}, ${y}`;
-    card = `${d1} de ${MESES[m1]}, ${y}`;
-    curta = `${d1} ${MESES_CURTO[m1]}`;
-  } else if (mesmoMes) {
-    texto = `${d1} e ${d2} de ${MESES[m1]} de ${y}`;
-    hero = `${d1} e ${d2} de ${cap(MESES[m1])}, ${y}`;
-    card = `${d1}–${d2} de ${MESES[m1]}, ${y}`;
-    curta = `${d1}–${d2} ${MESES_CURTO[m1]}`;
-  } else {
-    texto = `${d1} de ${MESES[m1]} e ${d2} de ${MESES[m2]} de ${y}`;
-    hero = `${d1} de ${cap(MESES[m1])} e ${d2} de ${cap(MESES[m2])}, ${y}`;
-    card = `${d1} ${MESES_CURTO[m1]} – ${d2} ${MESES_CURTO[m2]}, ${y}`;
-    curta = `${d1} ${MESES_CURTO[m1]}–${d2} ${MESES_CURTO[m2]}`;
-  }
+  const wa = a.getUTCDay(), wb = b.getUTCDay();
+  const dias = umDia ? T.dias[wa] : `${T.dias[wa]} ${T.e} ${T.dias[wb]}`;
+  const { texto, hero, card, curta } = T.datas(d1, d2, m1, m2, y, umDia, mesmoMes);
   const codigo = `MREI${pad(d1)}${pad(m1 + 1)}${String(a.getUTCFullYear()).slice(2)}`;
-  const diasCard = umDia ? DIAS[a.getUTCDay()] : `${DIAS[a.getUTCDay()]} · ${DIAS[b.getUTCDay()]}`;
+  const diasCard = umDia ? T.dias[wa] : `${T.dias[wa]} · ${T.dias[wb]}`;
   const h = ev.horarios || [];
   const horario = umDia
-    ? `${DIAS_CURTO[a.getUTCDay()]} ${h[0] || ""}`
-    : `${DIAS_CURTO[a.getUTCDay()]} ${h[0] || ""} · ${DIAS_CURTO[b.getUTCDay()]} ${h[1] || ""}`;
+    ? `${T.diasCurto[wa]} ${h[0] || ""}`
+    : `${T.diasCurto[wa]} ${h[0] || ""} · ${T.diasCurto[wb]} ${h[1] || ""}`;
   const nDias = Math.round((b - a) / 86400000) + 1;
   return { texto, hero, card, curta, codigo, dias, diasCard, horario, horarioCard: h.join(" · ").toUpperCase(), ano: y, fimDate: b, nDias };
 }
 
-function mentorHtml(id, i, ev) {
-  const p = data.preletores[id];
-  if (!p) throw new Error(`[${ev.slug}] preletor "${id}" não existe em "preletores"`);
+// Campos que precisam existir em todos os idiomas (se existirem em PT).
+const CAMPOS_PRELETOR = ["funcao", "bio", "bio_completa", "destaque"];
+const CAMPOS_EVENTO = ["selo", "destaque", "estado", "seo_descricao"];
+const faltaIdioma = [];
+function loc(obj, lang, campos, quem) {
+  if (lang === "pt") return obj;
+  const t = obj[lang] || {};
+  for (const c of campos) {
+    if (obj[c] === undefined) continue;
+    const v = t[c];
+    const ok = v !== undefined && v !== "" &&
+      (!Array.isArray(obj[c]) || (Array.isArray(v) && v.length === obj[c].length && v.every(Boolean))) &&
+      (typeof obj[c] !== "object" || Array.isArray(obj[c]) || Object.keys(obj[c]).every((k) => v && v[k]));
+    if (!ok) faltaIdioma.push(`${quem} → "${lang}.${c}"`);
+  }
+  return { ...obj, ...t };
+}
+const pv = (id, lang) => loc(data.preletores[id], lang, CAMPOS_PRELETOR, `preletor ${id}`);
+
+function mentorHtml(id, i, ev, lang) {
+  if (!data.preletores[id]) throw new Error(`[${ev.slug}] preletor "${id}" não existe em "preletores"`);
+  const p = pv(id, lang);
   if (p.foto && !existsSync(join(ROOT, p.foto))) console.warn(`  ! foto não encontrada: ${p.foto} (${id})`);
   const titulo = p.titulo_html || p.nome;
   const foto = p.foto
@@ -85,20 +100,21 @@ function mentorHtml(id, i, ev) {
           <h3>${titulo}</h3>
           <p>${p.bio}</p>${
             p.bio_completa && p.bio_completa.length
-              ? `\n          <details class="mentor__more"><summary>Ler bio completa</summary>\n${p.bio_completa.map((x) => `            <p>${x}</p>`).join("\n")}\n          </details>`
+              ? `\n          <details class="mentor__more"><summary>${L[lang].lerBio}</summary>\n${p.bio_completa.map((x) => `            <p>${x}</p>`).join("\n")}\n          </details>`
               : ""
           }
         </div>
       </article>`;
 }
 
-function heroLocal(ev) {
+const localDefinir = (l, lang) => !l.nome || /a definir/i.test(l.nome);
+function heroLocal(ev, lang) {
   const l = ev.local || {};
   if (l.endereco) {
     const q = l.maps_query || encodeURIComponent([l.nome, l.endereco].filter(Boolean).join(" ")).replace(/%20/g, "+");
     return `<a href="https://www.google.com/maps/search/?api=1&amp;query=${q}" target="_blank" rel="noopener">${l.endereco_exibicao || l.endereco}</a>`;
   }
-  return `${ev.cidade}, ${ev.uf} · ${l.nome || "Local a definir"}`;
+  return `${ev.cidade}, ${ev.uf} · ${localDefinir(l) ? L[lang].localDefinir : l.nome}`;
 }
 
 function checkout(ev, tipo) {
@@ -109,48 +125,60 @@ function checkout(ev, tipo) {
 }
 
 // Textos que dependem de duração (1 dia × 2+ dias), pré-venda e preços.
-function vendaVars(ev, d) {
+function vendaVars(ev, d, lang) {
+  const T = L[lang];
   const prevenda = ev.prevenda !== undefined ? ev.prevenda : true;
   const precos = { ...data.precos_padrao, ...(ev.precos || {}) };
-  const umDia = ev.inicio === ev.fim;
   const destaque = ev.destaque || null; // { curto: "...", nota_ingresso: "..." }
   const pct = (p) => (p.de && p.de > p.por ? Math.round((1 - p.por / p.de) * 100) : 0);
   const maxPct = Math.max(...["standard", "vip", "rei"].map((k) => pct(precos[k])));
   const ticket = (k) => {
     const p = precos[k];
     if (prevenda && p.de) {
-      return `          <div class="ticket__pre">Preço de pré-venda!</div>
-          <div class="ticket__price"><span class="ticket__old">US$${p.de}</span><span class="ticket__now">Agora<br>só</span><span class="ticket__amt">US$${p.por}</span></div>
-          <div class="ticket__note">${pct(p)}% OFF<br>por tempo limitado</div>`;
+      return `          <div class="ticket__pre">${T.prevendaPreco}</div>
+          <div class="ticket__price"><span class="ticket__old">US$${p.de}</span><span class="ticket__now">${T.agoraSo}</span><span class="ticket__amt">US$${p.por}</span></div>
+          <div class="ticket__note">${T.offTempo(pct(p))}</div>`;
     }
     const nota = destaque && destaque.nota_ingresso ? `\n          <div class="ticket__note">${destaque.nota_ingresso}</div>` : "";
     return `          <div class="ticket__price"><span class="ticket__amt">US$${p.por}</span></div>${nota}`;
   };
   let heroSave = "";
   if (destaque && destaque.curto) heroSave = `<div class="hero__save hero__save--destaque reveal" data-d="3">${destaque.curto}</div>`;
-  else if (prevenda && maxPct) heroSave = `<div class="hero__save reveal" data-d="3">Economize até <b>${maxPct}% OFF!</b></div>`;
+  else if (prevenda && maxPct) heroSave = `<div class="hero__save reveal" data-d="3">${T.economize(maxPct)}</div>`;
   return {
-    titulo_sufixo: prevenda ? "Pré-venda" : "Ingressos",
-    meta_intro: prevenda ? "Pré-venda especial da imersão presencial" : "Imersão presencial",
+    titulo_sufixo: T.tituloSufixo(prevenda),
     preco_min: Math.min(...["standard", "vip", "rei"].map((k) => precos[k].por)),
-    promo_bar: prevenda ? `<div class="promo"><b>Pré-venda especial!</b>Economize em todos os ingressos</div>` : "",
-    hero_offer: prevenda ? "Garanta a oferta de pré-venda" : "Garanta seu lugar",
+    promo_bar: prevenda ? T.promo : "",
+    hero_offer: T.heroOffer(prevenda),
     hero_save: heroSave,
-    dur_facts: umDia ? "1 dia presencial" : `${d.nDias} dias presenciais`,
-    dur_about: umDia ? "Um dia presencial" : "Dois dias presenciais",
-    dur_exp: umDia ? "é um dia" : "são dois dias",
-    dur_verbo: umDia ? "muda" : "mudam",
-    acesso: umDia ? "Acesso ao dia completo de imersão" : "Acesso aos 2 dias de imersão",
+    dur_facts: T.durFacts(d.nDias),
+    dur_about: T.durAbout(d.nDias),
+    acesso: T.acesso(d.nDias),
     preco_standard: ticket("standard"),
     preco_vip: ticket("vip"),
     preco_rei: ticket("rei"),
-    lead_titulo: prevenda ? "Garanta seu preço de pré-venda" : "Garanta seu ingresso",
+    lead_titulo: T.leadTitulo(prevenda),
   };
 }
 
-function render(ev) {
-  const d = datas(ev);
+const NOTA_IDIOMA = { pt: "", en: "Presented in Portuguese", es: "En portugués" };
+const extrasIdioma = (lang) => ({
+  tag_idioma: lang === "pt" ? "" : `,"Idioma: ${lang.toUpperCase()}"`,
+  nota_idioma_txt: NOTA_IDIOMA[lang],
+});
+
+function preencher(modelo, vars, nome) {
+  return modelo.replace(/\{\{(\w+)\}\}/g, (m, k) => {
+    if (!(k in vars)) throw new Error(`${nome} usa {{${k}}} mas não há valor`);
+    return String(vars[k]);
+  });
+}
+
+function render(ev0, lang) {
+  const ev = loc(ev0, lang, CAMPOS_EVENTO, `evento ${ev0.slug}`);
+  const d = datas(ev, lang);
   const ids = ev.preletores && ev.preletores.length ? ev.preletores : data.preletores_padrao;
+  const x = extrasIdioma(lang);
   const vars = {
     slug: ev.slug,
     cidade: ev.cidade,
@@ -161,45 +189,45 @@ function render(ev) {
     datas_hero: d.hero,
     datas_texto: d.texto,
     horario: d.horario,
-    hero_local: heroLocal(ev),
+    hero_local: heroLocal(ev, lang),
     imagem: ev.imagem_hero || ev.imagem || `assets/home/city-${ev.slug}.jpg`,
     checkout_standard: checkout(ev, "standard"),
     checkout_vip: checkout(ev, "vip"),
     checkout_rei: checkout(ev, "rei"),
     lead_tag: ev.lead_tag || `Método REI - ${ev.cidade} ${d.ano}`,
-    lead_codigo: ev.lead_codigo || d.codigo,
+    lead_codigo: ev.lead_codigo || datas(ev, "pt").codigo,
     mentors_class: ids.length >= 3 ? "mentors mentors--grid" : "mentors mentors--2",
-    mentors: ids.map((id, i) => mentorHtml(id, i, ev)).join("\n"),
-    ...vendaVars(ev, d),
+    mentors: ids.map((id, i) => mentorHtml(id, i, ev, lang)).join("\n"),
+    idiomas: seletor(lang, `/${ev.slug}`),
+    tag_idioma: x.tag_idioma,
+    nota_idioma: x.nota_idioma_txt ? `<span>${x.nota_idioma_txt}</span>` : "",
+    ...vendaVars(ev, d, lang),
   };
-  const seo = eventoSchema(data, ev, d, ids);
+  const seo = eventoSchema(data, ev, d, ids, lang, (id) => pv(id, lang));
   vars.seo_head = seo.head;
-  const out = template.replace(/\{\{(\w+)\}\}/g, (m, k) => {
-    if (!(k in vars)) throw new Error(`template usa {{${k}}} mas não há valor`);
-    return String(vars[k]);
-  });
-  return { html: out, d, seo, ids };
+  return { html: preencher(MODELOS[lang].evento, vars, "template"), d, seo, ids, ev };
 }
 
-function card(ev, i, d) {
+function card(ev, d, lang) {
+  const T = L[lang];
   const img = ev.imagem_card || ev.imagem || `assets/home/city-${ev.slug}.jpg`;
   const selo = ev.selo || d.diasCard.replace(" · ", " + ");
-  const cls = ev.selo ? (/pr[ée]-?venda/i.test(ev.selo) ? "badge-red" : "badge-gold") : "badge-line";
-  const quando = d.nDias === 1 ? `${d.dias}, ${d.card.replace(/, \d{4}$/, "")}` : d.card.replace(/, \d{4}$/, "");
+  const cls = ev.selo ? (/pr[ée]-?vent|pre-?sale/i.test(ev.selo) ? "badge-red" : "badge-gold") : "badge-line";
+  const quando = d.nDias === 1 ? `${d.dias}, ${d.card}` : d.card;
   const horas = d.horario.replace(/(am|pm)/gi, (m) => m.toUpperCase());
-  const local = ev.local && ev.local.nome && !/a definir/i.test(ev.local.nome) ? ` · ${ev.local.nome}` : "";
-  return `      <article class="card" data-end="${ev.fim}"><img src="${img}" alt="Skyline de ${ev.cidade}" loading="lazy"><div class="card-shade"></div>
-        <div style="position: relative"><span class="badge ${cls}">${selo}</span><div class="serif" style="font-size: 72px; line-height: .95; margin-top: 16px">${ev.cidade}</div><div style="font-size: 17px; font-weight: 600; margin-top: 10px">${quando}</div><div style="font-size: 14px; color: #9A948A; margin-top: 4px">${horas}${local}</div><a class="btn btn-gold" href="/${ev.slug}" data-event="${ev.cidade}" style="margin-top: 24px; width: 100%">Garantir minha vaga</a></div></article>`;
+  const local = ev.local && !localDefinir(ev.local) ? ` · ${ev.local.nome}` : "";
+  return `      <article class="card" data-end="${ev.fim}"><img src="${img}" alt="${T.skyline(ev.cidade)}" loading="lazy"><div class="card-shade"></div>
+        <div style="position: relative"><span class="badge ${cls}">${selo}</span><div class="serif" style="font-size: 72px; line-height: .95; margin-top: 16px">${ev.cidade}</div><div style="font-size: 17px; font-weight: 600; margin-top: 10px">${quando}</div><div style="font-size: 14px; color: #9A948A; margin-top: 4px">${horas}${local}</div><a class="btn btn-gold" href="/${ev.slug}" data-event="${ev.cidade}" style="margin-top: 24px; width: 100%">${T.garantirVaga}</a></div></article>`;
 }
 
 // "No palco" da home: fixos (sempre, em cor) + quem está em algum evento futuro (P&B), sem repetir.
-function lineup(upcoming) {
+function lineup(upcoming, lang) {
   const fixos = data.preletores_fixos || [];
   const ids = [...fixos];
   for (const r of upcoming) for (const id of r.ids) if (!ids.includes(id)) ids.push(id);
   const faces = ids.map((id) => {
-    const p = data.preletores[id];
-    if (!p) throw new Error(`preletor "${id}" não existe`);
+    if (!data.preletores[id]) throw new Error(`preletor "${id}" não existe`);
+    const p = pv(id, lang);
     const lead = fixos.includes(id);
     const nome = p.nome_curto || p.nome_palco || p.nome;
     return lead
@@ -211,66 +239,74 @@ function lineup(upcoming) {
   return { html: faces.join("\n"), cols: Math.max(cols, 2) };
 }
 
-function between(html, name, content) {
-  const re = new RegExp(`(<!-- ${name}:START -->)[\\s\\S]*?(<!-- ${name}:END -->)`);
-  if (!re.test(html)) throw new Error(`marcador ${name} não encontrado no index.html`);
-  return html.replace(re, `$1\n${content}\n$2`);
-}
-
-function listaCidades(nomes) {
-  return nomes.length <= 1 ? nomes.join("") : nomes.slice(0, -1).join(", ") + " e " + nomes.at(-1);
-}
-
 // ---------- main ----------
 const slugs = new Set();
-const today = new Date(); today.setUTCHours(0, 0, 0, 0);
-const rendered = data.eventos.map((ev) => {
+for (const ev of data.eventos) {
   for (const k of ["slug", "cidade", "uf", "estado", "inicio", "fim"]) if (!ev[k]) throw new Error(`evento sem "${k}": ${JSON.stringify(ev).slice(0, 80)}`);
   if (!/^[a-z0-9-]+$/.test(ev.slug)) throw new Error(`[${ev.slug}] slug só pode ter letras minúsculas, números e hífen`);
+  if (IDIOMAS.includes(ev.slug)) throw new Error(`[${ev.slug}] slug não pode ser um código de idioma`);
   if (slugs.has(ev.slug)) throw new Error(`slug repetido: ${ev.slug}`);
   slugs.add(ev.slug);
-  return { ev, ...render(ev) };
-});
+}
+const today = new Date(); today.setUTCHours(0, 0, 0, 0);
 
-const upcoming = rendered.filter((r) => r.d.fimDate >= today && !r.ev.oculto).sort((a, b) => a.ev.inicio.localeCompare(b.ev.inicio));
+const porIdioma = {};
+for (const lang of IDIOMAS) {
+  const rendered = data.eventos.map((ev) => render(ev, lang));
+  const upcoming = rendered.filter((r) => r.d.fimDate >= today && !r.ev.oculto).sort((a, b) => a.ev.inicio.localeCompare(b.ev.inicio));
+  const lu = lineup(upcoming, lang);
+  const x = extrasIdioma(lang);
+  const homeVars = {
+    seo_head: homeHead(data, upcoming, lang),
+    ano: upcoming.length ? upcoming[0].d.ano : new Date().getFullYear(),
+    cards: upcoming.map((r) => card(r.ev, r.d, lang)).join("\n"),
+    cards_cols: Math.min(Math.max(upcoming.length, 1), 3),
+    lineup: lu.html,
+    lineup_cols: lu.cols,
+    edicoes: upcoming.map((r) => `            <option value="${r.ev.cidade}">${r.ev.cidade} · ${r.d.curta}</option>`).join("\n"),
+    rodape: upcoming.map((r) => `<a href="/${r.ev.slug}" style="color: #9A948A; text-decoration: none; font-size: 12px; font-weight: 700; letter-spacing: .14em">${r.ev.cidade.toUpperCase()}</a>`).join(""),
+    idiomas: seletor(lang, ""),
+    tag_idioma: x.tag_idioma,
+    nota_idioma: x.nota_idioma_txt ? `<p style="margin: 10px 0 0; font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #E3C78A">${x.nota_idioma_txt}</p>` : "",
+  };
+  porIdioma[lang] = { rendered, upcoming, home: preencher(MODELOS[lang].home, homeVars, "home-template") };
+}
 
+if (faltaIdioma.length) {
+  console.error(`\n✗ Falta tradução em eventos/eventos.json:\n${[...new Set(faltaIdioma)].map((x) => "  " + x).join("\n")}\n`);
+  process.exit(1);
+}
+
+const pt = porIdioma.pt;
 if (CHECK_ONLY) {
-  console.log(`OK — ${rendered.length} eventos, ${upcoming.length} futuros: ${upcoming.map((r) => r.ev.slug).join(", ")}`);
+  console.log(`OK — ${pt.rendered.length} eventos, ${pt.upcoming.length} futuros: ${pt.upcoming.map((r) => r.ev.slug).join(", ")} · idiomas: ${IDIOMAS.join(", ")}`);
   process.exit(0);
 }
 
-for (const r of rendered) {
-  writeFileSync(join(ROOT, `${r.ev.slug}.html`), r.html);
-  console.log(`  ✓ /${r.ev.slug}  (${r.d.texto})`);
+for (const lang of IDIOMAS) {
+  const dir = lang === "pt" ? ROOT : join(ROOT, lang);
+  mkdirSync(dir, { recursive: true });
+  const { rendered, home, upcoming } = porIdioma[lang];
+  for (const r of rendered) writeFileSync(join(dir, `${r.ev.slug}.html`), localizarPagina(r.html, lang, slugs));
+  writeFileSync(join(dir, "index.html"), localizarPagina(home, lang, slugs));
+  console.log(`  ✓ ${prefixo(lang) || "/"}  + ${rendered.map((r) => `${prefixo(lang)}/${r.ev.slug}`).join(", ")}  (${upcoming.length} próximos)`);
 }
 
-const lu = lineup(upcoming);
-const anoHome = upcoming.length ? upcoming[0].d.ano : new Date().getFullYear();
-const homeVars = {
-  seo_head: homeHead(data, upcoming),
-  ano: anoHome,
-  cards: upcoming.map((r, i) => card(r.ev, i, r.d)).join("\n"),
-  cards_cols: Math.min(Math.max(upcoming.length, 1), 3),
-  lineup: lu.html,
-  lineup_cols: lu.cols,
-  edicoes: upcoming.map((r) => `            <option value="${r.ev.cidade}">${r.ev.cidade} · ${r.d.curta}</option>`).join("\n"),
-  rodape: upcoming.map((r) => `<a href="/${r.ev.slug}" style="color: #9A948A; text-decoration: none; font-size: 12px; font-weight: 700; letter-spacing: .14em">${r.ev.cidade.toUpperCase()}</a>`).join(""),
-};
-const index = homeTemplate.replace(/\{\{(\w+)\}\}/g, (m, k) => {
-  if (!(k in homeVars)) throw new Error(`home-template usa {{${k}}} mas não há valor`);
-  return String(homeVars[k]);
-});
-const nomes = [...new Set(upcoming.map((r) => r.ev.cidade))];
-writeFileSync(join(ROOT, "index.html"), index);
-writeFileSync(join(ROOT, "sitemap.xml"), sitemap(data, rendered.filter((r) => !r.ev.oculto)));
+const visiveis = pt.rendered.filter((r) => !r.ev.oculto).map((r) => r.ev.slug);
+writeFileSync(join(ROOT, "sitemap.xml"), sitemap(data, visiveis));
 writeFileSync(join(ROOT, "robots.txt"), robots(data));
-writeFileSync(join(ROOT, "llms.txt"), llms(data, upcoming, rendered.filter((r) => r.d.fimDate < today && !r.ev.oculto)));
-for (const r of rendered) if (!existsSync(join(ROOT, "assets/og", `${r.ev.slug}.jpg`))) console.warn(`  ! falta a imagem de compartilhamento assets/og/${r.ev.slug}.jpg (rode: python3 eventos/og.py)`);
+writeFileSync(join(ROOT, "llms.txt"), llms(data, pt.upcoming, pt.rendered.filter((r) => r.d.fimDate < today && !r.ev.oculto)));
 console.log("  ✓ sitemap.xml, robots.txt, llms.txt");
-writeFileSync(join(DIR, "og-data.json"), JSON.stringify({
-  home: { cidades: [...new Set(upcoming.map((r) => r.ev.cidade))], anos: [...new Set(upcoming.map((r) => r.d.ano))] },
-  eventos: rendered.map((r) => ({ slug: r.ev.slug, cidade: r.ev.cidade, uf: r.ev.uf, dias: r.d.dias, data: r.d.hero, onde: r.seo.onde, min: r.seo.min,
-    fotos: r.ids.map((id) => data.preletores[id].foto).filter(Boolean) })),
-}, null, 2));
 
-console.log(`  ✓ home: ${upcoming.length} próximos eventos (${nomes.join(", ")})`);
+for (const lang of IDIOMAS) for (const s of ["home", ...slugs]) {
+  const f = join(ROOT, "assets/og", lang === "pt" ? "" : lang, `${s}.jpg`);
+  if (!existsSync(f)) console.warn(`  ! falta a imagem de compartilhamento ${f.slice(ROOT.length + 1)} (rode: python3 eventos/og.py)`);
+}
+writeFileSync(join(DIR, "og-data.json"), JSON.stringify(Object.fromEntries(IDIOMAS.map((lang) => {
+  const { rendered, upcoming } = porIdioma[lang];
+  return [lang, {
+    home: { cidades: [...new Set(upcoming.map((r) => r.ev.cidade))], anos: [...new Set(upcoming.map((r) => r.d.ano))] },
+    eventos: rendered.map((r) => ({ slug: r.ev.slug, cidade: r.ev.cidade, uf: r.ev.uf, dias: r.d.dias, data: r.d.hero, onde: r.seo.onde, min: r.seo.min,
+      fotos: r.ids.map((id) => data.preletores[id].foto).filter(Boolean) })),
+  }];
+})), null, 2));

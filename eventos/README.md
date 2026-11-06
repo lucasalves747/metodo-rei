@@ -43,3 +43,16 @@ Precisa de Playwright + Chrome — o Claude roda isso no ambiente dele.
 
 ## "No palco" da home
 Montado sozinho a cada build: primeiro os `preletores_fixos` (Hewerton e Santiago — sempre aparecem, em cor), depois todos os preletores dos eventos futuros, em P&B, sem repetir. Quando um evento passa ou é removido, quem só estava nele sai da home; quando um evento novo entra, os preletores dele aparecem.
+
+## Idiomas (PT, EN, ES) — sempre os três
+
+Toda página sai nos três idiomas: `/orlando` (PT), `/en/orlando` (EN), `/es/orlando` (ES); a home em `/`, `/en` e `/es`. O seletor PT · EN · ES fica no topo de todas as páginas, e cada uma tem `hreflang`, `og:locale` e imagem de compartilhamento do seu idioma (`assets/og/en/…`, `assets/og/es/…`).
+
+O build **para com erro** se faltar qualquer tradução:
+
+- **Texto fixo dos modelos** (`home-template.html`, `template.html`, `partes/*.html`): cada texto visível, `alt`, `aria-label`, `placeholder`, `title` e texto de script precisa estar em `eventos/i18n/en.json` e `eventos/i18n/es.json` (chave = texto exato em PT). Mudou um texto em PT? Atualize a chave nos dois arquivos.
+- **Preletores** em `eventos.json`: `funcao`, `bio`, `bio_completa` (mesmo número de parágrafos) e `destaque` precisam existir em `"en": {…}` e `"es": {…}` dentro de cada preletor.
+- **Eventos**: `selo`, `destaque` (`curto` e `nota_ingresso`), `estado` e `seo_descricao` (se existirem em PT) precisam existir em `"en"` e `"es"` dentro do evento.
+- **Textos que o build monta** (datas, preços, rótulos, SEO): `eventos/textos.mjs`.
+
+As páginas EN/ES avisam que a imersão é apresentada em português. As tags do formulário recebem `Idioma: EN` / `Idioma: ES`.

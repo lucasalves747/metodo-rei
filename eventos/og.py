@@ -1,12 +1,18 @@
 #!/usr/bin/env python3
 """Gera as imagens de compartilhamento (1200x630) em assets/og/ a partir de eventos/og-data.json.
 Rode depois de `node eventos/build.mjs`. Precisa de: pip install playwright + Google Chrome (ou `playwright install chromium`).
-Uso: python3 eventos/og.py [slug ...]   (sem argumentos gera todas + home)"""
+Uso: python3 eventos/og.py [slug ...]   (sem argumentos gera todas + home, em PT, EN e ES)
+Saída: assets/og/<slug>.jpg (PT), assets/og/en/<slug>.jpg, assets/og/es/<slug>.jpg"""
 import json, sys, pathlib, asyncio, shutil
 from playwright.async_api import async_playwright
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 DATA = json.loads((ROOT / "eventos/og-data.json").read_text())
+TXT = {
+  "pt": {"imersao": "Imersão presencial", "apartir": "Ingressos a partir de US$", "tour": "IMERSÃO PRESENCIAL · TOUR EUA", "tag": 'A verdadeira prosperidade é <em>ganhar sem perder.</em>', "breve": "Novas datas em breve"},
+  "en": {"imersao": "In-person immersion", "apartir": "Tickets from US$", "tour": "IN-PERSON IMMERSION · US TOUR", "tag": 'True prosperity is <em>winning without losing.</em>', "breve": "New dates coming soon"},
+  "es": {"imersao": "Inmersión presencial", "apartir": "Entradas desde US$", "tour": "INMERSIÓN PRESENCIAL · GIRA EE. UU.", "tag": 'La verdadera prosperidad es <em>ganar sin perder.</em>', "breve": "Nuevas fechas muy pronto"},
+}
 CROWN = '<svg viewBox="0 0 24 20" fill="currentColor"><path d="M1.5 15.5 L3.8 5.5 L8.4 10.8 L12 2.5 L15.6 10.8 L20.2 5.5 L22.5 15.5 Z"/><rect x="1.8" y="16" width="20.4" height="3" rx="1"/></svg>'
 
 CSS = """
@@ -32,39 +38,42 @@ body{width:1200px;height:630px;overflow:hidden;background:#0B0B0C;font-family:'O
 .home .cities{margin-top:26px;font-weight:700;font-size:26px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.9)}
 """
 
-def page_evento(e):
+def page_evento(e, t):
     faces = "".join(f'<img src="{f}">' for f in e["fotos"][:7])
     return f"""<html><head><style>{CSS}</style></head><body>
 <img class="bg" src="assets/hero2.jpg"><div class="ov"></div>
 <div class="in"><div class="brand">{CROWN}MÉTODO REI</div>
 <div class="city">{e['cidade']}</div>
 <div class="date">{e['dias']} · {e['data']}</div>
-<div class="where">Imersão presencial · {e['onde']}</div>
-<div class="row"><div class="pill">Ingressos a partir de US${e['min']}</div><div class="faces">{faces}</div></div></div></body></html>"""
+<div class="where">{t['imersao']} · {e['onde']}</div>
+<div class="row"><div class="pill">{t['apartir']}{e['min']}</div><div class="faces">{faces}</div></div></div></body></html>"""
 
-def page_home(h):
-    cid = " · ".join(h["cidades"]) or "Novas datas em breve"
+def page_home(h, t):
+    cid = " · ".join(h["cidades"]) or t["breve"]
     anos = "–".join(str(a) for a in h["anos"])
     return f"""<html><head><style>{CSS}</style></head><body class="home">
 <img class="bg" src="assets/evento-1.jpg" style="object-position:60% 30%"><div class="ov"></div>
-<div class="in"><div class="brand">{CROWN}IMERSÃO PRESENCIAL · TOUR EUA {anos}</div>
-<h1>Método REI</h1><div class="tag">A verdadeira prosperidade é <em>ganhar sem perder.</em></div>
+<div class="in"><div class="brand">{CROWN}{t['tour']} {anos}</div>
+<h1>Método REI</h1><div class="tag">{t['tag']}</div>
 <div class="cities">{cid}</div></div></body></html>"""
 
 async def main():
     want = set(sys.argv[1:])
-    out = ROOT / "assets/og"; out.mkdir(parents=True, exist_ok=True)
     chrome = shutil.which("google-chrome") or shutil.which("chromium")
     async with async_playwright() as p:
         b = await p.chromium.launch(**({"executable_path": chrome} if chrome else {}))
         pg = await b.new_page(viewport={"width": 1200, "height": 630})
-        jobs = [(e["slug"], page_evento(e)) for e in DATA["eventos"] if not want or e["slug"] in want]
-        if not want or "home" in want: jobs.append(("home", page_home(DATA["home"])))
-        for slug, html in jobs:
-            tmp = ROOT / f"_og_{slug}.html"; tmp.write_text(html)
-            await pg.goto(tmp.as_uri()); await pg.wait_for_timeout(700)
-            await pg.screenshot(path=str(out / f"{slug}.jpg"), type="jpeg", quality=86)
-            tmp.unlink(); print("  ✓ assets/og/%s.jpg" % slug)
+        for lang, dados in DATA.items():
+            t = TXT[lang]
+            out = ROOT / "assets/og" / ("" if lang == "pt" else lang); out.mkdir(parents=True, exist_ok=True)
+            jobs = [(e["slug"], page_evento(e, t)) for e in dados["eventos"] if not want or e["slug"] in want]
+            if not want or "home" in want: jobs.append(("home", page_home(dados["home"], t)))
+            for slug, html in jobs:
+                tmp = ROOT / f"_og_{slug}.html"; tmp.write_text(html)
+                await pg.goto(tmp.as_uri()); await pg.wait_for_timeout(700)
+                dest = out / f"{slug}.jpg"
+                await pg.screenshot(path=str(dest), type="jpeg", quality=86)
+                tmp.unlink(); print("  ✓", dest.relative_to(ROOT))
         await b.close()
 
 asyncio.run(main())

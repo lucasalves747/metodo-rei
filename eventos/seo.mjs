@@ -1,6 +1,17 @@
 // SEO, AIO (dados estruturados + llms.txt), Open Graph/Twitter e favicons.
 // Usado por build.mjs — não precisa rodar sozinho.
 
+import { IDIOMAS, HTML_LANG, OG_LOCALE, prefixo } from "./i18n.mjs";
+import { L } from "./textos.mjs";
+
+// URL de uma página em cada idioma ("" = home, "/orlando"...)
+const urlDe = (site, lang, caminho) => `${site.url}${prefixo(lang) + caminho || "/"}`;
+function alternates(site, caminho) {
+  return [...IDIOMAS.map((l) => `<link rel="alternate" hreflang="${HTML_LANG[l]}" href="${urlDe(site, l, caminho)}" />`),
+    `<link rel="alternate" hreflang="x-default" href="${urlDe(site, "pt", caminho)}" />`].join("\n");
+}
+const ogImg = (site, lang, nome) => `${site.url}/assets/og/${lang === "pt" ? "" : lang + "/"}${nome}.jpg`;
+
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 const strip = (s) => String(s).replace(/<[^>]+>/g, "").replace(/&amp;/g, "&").replace(/\s+/g, " ").trim();
 
@@ -48,12 +59,14 @@ function favicons() {
 <meta name="theme-color" content="#0B121C" />`;
 }
 
-function social({ url, titulo, descricao, imagem, alt, tipo = "website", site }) {
+function social({ url, titulo, descricao, imagem, alt, tipo = "website", site, lang, caminho }) {
   return `<link rel="canonical" href="${url}" />
+${alternates(site, caminho)}
 <meta name="robots" content="index, follow, max-image-preview:large" />
 <meta property="og:type" content="${tipo}" />
 <meta property="og:site_name" content="${esc(site.nome)}" />
-<meta property="og:locale" content="pt_BR" />
+<meta property="og:locale" content="${OG_LOCALE[lang]}" />
+${IDIOMAS.filter((l) => l !== lang).map((l) => `<meta property="og:locale:alternate" content="${OG_LOCALE[l]}" />`).join("\n")}
 <meta property="og:url" content="${url}" />
 <meta property="og:title" content="${esc(titulo)}" />
 <meta property="og:description" content="${esc(descricao)}" />
@@ -69,23 +82,25 @@ function social({ url, titulo, descricao, imagem, alt, tipo = "website", site })
 
 const jsonld = (obj) => `<script type="application/ld+json">\n${JSON.stringify(obj, null, 2).replace(/</g, "\\u003c")}\n</script>`;
 
-function organizacao(site) {
+function organizacao(site, lang = "pt") {
   return {
     "@type": "Organization",
     "@id": `${site.url}/#org`,
     name: site.nome,
     url: `${site.url}/`,
     logo: `${site.url}/assets/logo-metodo-rei.png`,
-    description: site.descricao,
+    description: (site[lang] && site[lang].descricao) || site.descricao,
     ...(site.redes && site.redes.length ? { sameAs: site.redes } : {}),
-    ...(site.whatsapp ? { contactPoint: { "@type": "ContactPoint", telephone: site.whatsapp, contactType: "customer service", availableLanguage: ["Portuguese", "English"] } } : {}),
+    ...(site.whatsapp ? { contactPoint: { "@type": "ContactPoint", telephone: site.whatsapp, contactType: "customer service", availableLanguage: ["Portuguese", "English", "Spanish"] } } : {}),
   };
 }
 
 // Tudo que uma página de evento precisa no <head>
-export function eventoSchema(data, ev, d, ids) {
+export function eventoSchema(data, ev, d, ids, lang, pv) {
   const site = data.site;
-  const url = `${site.url}/${ev.slug}`;
+  const T = L[lang];
+  const caminho = `/${ev.slug}`;
+  const url = urlDe(site, lang, caminho);
   const fuso = ev.fuso || FUSOS[ev.uf] || "America/New_York";
   const h = horarios(ev);
   const start = `${ev.inicio}T${h.ini}:00${offset(fuso, ev.inicio)}`;
@@ -93,17 +108,16 @@ export function eventoSchema(data, ev, d, ids) {
   const precos = precosDe(data, ev);
   const nomes = ids.map((id) => data.preletores[id].nome);
   const l = ev.local || {};
-  const nomesTxt = nomes.length > 2 ? `${nomes.slice(0, 2).join(", ")} e mais ${nomes.length - 2} mentores` : nomes.join(" e ");
+  const nomesTxt = nomes.length > 2 ? T.eMais(nomes.slice(0, 2).join(", "), nomes.length - 2) : T.lista(nomes);
   const prevenda = ev.prevenda !== undefined ? ev.prevenda : true;
   const quando = d.nDias === 1 ? `${d.dias.toLowerCase()}, ${d.texto}` : d.texto;
   const onde = l.endereco ? l.endereco.replace(/\s+\d{5}$/, "") : `${ev.cidade}, ${ev.uf}`;
-  const duracao = d.nDias === 1 ? "Um dia" : `${d.nDias} dias`;
+  const duracao = d.nDias === 1 ? T.umDia : T.nDias(d.nDias);
   const min = Math.min(precos.standard.por, precos.vip.por, precos.rei.por);
 
-  const titulo = `Método REI ${ev.cidade} · ${d.texto}${prevenda ? " · Pré-venda" : ""}`;
-  const descricao = ev.seo_descricao ||
-    `${duracao} de imersão presencial em ${onde} (${quando}) para enriquecer com inteligência e governar a própria vida. Com ${nomesTxt}. Ingressos a partir de US$${min}.`;
-  const imagem = `${site.url}/assets/og/${ev.slug}.jpg`;
+  const titulo = `Método REI ${ev.cidade} · ${d.texto}${prevenda ? T.pvSufixo : ""}`;
+  const descricao = ev.seo_descricao || T.seoEvento({ duracao, onde, quando, nomes: nomesTxt, min });
+  const imagem = ogImg(site, lang, ev.slug);
   const alt = `Método REI ${ev.cidade} — ${d.texto}`;
 
   const location = {
@@ -117,7 +131,7 @@ export function eventoSchema(data, ev, d, ids) {
     ["Standard", "standard"], ["VIP", "vip"], ["REI", "rei"],
   ].map(([nome, k]) => ({
     "@type": "Offer",
-    name: `Ingresso ${nome}`,
+    name: T.ingresso(nome),
     price: String(precos[k].por),
     priceCurrency: "USD",
     availability: "https://schema.org/InStock",
@@ -126,7 +140,7 @@ export function eventoSchema(data, ev, d, ids) {
   const schema = {
     "@context": "https://schema.org",
     "@graph": [
-      organizacao(site),
+      organizacao(site, lang),
       {
         "@type": "Event",
         "@id": `${url}#evento`,
@@ -136,18 +150,18 @@ export function eventoSchema(data, ev, d, ids) {
         endDate: end,
         eventStatus: "https://schema.org/EventScheduled",
         eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-        inLanguage: "pt-BR",
+        inLanguage: "pt-BR", // a imersão é apresentada em português
         url,
         image: [imagem],
         location,
         organizer: { "@id": `${site.url}/#org` },
-        performer: ids.map((id) => ({ "@type": "Person", name: data.preletores[id].nome, jobTitle: strip(data.preletores[id].funcao) })),
+        performer: ids.map((id) => ({ "@type": "Person", name: data.preletores[id].nome, jobTitle: strip(pv(id).funcao) })),
         offers,
       },
       {
         "@type": "BreadcrumbList",
         itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Método REI", item: `${site.url}/` },
+          { "@type": "ListItem", position: 1, name: "Método REI", item: urlDe(site, lang, "") },
           { "@type": "ListItem", position: 2, name: ev.cidade, item: url },
         ],
       },
@@ -155,44 +169,47 @@ export function eventoSchema(data, ev, d, ids) {
   };
   const head = `<title>${esc(titulo)}</title>
 <meta name="description" content="${esc(descricao)}" />
-${social({ url, titulo, descricao, imagem, alt, site })}
+${social({ url, titulo, descricao, imagem, alt, site, lang, caminho })}
 ${favicons()}
 ${jsonld(schema)}`;
   return { head, titulo, descricao, url, start, end, nomes, min, quando, onde };
 }
 
-export function homeHead(data, proximos) {
+export function homeHead(data, proximos, lang) {
   const site = data.site;
+  const T = L[lang];
+  const home = urlDe(site, lang, "");
   const cidades = [...new Set(proximos.map((r) => r.ev.cidade))];
-  const lista = cidades.length <= 1 ? cidades.join("") : cidades.slice(0, -1).join(", ") + " e " + cidades.at(-1);
-  const titulo = "Método REI · Imersão Presencial · Tour EUA " + [...new Set(proximos.map((r) => r.d.ano))].join("–");
-  const descricao = `Imersão presencial para empresários e profissionais que decidiram enriquecer com inteligência e governar a própria vida.${cidades.length ? ` Próximas edições: ${lista}.` : ""}`;
+  const titulo = T.homeTitulo([...new Set(proximos.map((r) => r.d.ano))].join("–"));
+  const descricao = T.homeDesc(T.lista(cidades));
   const schema = {
     "@context": "https://schema.org",
     "@graph": [
-      organizacao(site),
-      { "@type": "WebSite", "@id": `${site.url}/#site`, url: `${site.url}/`, name: site.nome, inLanguage: "pt-BR", publisher: { "@id": `${site.url}/#org` } },
+      organizacao(site, lang),
+      { "@type": "WebSite", "@id": `${site.url}/#site`, url: `${site.url}/`, name: site.nome, inLanguage: IDIOMAS.map((l) => HTML_LANG[l]), publisher: { "@id": `${site.url}/#org` } },
       {
         "@type": "ItemList",
-        name: "Próximas edições do Método REI",
-        itemListElement: proximos.map((r, i) => ({ "@type": "ListItem", position: i + 1, url: `${site.url}/${r.ev.slug}`, name: `Método REI ${r.ev.cidade} — ${r.d.texto}` })),
+        name: T.proximas,
+        itemListElement: proximos.map((r, i) => ({ "@type": "ListItem", position: i + 1, url: urlDe(site, lang, `/${r.ev.slug}`), name: `Método REI ${r.ev.cidade} — ${r.d.texto}` })),
       },
     ],
   };
   return `<title>${esc(titulo)}</title>
 <meta name="description" content="${esc(descricao)}" />
-${social({ url: `${site.url}/`, titulo, descricao, imagem: `${site.url}/assets/og/home.jpg`, alt: "Método REI — imersão presencial", site })}
+${social({ url: home, titulo, descricao, imagem: ogImg(site, lang, "home"), alt: T.homeAlt, site, lang, caminho: "" })}
 ${favicons()}
 ${jsonld(schema)}`;
 }
 
-export function sitemap(data, todos) {
+export function sitemap(data, slugs) {
   const site = data.site;
   const hoje = new Date().toISOString().slice(0, 10);
-  const urls = [`${site.url}/`, ...todos.map((r) => `${site.url}/${r.ev.slug}`)];
+  const caminhos = ["", ...slugs.map((s) => `/${s}`)];
+  const alt = (c) => IDIOMAS.map((l) => `\n    <xhtml:link rel="alternate" hreflang="${HTML_LANG[l]}" href="${urlDe(site, l, c)}"/>`).join("");
+  const urls = caminhos.flatMap((c) => IDIOMAS.map((l) => `  <url><loc>${urlDe(site, l, c)}</loc><lastmod>${hoje}</lastmod>${alt(c)}\n  </url>`));
   return `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls.map((u) => `  <url><loc>${u}</loc><lastmod>${hoje}</lastmod></url>`).join("\n")}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+${urls.join("\n")}
 </urlset>
 `;
 }
@@ -232,7 +249,9 @@ ${ids.map((id) => `- ${data.preletores[id].nome} — ${strip(data.preletores[id]
 
 ## Links
 
-- [Site oficial](${site.url}/)
+- [Site oficial (português)](${site.url}/)
+- [Official site (English)](${site.url}/en)
+- [Sitio oficial (español)](${site.url}/es)
 - [Contato pelo WhatsApp](https://wa.me/${(site.whatsapp || "").replace(/\D/g, "")})
 ${passados.length ? `\n## Edições anteriores\n\n${passados.map((r) => `- [Método REI ${r.ev.cidade} — ${r.d.texto}](${r.seo.url})`).join("\n")}\n` : ""}`;
 }

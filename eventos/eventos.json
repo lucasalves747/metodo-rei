@@ -1,11 +1,17 @@
 {
-  "_leia_me": "Edite este arquivo e rode: node eventos/build.mjs  — gera /<slug> de cada evento e atualiza a lista da home. Datas em AAAA-MM-DD. Eventos passados somem da home sozinhos, mas a página continua no ar.",
+  "_leia_me": "Edite este arquivo e rode: node eventos/build.mjs  — gera /<slug> de cada evento e atualiza a lista da home. Datas em AAAA-MM-DD. Eventos passados somem da home sozinhos, mas a página continua no ar. Idiomas: o site sai em PT, EN e ES. Todo texto de preletor (funcao, bio, bio_completa, destaque) e de evento (selo, destaque, estado) precisa ter versão em \"en\" e \"es\" — o build para com erro se faltar.",
   "site": {
     "url": "https://www.metodorei.com",
     "nome": "Método REI",
     "descricao": "Imersão presencial para empresários e profissionais que decidiram enriquecer com inteligência e governar a própria vida — sem sacrificar família, saúde e direção.",
     "whatsapp": "+1 305-370-5595",
-    "redes": []
+    "redes": [],
+    "en": {
+      "descricao": "An in-person immersion for business owners and professionals who decided to build wealth wisely and govern their own lives — without sacrificing family, health or direction."
+    },
+    "es": {
+      "descricao": "Inmersión presencial para empresarios y profesionales que decidieron enriquecerse con inteligencia y gobernar su propia vida — sin sacrificar familia, salud ni dirección."
+    }
   },
   "preletores_padrao": [
     "hewerton-scheidegger",
@@ -36,7 +42,17 @@
       "funcao": "Criador &amp; Mentor",
       "foto": "assets/pv/hewerton.jpg",
       "bio": "Empresário, advogado, contador e consultor financeiro. Criador do Método REI e autor de 1000 Códigos de Sabedoria e Método 7D para Milhões em Vendas. Une gestão, finanças, liderança e propósito em uma visão de prosperidade que não precisa custar sua família e sua direção. Realizou provas de Ironman e Ultraman.",
-      "destaque": "Criador"
+      "destaque": "Criador",
+      "en": {
+        "funcao": "Creator &amp; Mentor",
+        "destaque": "Creator",
+        "bio": "Business owner, lawyer, accountant and financial advisor. Creator of Método REI and author of <i>1000 Códigos de Sabedoria</i> and <i>Método 7D para Milhões em Vendas</i>. He brings management, finance, leadership and purpose together in a vision of prosperity that doesn't have to cost you your family or your direction. He has completed Ironman and Ultraman races."
+      },
+      "es": {
+        "funcao": "Creador y Mentor",
+        "destaque": "Creador",
+        "bio": "Empresario, abogado, contador y asesor financiero. Creador del Método REI y autor de <i>1000 Códigos de Sabedoria</i> y <i>Método 7D para Milhões em Vendas</i>. Une gestión, finanzas, liderazgo y propósito en una visión de prosperidad que no tiene por qué costarte tu familia ni tu dirección. Ha completado pruebas de Ironman y Ultraman."
+      }
     },
     "santiago-vecina": {
       "nome": "Santiago Vecina",
@@ -45,35 +61,77 @@
       "foto": "assets/pv/santiago.jpg",
       "bio": "Médico e nutrólogo com foco em alta performance. Atleta de alta performance (Ultraman). Conecta saúde, clareza, liderança, negócios e legado na abordagem da Performance Integral. Sua trajetória reúne a perspectiva médica e a experiência empresarial para olhar para a vida como um todo.",
       "destaque": "Co-criador",
-      "nome_curto": "Dr. Santiago Vecina"
+      "nome_curto": "Dr. Santiago Vecina",
+      "en": {
+        "funcao": "Physician, nutrition specialist, business owner and mentor",
+        "destaque": "Co-creator",
+        "bio": "Physician and nutrition specialist focused on high performance, and a high-performance athlete himself (Ultraman). He connects health, clarity, leadership, business and legacy through the Integral Performance approach, bringing a doctor's perspective and a business owner's experience to life as a whole."
+      },
+      "es": {
+        "funcao": "Médico, nutriólogo, empresario y mentor",
+        "destaque": "Cocreador",
+        "bio": "Médico y nutriólogo enfocado en el alto rendimiento. Atleta de alto rendimiento (Ultraman). Conecta salud, claridad, liderazgo, negocios y legado en el enfoque de la Performance Integral. Su trayectoria reúne la perspectiva médica y la experiencia empresarial para mirar la vida como un todo."
+      }
     },
     "eliane-martins": {
       "nome": "Eliane Martins",
       "titulo_html": "Eliane <span class=\"g\">Martins</span>",
       "funcao": "Psicanalista, Coach &amp; Mentora",
       "foto": "assets/pv/eliane.jpg",
-      "bio": "Psicanalista, coach e mentora, especialista em relacionamentos, inteligência emocional e identidade feminina. Reconhecida nacionalmente no desenvolvimento emocional e comportamental de mulheres e casais, integra Coaching, Psicanálise e princípios de Fé Cristã para conduzir uma jornada de autoconhecimento, cura emocional e liderança com propósito."
+      "bio": "Psicanalista, coach e mentora, especialista em relacionamentos, inteligência emocional e identidade feminina. Reconhecida nacionalmente no desenvolvimento emocional e comportamental de mulheres e casais, integra Coaching, Psicanálise e princípios de Fé Cristã para conduzir uma jornada de autoconhecimento, cura emocional e liderança com propósito.",
+      "en": {
+        "funcao": "Psychoanalyst, Coach &amp; Mentor",
+        "bio": "Psychoanalyst, coach and mentor specializing in relationships, emotional intelligence and female identity. Nationally recognized in Brazil for the emotional and behavioral development of women and couples, she combines coaching, psychoanalysis and Christian faith to guide a journey of self-knowledge, emotional healing and purposeful leadership."
+      },
+      "es": {
+        "funcao": "Psicoanalista, Coach y Mentora",
+        "bio": "Psicoanalista, coach y mentora, especialista en relaciones, inteligencia emocional e identidad femenina. Reconocida en Brasil por el desarrollo emocional y conductual de mujeres y parejas, integra coaching, psicoanálisis y principios de la fe cristiana para guiar un camino de autoconocimiento, sanidad emocional y liderazgo con propósito."
+      }
     },
     "airam-da-silva": {
       "nome": "Airam da Silva",
       "titulo_html": "Airam da <span class=\"g\">Silva</span>",
       "funcao": "Presidente da Fundação Icla da Silva",
       "foto": "assets/iram.png",
-      "bio": "Presidente da Fundação Icla da Silva, dedicada ao cadastro de doadores de medula óssea e ao apoio a pacientes com leucemia. Bacharel em Biologia e Economia e mestre em Saúde Pública, une experiência em saúde e impacto social à missão de ajudar famílias a se prepararem financeiramente, com propósito, segurança e tranquilidade para o futuro."
+      "bio": "Presidente da Fundação Icla da Silva, dedicada ao cadastro de doadores de medula óssea e ao apoio a pacientes com leucemia. Bacharel em Biologia e Economia e mestre em Saúde Pública, une experiência em saúde e impacto social à missão de ajudar famílias a se prepararem financeiramente, com propósito, segurança e tranquilidade para o futuro.",
+      "en": {
+        "funcao": "President of the Icla da Silva Foundation",
+        "bio": "President of the Icla da Silva Foundation, dedicated to registering bone marrow donors and supporting leukemia patients. With degrees in Biology and Economics and a master's in Public Health, he brings health and social-impact experience to the mission of helping families prepare financially, with purpose, security and peace of mind for the future."
+      },
+      "es": {
+        "funcao": "Presidente de la Fundación Icla da Silva",
+        "bio": "Presidente de la Fundación Icla da Silva, dedicada al registro de donantes de médula ósea y al apoyo a pacientes con leucemia. Licenciado en Biología y Economía y con maestría en Salud Pública, une su experiencia en salud e impacto social a la misión de ayudar a las familias a prepararse financieramente, con propósito, seguridad y tranquilidad para el futuro."
+      }
     },
     "alexandre-morelli": {
       "nome": "Alexandre Morelli",
       "titulo_html": "Alexandre <span class=\"g\">Morelli</span>",
       "funcao": "Empresário, escritor, mentor e palestrante internacional",
       "foto": "assets/alexandre-morelli.JPEG",
-      "bio": "Empreendedor há mais de 30 anos, é administrador, autor de três livros e triatleta com três provas de Ironman concluídas. Fundador da Plenitude Corp, em Orlando, atua na formação de empresários e no desenvolvimento de estratégias para escalar negócios com lucro. Com mais de 50 mil pessoas impactadas e R$ 10 milhões em faturamento gerados nos últimos sete anos, une fé, conhecimento e prática para promover Liberdade, Lucro e Legado."
+      "bio": "Empreendedor há mais de 30 anos, é administrador, autor de três livros e triatleta com três provas de Ironman concluídas. Fundador da Plenitude Corp, em Orlando, atua na formação de empresários e no desenvolvimento de estratégias para escalar negócios com lucro. Com mais de 50 mil pessoas impactadas e R$ 10 milhões em faturamento gerados nos últimos sete anos, une fé, conhecimento e prática para promover Liberdade, Lucro e Legado.",
+      "en": {
+        "funcao": "Business owner, author, mentor and international speaker",
+        "bio": "An entrepreneur for over 30 years, he is a business administrator, author of three books and a triathlete with three Ironman finishes. Founder of Plenitude Corp in Orlando, he trains business owners and builds strategies to scale companies profitably. Having impacted more than 50,000 people and generated R$10 million in revenue over the last seven years, he combines faith, knowledge and practice to promote Freedom, Profit and Legacy."
+      },
+      "es": {
+        "funcao": "Empresario, escritor, mentor y conferencista internacional",
+        "bio": "Emprendedor desde hace más de 30 años, es administrador, autor de tres libros y triatleta con tres Ironman completados. Fundador de Plenitude Corp, en Orlando, forma empresarios y desarrolla estrategias para escalar negocios con rentabilidad. Con más de 50 mil personas impactadas y R$ 10 millones en facturación generados en los últimos siete años, une fe, conocimiento y práctica para promover Libertad, Lucro y Legado."
+      }
     },
     "bruno-rodrigues": {
       "nome": "Bruno Rodrigues",
       "titulo_html": "Bruno <span class=\"g\">Rodrigues</span>",
       "funcao": "Empresário e mentor",
       "foto": "assets/bruno.jpg",
-      "bio": "Engenheiro mecânico, empreendedor e imigrante nos EUA, lidera negócios de HVAC e desenvolve projetos em nanotecnologia com eletrofiação. Maratonista, Ironman e piloto de helicóptero em formação, combina excelência técnica e superação pessoal em uma jornada dedicada à autogovernança, liderança e crescimento com propósito."
+      "bio": "Engenheiro mecânico, empreendedor e imigrante nos EUA, lidera negócios de HVAC e desenvolve projetos em nanotecnologia com eletrofiação. Maratonista, Ironman e piloto de helicóptero em formação, combina excelência técnica e superação pessoal em uma jornada dedicada à autogovernança, liderança e crescimento com propósito.",
+      "en": {
+        "funcao": "Business owner and mentor",
+        "bio": "Mechanical engineer, entrepreneur and immigrant to the US, he runs HVAC businesses and develops nanotechnology projects using electrospinning. A marathoner, Ironman and helicopter pilot in training, he combines technical excellence and personal grit in a journey devoted to self-government, leadership and purposeful growth."
+      },
+      "es": {
+        "funcao": "Empresario y mentor",
+        "bio": "Ingeniero mecánico, emprendedor e inmigrante en EE. UU., dirige negocios de HVAC y desarrolla proyectos de nanotecnología con electrohilado. Maratonista, Ironman y piloto de helicóptero en formación, combina excelencia técnica y superación personal en un camino dedicado al autogobierno, el liderazgo y el crecimiento con propósito."
+      }
     },
     "eduardo-itaborahy": {
       "nome": "Eduardo Itaborahy",
@@ -88,7 +146,31 @@
         "Foi fundador e pastor sênior da Alliance Ministry USA. É fundador e presidente do Ministério Entre Nós USA, dedicado ao fortalecimento de casais e famílias. Atualmente, exerce a função de Vice-Presidente e Administrador Geral da Belong Church JAX, na Flórida, Estados Unidos.",
         "Possui ainda formação em capelania, aconselhamento pastoral e gestão de emergências, incluindo capacitações pelo Emergency Management Institute da FEMA, nos Estados Unidos.",
         "Sua trajetória é marcada pela integração entre conhecimento acadêmico, experiência internacional, liderança, produção intelectual e visão empreendedora, com dedicação à formação de pessoas, ao fortalecimento de relacionamentos conjugais, ao desenvolvimento de líderes e à consolidação de instituições."
-      ]
+      ],
+      "en": {
+        "funcao": "PhD, D.Div., DCC · Pastor, professor and theologian",
+        "bio": "Pastor, university professor of Theology, writer, chaplain and business owner with an international academic background. An award-winning tenor in international competitions, he also works as a conductor and composer. Founder of Ministério Entre Nós USA, devoted to couples and families, he is Vice President and General Administrator of Belong Church JAX in Florida.",
+        "bio_completa": [
+          "With an international academic background and a multidisciplinary career, Eduardo Itaborahy brings solid experience in theology, higher education, ministry leadership, writing, business management, chaplaincy and classical music.",
+          "A Theology professor, writer, speaker and trainer of leaders, he built a notable international career as an opera singer (tenor), winning awards in international singing competitions. His musical path also includes work as a conductor and composer.",
+          "With broad experience in management and entrepreneurship in Brazil and the United States, he has led companies and organizations, standing out in strategic planning, institutional management, organizational development and team leadership.",
+          "He was the founder and senior pastor of Alliance Ministry USA. He is the founder and president of Ministério Entre Nós USA, devoted to strengthening couples and families. He currently serves as Vice President and General Administrator of Belong Church JAX in Florida, United States.",
+          "He is also trained in chaplaincy, pastoral counseling and emergency management, including courses from FEMA's Emergency Management Institute in the United States.",
+          "His career is marked by the integration of academic knowledge, international experience, leadership, intellectual work and entrepreneurial vision, with a commitment to developing people, strengthening marriages, raising leaders and building lasting institutions."
+        ]
+      },
+      "es": {
+        "funcao": "PhD, D.Div., DCC · Pastor, profesor y teólogo",
+        "bio": "Pastor, profesor universitario de Teología, escritor, capellán y empresario, con formación académica internacional. Tenor premiado en concursos internacionales, también se desempeña como director de orquesta y compositor. Fundador del Ministério Entre Nós USA, dedicado a parejas y familias, es Vicepresidente y Administrador General de Belong Church JAX, en Florida.",
+        "bio_completa": [
+          "Con formación académica internacional y una trayectoria multidisciplinaria, Eduardo Itaborahy reúne sólida experiencia en teología, educación superior, liderazgo ministerial, producción literaria, gestión empresarial, capellanía y música clásica.",
+          "Profesor de Teología, escritor, conferencista y formador de líderes, desarrolló una destacada carrera artística internacional como cantante lírico (tenor), obteniendo premios en concursos internacionales de canto. Su trayectoria musical incluye además su labor como director y compositor.",
+          "Con amplia experiencia en administración y emprendimiento en Brasil y en Estados Unidos, ha estado al frente de empresas y organizaciones, destacándose en planificación estratégica, gestión institucional, desarrollo organizacional y liderazgo de equipos.",
+          "Fue fundador y pastor principal de Alliance Ministry USA. Es fundador y presidente del Ministério Entre Nós USA, dedicado al fortalecimiento de parejas y familias. Actualmente es Vicepresidente y Administrador General de Belong Church JAX, en Florida, Estados Unidos.",
+          "Cuenta además con formación en capellanía, consejería pastoral y gestión de emergencias, incluidas capacitaciones del Emergency Management Institute de FEMA, en Estados Unidos.",
+          "Su trayectoria se caracteriza por integrar conocimiento académico, experiencia internacional, liderazgo, producción intelectual y visión emprendedora, con dedicación a la formación de personas, al fortalecimiento de los matrimonios, al desarrollo de líderes y a la consolidación de instituciones."
+        ]
+      }
     },
     "dany-rocha": {
       "nome": "Dany Rocha",
@@ -100,7 +182,25 @@
         "Sua trajetória é construída em torno de uma convicção: a comunicação transforma a maneira como as pessoas se enxergam, se posicionam e ocupam seu espaço no mundo.",
         "Hoje, seu trabalho conecta cinco grandes pilares:",
         "<b>Comunicação:</b> aprender a comunicar ideias, histórias e mensagens com impacto.<br><b>Identidade:</b> reconhecer quem você é e o que torna sua voz única.<br><b>Posicionamento:</b> construir autoridade e presença no ambiente digital.<br><b>Propósito:</b> conectar talentos, experiências e missão de vida.<br><b>Espiritualidade:</b> compreender a comunicação também como instrumento de transformação e expressão daquilo que Deus colocou em cada pessoa."
-      ]
+      ],
+      "en": {
+        "funcao": "Communicator, mentor and business owner",
+        "bio": "Communicator, mentor, business owner, producer and content director with more than 25 years of experience in radio, television, journalism, production, directing and hosting. Her work helps people communicate with impact through five pillars: communication, identity, positioning, purpose and spirituality.",
+        "bio_completa": [
+          "Her career is built on one conviction: communication transforms how people see themselves, position themselves and take their place in the world.",
+          "Today her work connects five major pillars:",
+          "<b>Communication:</b> learning to share ideas, stories and messages with impact.<br><b>Identity:</b> recognizing who you are and what makes your voice unique.<br><b>Positioning:</b> building authority and presence online.<br><b>Purpose:</b> connecting talents, experiences and life mission.<br><b>Spirituality:</b> seeing communication as a tool for transformation and for expressing what God has placed in each person."
+        ]
+      },
+      "es": {
+        "funcao": "Comunicadora, mentora y empresaria",
+        "bio": "Comunicadora, mentora, empresaria, productora y directora de contenido, con más de 25 años de experiencia en radio, televisión, periodismo, producción, dirección y conducción. Su trabajo ayuda a las personas a comunicar con impacto a partir de cinco pilares: comunicación, identidad, posicionamiento, propósito y espiritualidad.",
+        "bio_completa": [
+          "Su trayectoria se construye en torno a una convicción: la comunicación transforma la manera en que las personas se ven, se posicionan y ocupan su lugar en el mundo.",
+          "Hoy su trabajo conecta cinco grandes pilares:",
+          "<b>Comunicación:</b> aprender a comunicar ideas, historias y mensajes con impacto.<br><b>Identidad:</b> reconocer quién eres y qué hace única tu voz.<br><b>Posicionamiento:</b> construir autoridad y presencia en el entorno digital.<br><b>Propósito:</b> conectar talentos, experiencias y misión de vida.<br><b>Espiritualidad:</b> entender la comunicación también como instrumento de transformación y expresión de lo que Dios puso en cada persona."
+        ]
+      }
     },
     "jake-belieny": {
       "nome": "Jake Belieny",
@@ -114,7 +214,29 @@
         "Ensinou ciência da computação em escolas americanas pelo programa TEALS da Microsoft, por acreditar que a capacidade de pensar em sistemas deve ser transmitida, não guardada a sete chaves. Essa mesma convicção virou quatro livros publicados e um trabalho de mentoria em três idiomas (inglês, português e espanhol) que já alcançou pessoas em sete países.",
         "Hoje toda essa experiência converge em um papel: Consultor de Transformação com IA. Ajuda empresas de serviços nos EUA a transformar experimentos soltos de IA em fluxos de trabalho confiáveis e mensuráveis, e constrói de forma aberta seu próprio ecossistema de empresas, produtos e eventos, a maioria acelerada com IA.",
         "O fio condutor de tudo isso (engenharia, operações e comportamento) é o mesmo: encontrar a estrutura que está desalinhada, consertar isso primeiro e deixar os resultados se acumularem."
-      ]
+      ],
+      "en": {
+        "funcao": "Mentor, author and entrepreneur",
+        "bio": "Mentor, author and entrepreneur with 30 years of hands-on technology work. He has collaborated with the United Nations, run companies in the US for more than two decades and taught computer science through Microsoft's TEALS program. Today he works as an AI Transformation Consultant, helping companies turn scattered AI experiments into measurable results.",
+        "bio_completa": [
+          "Jake has spent three decades building technology the unglamorous way: shipping it, breaking it, fixing it and running the businesses that depend on it. Not stage theory — systems that had to work on Monday morning.",
+          "Along the way he collaborated with the United Nations, ran companies in the United States for more than two decades and closed deals and projects above US$1 million. He has sat on both sides of the table: the engineer who builds the system and the owner who has to make payroll with it.",
+          "He taught computer science in American schools through Microsoft's TEALS program, believing that systems thinking should be passed on, not locked away. That same conviction became four published books and mentoring work in three languages (English, Portuguese and Spanish) that has reached people in seven countries.",
+          "Today all of that experience converges in one role: AI Transformation Consultant. He helps US service businesses turn scattered AI experiments into reliable, measurable workflows, and builds his own ecosystem of companies, products and events in the open, most of it accelerated with AI.",
+          "The thread running through all of it — engineering, operations and behavior — is the same: find the structure that's out of alignment, fix that first, and let the results compound."
+        ]
+      },
+      "es": {
+        "funcao": "Mentor, autor y emprendedor",
+        "bio": "Mentor, autor y emprendedor, con 30 años de tecnología construida en la práctica. Colaboró con las Naciones Unidas, dirigió empresas en EE. UU. por más de dos décadas y enseñó ciencias de la computación en el programa TEALS de Microsoft. Hoy es Consultor de Transformación con IA y ayuda a las empresas a convertir experimentos sueltos de IA en resultados medibles.",
+        "bio_completa": [
+          "Jake pasó tres décadas construyendo tecnología sin glamour: poniéndola en marcha, rompiéndola, arreglándola y dirigiendo los negocios que dependen de ella. No teoría de escenario: sistemas que tenían que funcionar el lunes por la mañana.",
+          "En el camino colaboró con las Naciones Unidas, dirigió empresas en Estados Unidos por más de dos décadas y cerró negocios y proyectos de más de US$ 1 millón. Se ha sentado a ambos lados de la mesa: el ingeniero que construye el sistema y el dueño que tiene que pagar la nómina con él.",
+          "Enseñó ciencias de la computación en escuelas estadounidenses a través del programa TEALS de Microsoft, convencido de que la capacidad de pensar en sistemas debe transmitirse, no guardarse bajo llave. Esa misma convicción se convirtió en cuatro libros publicados y en un trabajo de mentoría en tres idiomas (inglés, portugués y español) que ya llegó a personas en siete países.",
+          "Hoy toda esa experiencia converge en un rol: Consultor de Transformación con IA. Ayuda a empresas de servicios en EE. UU. a convertir experimentos sueltos de IA en flujos de trabajo confiables y medibles, y construye de forma abierta su propio ecosistema de empresas, productos y eventos, en su mayoría acelerados con IA.",
+          "El hilo conductor de todo (ingeniería, operaciones y comportamiento) es el mismo: encontrar la estructura que está desalineada, arreglarla primero y dejar que los resultados se acumulen."
+        ]
+      }
     },
     "patricia-belieny": {
       "nome": "Patrícia Belieny",
@@ -126,7 +248,25 @@
         "Mãe de três filhos e futura avó, Patrícia Belieny é idealizadora do movimento Mulheres Embelezadas e criadora do método Ser, Ver e Ter, fundamentado nos três pilares do ser humano: corpo, alma e espírito.",
         "Coautora de três livros, está em formação em Psicanálise pelo Instituto Faz a Diferença, ampliando seus estudos sobre o comportamento humano.",
         "Entusiasta da inteligência artificial aplicada ao empreendedorismo feminino, utiliza a tecnologia para criar conteúdos digitais, materiais educacionais (homeschool), vídeos, identidades visuais, métodos de estudo e produtos digitais, gerando novas oportunidades de renda."
-      ]
+      ],
+      "en": {
+        "funcao": "Entrepreneur, author and mentor to women",
+        "bio": "A creative entrepreneur, author and mentor to women, she brings faith, knowledge, education and technology together to turn ideas into purposeful projects. Founder of the Mulheres Embelezadas movement and creator of the Ser, Ver e Ter (Be, See and Have) method, she has co-authored three books and uses artificial intelligence to open new income opportunities for women entrepreneurs.",
+        "bio_completa": [
+          "A mother of three and soon-to-be grandmother, Patrícia Belieny founded the Mulheres Embelezadas movement and created the Ser, Ver e Ter (Be, See and Have) method, grounded in the three dimensions of the human being: body, soul and spirit.",
+          "Co-author of three books, she is training in Psychoanalysis at Instituto Faz a Diferença, deepening her study of human behavior.",
+          "An enthusiast of artificial intelligence applied to women's entrepreneurship, she uses technology to create digital content, educational materials (homeschool), videos, visual identities, study methods and digital products, creating new income opportunities."
+        ]
+      },
+      "es": {
+        "funcao": "Emprendedora, autora y mentora de mujeres",
+        "bio": "Emprendedora creativa, autora y mentora de mujeres, une fe, conocimiento, educación y tecnología para convertir ideas en proyectos con propósito. Fundadora del movimiento Mulheres Embelezadas y creadora del método Ser, Ver e Ter (Ser, Ver y Tener), es coautora de tres libros y usa la inteligencia artificial para abrir nuevas oportunidades de ingresos en el emprendimiento femenino.",
+        "bio_completa": [
+          "Madre de tres hijos y futura abuela, Patrícia Belieny es fundadora del movimiento Mulheres Embelezadas y creadora del método Ser, Ver e Ter (Ser, Ver y Tener), basado en las tres dimensiones del ser humano: cuerpo, alma y espíritu.",
+          "Coautora de tres libros, se está formando en Psicoanálisis en el Instituto Faz a Diferença, ampliando sus estudios sobre el comportamiento humano.",
+          "Entusiasta de la inteligencia artificial aplicada al emprendimiento femenino, usa la tecnología para crear contenidos digitales, materiales educativos (homeschool), videos, identidades visuales, métodos de estudio y productos digitales, generando nuevas oportunidades de ingresos."
+        ]
+      }
     }
   },
   "eventos": [
@@ -149,7 +289,13 @@
       "preletores": [
         "hewerton-scheidegger",
         "santiago-vecina"
-      ]
+      ],
+      "en": {
+        "estado": "Florida"
+      },
+      "es": {
+        "estado": "Florida"
+      }
     },
     {
       "slug": "orlando",
@@ -192,7 +338,23 @@
         "nota_ingresso": "Almoço com churrasco<br>incluso"
       },
       "lead_codigo": "MREI201126",
-      "selo": "Churrasco incluso"
+      "selo": "Churrasco incluso",
+      "en": {
+        "selo": "BBQ lunch included",
+        "destaque": {
+          "curto": "🥩 Brazilian BBQ lunch <b>included with every ticket</b>",
+          "nota_ingresso": "Brazilian BBQ lunch<br>included"
+        },
+        "estado": "Florida"
+      },
+      "es": {
+        "selo": "Churrasco incluido",
+        "destaque": {
+          "curto": "🥩 Almuerzo con churrasco <b>incluido en todas las entradas</b>",
+          "nota_ingresso": "Almuerzo con churrasco<br>incluido"
+        },
+        "estado": "Florida"
+      }
     },
     {
       "slug": "boston",
@@ -212,7 +374,13 @@
         "hewerton-scheidegger",
         "santiago-vecina",
         "bruno-rodrigues"
-      ]
+      ],
+      "en": {
+        "estado": "Massachusetts"
+      },
+      "es": {
+        "estado": "Massachusetts"
+      }
     }
   ]
 }

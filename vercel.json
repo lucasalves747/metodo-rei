@@ -51,6 +51,26 @@
       "source": "/cart-vip",
       "destination": "https://pag.metodorei.com/cart-vip",
       "permanent": false
+    },
+    {
+      "source": "/en/dallas",
+      "destination": "/en",
+      "permanent": false
+    },
+    {
+      "source": "/en/prevenda-dallas",
+      "destination": "/en",
+      "permanent": false
+    },
+    {
+      "source": "/es/dallas",
+      "destination": "/es",
+      "permanent": false
+    },
+    {
+      "source": "/es/prevenda-dallas",
+      "destination": "/es",
+      "permanent": false
     }
   ]
 }
