@@ -16,7 +16,7 @@ const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/"/g, "&quot;").repl
 const strip = (s) => String(s).replace(/<[^>]+>/g, "").replace(/&amp;/g, "&").replace(/\s+/g, " ").trim();
 
 // UF → fuso IANA (usado para o horário certo no schema do evento)
-const FUSOS = {
+export const FUSOS = {
   FL: "America/New_York", MA: "America/New_York", NY: "America/New_York", NJ: "America/New_York", GA: "America/New_York",
   NC: "America/New_York", SC: "America/New_York", VA: "America/New_York", PA: "America/New_York", CT: "America/New_York",
   TX: "America/Chicago", IL: "America/Chicago", TN: "America/Chicago", MN: "America/Chicago",

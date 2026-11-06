@@ -1,5 +1,5 @@
 {
-  "_leia_me": "Edite este arquivo e rode: node eventos/build.mjs  — gera /<slug> de cada evento e atualiza a lista da home. Datas em AAAA-MM-DD. Eventos passados somem da home sozinhos, mas a página continua no ar. Idiomas: o site sai em PT, EN e ES. Todo texto de preletor (funcao, bio, bio_completa, destaque) e de evento (selo, destaque, estado) precisa ter versão em \"en\" e \"es\" — o build para com erro se faltar.",
+  "_leia_me": "Edite este arquivo e rode: node eventos/build.mjs  — gera /<slug> de cada evento e atualiza a lista da home. Datas em AAAA-MM-DD. Eventos passados somem da home sozinhos, mas a página continua no ar. Idiomas: o site sai em PT, EN e ES. Todo texto de preletor (funcao, bio, bio_completa, destaque) e de evento (selo, destaque, estado) precisa ter versão em \"en\" e \"es\" — o build para com erro se faltar. Checkout: \"cupons\" (codigo, tipo \"percentual\"|\"fixo\", valor, eventos?, tiers?, valido_ate?, por_ingresso?, somente_teste?) e \"entregas\" (materiais por tipo de ingresso, mostrados na confirmação).",
   "site": {
     "url": "https://www.metodorei.com",
     "nome": "Método REI",
@@ -382,5 +382,27 @@
         "estado": "Massachusetts"
       }
     }
-  ]
+  ],
+  "cupons": [
+    {
+      "codigo": "TESTE10",
+      "tipo": "percentual",
+      "valor": 10,
+      "somente_teste": true,
+      "_nota": "só funciona no modo de teste (sandbox)"
+    },
+    {
+      "codigo": "TESTE100",
+      "tipo": "percentual",
+      "valor": 100,
+      "somente_teste": true,
+      "_nota": "só funciona no modo de teste (sandbox)"
+    }
+  ],
+  "entregas": {
+    "_leia_me": "O que cada tipo de ingresso recebe na página de confirmação. Cada item: {titulo:{pt,en,es}, descricao?:{pt,en,es}, url, tipo:'download'|'acesso'}. Vazio = mostra 'os materiais chegam no seu e-mail'.",
+    "standard": [],
+    "vip": [],
+    "rei": []
+  }
 }

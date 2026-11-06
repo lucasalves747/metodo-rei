@@ -7,7 +7,9 @@
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { eventoSchema, homeHead, sitemap, robots, llms } from "./seo.mjs";
+import { eventoSchema, homeHead, sitemap, robots, llms, FUSOS } from "./seo.mjs";
+import { CO, POLITICA } from "./textos-checkout.mjs";
+import { HTML_LANG } from "./i18n.mjs";
 import { IDIOMAS, dicionarios, traduzirModelo, localizarPagina, seletor, prefixo } from "./i18n.mjs";
 import { L } from "./textos.mjs";
 
@@ -17,6 +19,8 @@ const data = JSON.parse(readFileSync(join(DIR, "eventos.json"), "utf8"));
 const PARTES = Object.fromEntries(["pilares", "wall", "experiencia"].map((k) => [k, readFileSync(join(DIR, "partes", `${k}.html`), "utf8").trimEnd()]));
 const incluir = (t) => t.replace(/\{\{(pilares|wall|experiencia)\}\}/g, (m, k) => PARTES[k]);
 const template = incluir(readFileSync(join(DIR, "template.html"), "utf8"));
+const pedidoTemplate = readFileSync(join(DIR, "pedido-template.html"), "utf8");
+const paginaTemplate = readFileSync(join(DIR, "pagina-template.html"), "utf8");
 const homeTemplate = incluir(readFileSync(join(DIR, "home-template.html"), "utf8"));
 const CHECK_ONLY = process.argv.includes("--check");
 
@@ -239,6 +243,7 @@ function render(ev0, lang) {
     nota_idioma: x.nota_idioma_txt ? `<span>${x.nota_idioma_txt}</span>` : "",
     ...vendaVars(ev, d, lang),
   };
+  vars.checkout = checkoutHtml(ev, d, lang);
   const seo = eventoSchema(data, ev, d, ids, lang, (id) => pv(id, lang));
   vars.seo_head = seo.head;
   return { html: preencher(MODELOS[lang].evento, vars, "template"), d, seo, ids, ev };
@@ -275,6 +280,54 @@ function lineup(upcoming, lang) {
   const n = ids.length;
   const cols = n <= 5 ? n : Math.ceil(n / Math.ceil(n / 5));
   return { html: faces.join("\n"), cols: Math.max(cols, 2) };
+}
+
+
+// ---------- checkout (Square) ----------
+const LEAD_EVENTO = "https://contact-blossom-39.lovable.app/api/public/contatos/ck_479abcc9_479abcc9a2f98313db0a19480754dbf7abe9b3cc27b6cd889cd5d06a3d43deef";
+const TIERS = { standard: "Standard", vip: "VIP", rei: "REI" };
+const precosEv = (ev) => ({ ...data.precos_padrao, ...(ev.precos || {}) });
+function checkoutHtml(ev, d, lang) {
+  const pr = precosEv(ev);
+  const cfg = {
+    lang, locale: CO[lang].locale, slug: ev.slug, cidade: ev.cidade,
+    eventoLinha: `Método REI ${ev.cidade} · ${d.curta}${d.ano ? " " + d.ano : ""}`,
+    tiers: Object.fromEntries(Object.entries(TIERS).map(([k, nome]) => [k, { nome, preco: pr[k].por }])),
+    politica: `${prefixo(lang)}/politica`,
+    lead: { endpoint: LEAD_EVENTO, tags: [ev.lead_tag || `Método REI - ${ev.cidade} ${d.ano}`, ev.lead_codigo || datas(ev, "pt").codigo, "Checkout"] },
+    t: CO[lang],
+  };
+  return `<link rel="stylesheet" href="/assets/checkout.css">
+<script>window.MREI_CO=${JSON.stringify(cfg).replace(/</g, "\\u003c")};</script>
+<script src="/assets/checkout.js" defer></script>`;
+}
+function catalogo() {
+  const eventos = {};
+  for (const ev of data.eventos) {
+    const d = datas(ev, "pt"), pr = precosEv(ev);
+    eventos[ev.slug] = {
+      slug: ev.slug, cidade: ev.cidade, uf: ev.uf, inicio: ev.inicio, fim: ev.fim, ano: d.ano, horarios: ev.horarios || [],
+      datas_texto: d.texto, tz: ev.fuso || FUSOS[ev.uf] || "America/New_York",
+      local: { nome: /a definir/i.test((ev.local || {}).nome || "") ? "" : (ev.local || {}).nome || "", endereco: (ev.local || {}).endereco || "", endereco_exibicao: (ev.local || {}).endereco_exibicao || "", maps_query: (ev.local || {}).maps_query || "" },
+      tiers: Object.fromEntries(Object.entries(TIERS).map(([k, nome]) => [k, { nome, preco: pr[k].por }])),
+    };
+  }
+  const cupons = (data.cupons || []).map(({ _nota, ...c }) => c);
+  const entregas = Object.fromEntries(Object.entries(data.entregas || {}).filter(([k]) => !k.startsWith("_")));
+  return `// GERADO por eventos/build.mjs a partir de eventos/eventos.json — não edite à mão.\nexport const CATALOGO = ${JSON.stringify({ eventos, cupons, entregas }, null, 2)};\n`;
+}
+function paginasCheckout(lang) {
+  const T = CO[lang], pre = prefixo(lang), home = pre || "/";
+  const wa = `https://wa.me/${(data.site.whatsapp || "").replace(/\D/g, "")}`;
+  const pedido = preencher(pedidoTemplate, {
+    html_lang: HTML_LANG[lang], titulo: T.pdTitulo, home, voltar: T.pdVoltar, carregando: T.pdCarregando,
+    dados: JSON.stringify({ lang, locale: T.locale, whatsapp: wa, t: { ...T, ingresso: T.ingresso } }).replace(/</g, "\\u003c"),
+  }, "pedido-template");
+  const politica = preencher(paginaTemplate, {
+    html_lang: HTML_LANG[lang], titulo: T.politicaTitulo, home, voltar: T.pdVoltar, canonical: `${data.site.url}${pre}/politica`,
+    conteudo: POLITICA[lang].map((p) => `<p>${p}</p>`).join("\n"), whatsapp: wa, duvidas: T.pdDuvidas,
+  }, "pagina-template");
+  return { pedido, politica };
 }
 
 // ---------- main ----------
@@ -327,6 +380,9 @@ for (const lang of IDIOMAS) {
   const { rendered, home, upcoming } = porIdioma[lang];
   for (const r of rendered) writeFileSync(join(dir, `${r.ev.slug}.html`), localizarPagina(r.html, lang, slugs));
   writeFileSync(join(dir, "index.html"), localizarPagina(home, lang, slugs));
+  const pc = paginasCheckout(lang);
+  writeFileSync(join(dir, "pedido.html"), pc.pedido);
+  writeFileSync(join(dir, "politica.html"), pc.politica);
   console.log(`  ✓ ${prefixo(lang) || "/"}  + ${rendered.map((r) => `${prefixo(lang)}/${r.ev.slug}`).join(", ")}  (${upcoming.length} próximos)`);
 }
 
@@ -335,6 +391,9 @@ writeFileSync(join(ROOT, "sitemap.xml"), sitemap(data, visiveis));
 writeFileSync(join(ROOT, "robots.txt"), robots(data));
 writeFileSync(join(ROOT, "llms.txt"), llms(data, pt.upcoming, pt.rendered.filter((r) => r.d.fimDate < today && !r.ev.oculto)));
 console.log("  ✓ sitemap.xml, robots.txt, llms.txt");
+mkdirSync(join(ROOT, "api/_lib"), { recursive: true });
+writeFileSync(join(ROOT, "api/_lib/catalogo.mjs"), catalogo());
+console.log("  ✓ api/_lib/catalogo.mjs (preços e cupons do checkout)");
 
 for (const lang of IDIOMAS) for (const s of ["home", ...slugs]) {
   const f = join(ROOT, "assets/og", lang === "pt" ? "" : lang, `${s}.jpg`);
