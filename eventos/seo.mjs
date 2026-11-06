@@ -235,7 +235,7 @@ export function llms(data, proximos, passados) {
 
 > ${site.descricao}
 
-O Método REI é uma imersão presencial em português para empresários e profissionais brasileiros nos Estados Unidos. O nome resume os três pilares: **Reinar** (assumir o governo da própria vida, decisões e resultados), **Enriquecer** (mentalidade de riqueza e prosperidade com inteligência e propósito) e **Identidade** (descobrir quem você é e alinhar a vida ao seu propósito). A tese central: a verdadeira prosperidade é ganhar sem perder — crescer financeiramente sem sacrificar família, saúde e direção.
+O Método REI é uma imersão presencial em português para empresários e profissionais brasileiros nos Estados Unidos. O nome resume os três pilares: **Reinar** (assumir o governo da própria vida, decisões e resultados), **Enriquecer** (mentalidade de riqueza e prosperidade com inteligência e propósito) e **Identidade** (descobrir quem você é e alinhar a vida ao seu propósito). A tese central: a verdadeira prosperidade é crescer financeiramente sem sacrificar família, saúde e direção.
 
 Criado por Hewerton Scheidegger. Ingressos em três categorias: Standard, VIP e REI.
 
