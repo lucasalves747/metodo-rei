@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <script>document.documentElement.className += " reveal-on";</script>
 <title>Método REI · Imersão Presencial · Tour EUA 2026</title>
-<meta name="description" content="Método REI: imersão presencial de 2 dias para quem decidiu enriquecer com inteligência e governar a própria vida. Edições em Miami, Dallas, Orlando e Boston em 2026." />
+<meta name="description" content="Método REI: imersão presencial de 2 dias para quem decidiu enriquecer com inteligência e governar a própria vida. Edições em Dallas, Orlando e Boston em 2026." />
 <link rel="preload" as="image" href="assets/home/hero.jpg" />
 
 <style>
@@ -321,7 +321,9 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
     <a href="#eventos" class="btn reveal" data-d="2">Ver eventos</a>
     <div class="hero__tour reveal" data-d="3">
       <small>Tour EUA 2026</small>
-      <span class="hero__chip"><svg viewBox="0 0 24 20" fill="currentColor" aria-hidden="true"><path d="M1.5 15.5 L3.8 5.5 L8.4 10.8 L12 2.5 L15.6 10.8 L20.2 5.5 L22.5 15.5 Z"/><rect x="1.8" y="16" width="20.4" height="3" rx="1"/></svg>Miami <i>·</i> Dallas <i>·</i> Orlando <i>·</i> Boston</span>
+      <span class="hero__chip"><svg viewBox="0 0 24 20" fill="currentColor" aria-hidden="true"><path d="M1.5 15.5 L3.8 5.5 L8.4 10.8 L12 2.5 L15.6 10.8 L20.2 5.5 L22.5 15.5 Z"/><rect x="1.8" y="16" width="20.4" height="3" rx="1"/></svg><!-- CHIP:START -->
+Dallas <i>·</i> Orlando <i>·</i> Boston
+<!-- CHIP:END --></span>
     </div>
   </div>
 </section>
@@ -345,18 +347,8 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
 
     <!-- data-end = último dia do evento (AAAA-MM-DD); o card some sozinho no dia seguinte -->
     <ul class="events">
-      <li class="event reveal" data-end="2026-10-24">
-        <div class="event__img"><img decoding="async" src="assets/home/city-miami.jpg" alt="Skyline de Miami" loading="lazy" /></div>
-        <div class="event__body">
-          <span class="event__date">23–24 de outubro, 2026</span>
-          <h3 class="event__city">Miami</h3>
-          <span class="event__venue">Lagoinha Miami Church</span>
-          <span class="event__days">Sexta · Sábado</span>
-          <span class="event__time">6:30PM–11PM · 8:30AM–8PM</span>
-          <div class="event__cta"><a href="/miami" class="btn btn--sm" data-event="Miami">Ver evento</a></div>
-        </div>
-      </li>
-      <li class="event reveal" data-d="1" data-end="2026-11-14">
+<!-- EVENTOS:START -->
+      <li class="event reveal" data-end="2026-11-14">
         <div class="event__img"><span class="event__badge">Pré-venda</span><img decoding="async" src="assets/home/city-dallas.jpg" alt="Skyline de Dallas" loading="lazy" /></div>
         <div class="event__body">
           <span class="event__date">13–14 de novembro, 2026</span>
@@ -367,7 +359,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
           <div class="event__cta"><a href="/dallas" class="btn btn--sm" data-event="Dallas">Ver evento</a></div>
         </div>
       </li>
-      <li class="event reveal" data-end="2026-11-21">
+      <li class="event reveal" data-d="1" data-end="2026-11-21">
         <div class="event__img"><img decoding="async" src="assets/home/city-orlando.jpg" alt="Skyline de Orlando" loading="lazy" /></div>
         <div class="event__body">
           <span class="event__date">20–21 de novembro, 2026</span>
@@ -378,7 +370,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
           <div class="event__cta"><a href="/orlando" class="btn btn--sm" data-event="Orlando">Ver evento</a></div>
         </div>
       </li>
-      <li class="event reveal" data-d="1" data-end="2026-12-05">
+      <li class="event reveal" data-end="2026-12-05">
         <div class="event__img"><img decoding="async" src="assets/home/city-boston.jpg" alt="Skyline de Boston" loading="lazy" /></div>
         <div class="event__body">
           <span class="event__date">4–5 de dezembro, 2026</span>
@@ -389,7 +381,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
           <div class="event__cta"><a href="/boston" class="btn btn--sm" data-event="Boston">Ver evento</a></div>
         </div>
       </li>
-    </ul>
+<!-- EVENTOS:END -->    </ul>
     <p class="events__empty" id="eventsEmpty">Novas datas em breve. <a href="#comunidade" style="color:var(--gold-deep);font-weight:700;text-decoration:underline">Entre para a comunidade</a> e seja avisado primeiro.</p>
   </div>
 </section>
@@ -538,11 +530,11 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
         <div class="field">
           <select class="sel" id="leadEdicao" aria-label="Edição de interesse">
             <option value="">Edição de interesse (opcional)</option>
-            <option value="Miami">Miami · 23–24 out</option>
+<!-- EDICOES:START -->
             <option value="Dallas">Dallas · 13–14 nov</option>
             <option value="Orlando">Orlando · 20–21 nov</option>
             <option value="Boston">Boston · 4–5 dez</option>
-            <option value="Outra cidade">Quero em outra cidade</option>
+<!-- EDICOES:END -->            <option value="Outra cidade">Quero em outra cidade</option>
           </select>
         </div>
         <p class="join__err" id="leadError" role="alert">Por favor, preencha os campos obrigatórios.</p>
@@ -559,11 +551,11 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
   <img class="footer__logo" src="assets/logo-metodo-rei.png" alt="Método REI" loading="lazy" />
   <nav aria-label="Rodapé">
     <a href="#eventos">Próximos eventos</a>
-    <a href="/miami">Miami</a>
+<!-- RODAPE:START -->
     <a href="/dallas">Dallas</a>
     <a href="/orlando">Orlando</a>
     <a href="/boston">Boston</a>
-    <a href="#metodo">O Método</a>
+<!-- RODAPE:END -->    <a href="#metodo">O Método</a>
     <!-- [TROCAR: links de políticas] -->
     <a href="#">Privacidade</a>
     <a href="#">Termos</a>

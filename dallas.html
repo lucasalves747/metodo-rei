@@ -372,10 +372,10 @@ a{color:inherit;text-decoration:none}
 }
 
 /* ========================================
-   MENTORES — GRID COMPACTO
+   MENTORES — GRID COMPACTO (3+ preletores — classe .mentors--grid)
 ======================================== */
 
-.mentors-sec .mentors--2 {
+.mentors-sec .mentors--grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 24px;
@@ -386,7 +386,7 @@ a{color:inherit;text-decoration:none}
 }
 
 /* Card */
-.mentors-sec .mentor {
+.mentors-sec .mentors--grid .mentor {
   min-width: 0;
   width: 100%;
   display: flex;
@@ -397,14 +397,14 @@ a{color:inherit;text-decoration:none}
 }
 
 /* Imagem mais compacta */
-.mentors-sec .mentor__ph {
+.mentors-sec .mentors--grid .mentor__ph {
   width: 100%;
   aspect-ratio: 4 / 3;
   overflow: hidden;
   flex-shrink: 0;
 }
 
-.mentors-sec .mentor__ph img {
+.mentors-sec .mentors--grid .mentor__ph img {
   display: block;
   width: 100%;
   height: 100%;
@@ -413,14 +413,14 @@ a{color:inherit;text-decoration:none}
 }
 
 /* Conteúdo */
-.mentors-sec .mentor__b {
+.mentors-sec .mentors--grid .mentor__b {
   flex: 1;
   padding: 22px 20px 24px;
   text-align: left;
 }
 
 /* Cargo */
-.mentors-sec .mentor__role {
+.mentors-sec .mentors--grid .mentor__role {
   display: block;
   margin-bottom: 10px;
   font-size: 11px;
@@ -429,7 +429,7 @@ a{color:inherit;text-decoration:none}
 }
 
 /* Nome */
-.mentors-sec .mentor h3 {
+.mentors-sec .mentors--grid .mentor h3 {
   font-size: clamp(19px, 1.6vw, 25px);
   line-height: 1.15;
   margin: 0 0 12px;
@@ -437,7 +437,7 @@ a{color:inherit;text-decoration:none}
 }
 
 /* Descrição */
-.mentors-sec .mentor__b p {
+.mentors-sec .mentors--grid .mentor__b p {
   font-size: 14px;
   line-height: 1.7;
   margin: 0;
@@ -445,41 +445,40 @@ a{color:inherit;text-decoration:none}
 
 /* Tablet */
 @media (max-width: 900px) {
-  .mentors-sec .mentors--2 {
+  .mentors-sec .mentors--grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 20px;
   }
 
-  .mentors-sec .mentor h3 {
+  .mentors-sec .mentors--grid .mentor h3 {
     font-size: 22px;
   }
 }
 
 /* Celular */
 @media (max-width: 600px) {
-  .mentors-sec .mentors--2 {
+  .mentors-sec .mentors--grid {
     grid-template-columns: 1fr;
     gap: 22px;
     margin-top: 28px;
   }
 
-  .mentors-sec .mentor__ph {
+  .mentors-sec .mentors--grid .mentor__ph {
     aspect-ratio: 4 / 3;
   }
 
-  .mentors-sec .mentor__b {
+  .mentors-sec .mentors--grid .mentor__b {
     padding: 20px;
   }
 
-  .mentors-sec .mentor h3 {
+  .mentors-sec .mentors--grid .mentor h3 {
     font-size: 23px;
   }
 
-  .mentors-sec .mentor__b p {
+  .mentors-sec .mentors--grid .mentor__b p {
     font-size: 14px;
   }
 }
-
 </style>
 <!-- Microsoft Clarity -->
 <script type="text/javascript">
@@ -662,7 +661,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
   <div class="wrap">
     <h2 class="h-big reveal">Ouça quem vive o que ensina</h2>
     <p class="sub reveal" data-d="1">Os mentores do Método REI</p>
-    <div class="mentors mentors--2">
+    <div class="mentors mentors--grid">
       <article class="mentor reveal" data-d="1">
         <div class="mentor__ph"><img decoding="async" src="assets/pv/hewerton.jpg" alt="Hewerton Scheidegger" loading="lazy" /></div>
         <div class="mentor__b">
@@ -679,7 +678,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
           <p>Médico e nutrólogo com foco em alta performance. Atleta de alta performance (Ultraman). Conecta saúde, clareza, liderança, negócios e legado na abordagem da Performance Integral. Sua trajetória reúne a perspectiva médica e a experiência empresarial para olhar para a vida como um todo.</p>
         </div>
       </article>
-      <article class="mentor reveal" data-d="3" data-only="dallas">
+      <article class="mentor reveal" data-d="3">
         <div class="mentor__ph"><img decoding="async" src="assets/pv/eliane.jpg" alt="Eliane Martins" loading="lazy" /></div>
         <div class="mentor__b">
           <span class="mentor__role">Psicanalista, Coach &amp; Mentora</span>
@@ -687,8 +686,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
           <p>Psicanalista, coach e mentora, especialista em relacionamentos, inteligência emocional e identidade feminina. Reconhecida nacionalmente no desenvolvimento emocional e comportamental de mulheres e casais, integra Coaching, Psicanálise e princípios de Fé Cristã para conduzir uma jornada de autoconhecimento, cura emocional e liderança com propósito.</p>
         </div>
       </article>
-      
-      <article class="mentor reveal" data-d="1" data-only="dallas">
+      <article class="mentor reveal" data-d="1">
         <div class="mentor__ph"><img decoding="async" src="assets/iram.png" alt="Airam da Silva" loading="lazy" /></div>
         <div class="mentor__b">
           <span class="mentor__role">Presidente da Fundação Icla da Silva</span>
@@ -696,7 +694,6 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
           <p>Presidente da Fundação Icla da Silva, dedicada ao cadastro de doadores de medula óssea e ao apoio a pacientes com leucemia. Bacharel em Biologia e Economia e mestre em Saúde Pública, une experiência em saúde e impacto social à missão de ajudar famílias a se prepararem financeiramente, com propósito, segurança e tranquilidade para o futuro.</p>
         </div>
       </article>
-
     </div>
     <a href="#ingressos" class="pill reveal">Garantir ingresso</a>
   </div>

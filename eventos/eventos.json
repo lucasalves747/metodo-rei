@@ -1,0 +1,143 @@
+{
+  "_leia_me": "Edite este arquivo e rode: node eventos/build.mjs  — gera /<slug> de cada evento e atualiza a lista da home. Datas em AAAA-MM-DD. Eventos passados somem da home sozinhos, mas a página continua no ar.",
+  "preletores_padrao": [
+    "hewerton-scheidegger",
+    "santiago-vecina"
+  ],
+  "preletores": {
+    "hewerton-scheidegger": {
+      "nome": "Hewerton Scheidegger",
+      "titulo_html": "Hewerton <span class=\"g\">Scheidegger</span>",
+      "funcao": "Criador &amp; Mentor",
+      "foto": "assets/pv/hewerton.jpg",
+      "bio": "Advogado, contador e atleta de alta performance (Ironman e Ultraman). Criador do Método REI e autor de 1000 Códigos de Sabedoria e Método 7D para Milhões em Vendas. Une organização, finanças, liderança e propósito em uma visão de prosperidade que não precisa custar sua família e sua direção."
+    },
+    "santiago-vecina": {
+      "nome": "Santiago Vecina",
+      "titulo_html": "Dr. Santiago <span class=\"g\">Vecina</span>",
+      "funcao": "Médico, nutrólogo, empresário e mentor",
+      "foto": "assets/pv/santiago.jpg",
+      "bio": "Médico e nutrólogo com foco em alta performance. Atleta de alta performance (Ultraman). Conecta saúde, clareza, liderança, negócios e legado na abordagem da Performance Integral. Sua trajetória reúne a perspectiva médica e a experiência empresarial para olhar para a vida como um todo."
+    },
+    "eliane-martins": {
+      "nome": "Eliane Martins",
+      "titulo_html": "Eliane <span class=\"g\">Martins</span>",
+      "funcao": "Psicanalista, Coach &amp; Mentora",
+      "foto": "assets/pv/eliane.jpg",
+      "bio": "Psicanalista, coach e mentora, especialista em relacionamentos, inteligência emocional e identidade feminina. Reconhecida nacionalmente no desenvolvimento emocional e comportamental de mulheres e casais, integra Coaching, Psicanálise e princípios de Fé Cristã para conduzir uma jornada de autoconhecimento, cura emocional e liderança com propósito."
+    },
+    "airam-da-silva": {
+      "nome": "Airam da Silva",
+      "titulo_html": "Airam da <span class=\"g\">Silva</span>",
+      "funcao": "Presidente da Fundação Icla da Silva",
+      "foto": "assets/iram.png",
+      "bio": "Presidente da Fundação Icla da Silva, dedicada ao cadastro de doadores de medula óssea e ao apoio a pacientes com leucemia. Bacharel em Biologia e Economia e mestre em Saúde Pública, une experiência em saúde e impacto social à missão de ajudar famílias a se prepararem financeiramente, com propósito, segurança e tranquilidade para o futuro."
+    },
+    "alexandre-morelli": {
+      "nome": "Alexandre Morelli",
+      "titulo_html": "Alexandre <span class=\"g\">Morelli</span>",
+      "funcao": "Empresário, escritor, mentor e palestrante internacional",
+      "foto": "assets/alexandre-morelli.JPEG",
+      "bio": "Empreendedor há mais de 30 anos, é administrador, autor de três livros e triatleta com três provas de Ironman concluídas. Fundador da Plenitude Corp, em Orlando, atua na formação de empresários e no desenvolvimento de estratégias para escalar negócios com lucro. Com mais de 50 mil pessoas impactadas e R$ 10 milhões em faturamento gerados nos últimos sete anos, une fé, conhecimento e prática para promover Liberdade, Lucro e Legado."
+    },
+    "bruno-rodrigues": {
+      "nome": "Bruno Rodrigues",
+      "titulo_html": "Bruno <span class=\"g\">Rodrigues</span>",
+      "funcao": "Empresário e mentor",
+      "foto": "assets/bruno.jpg",
+      "bio": "Engenheiro mecânico, empreendedor e imigrante nos EUA, lidera negócios de HVAC e desenvolve projetos em nanotecnologia com eletrofiação. Maratonista, Ironman e piloto de helicóptero em formação, combina excelência técnica e superação pessoal em uma jornada dedicada à autogovernança, liderança e crescimento com propósito."
+    }
+  },
+  "eventos": [
+    {
+      "slug": "miami",
+      "cidade": "Miami",
+      "uf": "FL",
+      "estado": "Flórida",
+      "inicio": "2026-10-23",
+      "fim": "2026-10-24",
+      "horarios": [
+        "6:30pm–11pm",
+        "8:30am–8pm"
+      ],
+      "local": {
+        "nome": "Lagoinha Miami Church",
+        "endereco": "295 NE 59th Terrace, Miami, FL",
+        "maps_query": "Lagoinha+Miami+Church+295+NE+59th+Terrace+Miami+FL+33137"
+      },
+      "preletores": [
+        "hewerton-scheidegger",
+        "santiago-vecina"
+      ]
+    },
+    {
+      "slug": "dallas",
+      "cidade": "Dallas",
+      "uf": "TX",
+      "estado": "Texas",
+      "inicio": "2026-11-13",
+      "fim": "2026-11-14",
+      "horarios": [
+        "6:30pm–11pm",
+        "8:30am–8pm"
+      ],
+      "local": {
+        "nome": "Local a definir"
+      },
+      "selo": "Pré-venda",
+      "imagem_hero": "assets/pv-dallas.jpg",
+      "imagem_card": "assets/home/city-dallas.jpg",
+      "checkout": {
+        "standard": "https://pag.metodorei.com/cart-pre",
+        "vip": "https://pag.metodorei.com/cart-pre-vip",
+        "rei": "https://pag.metodorei.com/cart-pre-rei"
+      },
+      "preletores": [
+        "hewerton-scheidegger",
+        "santiago-vecina",
+        "eliane-martins",
+        "airam-da-silva"
+      ]
+    },
+    {
+      "slug": "orlando",
+      "cidade": "Orlando",
+      "uf": "FL",
+      "estado": "Flórida",
+      "inicio": "2026-11-20",
+      "fim": "2026-11-21",
+      "horarios": [
+        "6:30pm–11pm",
+        "8:30am–8pm"
+      ],
+      "local": {
+        "nome": "Local a definir"
+      },
+      "preletores": [
+        "hewerton-scheidegger",
+        "santiago-vecina",
+        "alexandre-morelli"
+      ]
+    },
+    {
+      "slug": "boston",
+      "cidade": "Boston",
+      "uf": "MA",
+      "estado": "Massachusetts",
+      "inicio": "2026-12-04",
+      "fim": "2026-12-05",
+      "horarios": [
+        "6:30pm–11pm",
+        "8:30am–7pm"
+      ],
+      "local": {
+        "nome": "Local a definir"
+      },
+      "preletores": [
+        "hewerton-scheidegger",
+        "santiago-vecina",
+        "bruno-rodrigues"
+      ]
+    }
+  ]
+}
