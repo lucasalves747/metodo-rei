@@ -1,6 +1,6 @@
 // Cria o pedido na Square, cobra o pagamento e avisa o Salee.ai (GHL).
 import crypto from "node:crypto";
-import { montarPayload } from "../_lib/payload.mjs";
+import { enviarSalee } from "../_lib/salee.mjs";
 import { config, square, cotar, corpo, json, limpa, emailOk, chavePedido, codigoIngresso, assinaturaIngresso } from "../_lib/square.mjs";
 
 const ERROS_CARTAO = {
@@ -50,7 +50,7 @@ export default async function handler(req, res) {
       quantity: "1",
       base_price_money: { amount: q.unit, currency: "USD" },
       note: p.nome.slice(0, 500),
-      metadata: { titular: p.nome.slice(0, 255), email: p.email.slice(0, 255), n: String(i + 1) },
+      metadata: { titular: p.nome.slice(0, 255), email: p.email.slice(0, 255), n: String(i + 1), ...(p.convidado ? { convidado: "1" } : {}) },
     })),
     metadata: {
       evento: ev.slug, tipo: q.tier, idioma: lang, comprador: nome.slice(0, 255), email, telefone,
@@ -104,53 +104,9 @@ export default async function handler(req, res) {
     qr: `MREI:${ord.id}:${i + 1}:${assinaturaIngresso(ord.id, i + 1)}`,
   }));
 
-  // 4) webhooks do evento (liberação de e-books, campanhas etc.), por tipo de ingresso
-  await dispararWebhooks(ev, q, t, ord.id, nome, email, telefone, ingressos);
-
-  // 5) Salee.ai (GHL) — um aviso com tudo: comprador, pedido, pagamento, evento e ingresso
-  if (process.env.GHL_WEBHOOK_URL) {
-    const payload = montarPayload({ cfg, ev, q, t, ord, pagamento, nome, email, telefone, lang, link, ingressos, utm: b.utm || {} });
-    try {
-      const ctl = new AbortController(); const tm = setTimeout(() => ctl.abort(), 5000);
-      const r = await fetch(process.env.GHL_WEBHOOK_URL, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload), signal: ctl.signal });
-      clearTimeout(tm);
-      if (!r.ok) console.error("ghl", r.status);
-    } catch (e) { console.error("ghl", e.message); }
-  }
+  // 5) Salee.ai (GHL): tenta na hora; se falhar, fica "pendente" na Square e é reenviado depois
+  try { await enviarSalee(ord.id, { origem: "compra" }); } catch (e) { console.error("salee", e.message); }
 
   json(res, 200, { ok: true, pedido: ord.id, k, link, recibo: pagamento ? pagamento.receipt_url || null : null });
 }
 
-function preencher(v, d) {
-  if (typeof v === "string") return v.replace(/\{(\w+)\}/g, (m, k) => (k in d ? d[k] : m));
-  if (Array.isArray(v)) return v.map((x) => preencher(x, d));
-  if (v && typeof v === "object") return Object.fromEntries(Object.entries(v).map(([k, x]) => [k, preencher(x, d)]));
-  return v;
-}
-async function dispararWebhooks(ev, q, t, orderId, nome, email, telefone, ingressos) {
-  const hooks = (ev.webhooks || []).filter((h) => !h.tiers || h.tiers.includes(q.tier));
-  if (!hooks.length) return;
-  // No modo de teste nunca chama os endpoints reais (liberariam e-books para compras de teste):
-  // manda para WEBHOOK_TESTE, se existir, ou não manda.
-  const teste = config().env !== "production";
-  if (teste && !process.env.WEBHOOK_TESTE) return;
-  // uma pessoa por e-mail: o comprador e cada convidado que recebeu e-mail próprio
-  const pessoas = [{ nome, email, telefone, codigo: ingressos[0].codigo }];
-  for (const i of ingressos.slice(1)) if (i.convidado && i.email && !pessoas.some((p) => p.email === i.email)) pessoas.push({ nome: i.titular, email: i.email, telefone: "", codigo: i.codigo });
-  const envios = [];
-  for (const h of hooks) for (const p of h.para === "comprador" ? pessoas.slice(0, 1) : pessoas) {
-    const partes = p.nome.trim().split(/\s+/);
-    const dados = { id: `${orderId}-${p.codigo.slice(-2)}`, nome: p.nome, primeiro_nome: partes[0], sobrenome: partes.slice(1).join(" "), email: p.email, telefone: p.telefone,
-      cidade: ev.cidade, tipo: q.tier, tipo_nome: t.nome, pedido: orderId, codigo: p.codigo };
-    envios.push((async () => {
-      try {
-        const ctl = new AbortController(); const tm = setTimeout(() => ctl.abort(), 5000);
-        const destino = teste ? process.env.WEBHOOK_TESTE : h.url;
-        const r = await fetch(destino, { method: "POST", headers: { "Content-Type": "application/json", ...(teste ? { "X-Webhook-Original": h.nome } : {}) }, body: JSON.stringify(preencher(h.corpo, dados)), signal: ctl.signal });
-        clearTimeout(tm);
-        if (!r.ok) console.error("webhook", h.nome, r.status);
-      } catch (e) { console.error("webhook", h.nome, e.message); }
-    })());
-  }
-  await Promise.all(envios);
-}

@@ -72,5 +72,25 @@
       "destination": "/es",
       "permanent": false
     }
-  ]
+  ],
+  "crons": [
+    {
+      "path": "/api/cron/reenviar",
+      "schedule": "0 13 * * *"
+    }
+  ],
+  "functions": {
+    "api/cron/*.mjs": {
+      "maxDuration": 60
+    },
+    "api/admin/*.mjs": {
+      "maxDuration": 60
+    },
+    "api/checkout/*.mjs": {
+      "maxDuration": 30
+    },
+    "api/pedido.mjs": {
+      "maxDuration": 30
+    }
+  }
 }
