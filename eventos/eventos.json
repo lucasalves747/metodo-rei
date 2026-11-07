@@ -397,6 +397,11 @@
       "valor": 100,
       "somente_teste": true,
       "_nota": "só funciona no modo de teste (sandbox)"
+    },
+    {
+      "codigo": "REIFREE1126",
+      "tipo": "percentual",
+      "valor": 100
     }
   ],
   "entregas": {

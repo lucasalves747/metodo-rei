@@ -118,6 +118,11 @@ export const CATALOGO = {
       "tipo": "percentual",
       "valor": 100,
       "somente_teste": true
+    },
+    {
+      "codigo": "REIFREE1126",
+      "tipo": "percentual",
+      "valor": 100
     }
   ],
   "entregas": {
