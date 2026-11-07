@@ -175,12 +175,12 @@ ${jsonld(schema)}`;
   return { head, titulo, descricao, url, start, end, nomes, min, quando, onde };
 }
 
-export function homeHead(data, proximos, lang) {
+export function homeHead(data, proximos, lang, agenda = proximos) {
   const site = data.site;
   const T = L[lang];
   const home = urlDe(site, lang, "");
-  const cidades = [...new Set(proximos.map((r) => r.ev.cidade))];
-  const titulo = T.homeTitulo([...new Set(proximos.map((r) => r.d.ano))].join("–"));
+  const cidades = [...new Set(agenda.map((r) => r.ev.cidade))];
+  const titulo = T.homeTitulo([...new Set(agenda.map((r) => r.d.ano))].join("/"));
   const descricao = T.homeDesc(T.lista(cidades));
   const schema = {
     "@context": "https://schema.org",

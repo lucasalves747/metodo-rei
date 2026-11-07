@@ -1,5 +1,5 @@
 {
-  "_leia_me": "Edite este arquivo e rode: node eventos/build.mjs  — gera /<slug> de cada evento e atualiza a lista da home. Datas em AAAA-MM-DD. Eventos passados somem da home sozinhos, mas a página continua no ar. Idiomas: o site sai em PT, EN e ES. Todo texto de preletor (funcao, bio, bio_completa, destaque) e de evento (selo, destaque, estado) precisa ter versão em \"en\" e \"es\" — o build para com erro se faltar. Checkout: \"cupons\" (codigo, tipo \"percentual\"|\"fixo\", valor, eventos?, tiers?, valido_ate?, por_ingresso?, somente_teste?) e \"entregas\" (materiais por tipo de ingresso, mostrados na confirmação). \"webhooks\" (por evento): lista de {nome, url, tiers?, para? (\"todos\"|\"comprador\"), corpo} disparados depois do pagamento, um por participante com e-mail. No corpo, use {id} {nome} {primeiro_nome} {sobrenome} {email} {telefone} {cidade} {tipo} {tipo_nome} {pedido} {codigo}.",
+  "_leia_me": "Edite este arquivo e rode: node eventos/build.mjs  — gera /<slug> de cada evento e atualiza a lista da home. Datas em AAAA-MM-DD. Eventos passados somem da home sozinhos, mas a página continua no ar. Idiomas: o site sai em PT, EN e ES. Todo texto de preletor (funcao, bio, bio_completa, destaque) e de evento (selo, destaque, estado) precisa ter versão em \"en\" e \"es\" — o build para com erro se faltar. Checkout: \"cupons\" (codigo, tipo \"percentual\"|\"fixo\", valor, eventos?, tiers?, valido_ate?, por_ingresso?, somente_teste?) e \"entregas\" (materiais por tipo de ingresso, mostrados na confirmação). \"webhooks\" (por evento): lista de {nome, url, tiers?, para? (\"todos\"|\"comprador\"), corpo} disparados depois do pagamento, um por participante com e-mail. No corpo, use {id} {nome} {primeiro_nome} {sobrenome} {email} {telefone} {cidade} {tipo} {tipo_nome} {pedido} {codigo}. \"ingressos\" (por evento): muda os itens dos cards de ingresso só daquele evento — veja eventos/README.md. \"em_breve\": true mostra só cidade e data na home, com botão para ser avisado (sem página e sem ingressos).",
   "site": {
     "url": "https://www.metodorei.com",
     "nome": "Método REI",
@@ -317,8 +317,8 @@
         "santiago-vecina",
         "alexandre-morelli",
         "eduardo-itaborahy",
-        "patricia-belieny",
         "dany-rocha",
+        "patricia-belieny",
         "jake-belieny"
       ],
       "prevenda": false,
@@ -354,6 +354,29 @@
           "nota_ingresso": "Almuerzo con churrasco<br>incluido"
         },
         "estado": "Florida"
+      },
+      "ingressos": {
+        "todos": {
+          "adicionar": [
+            {
+              "pt": "Almoço com churrasco",
+              "en": "Brazilian BBQ lunch",
+              "es": "Almuerzo con churrasco"
+            }
+          ]
+        },
+        "rei": {
+          "remover": [
+            "cafe-da-manha"
+          ],
+          "adicionar_bonus": [
+            {
+              "pt": "Jantar com os palestrantes na sexta-feira antes do evento",
+              "en": "Dinner with the speakers on the Friday before the event",
+              "es": "Cena con los conferencistas el viernes antes del evento"
+            }
+          ]
+        }
       }
     },
     {
@@ -361,10 +384,9 @@
       "cidade": "Boston",
       "uf": "MA",
       "estado": "Massachusetts",
-      "inicio": "2026-12-04",
+      "inicio": "2026-12-05",
       "fim": "2026-12-05",
       "horarios": [
-        "6:30pm–11pm",
         "8:30am–7pm"
       ],
       "local": {
@@ -380,6 +402,70 @@
       },
       "es": {
         "estado": "Massachusetts"
+      }
+    },
+    {
+      "slug": "danbury",
+      "cidade": "Danbury",
+      "uf": "CT",
+      "estado": "Connecticut",
+      "inicio": "2027-01-16",
+      "fim": "2027-01-16",
+      "em_breve": true,
+      "imagem": "assets/pv/evento-2.jpg",
+      "en": {
+        "estado": "Connecticut"
+      },
+      "es": {
+        "estado": "Connecticut"
+      }
+    },
+    {
+      "slug": "sao-paulo",
+      "cidade": "São Paulo / Alphaville",
+      "uf": "SP",
+      "estado": "São Paulo",
+      "inicio": "2027-03-20",
+      "fim": "2027-03-20",
+      "em_breve": true,
+      "imagem": "assets/pv/evento-3.jpg",
+      "en": {
+        "estado": "São Paulo, Brazil"
+      },
+      "es": {
+        "estado": "São Paulo, Brasil"
+      }
+    },
+    {
+      "slug": "florianopolis",
+      "cidade": "Florianópolis",
+      "uf": "SC",
+      "estado": "Santa Catarina",
+      "inicio": "2027-04-16",
+      "fim": "2027-04-16",
+      "em_breve": true,
+      "imagem": "assets/pv/evento-5.jpg",
+      "en": {
+        "estado": "Santa Catarina, Brazil"
+      },
+      "es": {
+        "estado": "Santa Catarina, Brasil"
+      }
+    },
+    {
+      "slug": "maputo",
+      "cidade": "Maputo",
+      "uf": "MZ",
+      "estado": "Moçambique",
+      "inicio": "2027-05-22",
+      "fim": "2027-05-22",
+      "em_breve": true,
+      "imagem": "assets/pv/evento-1.jpg",
+      "en": {
+        "estado": "Mozambique"
+      },
+      "es": {
+        "estado": "Mozambique"
       }
     }
   ],

@@ -163,7 +163,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
   <div class="hero-glow"></div>
   <div class="wrap">
     <div class="hero-in">
-      <div class="kick">Imersão premium · Tour EUA {{ano}}</div>
+      <div class="kick">Imersão premium · Global Tour {{anos}}</div>
       <h1 class="serif">Todo <span class="champ">Rei</span> é rico.<br><em>Mas nem todo<br>rico&nbsp;</em>é <span class="champ">Rei.</span></h1>
       <p style="font-size: 20px; line-height: 1.6; font-weight: 300; max-width: 640px; margin: 28px auto 0; color: rgba(238,233,224,.86)">Uma imersão para homens e mulheres que desejam governar a própria vida, prosperar com propósito e construir um legado.</p>
       <div style="display: flex; gap: 12px; margin-top: 34px; flex-wrap: wrap; justify-content: center">
@@ -183,7 +183,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
 <section id="tour" style="padding: 110px 0">
   <div class="wrap">
     <div class="split" style="display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; margin-bottom: 44px">
-      <h2 class="serif h2" style="font-size: 96px; line-height: .95; margin: 0">Tour <span class="champ">{{ano}}</span></h2>
+      <h2 class="serif h2" style="font-size: 96px; line-height: .95; margin: 0">Global Tour <span class="champ">{{anos}}</span></h2>
       <p style="max-width: 380px; margin: 0; font-size: 17px; line-height: 1.6; color: #9A948A">Alto impacto. Alta profundidade. Escolha onde começar a reinar.</p>{{nota_idioma}}
     </div>
     <div class="cards" style="grid-template-columns: repeat({{cards_cols}}, minmax(0,1fr))">
@@ -371,6 +371,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
       .catch(function(){btn.disabled=false;btn.textContent="Eu estou pronto";err.textContent="Não foi possível enviar agora. Tente novamente em instantes.";err.style.display="block";});
   });
 })();
+document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("[data-avisar]");if(!a)return;var s=document.getElementById("leadEdicao");if(s){s.value=a.getAttribute("data-avisar");}setTimeout(function(){var n=document.getElementById("leadNome");n&&n.focus({preventScroll:true});},600);});
 </script>
 </body>
 </html>

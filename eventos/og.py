@@ -9,9 +9,9 @@ from playwright.async_api import async_playwright
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 DATA = json.loads((ROOT / "eventos/og-data.json").read_text())
 TXT = {
-  "pt": {"imersao": "Imersão presencial", "apartir": "Ingressos a partir de US$", "tour": "IMERSÃO PRESENCIAL · TOUR EUA", "tag": 'Todo Rei é rico. <em>Mas nem todo rico é Rei.</em>', "breve": "Novas datas em breve"},
-  "en": {"imersao": "In-person immersion", "apartir": "Tickets from US$", "tour": "IN-PERSON IMMERSION · US TOUR", "tag": 'Every King is rich. <em>But not every rich man is a King.</em>', "breve": "New dates coming soon"},
-  "es": {"imersao": "Inmersión presencial", "apartir": "Entradas desde US$", "tour": "INMERSIÓN PRESENCIAL · GIRA EE. UU.", "tag": 'Todo Rey es rico. <em>Pero no todo rico es Rey.</em>', "breve": "Nuevas fechas muy pronto"},
+  "pt": {"imersao": "Imersão presencial", "apartir": "Ingressos a partir de US$", "tour": "IMERSÃO PRESENCIAL · GLOBAL TOUR", "tag": 'Todo Rei é rico. <em>Mas nem todo rico é Rei.</em>', "breve": "Novas datas em breve"},
+  "en": {"imersao": "In-person immersion", "apartir": "Tickets from US$", "tour": "IN-PERSON IMMERSION · GLOBAL TOUR", "tag": 'Every King is rich. <em>But not every rich man is a King.</em>', "breve": "New dates coming soon"},
+  "es": {"imersao": "Inmersión presencial", "apartir": "Entradas desde US$", "tour": "INMERSIÓN PRESENCIAL · GLOBAL TOUR", "tag": 'Todo Rey es rico. <em>Pero no todo rico es Rey.</em>', "breve": "Nuevas fechas muy pronto"},
 }
 CROWN = '<svg viewBox="0 0 24 20" fill="currentColor"><path d="M1.5 15.5 L3.8 5.5 L8.4 10.8 L12 2.5 L15.6 10.8 L20.2 5.5 L22.5 15.5 Z"/><rect x="1.8" y="16" width="20.4" height="3" rx="1"/></svg>'
 

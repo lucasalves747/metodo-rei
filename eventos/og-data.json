@@ -3,10 +3,15 @@
     "home": {
       "cidades": [
         "Orlando",
-        "Boston"
+        "Boston",
+        "Danbury",
+        "São Paulo / Alphaville",
+        "Florianópolis",
+        "Maputo"
       ],
       "anos": [
-        2026
+        2026,
+        2027
       ]
     },
     "eventos": [
@@ -36,8 +41,8 @@
           "assets/pv/santiago.jpg",
           "assets/alexandre-morelli.JPEG",
           "assets/pv/eduardo-itaborahy.jpg",
-          "assets/pv/patricia-belieny.jpg",
           "assets/pv/dany-rocha.jpg",
+          "assets/pv/patricia-belieny.jpg",
           "assets/pv/jake-belieny.jpg"
         ]
       },
@@ -45,8 +50,8 @@
         "slug": "boston",
         "cidade": "Boston",
         "uf": "MA",
-        "dias": "Sexta e Sábado",
-        "data": "4 e 5 de Dezembro, 2026",
+        "dias": "Sábado",
+        "data": "5 de Dezembro, 2026",
         "onde": "Boston, MA",
         "min": 14,
         "fotos": [
@@ -61,10 +66,15 @@
     "home": {
       "cidades": [
         "Orlando",
-        "Boston"
+        "Boston",
+        "Danbury",
+        "São Paulo / Alphaville",
+        "Florianópolis",
+        "Maputo"
       ],
       "anos": [
-        2026
+        2026,
+        2027
       ]
     },
     "eventos": [
@@ -94,8 +104,8 @@
           "assets/pv/santiago.jpg",
           "assets/alexandre-morelli.JPEG",
           "assets/pv/eduardo-itaborahy.jpg",
-          "assets/pv/patricia-belieny.jpg",
           "assets/pv/dany-rocha.jpg",
+          "assets/pv/patricia-belieny.jpg",
           "assets/pv/jake-belieny.jpg"
         ]
       },
@@ -103,8 +113,8 @@
         "slug": "boston",
         "cidade": "Boston",
         "uf": "MA",
-        "dias": "Friday & Saturday",
-        "data": "December 4–5, 2026",
+        "dias": "Saturday",
+        "data": "December 5, 2026",
         "onde": "Boston, MA",
         "min": 14,
         "fotos": [
@@ -119,10 +129,15 @@
     "home": {
       "cidades": [
         "Orlando",
-        "Boston"
+        "Boston",
+        "Danbury",
+        "São Paulo / Alphaville",
+        "Florianópolis",
+        "Maputo"
       ],
       "anos": [
-        2026
+        2026,
+        2027
       ]
     },
     "eventos": [
@@ -152,8 +167,8 @@
           "assets/pv/santiago.jpg",
           "assets/alexandre-morelli.JPEG",
           "assets/pv/eduardo-itaborahy.jpg",
-          "assets/pv/patricia-belieny.jpg",
           "assets/pv/dany-rocha.jpg",
+          "assets/pv/patricia-belieny.jpg",
           "assets/pv/jake-belieny.jpg"
         ]
       },
@@ -161,8 +176,8 @@
         "slug": "boston",
         "cidade": "Boston",
         "uf": "MA",
-        "dias": "Viernes y Sábado",
-        "data": "4 y 5 de diciembre de 2026",
+        "dias": "Sábado",
+        "data": "5 de diciembre de 2026",
         "onde": "Boston, MA",
         "min": 14,
         "fotos": [

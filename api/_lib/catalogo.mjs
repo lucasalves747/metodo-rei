@@ -74,14 +74,13 @@ export const CATALOGO = {
       "slug": "boston",
       "cidade": "Boston",
       "uf": "MA",
-      "inicio": "2026-12-04",
+      "inicio": "2026-12-05",
       "fim": "2026-12-05",
       "ano": 2026,
       "horarios": [
-        "6:30pm–11pm",
         "8:30am–7pm"
       ],
-      "datas_texto": "4 e 5 de dezembro de 2026",
+      "datas_texto": "5 de dezembro de 2026",
       "tz": "America/New_York",
       "local": {
         "nome": "",

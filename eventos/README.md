@@ -56,3 +56,38 @@ O build **para com erro** se faltar qualquer tradução:
 - **Textos que o build monta** (datas, preços, rótulos, SEO): `eventos/textos.mjs`.
 
 As páginas EN/ES avisam que a imersão é apresentada em português. As tags do formulário recebem `Idioma: EN` / `Idioma: ES`.
+
+## Itens dos ingressos por evento (`"ingressos"`)
+
+Cada `<li>` dos cards de ingresso em `eventos/template.html` tem uma chave fixa (`data-item`). Um evento pode tirar ou acrescentar itens só nele, sem mexer nos outros, com o campo opcional `"ingressos"`:
+
+```json
+"ingressos": {
+  "todos": { "adicionar": [ { "pt": "Almoço com churrasco", "en": "Brazilian BBQ lunch", "es": "Almuerzo con churrasco" } ] },
+  "rei":   { "remover": ["cafe-da-manha"],
+             "adicionar_bonus": [ { "pt": "Jantar com os palestrantes…", "en": "Dinner with the speakers…", "es": "Cena con los conferencistas…" } ] }
+}
+```
+
+- Tipos: `todos` (os três ingressos), `standard`, `vip`, `rei`. `todos` é aplicado primeiro, depois o tipo específico.
+- `remover`: lista de chaves. `adicionar`: itens no fim da lista principal (antes do título "Bônus", se houver). `adicionar_bonus`: itens sob o título "Bônus" (criado se o ingresso não tiver).
+- Todo item novo precisa de `pt`, `en` e `es`.
+- Tipo, campo ou chave desconhecidos fazem o build parar com erro. Os atributos `data-item`/`data-card` saem do HTML final.
+
+Chaves disponíveis:
+
+| Ingresso | Chaves |
+|---|---|
+| Standard | `assento`, `acesso`, `apostila`, `material-apoio`, `ebook-bonus`, `ebook-mente`, `ebook-guia`, `plano-90-dias` |
+| VIP | `assento`, `acesso`, `apostila`, `material-apoio`, `plano-90-dias`, `ebook-bonus`, `ebooks` |
+| REI | `melhores-lugares`, `entrada-prioritaria`, `acesso`, `apostila`, `material-apoio`, `acesso-mentores`, `legacy`, `plano-90-dias`, `ebook-bonus`, `ebooks`, `bonus` (título), `call-palestrantes`, `cafe-da-manha` |
+
+## Eventos "em breve" (`"em_breve": true`)
+
+Para datas confirmadas sem detalhes ainda. Campos: `slug`, `cidade`, `uf`, `estado` (+ `en.estado` e `es.estado`), `inicio`, `fim`, `imagem` (foto do card) e `"em_breve": true`.
+
+- Na home aparece só um card com cidade, estado/país e data, selo "Em breve" e o botão "Quero ser avisado", que leva ao formulário da comunidade já com a cidade escolhida.
+- Não gera página, ingressos, checkout, sitemap nem imagem de compartilhamento.
+- Quando os detalhes chegarem, tire o `"em_breve"` e complete o evento como os outros.
+
+O título da agenda na home ("Global Tour 2026/2027") usa os anos de todos os próximos eventos, inclusive os "em breve".

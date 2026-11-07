@@ -246,9 +246,17 @@ function render(ev0, lang) {
   vars.checkout = checkoutHtml(ev, d, lang);
   const seo = eventoSchema(data, ev, d, ids, lang, (id) => pv(id, lang));
   vars.seo_head = seo.head;
-  return { html: preencher(MODELOS[lang].evento, vars, "template"), d, seo, ids, ev };
+  return { html: aplicarIngressos(preencher(MODELOS[lang].evento, vars, "template"), ev0, lang), d, seo, ids, ev };
 }
 
+const tamCidade = (c) => (c.length <= 9 ? 72 : c.length <= 12 ? 58 : 46);
+function cardEmBreve(ev, d, lang) {
+  const T = L[lang];
+  const img = ev.imagem_card || ev.imagem || "assets/pv/evento-1.jpg";
+  const quando = d.nDias === 1 ? `${d.dias}, ${d.texto}` : d.texto;
+  return `      <article class="card card--breve" data-end="${ev.fim}"><img src="${img}" alt="${T.skyline(ev.cidade)}" loading="lazy"><div class="card-shade"></div>
+        <div style="position: relative"><span class="badge badge-line">${T.emBreve}</span><div class="serif" style="font-size: ${tamCidade(ev.cidade)}px; line-height: .95; margin-top: 16px">${ev.cidade}</div><div style="font-size: 14px; color: #9A948A; margin-top: 6px; letter-spacing: .04em">${ev.estado}</div><div style="font-size: 17px; font-weight: 600; margin-top: 10px">${quando}</div><a class="btn btn-line" href="#comunidade" data-avisar="${ev.cidade}" style="margin-top: 24px; width: 100%">${T.queroAvisado}</a></div></article>`;
+}
 function card(ev, d, lang) {
   const T = L[lang];
   const pr = { ...data.precos_padrao, ...(ev.precos || {}) };
@@ -260,7 +268,7 @@ function card(ev, d, lang) {
   const horas = d.horario.replace(/(am|pm)/gi, (m) => m.toUpperCase());
   const local = ev.local && !localDefinir(ev.local) ? ` · ${ev.local.nome}` : "";
   return `      <article class="card" data-end="${ev.fim}"><img src="${img}" alt="${T.skyline(ev.cidade)}" loading="lazy"><div class="card-shade"></div>
-        <div style="position: relative"><span class="badge ${cls}">${selo}</span><div class="serif" style="font-size: 72px; line-height: .95; margin-top: 16px">${ev.cidade}</div><div style="font-size: 17px; font-weight: 600; margin-top: 10px">${quando}</div><div style="font-size: 14px; color: #9A948A; margin-top: 4px">${horas}${local}</div><div style="font-size: 15px; font-weight: 700; color: #E3C78A; margin-top: 14px">${T.aPartir(min)}</div><a class="btn btn-gold" href="/${ev.slug}" data-event="${ev.cidade}" style="margin-top: 18px; width: 100%">${T.verEvento}</a></div></article>`;
+        <div style="position: relative"><span class="badge ${cls}">${selo}</span><div class="serif" style="font-size: ${tamCidade(ev.cidade)}px; line-height: .95; margin-top: 16px">${ev.cidade}</div><div style="font-size: 17px; font-weight: 600; margin-top: 10px">${quando}</div><div style="font-size: 14px; color: #9A948A; margin-top: 4px">${horas}${local}</div><div style="font-size: 15px; font-weight: 700; color: #E3C78A; margin-top: 14px">${T.aPartir(min)}</div><a class="btn btn-gold" href="/${ev.slug}" data-event="${ev.cidade}" style="margin-top: 18px; width: 100%">${T.verEvento}</a></div></article>`;
 }
 
 // "No palco" da home: fixos (sempre, em cor) + quem está em algum evento futuro (P&B), sem repetir.
@@ -283,6 +291,68 @@ function lineup(upcoming, lang) {
 }
 
 
+// ---------- itens dos cards de ingresso (por evento) ----------
+// eventos.json → "ingressos": { "todos"|"standard"|"vip"|"rei": { remover: [chave], adicionar: [{pt,en,es}], adicionar_bonus: [{pt,en,es}] } }
+const TIPOS_INGRESSO = ["standard", "vip", "rei"];
+const CHECK_LI = (template.match(/<li data-item="[^"]+">(<svg[\s\S]*?<\/svg>)/) || [])[1] || "";
+const BONUS_TXT = { pt: "Bônus", en: "Bonus", es: "Bonos" };
+function fimElemento(html, ini, tag) {
+  const re = new RegExp(`<${tag}\\b|</${tag}>`, "g"); re.lastIndex = ini; let depth = 0, m;
+  while ((m = re.exec(html))) { if (m[0][1] === "/") { if (--depth === 0) return re.lastIndex; } else depth++; }
+  throw new Error(`HTML sem </${tag}>`);
+}
+function validarIngressos(ev) {
+  const cfg = ev.ingressos;
+  if (!cfg) return;
+  const chaves = {};
+  for (const t of TIPOS_INGRESSO) {
+    const i = template.indexOf(`data-card="${t}"`), f = fimElemento(template, template.lastIndexOf("<article", i), "article");
+    chaves[t] = new Set([...template.slice(i, f).matchAll(/data-item="([^"]+)"/g)].map((m) => m[1]));
+  }
+  for (const [tipo, c] of Object.entries(cfg)) {
+    if (tipo.startsWith("_")) continue;
+    if (tipo !== "todos" && !TIPOS_INGRESSO.includes(tipo)) throw new Error(`[${ev.slug}] ingressos: tipo desconhecido "${tipo}" (use todos, standard, vip ou rei)`);
+    for (const k of Object.keys(c)) if (!["remover", "adicionar", "adicionar_bonus"].includes(k)) throw new Error(`[${ev.slug}] ingressos.${tipo}: campo desconhecido "${k}"`);
+    for (const chave of c.remover || []) for (const t of tipo === "todos" ? TIPOS_INGRESSO : [tipo])
+      if (!chaves[t].has(chave)) throw new Error(`[${ev.slug}] ingressos.${tipo}.remover: chave "${chave}" não existe no ingresso ${t} (chaves: ${[...chaves[t]].join(", ")})`);
+    for (const campo of ["adicionar", "adicionar_bonus"]) for (const it of c[campo] || [])
+      for (const l of IDIOMAS) if (!it || typeof it[l] !== "string" || !it[l].trim()) throw new Error(`[${ev.slug}] ingressos.${tipo}.${campo}: item sem texto em "${l}"`);
+  }
+}
+function aplicarIngressos(html, ev, lang) {
+  const cfg = ev.ingressos || {};
+  for (const t of TIPOS_INGRESSO) {
+    const passos = [cfg.todos, cfg[t]].filter(Boolean);
+    const ia = html.indexOf(`data-card="${t}"`);
+    if (ia < 0) continue;
+    const ini = html.lastIndexOf("<article", ia), fim = fimElemento(html, ini, "article");
+    let card = html.slice(ini, fim);
+    for (const p of passos) {
+      for (const chave of p.remover || []) {
+        const i = card.indexOf(`<li data-item="${chave}"`);
+        card = card.slice(0, i) + card.slice(fimElemento(card, i, "li")).replace(/^\s*\n/, "\n");
+      }
+      const ul = card.indexOf("<ul>"), fu = fimElemento(card, ul, "ul") - "</ul>".length;
+      const li = (txt) => `            <li>${CHECK_LI}${txt}</li>\n`;
+      if ((p.adicionar || []).length) {
+        const bh = card.indexOf('class="bh"');
+        const at = bh > 0 && bh < fu ? card.lastIndexOf("<li", bh) : fu;
+        const before = card.slice(0, at).replace(/[ \t]*$/, "");
+        card = before + (before.endsWith("\n") ? "" : "\n") + p.adicionar.map((it) => li(it[lang])).join("") + "          " + card.slice(at).replace(/^\s*/, "");
+      }
+      if ((p.adicionar_bonus || []).length) {
+        const ul2 = card.indexOf("<ul>"), fu2 = fimElemento(card, ul2, "ul") - "</ul>".length;
+        const tem = card.slice(ul2, fu2).includes('class="bh"');
+        const add = (tem ? "" : `            <li class="bh">${BONUS_TXT[lang]}</li>\n`) + p.adicionar_bonus.map((it) => li(it[lang])).join("");
+        const before = card.slice(0, fu2).replace(/\s*$/, "");
+        card = before + "\n" + add + "          " + card.slice(fu2);
+      }
+    }
+    html = html.slice(0, ini) + card + html.slice(fim);
+  }
+  return html.replace(/ data-item="[^"]*"/g, "").replace(/ data-card="[^"]*"/g, "");
+}
+
 // ---------- checkout (Square) ----------
 const LEAD_EVENTO = "https://contact-blossom-39.lovable.app/api/public/contatos/ck_479abcc9_479abcc9a2f98313db0a19480754dbf7abe9b3cc27b6cd889cd5d06a3d43deef";
 const TIERS = { standard: "Standard", vip: "VIP", rei: "REI" };
@@ -303,7 +373,7 @@ function checkoutHtml(ev, d, lang) {
 }
 function catalogo() {
   const eventos = {};
-  for (const ev of data.eventos) {
+  for (const ev of PAGINAS) {
     const d = datas(ev, "pt"), pr = precosEv(ev);
     eventos[ev.slug] = {
       slug: ev.slug, cidade: ev.cidade, uf: ev.uf, inicio: ev.inicio, fim: ev.fim, ano: d.ano, horarios: ev.horarios || [],
@@ -332,36 +402,46 @@ function paginasCheckout(lang) {
 }
 
 // ---------- main ----------
-const slugs = new Set();
+const slugs = new Set(), todosSlugs = new Set();
+const PAGINAS = data.eventos.filter((ev) => !ev.em_breve);
+const EM_BREVE = data.eventos.filter((ev) => ev.em_breve);
 for (const ev of data.eventos) {
   for (const k of ["slug", "cidade", "uf", "estado", "inicio", "fim"]) if (!ev[k]) throw new Error(`evento sem "${k}": ${JSON.stringify(ev).slice(0, 80)}`);
   if (!/^[a-z0-9-]+$/.test(ev.slug)) throw new Error(`[${ev.slug}] slug só pode ter letras minúsculas, números e hífen`);
   if (IDIOMAS.includes(ev.slug)) throw new Error(`[${ev.slug}] slug não pode ser um código de idioma`);
-  if (slugs.has(ev.slug)) throw new Error(`slug repetido: ${ev.slug}`);
-  slugs.add(ev.slug);
+  if (todosSlugs.has(ev.slug)) throw new Error(`slug repetido: ${ev.slug}`);
+  todosSlugs.add(ev.slug);
+  if (!ev.em_breve) slugs.add(ev.slug);
+  validarIngressos(ev);
 }
 const today = new Date(); today.setUTCHours(0, 0, 0, 0);
 
 const porIdioma = {};
 for (const lang of IDIOMAS) {
-  const rendered = data.eventos.map((ev) => render(ev, lang));
+  const rendered = PAGINAS.map((ev) => render(ev, lang));
   const upcoming = rendered.filter((r) => r.d.fimDate >= today && !r.ev.oculto).sort((a, b) => a.ev.inicio.localeCompare(b.ev.inicio));
+  // "em breve": só cidade e data na home, sem página nem ingressos
+  const breve = EM_BREVE.map((ev0) => { const ev = loc(ev0, lang, CAMPOS_EVENTO, `evento ${ev0.slug}`); return { ev, d: datas(ev, lang), breve: true }; })
+    .filter((r) => r.d.fimDate >= today && !r.ev.oculto);
+  const agenda = [...upcoming, ...breve].sort((a, b) => a.ev.inicio.localeCompare(b.ev.inicio));
+  const anos = [...new Set(agenda.map((r) => r.d.ano))].join("/");
   const lu = lineup(upcoming, lang);
   const x = extrasIdioma(lang);
   const homeVars = {
-    seo_head: homeHead(data, upcoming, lang),
+    seo_head: homeHead(data, upcoming, lang, agenda),
     ano: upcoming.length ? upcoming[0].d.ano : new Date().getFullYear(),
-    cards: upcoming.map((r) => card(r.ev, r.d, lang)).join("\n"),
-    cards_cols: Math.min(Math.max(upcoming.length, 1), 3),
+    anos: anos || new Date().getFullYear(),
+    cards: agenda.map((r) => (r.breve ? cardEmBreve(r.ev, r.d, lang) : card(r.ev, r.d, lang))).join("\n"),
+    cards_cols: Math.min(Math.max(agenda.length, 1), 3),
     lineup: lu.html,
     lineup_cols: lu.cols,
-    edicoes: upcoming.map((r) => `            <option value="${r.ev.cidade}">${r.ev.cidade} · ${r.d.curta}</option>`).join("\n"),
+    edicoes: agenda.map((r) => `            <option value="${r.ev.cidade}">${r.ev.cidade} · ${r.d.curta}</option>`).join("\n"),
     rodape: upcoming.map((r) => `<a href="/${r.ev.slug}" style="color: #9A948A; text-decoration: none; font-size: 12px; font-weight: 700; letter-spacing: .14em">${r.ev.cidade.toUpperCase()}</a>`).join(""),
     idiomas: seletor(lang, ""),
     tag_idioma: x.tag_idioma,
     nota_idioma: x.nota_idioma_txt ? `<p style="margin: 10px 0 0; font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #E3C78A">${x.nota_idioma_txt}</p>` : "",
   };
-  porIdioma[lang] = { rendered, upcoming, home: preencher(MODELOS[lang].home, homeVars, "home-template") };
+  porIdioma[lang] = { rendered, upcoming, agenda, anos, home: preencher(MODELOS[lang].home, homeVars, "home-template") };
 }
 
 if (faltaIdioma.length) {
@@ -401,9 +481,9 @@ for (const lang of IDIOMAS) for (const s of ["home", ...slugs]) {
   if (!existsSync(f)) console.warn(`  ! falta a imagem de compartilhamento ${f.slice(ROOT.length + 1)} (rode: python3 eventos/og.py)`);
 }
 writeFileSync(join(DIR, "og-data.json"), JSON.stringify(Object.fromEntries(IDIOMAS.map((lang) => {
-  const { rendered, upcoming } = porIdioma[lang];
+  const { rendered, agenda } = porIdioma[lang];
   return [lang, {
-    home: { cidades: [...new Set(upcoming.map((r) => r.ev.cidade))], anos: [...new Set(upcoming.map((r) => r.d.ano))] },
+    home: { cidades: [...new Set(agenda.map((r) => r.ev.cidade))], anos: [...new Set(agenda.map((r) => r.d.ano))] },
     eventos: rendered.map((r) => ({ slug: r.ev.slug, cidade: r.ev.cidade, uf: r.ev.uf, dias: r.d.dias, data: r.d.hero, onde: r.seo.onde, min: r.seo.min,
       fotos: r.ids.map((id) => data.preletores[id].foto).filter(Boolean) })),
   }];
