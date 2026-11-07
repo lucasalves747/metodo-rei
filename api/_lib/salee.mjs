@@ -38,7 +38,9 @@ async function gravarStatus(orderId, valor, versao) {
   const body = { idempotency_key: crypto.randomUUID(), custom_attribute: { value: valor.slice(0, 1000) } };
   if (versao) body.custom_attribute.version = versao;
   let r = await square(`/v2/orders/${orderId}/custom-attributes/${ATTR}`, { method: "POST", body });
-  if (!r.ok && r.status === 404) { await garanteDefinicao(); r = await square(`/v2/orders/${orderId}/custom-attributes/${ATTR}`, { method: "POST", body }); }
+  // conta nova: a definição do atributo ainda não existe (a Square responde 400 ou 404) — cria e tenta de novo
+  if (!r.ok && !versao) { await garanteDefinicao(); body.idempotency_key = crypto.randomUUID(); r = await square(`/v2/orders/${orderId}/custom-attributes/${ATTR}`, { method: "POST", body }); }
+  if (!r.ok) console.error("salee_status", orderId, r.status, JSON.stringify(r.data && r.data.errors || "").slice(0, 300));
   return r.ok ? r.data.custom_attribute.version : null;
 }
 
@@ -96,7 +98,11 @@ export async function enviarSalee(orderId, { origem = "compra", forcar = false }
   // trava otimista: se outro processo gravar antes, a versão muda e este desiste
   const agora = () => new Date().toISOString();
   let versao = await gravarStatus(orderId, `enviando|${st.tentativas}|${agora()}`, st.versao);
-  if (!versao) return { ok: false, motivo: "concorrencia" };
+  if (!versao) {
+    // outro processo pegou este pedido agora? então desiste; se não, segue e envia mesmo sem conseguir marcar o status
+    const de_novo = await lerStatus(orderId);
+    if (de_novo.estado === "ok" || (de_novo.estado === "enviando" && de_novo.versao !== st.versao)) return { ok: false, motivo: "concorrencia" };
+  }
   let payload;
   try { payload = await payloadDoPedido(orderId); }
   catch (e) { await gravarStatus(orderId, `pendente|${st.tentativas}|${agora()}|${e.message}`, versao); return { ok: false, motivo: e.message }; }
