@@ -387,6 +387,22 @@ function catalogo() {
   const entregas = Object.fromEntries(Object.entries(data.entregas || {}).filter(([k]) => !k.startsWith("_")));
   return `// GERADO por eventos/build.mjs a partir de eventos/eventos.json — não edite à mão.\nexport const CATALOGO = ${JSON.stringify({ eventos, cupons, entregas }, null, 2)};\n`;
 }
+const CREDITOS = {
+  pt: { link: "Créditos das fotos", titulo: "Créditos das fotos", foto: (c) => `Foto de ${c}`, intro: "Algumas fotos das cidades são de fotógrafos que as publicaram com licença livre no Wikimedia Commons." },
+  en: { link: "Photo credits", titulo: "Photo credits", foto: (c) => `Photo of ${c}`, intro: "Some city photos are by photographers who published them under free licenses on Wikimedia Commons." },
+  es: { link: "Créditos de las fotos", titulo: "Créditos de las fotos", foto: (c) => `Foto de ${c}`, intro: "Algunas fotos de las ciudades son de fotógrafos que las publicaron con licencia libre en Wikimedia Commons." },
+};
+function paginaCreditos(lang) {
+  const T = CREDITOS[lang], C = CO[lang], pre = prefixo(lang);
+  const itens = data.eventos.filter((e) => e.imagem_credito).map((e) => {
+    const c = e.imagem_credito;
+    return `<p><b>${T.foto(e.cidade)}</b>: ${c.autor} · <a href="${c.url}" target="_blank" rel="noopener">${c.licenca}</a> · Wikimedia Commons</p>`;
+  });
+  return preencher(paginaTemplate, {
+    html_lang: HTML_LANG[lang], titulo: T.titulo, home: pre || "/", voltar: C.pdVoltar, canonical: `${data.site.url}${pre}/creditos`,
+    conteudo: `<p>${T.intro}</p>\n` + itens.join("\n"), whatsapp: `https://wa.me/${(data.site.whatsapp || "").replace(/\D/g, "")}`, duvidas: C.pdDuvidas,
+  }, "pagina-template");
+}
 function paginasCheckout(lang) {
   const T = CO[lang], pre = prefixo(lang), home = pre || "/";
   const wa = `https://wa.me/${(data.site.whatsapp || "").replace(/\D/g, "")}`;
@@ -436,7 +452,8 @@ for (const lang of IDIOMAS) {
     lineup: lu.html,
     lineup_cols: lu.cols,
     edicoes: agenda.map((r) => `            <option value="${r.ev.cidade}">${r.ev.cidade} · ${r.d.curta}</option>`).join("\n"),
-    rodape: upcoming.map((r) => `<a href="/${r.ev.slug}" style="color: #9A948A; text-decoration: none; font-size: 12px; font-weight: 700; letter-spacing: .14em">${r.ev.cidade.toUpperCase()}</a>`).join(""),
+    rodape: upcoming.map((r) => `<a href="/${r.ev.slug}" style="color: #9A948A; text-decoration: none; font-size: 12px; font-weight: 700; letter-spacing: .14em">${r.ev.cidade.toUpperCase()}</a>`).join("") +
+      (data.eventos.some((e) => e.imagem_credito) ? `<a href="${prefixo(lang)}/creditos" hreflang="${HTML_LANG[lang]}" style="color: #6F6A62; text-decoration: none; font-size: 11px; letter-spacing: .08em">${CREDITOS[lang].link}</a>` : ""),
     idiomas: seletor(lang, ""),
     tag_idioma: x.tag_idioma,
     nota_idioma: x.nota_idioma_txt ? `<p style="margin: 10px 0 0; font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #E3C78A">${x.nota_idioma_txt}</p>` : "",
@@ -464,6 +481,7 @@ for (const lang of IDIOMAS) {
   const pc = paginasCheckout(lang);
   writeFileSync(join(dir, "pedido.html"), pc.pedido);
   writeFileSync(join(dir, "politica.html"), pc.politica);
+  writeFileSync(join(dir, "creditos.html"), paginaCreditos(lang));
   console.log(`  ✓ ${prefixo(lang) || "/"}  + ${rendered.map((r) => `${prefixo(lang)}/${r.ev.slug}`).join(", ")}  (${upcoming.length} próximos)`);
 }
 

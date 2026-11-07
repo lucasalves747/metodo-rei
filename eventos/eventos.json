@@ -412,12 +412,17 @@
       "inicio": "2027-01-16",
       "fim": "2027-01-16",
       "em_breve": true,
-      "imagem": "assets/pv/evento-2.jpg",
+      "imagem": "assets/home/city-danbury.jpg",
       "en": {
         "estado": "Connecticut"
       },
       "es": {
         "estado": "Connecticut"
+      },
+      "imagem_credito": {
+        "autor": "Quintin Soloviev",
+        "licenca": "CC BY 4.0",
+        "url": "https://commons.wikimedia.org/wiki/File:Danbury,_Connecticut_downtown_aerial_view.jpg"
       }
     },
     {
@@ -428,12 +433,17 @@
       "inicio": "2027-03-20",
       "fim": "2027-03-20",
       "em_breve": true,
-      "imagem": "assets/pv/evento-3.jpg",
+      "imagem": "assets/home/city-sao-paulo.jpg",
       "en": {
         "estado": "São Paulo, Brazil"
       },
       "es": {
         "estado": "São Paulo, Brasil"
+      },
+      "imagem_credito": {
+        "autor": "Cleitonrauber",
+        "licenca": "CC BY-SA 4.0",
+        "url": "https://commons.wikimedia.org/wiki/File:Alphaville_Skyline.jpg"
       }
     },
     {
@@ -444,12 +454,17 @@
       "inicio": "2027-04-16",
       "fim": "2027-04-16",
       "em_breve": true,
-      "imagem": "assets/pv/evento-5.jpg",
+      "imagem": "assets/home/city-florianopolis.jpg",
       "en": {
         "estado": "Santa Catarina, Brazil"
       },
       "es": {
         "estado": "Santa Catarina, Brasil"
+      },
+      "imagem_credito": {
+        "autor": "Rodrigo Graeff",
+        "licenca": "CC BY 2.0",
+        "url": "https://commons.wikimedia.org/wiki/File:Hercilio_Luz.jpg"
       }
     },
     {
@@ -460,12 +475,17 @@
       "inicio": "2027-05-22",
       "fim": "2027-05-22",
       "em_breve": true,
-      "imagem": "assets/pv/evento-1.jpg",
+      "imagem": "assets/home/city-maputo.jpg",
       "en": {
         "estado": "Mozambique"
       },
       "es": {
         "estado": "Mozambique"
+      },
+      "imagem_credito": {
+        "autor": "Andrew Moir",
+        "licenca": "CC BY 2.0",
+        "url": "https://commons.wikimedia.org/wiki/File:Maputo_skyline_from_cruiseship_East_Africa_-_Flickr_-_moron_noodle.jpg"
       }
     }
   ],
