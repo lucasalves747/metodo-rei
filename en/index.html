@@ -181,7 +181,14 @@ a{color:#E3C78A}a:hover{color:#F6E2B0}
 .field input,.field select{height:54px;border-radius:4px;border:1px solid rgba(238,233,224,.18);background:#121212;color:#EEE9E0;padding:0 16px;font:500 15px 'Inter Tight',sans-serif;width:100%}
 .phone{display:flex;gap:8px}.phone select{flex:0 0 108px}
 .join__err{display:none;grid-column:1 / -1;margin:0;color:#E08A7A;font-size:14px}
-.join__ok{display:none;font-size:18px;line-height:1.6;color:#EEE9E0;border:1px solid rgba(227,199,138,.4);border-radius:6px;padding:28px}
+.join__ok{display:none;text-align:center;color:#EEE9E0;border:1px solid rgba(227,199,138,.45);border-radius:10px;padding:44px 36px;background:radial-gradient(120% 120% at 50% 0%,rgba(240,206,130,.12),rgba(8,8,8,0) 60%),#0D0C0A;box-shadow:0 30px 70px -40px rgba(227,199,138,.5)}
+.join__check{width:64px;height:64px;margin:0 auto 20px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle,rgba(227,199,138,.28),rgba(227,199,138,.06));box-shadow:0 0 0 1px rgba(227,199,138,.55)}
+.join__check svg{width:30px;height:30px;color:#E3C78A}
+.join__title{font-size:36px;line-height:1.1;margin:12px 0 0;color:#F2EEE6}
+.join__txt{font-size:16px;line-height:1.65;color:#B9B2A5;margin:14px auto 26px;max-width:420px}
+.join__btn{min-height:50px}
+#join.is-done .join__ok{animation:joinIn .5s cubic-bezier(.2,.8,.2,1)}
+@keyframes joinIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 #join.is-done .form{display:none}#join.is-done .join__ok{display:block}
 .events__empty{display:none;color:#9A948A;font-size:17px}
 @media (max-width:900px){.form{grid-template-columns:1fr}}
@@ -407,10 +414,17 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
             <option value="Florianópolis">Florianópolis · Apr 16</option>
             <option value="Maputo">Maputo · May 22</option>
             <option value="Outra cidade">I want another city</option></select></div>
+        <input type="text" name="website" id="leadWebsite" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
         <p class="join__err" id="leadError" role="alert">Please fill in the required fields.</p>
         <button class="btn btn-gold" type="submit" id="leadSubmit" style="grid-column: 1 / -1">I'm ready</button>
       </form>
-      <p class="join__ok">You're in the community! Método REI news will reach you soon.</p>
+      <div class="join__ok" role="status" aria-live="polite" tabindex="-1">
+        <div class="join__check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="kick">You're registered</div>
+        <h3 class="serif join__title">You're in the community<span id="leadOkNome"></span>.</h3>
+        <p class="join__txt">New dates, cities and pre-sale offers reach you first, by email and WhatsApp.</p>
+        <a class="btn btn-line join__btn" href="#tour">See upcoming dates</a>
+      </div>
     </div>
   </div>
 </section>
@@ -443,7 +457,8 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
   /* UTMs: repassa para as páginas dos eventos */
   var UTM_KEYS=["utm_source","utm_medium","utm_campaign","utm_term","utm_content"];
   var params=new URLSearchParams(window.location.search),utms={};
-  UTM_KEYS.forEach(function(k){var v=params.get(k);if(v)utms[k]=v;});
+  UTM_KEYS.concat(["fbclid","gclid"]).forEach(function(k){var v=params.get(k);if(v)utms[k]=v;});
+  try{if(Object.keys(utms).length)sessionStorage.setItem("mrei_utm",JSON.stringify(utms));else utms=JSON.parse(sessionStorage.getItem("mrei_utm")||"{}");}catch(_){}
   if(Object.keys(utms).length){
     document.querySelectorAll("a[href^='/']").forEach(function(a){
       var url=new URL(a.getAttribute("href"),window.location.origin);
@@ -465,10 +480,8 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
   dlg.addEventListener("click",function(e){if(e.target===dlg)closeV();});
 
   /* Captura de leads (lista geral) */
-  var LEAD_ENDPOINT="https://contact-blossom-39.lovable.app/api/public/contatos/ck_11fff2c5_11fff2c5f5084104ca4c6d6407a1a620f0d025e250e4b95c3e6438d41ee107ab";
-  var LEAD_TAGS=["Método REI - Lista Geral","site","Idioma: EN"];
   var join=document.getElementById("join"),form=document.getElementById("leadForm"),
-      err=document.getElementById("leadError"),btn=document.getElementById("leadSubmit");
+      err=document.getElementById("leadError"),btn=document.getElementById("leadSubmit"),btnTxt=btn.textContent;
   form.addEventListener("submit",function(e){
     e.preventDefault();
     var f=function(id){return document.getElementById(id);};
@@ -478,19 +491,18 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
       err.textContent="Please fill in the required fields.";err.style.display="block";return;
     }
     err.style.display="none";
-    var tags=LEAD_TAGS.slice();if(edicao)tags.push("Interesse: "+edicao);
-    var payload={nome:nome,email:email.value.trim(),telefone:(f("leadDdi").value+" "+tel).trim(),regiao:regiao,tags:tags,
-      comentario:edicao?"Edição de interesse: "+edicao:"Edição de interesse: não informada",link_origem:window.location.href};
-    if(prof)payload.profissao=prof;
-    UTM_KEYS.forEach(function(k){if(utms[k])payload[k]=utms[k];});
+    var payload={nome:nome,email:email.value.trim(),ddi:f("leadDdi").value,telefone:tel,cidade_estado:regiao,profissao:prof,edicao_interesse:edicao,
+      idioma:(document.documentElement.lang||"pt").slice(0,2),pagina_url:window.location.href,referrer:document.referrer,utm:utms,website:f("leadWebsite").value};
     btn.disabled=true;btn.textContent="Sending…";
-    fetch(LEAD_ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload),keepalive:true})
+    fetch("/api/lead",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)})
       .then(function(r){if(!r.ok)throw new Error(r.status);})
       .then(function(){
-        try{if(typeof fbq==="function"){var fb={content_name:LEAD_TAGS[0],content_category:"Inscricao",source:"home"};fbq("track","Lead",fb);fbq("trackCustom","Inscricao",fb);}}catch(_){}
+        try{if(typeof fbq==="function"){var fb={content_name:"Método REI - Lista Geral",content_category:"Inscricao",source:"home"};fbq("track","Lead",fb);fbq("trackCustom","Inscricao",fb);}}catch(_){}
+        var okNome=document.getElementById("leadOkNome");if(okNome)okNome.textContent=", "+nome.split(/\s+/)[0];
         join.classList.add("is-done");
+        var ok=join.querySelector(".join__ok");if(ok){ok.focus({preventScroll:true});ok.scrollIntoView({behavior:"smooth",block:"center"});}
       })
-      .catch(function(){btn.disabled=false;btn.textContent="I'm ready";err.textContent="We couldn't send this right now. Please try again in a moment.";err.style.display="block";});
+      .catch(function(){btn.disabled=false;btn.textContent=btnTxt;err.textContent="We couldn't send this right now. Please try again in a moment.";err.style.display="block";});
   });
 })();
 document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("[data-avisar]");if(!a)return;var s=document.getElementById("leadEdicao");if(s){s.value=a.getAttribute("data-avisar");}setTimeout(function(){var n=document.getElementById("leadNome");n&&n.focus({preventScroll:true});},600);});
