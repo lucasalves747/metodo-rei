@@ -287,9 +287,10 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
         <div class="field"><label for="leadNome">Nome*</label><input id="leadNome" type="text" autocomplete="name" required></div>
         <div class="field"><label for="leadEmail">E-mail*</label><input id="leadEmail" type="email" autocomplete="email" required></div>
         <div class="field"><label for="leadTel">WhatsApp*</label><div class="phone"><select id="leadDdi" aria-label="País (código)"><option value="+1">🇺🇸 +1</option><option value="+55">🇧🇷 +55</option><option value="+351">🇵🇹 +351</option><option value="+52">🇲🇽 +52</option><option value="+34">🇪🇸 +34</option><option value="+54">🇦🇷 +54</option><option value="+57">🇨🇴 +57</option><option value="+44">🇬🇧 +44</option></select><input id="leadTel" type="tel" inputmode="tel" autocomplete="tel" required></div></div>
-        <div class="field"><label for="leadRegiao">Cidade / Estado*</label><input id="leadRegiao" type="text" autocomplete="address-level2" required></div>
         <div class="field"><label for="leadProf">Profissão</label><input id="leadProf" type="text" autocomplete="organization-title"></div>
-        <div class="field"><label for="leadEdicao">Edição de interesse</label><select id="leadEdicao"><option value="">Selecione</option>
+        <div class="field"><label for="leadCidade">Cidade*</label><input id="leadCidade" type="text" autocomplete="address-level2" required></div>
+        <div class="field"><label for="leadEstado">Estado*</label><input id="leadEstado" type="text" autocomplete="address-level1" required></div>
+        <div class="field" style="grid-column: 1 / -1"><label for="leadEdicao">Edição de interesse</label><select id="leadEdicao"><option value="">Selecione</option>
 {{edicoes}}
             <option value="Outra cidade">Quero em outra cidade</option></select></div>
         <input type="text" name="website" id="leadWebsite" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
@@ -364,12 +365,12 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
     e.preventDefault();
     var f=function(id){return document.getElementById(id);};
     var nome=f("leadNome").value.trim(),email=f("leadEmail"),tel=f("leadTel").value.trim(),
-        regiao=f("leadRegiao").value.trim(),prof=f("leadProf").value.trim(),edicao=f("leadEdicao").value;
-    if(!nome||!email.value.trim()||!email.checkValidity()||!tel||!regiao){
+        cidade=f("leadCidade").value.trim(),estado=f("leadEstado").value.trim(),prof=f("leadProf").value.trim(),edicao=f("leadEdicao").value;
+    if(!nome||!email.value.trim()||!email.checkValidity()||!tel||!cidade||!estado){
       err.textContent="Por favor, preencha os campos obrigatórios.";err.style.display="block";return;
     }
     err.style.display="none";
-    var payload={nome:nome,email:email.value.trim(),ddi:f("leadDdi").value,telefone:tel,cidade_estado:regiao,profissao:prof,edicao_interesse:edicao,
+    var payload={nome:nome,email:email.value.trim(),ddi:f("leadDdi").value,telefone:tel,cidade:cidade,estado:estado,profissao:prof,edicao_interesse:edicao,
       idioma:(document.documentElement.lang||"pt").slice(0,2),pagina_url:window.location.href,referrer:document.referrer,utm:utms,website:f("leadWebsite").value};
     btn.disabled=true;btn.textContent="Enviando…";
     fetch("/api/lead",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)})

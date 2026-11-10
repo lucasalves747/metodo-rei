@@ -69,7 +69,6 @@
  "E-mail*": "Correo*",
  "WhatsApp*": "WhatsApp*",
  "País (código)": "País (código)",
- "Cidade / Estado*": "Ciudad / Estado*",
  "Profissão": "Profesión",
  "Edição de interesse": "Edición de interés",
  "Selecione": "Selecciona",
@@ -252,5 +251,7 @@
  "Inscrição confirmada": "Inscripción confirmada",
  "Você está na comunidade": "Ya estás en la comunidad",
  "Novas datas, cidades e condições de pré-venda chegam primeiro para você, por e-mail e WhatsApp.": "Nuevas fechas, ciudades y condiciones de preventa te llegan primero, por correo y WhatsApp.",
- "Ver as próximas datas": "Ver las próximas fechas"
+ "Ver as próximas datas": "Ver las próximas fechas",
+ "Cidade*": "Ciudad*",
+ "Estado*": "Estado*"
 }

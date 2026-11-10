@@ -14,8 +14,8 @@ export default async function handler(req, res) {
 
   const nome = limpa(b.nome, 80), email = limpa(b.email, 120).toLowerCase();
   const ddi = limpa(b.ddi, 6), tel = limpa(b.telefone, 30);
-  const cidade = limpa(b.cidade_estado, 100);
-  if (nome.length < 2 || !emailOk(email) || tel.replace(/\D/g, "").length < 6 || !cidade) return json(res, 400, { erro: "dados" });
+  const cidade = limpa(b.cidade, 80), estado = limpa(b.estado, 80);
+  if (nome.length < 2 || !emailOk(email) || tel.replace(/\D/g, "").length < 6 || !cidade || !estado) return json(res, 400, { erro: "dados" });
   const partes = nome.split(/\s+/);
   const edicao = limpa(b.edicao_interesse, 60);
   const idioma = ["pt", "en", "es"].includes(b.idioma) ? b.idioma : "pt";
@@ -29,7 +29,8 @@ export default async function handler(req, res) {
     email,
     telefone: `${ddi}${tel.replace(/[^\d]/g, "")}`.replace(/^\+?/, "+"),
     telefone_ddi: ddi,
-    cidade_estado: cidade,
+    cidade,
+    estado,
     profissao: limpa(b.profissao, 80),
     edicao_interesse: edicao,
     tags: ["Método REI - Lista Geral", "site", `Idioma: ${idioma.toUpperCase()}`, ...(edicao ? [`Interesse: ${edicao}`] : [])],
