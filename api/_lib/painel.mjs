@@ -28,21 +28,30 @@ export function sessaoValida(req) {
 // ---------- eventos ----------
 const sem = (s) => String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
 const EVENTOS = Object.values(CATALOGO.eventos);
-// Eventos antigos que já saíram do catálogo mas ainda aparecem nos nomes de produto do GHL.
-const ANTIGOS = [{ slug: "dallas", cidade: "Dallas" }];
+// Eventos antigos que já saíram do catálogo mas ainda aparecem nos carrinhos do Salee.ai.
+const ANTIGOS = [
+  { slug: "dallas", cidade: "Dallas", uf: "TX", apelidos: ["/cart-dl", "/cart-pre-", "/cart-vip"] },
+  { slug: "jackson", cidade: "Jacksonville", uf: "FL", apelidos: ["jack"] },
+];
 
 export function listaEventos() {
-  return [...EVENTOS.map((e) => ({ slug: e.slug, cidade: e.cidade, uf: e.uf, inicio: e.inicio, fim: e.fim, datas_texto: e.datas_texto })), ...ANTIGOS];
+  return [
+    ...EVENTOS.map((e) => ({ slug: e.slug, cidade: e.cidade, uf: e.uf, inicio: e.inicio, fim: e.fim, datas_texto: e.datas_texto })),
+    ...ANTIGOS.map(({ apelidos, ...e }) => e),
+  ];
 }
 
-// Tenta descobrir evento e tipo de ingresso a partir de um texto livre (nome do produto/funil no GHL).
-export function classificar(texto) {
-  const t = sem(texto);
-  if (!t) return { evento: "", tipo: "" };
-  const ev = [...EVENTOS, ...ANTIGOS].find((e) => t.includes(sem(e.cidade)) || t.includes(e.slug));
-  const resto = t.replace(/metodo rei/g, "");
-  const tipo = /\bvip\b/.test(resto) ? "vip" : /\brei\b/.test(resto) ? "rei" : /standard|geral|individual/.test(resto) ? "standard" : "";
-  return { evento: ev ? ev.slug : "", tipo };
+// Descobre evento e tipo de ingresso a partir do nome do funil e do endereço do carrinho no Salee.ai
+// (ex.: "METHODO REI Miami" + "/cart-vip-miami" → miami / vip).
+export function classificar(nome, url = "") {
+  const t = sem(`${nome} ${url}`);
+  const u = sem(url);
+  if (!t.trim()) return { evento: "", tipo: "" };
+  let ev = EVENTOS.find((e) => t.includes(sem(e.cidade)) || t.includes(e.slug));
+  if (!ev) ev = ANTIGOS.find((e) => t.includes(e.slug) || t.includes(sem(e.cidade)) || e.apelidos.some((a) => (a.endsWith("-") ? u.startsWith(a) : u === a || u.startsWith(a + "?") || (a.length > 4 && !a.startsWith("/") && t.includes(a)))));
+  if (!ev) return { evento: "", tipo: "" };
+  const tipo = /vip/.test(u) ? "vip" : /-rei\b/.test(u) ? "rei" : "standard";
+  return { evento: ev.slug, tipo };
 }
 
 // ---------- Square ----------
@@ -141,6 +150,7 @@ export async function vendas(desde) {
 // ---------- GHL (Salee.ai) ----------
 const GHL = "https://services.leadconnectorhq.com";
 export const ghlAtivo = () => Boolean(process.env.GHL_API_TOKEN && process.env.GHL_LOCATION_ID);
+const LOC = () => process.env.GHL_LOCATION_ID;
 
 async function ghl(path, { method = "GET", body } = {}) {
   const r = await fetch(GHL + path, {
@@ -153,75 +163,144 @@ async function ghl(path, { method = "GET", body } = {}) {
   return data;
 }
 
-// Transações de pagamento do GHL: dão o nome do produto/funil de cada venda feita em pag.metodorei.com.
-export async function transacoesGhl(desde) {
-  const loc = process.env.GHL_LOCATION_ID;
+async function ghlLista(recurso) {
   const out = [];
-  for (let offset = 0; offset < 5000; offset += 100) {
-    const q = new URLSearchParams({ altId: loc, altType: "location", limit: "100", offset: String(offset), startAt: desde.slice(0, 10) });
-    const d = await ghl(`/payments/transactions?${q}`);
-    const lista = d.data || d.transactions || [];
+  for (let offset = 0; offset < 10000; offset += 100) {
+    const d = await ghl(`/payments/${recurso}?altId=${LOC()}&altType=location&limit=100&offset=${offset}`);
+    const lista = d.data || [];
     out.push(...lista);
     if (lista.length < 100) break;
   }
   return out;
 }
 
-// Junta o nome do produto do GHL às vendas "pag" e classifica evento/tipo.
-export function enriquecer(linhas, transacoes) {
-  const porChave = {};
-  for (const t of transacoes) {
-    const nome = [t.entitySourceName, t.entitySourceMeta && t.entitySourceMeta.name, t.productName, (t.lineItems || []).map((i) => i.name || (i.product && i.product.name)).join(" ")].filter(Boolean).join(" · ");
-    const info = { produto: nome, contato: t.contactName || "", email: t.contactEmail || "" };
-    for (const k of [t._id, t.entityId, t.chargeId, t.chargeSnapshot && t.chargeSnapshot.id]) if (k) porChave[k] = info;
-  }
-  for (const l of linhas) {
-    if (l.origem !== "pag") continue;
-    const info = porChave[l.ref_ghl] || porChave[l.id];
-    if (!info) continue;
-    l.descricao_ghl = info.produto;
-    if (/m[eé]todo rei/i.test(info.produto)) l.metodo_rei = true;
-    l.comprador = l.comprador || info.contato;
-    l.email = l.email || info.email;
-    const c = classificar(info.produto);
-    l.evento = c.evento;
-    l.tipo = c.tipo;
-  }
-  return linhas;
+async function emLotes(itens, n, fn) {
+  const out = [];
+  for (let i = 0; i < itens.length; i += n) out.push(...(await Promise.all(itens.slice(i, i + n).map(fn))));
+  return out;
 }
 
-// Leads da comunidade (formulário da home): contatos com a tag "Método REI - Lista Geral".
+const doMetodoRei = (o) => /metodorei\.com/i.test((o.sourceMeta && o.sourceMeta.domain) || "");
+
+// Pedidos dos carrinhos do Salee.ai em (pag.)metodorei.com: pagos viram vendas; não pagos viram leads de carrinho.
+export async function pedidosGhl() {
+  const [ordens, transacoes] = await Promise.all([ghlLista("orders"), ghlLista("transactions")]);
+  const txPorPedido = {};
+  for (const t of transacoes) (txPorPedido[t.entityId] ||= []).push(t);
+  const mr = ordens.filter(doMetodoRei);
+  // pedidos com mais de um produto: busca o detalhe para contar ingressos (ignora order bumps)
+  const multi = mr.filter((o) => o.paymentStatus === "paid" && o.totalProducts > 1);
+  const qtd = {};
+  await emLotes(multi, 5, async (o) => {
+    try {
+      const d = await ghl(`/payments/orders/${o._id}?altId=${LOC()}&altType=location`);
+      qtd[o._id] = (d.items || []).filter((i) => !i.bumpProduct).reduce((s, i) => s + (Number(i.qty) || 1), 0) || 1;
+    } catch { qtd[o._id] = o.totalProducts; }
+  });
+  const vendas = [], carrinhos = [];
+  for (const o of mr) {
+    const meta = o.sourceMeta || {};
+    const txs = txPorPedido[o._id] || [];
+    const c = classificar(o.sourceName, meta.pageUrl);
+    const base = {
+      ghl_id: o._id, ghl_tx: txs.map((t) => t._id), contato_id: o.contactId,
+      data: o.createdAt, comprador: o.contactName || "", email: o.contactEmail || "",
+      produto: o.sourceName || "Método REI", carrinho: `${meta.domain || ""}${meta.pageUrl || ""}`,
+      evento: c.evento, tipo: c.tipo, moeda: o.currency || "USD",
+    };
+    if (o.paymentStatus === "paid") {
+      const ok = txs.find((t) => t.status === "succeeded");
+      vendas.push({
+        ...base, id: o._id, numero: o._id.slice(-8).toUpperCase(), origem: "pag", metodo_rei: true,
+        total: Number(o.amount) || 0, desconto: Number(o.discount) || 0, cupom: o.couponCode || "",
+        reembolso: txs.reduce((s, t) => s + (Number(t.amountRefunded) || 0), 0), taxa: 0,
+        qtd: qtd[o._id] || 1, recibo: "", ref_ghl: o._id, descricao: o.sourceName || "", descricao_ghl: `${o.sourceName || ""} · ${base.carrinho}`,
+        metodo: ok ? (ok.paymentProviderType === "square" ? "Cartão (Square)" : Number(o.amount) ? "Manual" : "Cupom / gratuito") : "—",
+        telefone: "", utm: "", idioma: "", ingressos: [], link: "",
+      });
+    } else {
+      carrinhos.push(base);
+    }
+  }
+  for (const v of vendas) v.liquido = Math.round((v.total - v.reembolso) * 100) / 100;
+  return { vendas, carrinhos };
+}
+
+// Junta as vendas do Salee.ai com as da Square: a venda paga com cartão aparece nos dois;
+// fica a linha do Salee.ai (tem evento e tipo) com recibo, taxa e reembolso da Square.
+export function juntar(linhasSquare, vendasGhl) {
+  const porRef = {};
+  for (const v of vendasGhl) for (const k of [v.ghl_id, ...v.ghl_tx]) porRef[k] = v;
+  const resto = [];
+  for (const l of linhasSquare) {
+    const v = l.origem === "pag" && porRef[l.ref_ghl];
+    if (!v) { resto.push(l); continue; }
+    Object.assign(v, {
+      reembolso: l.reembolso || v.reembolso, taxa: l.taxa, recibo: l.recibo, metodo: l.metodo, square_id: l.id,
+      comprador: v.comprador || l.comprador, email: v.email || l.email, telefone: l.telefone,
+    });
+    v.liquido = Math.round((v.total - v.reembolso) * 100) / 100;
+  }
+  // Vendas "Método Rei" da Square sem par no Salee.ai continuam contando, mas sem evento.
+  return [...resto, ...vendasGhl];
+}
+
+// ---------- leads ----------
 export const TAG_LEAD = "Método REI - Lista Geral";
-export async function leads(desde) {
-  const loc = process.env.GHL_LOCATION_ID;
+
+async function contatosComTag(tag) {
   const out = [];
   let searchAfter;
   for (let i = 0; i < 50; i++) {
     const d = await ghl("/contacts/search", {
       method: "POST",
-      body: {
-        locationId: loc, pageLimit: 100,
-        filters: [{ field: "tags", operator: "contains", value: TAG_LEAD }, { field: "dateAdded", operator: "range", value: { gte: desde, lte: new Date().toISOString() } }],
-        sort: [{ field: "dateAdded", direction: "desc" }],
-        ...(searchAfter ? { searchAfter } : {}),
-      },
+      body: { locationId: LOC(), pageLimit: 100, filters: [{ field: "tags", operator: "eq", value: tag }], sort: [{ field: "dateAdded", direction: "desc" }], ...(searchAfter ? { searchAfter } : {}) },
     });
     const lista = d.contacts || [];
     out.push(...lista);
-    if (lista.length < 100) break;
+    if (lista.length < 100 || !lista[lista.length - 1].searchAfter) break;
     searchAfter = lista[lista.length - 1].searchAfter;
-    if (!searchAfter) break;
   }
-  return out.map((c) => {
-    const tags = c.tags || [];
-    const tag = (pre) => (tags.find((t) => sem(t).startsWith(sem(pre))) || "").slice(pre.length).trim();
-    const att = c.attributionSource || c.lastAttributionSource || {};
-    return {
-      id: c.id, data: c.dateAdded, nome: [c.firstName, c.lastName].filter(Boolean).join(" ") || c.contactName || "",
-      email: c.email || "", telefone: c.phone || "", cidade: c.city || "", estado: c.state || "",
-      idioma: tag("Idioma:"), interesse: tag("Interesse:"), comprou: tags.some((t) => sem(t) === sem("Método REI - Comprou")),
-      origem: att.utmSource || c.source || "", campanha: att.campaign || att.utmCampaign || "",
-      link: `${(process.env.GHL_APP_URL || "https://app.gohighlevel.com").replace(/\/$/, "")}/v2/location/${loc}/contacts/detail/${c.id}`,
-    };
+  return out;
+}
+
+const linkContato = (id) => `${(process.env.GHL_APP_URL || "https://app.gohighlevel.com").replace(/\/$/, "")}/v2/location/${LOC()}/contacts/detail/${id}`;
+
+function linhaLead(c, fonte, extra = {}) {
+  const tags = c.tags || [];
+  const tag = (pre) => (tags.find((t) => sem(t).startsWith(sem(pre))) || "").slice(pre.length).trim();
+  const att = c.attributionSource || c.lastAttributionSource || {};
+  return {
+    id: c.id, data: c.dateAdded, nome: [c.firstName, c.lastName].filter(Boolean).join(" ") || c.contactName || "",
+    email: c.email || "", telefone: c.phone || "", cidade: c.city || "", estado: c.state || "",
+    idioma: tag("Idioma:").toUpperCase(), interesse: tag("Interesse:"), fonte,
+    origem: att.utmSource || att.sessionSource || c.source || "", campanha: att.campaign || att.utmCampaign || "",
+    comprou: tags.some((t) => sem(t) === sem("Método REI - Comprou")), link: linkContato(c.id), ...extra,
+  };
+}
+
+// Três fontes: formulário da home, checkout do site que não terminou (tags com o código do evento)
+// e carrinhos do Salee.ai em pag.metodorei.com que não foram pagos.
+export async function leads() {
+  const [home, checkout, ghlPedidos] = await Promise.all([contatosComTag(TAG_LEAD), contatosComTag("Checkout"), pedidosGhl()]);
+  const out = new Map();
+  for (const c of home) out.set(c.id, linhaLead(c, "Formulário da home"));
+  for (const c of checkout) {
+    if (out.has(c.id)) continue;
+    const t = (c.tags || []).find((x) => /^m[eé]todo rei - /i.test(x) && !/lista geral|comprou/i.test(x)) || "";
+    out.set(c.id, linhaLead(c, "Checkout do site (não pagou)", { interesse: t.replace(/^m[eé]todo rei - /i, "") }));
+  }
+  // carrinhos não pagos, sem quem acabou comprando depois
+  const compradores = new Set(ghlPedidos.vendas.map((v) => v.contato_id));
+  const abandonos = new Map();
+  for (const c of ghlPedidos.carrinhos) if (c.contato_id && !compradores.has(c.contato_id) && !out.has(c.contato_id) && !abandonos.has(c.contato_id)) abandonos.set(c.contato_id, c);
+  const contatos = await emLotes([...abandonos.values()], 8, async (c) => {
+    try { return (await ghl(`/contacts/${c.contato_id}`)).contact; } catch { return null; }
   });
+  [...abandonos.values()].forEach((c, i) => {
+    const ct = contatos[i] || { id: c.contato_id, contactName: c.comprador, email: c.email, dateAdded: c.data };
+    const ev = listaEventos().find((e) => e.slug === c.evento);
+    out.set(c.contato_id, linhaLead({ ...ct, dateAdded: c.data }, "Carrinho pag.metodorei (não pagou)", { interesse: ev ? ev.cidade : c.produto }));
+  });
+  return [...out.values()].sort((a, b) => String(b.data).localeCompare(String(a.data)));
 }

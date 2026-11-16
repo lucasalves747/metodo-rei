@@ -79,7 +79,7 @@ svg text{fill:var(--muted);font-size:11px}
     <label class="muted" for="periodo">Período</label>
     <select id="periodo">
       <option value="7">7 dias</option><option value="30">30 dias</option><option value="90">90 dias</option>
-      <option value="ano" selected>2026 inteiro</option>
+      <option value="ano" selected>2026 inteiro</option><option value="tudo">Tudo (desde 2025)</option>
     </select>
     <select id="produto" aria-label="Produto"></select>
     <button class="btn ghost" id="atualizar" title="Buscar dados novos">Atualizar</button>
@@ -128,11 +128,12 @@ svg text{fill:var(--muted);font-size:11px}
     <div class="filtros">
       <input type="search" id="buscaLead" placeholder="Buscar nome, e-mail, telefone, cidade">
       <select id="fInteresse" aria-label="Interesse"></select>
+      <select id="fFonte" aria-label="Fonte"></select>
       <select id="fEstadoLead" aria-label="Estado"></select>
       <button class="btn ghost" id="csvLeads">Baixar CSV</button>
     </div>
     <p class="muted" id="contaLeads"></p>
-    <div class="tabela"><table><thead><tr><th>Data</th><th>Nome</th><th>E-mail</th><th>Telefone</th><th>Cidade / UF</th><th>Interesse</th><th>Idioma</th><th>Origem</th><th>Comprou?</th></tr></thead><tbody id="leads"></tbody></table></div>
+    <div class="tabela"><table><thead><tr><th>Data</th><th>Nome</th><th>E-mail</th><th>Telefone</th><th>Cidade / UF</th><th>Interesse</th><th>Fonte</th><th>Idioma</th><th>Origem</th></tr></thead><tbody id="leads"></tbody></table></div>
   </section>
 </main>
 </div>
@@ -159,6 +160,7 @@ svg text{fill:var(--muted);font-size:11px}
   function desde() {
     const p = $("#periodo").value;
     if (p === "ano") return "2026-01-01";
+    if (p === "tudo") return "2025-01-01";
     const d = new Date(Date.now() - Number(p) * 86400000);
     return d.toISOString().slice(0, 10);
   }
@@ -201,9 +203,10 @@ svg text{fill:var(--muted);font-size:11px}
     const a = [];
     $("#amb").textContent = V.ambiente === "production" ? "Produção" : "Sandbox (teste)";
     $("#amb").className = "badge" + (V.ambiente === "production" ? "" : " sandbox");
-    if (V.ghl === "sem_token") a.push("As vendas de pag.metodorei.com aparecem com o nome curto do cartão (ex.: “Método Rei”), mas sem evento e tipo de ingresso. Para separar por evento, falta configurar a chave da API do Salee.ai.");
-    else if (V.ghl !== "ok") a.push("Não foi possível ler os produtos no Salee.ai agora (" + esc(V.ghl) + "). As vendas aparecem sem evento.");
-    a.push("Valores em USD, já com cupons e reembolsos descontados, antes das taxas da Square. Carrinhos abertos e cartões recusados não entram.");
+    if (V.ghl === "sem_token") a.push("Sem a chave da API do Salee.ai: as vendas de pag.metodorei.com aparecem só pela Square, sem evento e sem os ingressos gratuitos.");
+    else if (V.ghl !== "ok") a.push("Não foi possível ler o Salee.ai agora (" + V.ghl + "). Mostrando só as vendas da Square.");
+    else a.push("Vendas de pag.metodorei.com vêm do Salee.ai (evento e tipo pelo endereço do carrinho, incluindo ingressos gratuitos com cupom); recibo, taxa e reembolso vêm da Square.");
+    a.push("Valores em USD, já com cupons e reembolsos descontados, antes das taxas da Square. Carrinhos não pagos e cartões recusados não entram (carrinhos não pagos aparecem em Leads).");
     $("#avisos").innerHTML = a.map((t) => `<p class="aviso">${esc(t)}</p>`).join("");
   }
 
@@ -256,9 +259,9 @@ svg text{fill:var(--muted);font-size:11px}
     $("#porEvento").innerHTML = ordem.map((k) => {
       const g = grupos[k], st = soma(g), ev = V.eventos.find((e) => e.slug === k);
       const porTipo = {};
-      for (const l of g) { const t = l.tipo || "—"; porTipo[t] ||= { q: 0, v: 0 }; porTipo[t].q += l.qtd; porTipo[t].v += l.liquido; }
+      for (const l of g) { const t = ev ? l.tipo || "—" : l.produto; porTipo[t] ||= { q: 0, v: 0 }; porTipo[t].q += l.qtd; porTipo[t].v += l.liquido; }
       const titulo = ev ? `${esc(ev.cidade)}${ev.uf ? ", " + esc(ev.uf) : ""}` : "Sem evento identificado";
-      const sub = ev ? esc(ev.datas_texto || "") : "vendas de pag.metodorei.com sem detalhe do produto";
+      const sub = ev ? esc(ev.datas_texto || "") : "produtos sem cidade no nome do carrinho";
       return `<div class="card"><h3>${titulo}</h3><div class="sub">${sub}</div>
         <table><tbody>${Object.entries(porTipo).map(([t, x]) => `<tr><td>${esc(TIPOS[t] || t)}</td><td class="n">${num(x.q)} ingr.</td><td class="n">${usd(x.v)}</td></tr>`).join("")}
         <tr><td><b>Total</b></td><td class="n"><b>${num(st.ingressos)}</b></td><td class="n"><b>${usd(st.liquido)}</b></td></tr></tbody></table></div>`;
@@ -270,7 +273,11 @@ svg text{fill:var(--muted);font-size:11px}
     const ini = new Date(desde() + "T12:00:00"), fim = new Date();
     const serie = [];
     for (let d = new Date(ini); d <= fim; d.setDate(d.getDate() + 1)) { const k = d.toISOString().slice(0, 10); serie.push([k, dias[k] || 0]); }
-    $("#grafico").innerHTML = grafico(serie);
+    // períodos longos: soma por semana para as barras não sumirem
+    const semanal = serie.length > 120;
+    const pontos = semanal ? serie.reduce((acc, s, i) => { if (i % 7 === 0) acc.push([s[0], 0]); acc[acc.length - 1][1] += s[1]; return acc; }, []) : serie;
+    document.querySelector("#aba-vendas h2:nth-of-type(2)").textContent = semanal ? "Vendas por semana" : "Vendas por dia";
+    $("#grafico").innerHTML = grafico(pontos);
 
     // por produto
     $("#blocoProdutos").hidden = soMR;
@@ -332,7 +339,7 @@ svg text{fill:var(--muted);font-size:11px}
         <p><b>Pedido</b> ${esc(l.id)} · ${new Date(l.data).toLocaleString("pt-BR", { timeZone: "America/New_York" })} (horário de NY)</p>
         <p><b>Comprador</b> ${esc(l.comprador)} · ${esc(l.email)} · ${esc(l.telefone)}${l.idioma ? " · idioma " + esc(l.idioma.toUpperCase()) : ""}</p>
         <p><b>Valores</b> total ${usd(l.total)}${l.desconto ? " · desconto " + usd(l.desconto) : ""}${l.cupom ? " (cupom " + esc(l.cupom) + ")" : ""}${l.reembolso ? " · reembolsado " + usd(l.reembolso) : ""} · taxa Square ${usd(l.taxa)} · ${esc(l.metodo)}</p>
-        ${l.descricao_ghl ? `<p><b>Produto no Salee</b> ${esc(l.descricao_ghl)}</p>` : ""}
+        ${l.descricao_ghl ? `<p><b>Carrinho no Salee</b> ${esc(l.descricao_ghl)}${l.square_id ? " · Square " + esc(l.square_id) : ""}</p>` : ""}
         ${l.utm ? `<p><b>Origem (UTM)</b> ${esc(l.utm)}</p>` : ""}
         ${l.ingressos.length ? `<p><b>Ingressos</b><br>${l.ingressos.map((x) => `${esc(x.codigo)} — ${esc(x.titular)}${x.email ? " · " + esc(x.email) : ""}`).join("<br>")}</p>` : ""}
         <p>${l.recibo ? `<a href="${esc(l.recibo)}" target="_blank" rel="noopener">Recibo Square</a>` : ""}${l.link ? ` · <a href="${esc(l.link)}" target="_blank" rel="noopener">Página de confirmação / ingressos</a>` : ""}</p></td>`;
@@ -358,13 +365,14 @@ svg text{fill:var(--muted);font-size:11px}
     };
     sel("#fInteresse", "interesse", "Todo interesse");
     sel("#fEstadoLead", "estado", "Todos os estados");
+    sel("#fFonte", "fonte", "Todas as fontes");
     renderLeads();
     renderVendas();
   }
 
   function leadsFiltrados() {
-    const q = $("#buscaLead").value.trim().toLowerCase(), it = $("#fInteresse").value, es = $("#fEstadoLead").value;
-    return L.linhas.filter((x) => (!it || x.interesse === it) && (!es || x.estado === es) &&
+    const q = $("#buscaLead").value.trim().toLowerCase(), it = $("#fInteresse").value, es = $("#fEstadoLead").value, fo = $("#fFonte").value;
+    return L.linhas.filter((x) => (!it || x.interesse === it) && (!es || x.estado === es) && (!fo || x.fonte === fo) &&
       (!q || [x.nome, x.email, x.telefone, x.cidade, x.estado].join(" ").toLowerCase().includes(q)));
   }
 
@@ -378,16 +386,18 @@ svg text{fill:var(--muted);font-size:11px}
     if (!L || L.indisponivel || L.erro) return;
     const todos = L.linhas, ls = leadsFiltrados();
     const semana = todos.filter((x) => Date.now() - new Date(x.data) < 7 * 86400000).length;
-    $("#kpisLeads").innerHTML = [[num(todos.length), "leads no período"], [num(semana), "últimos 7 dias"], [num(todos.filter((x) => x.comprou).length), "já compraram"]]
+    const home = todos.filter((x) => x.fonte === "Formulário da home").length;
+    $("#kpisLeads").innerHTML = [[num(todos.length), "leads no período"], [num(semana), "últimos 7 dias"], [num(home), "do formulário da home"]]
       .map(([v, t]) => `<div class="kpi"><b>${v}</b><span>${t}</span></div>`).join("");
     const bloco = (t, arr) => `<div class="card"><h3>${t}</h3><table><tbody>${arr.map(([k, v]) => `<tr><td>${esc(k)}</td><td class="n">${num(v)}</td></tr>`).join("")}</tbody></table></div>`;
-    $("#resumoLeads").innerHTML = bloco("Interesse", contagem(todos, "interesse")) + bloco("Estado", contagem(todos, "estado")) + bloco("Origem", contagem(todos, "origem"));
+    $("#resumoLeads").innerHTML = (home ? "" : '<p class="aviso erro" style="grid-column:1/-1">Nenhum lead do formulário da home (nem do checkout do site) aparece no Salee.ai. O site envia, mas o workflow do webhook no Salee.ai não está criando/marcando os contatos — vale conferir a automação lá.</p>') +
+      bloco("Fonte", contagem(todos, "fonte")) + bloco("Interesse", contagem(todos, "interesse")) + bloco("Estado", contagem(todos, "estado"));
     $("#contaLeads").textContent = `${num(ls.length)} leads`;
     $("#leads").innerHTML = ls.slice(0, 1000).map((x) => `<tr><td>${dataBR(x.data)}</td><td><a href="${esc(x.link)}" target="_blank" rel="noopener">${esc(x.nome) || "—"}</a></td>
       <td>${esc(x.email)}</td><td>${esc(x.telefone)}</td><td>${esc([x.cidade, x.estado].filter(Boolean).join(" / "))}</td><td>${esc(x.interesse)}</td>
-      <td>${esc(x.idioma)}</td><td>${esc([x.origem, x.campanha].filter(Boolean).join(" · "))}</td><td>${x.comprou ? "Sim" : ""}</td></tr>`).join("");
+      <td>${esc(x.fonte)}</td><td>${esc(x.idioma)}</td><td>${esc([x.origem, x.campanha].filter(Boolean).join(" · "))}</td></tr>`).join("");
   }
-  ["#buscaLead", "#fInteresse", "#fEstadoLead"].forEach((s) => $(s).addEventListener("input", renderLeads));
+  ["#buscaLead", "#fInteresse", "#fEstadoLead", "#fFonte"].forEach((s) => $(s).addEventListener("input", renderLeads));
 
   // ---------- CSV ----------
   function csv(nome, cab, rows) {
@@ -403,8 +413,8 @@ svg text{fill:var(--muted);font-size:11px}
     ["data", "pedido", "origem", "produto", "evento", "tipo", "quantidade", "total", "desconto", "cupom", "reembolso", "liquido", "taxa_square", "comprador", "email", "telefone", "idioma", "utm", "ingressos", "recibo"],
     pedidosFiltrados().map((l) => [l.data, l.id, l.origem, l.produto, nomeEvento(l.evento), TIPOS[l.tipo] || "", l.qtd, l.total, l.desconto, l.cupom, l.reembolso, l.liquido, l.taxa, l.comprador, l.email, l.telefone, l.idioma, l.utm, l.ingressos.map((i) => `${i.codigo} ${i.titular}`).join(" | "), l.recibo])));
   $("#csvLeads").addEventListener("click", () => L && !L.indisponivel && csv(`leads-${desde()}.csv`,
-    ["data", "nome", "email", "telefone", "cidade", "estado", "interesse", "idioma", "origem", "campanha", "comprou"],
-    leadsFiltrados().map((x) => [x.data, x.nome, x.email, x.telefone, x.cidade, x.estado, x.interesse, x.idioma, x.origem, x.campanha, x.comprou ? "sim" : ""])));
+    ["data", "nome", "email", "telefone", "cidade", "estado", "interesse", "fonte", "idioma", "origem", "campanha"],
+    leadsFiltrados().map((x) => [x.data, x.nome, x.email, x.telefone, x.cidade, x.estado, x.interesse, x.fonte, x.idioma, x.origem, x.campanha])));
 
   // ---------- início ----------
   $("#periodo").addEventListener("change", () => carregar());
