@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Painel · Método REI</title>
+<link rel="icon" href="/favicon-32.png">
+<style>
+@font-face{font-family:Outfit;src:url(/assets/fonts/outfit.woff2) format("woff2");font-weight:100 900;font-display:swap}
+@font-face{font-family:Playfair;src:url(/assets/fonts/playfair.woff2) format("woff2");font-weight:400 900;font-display:swap}
+:root{--navy-950:#0B121C;--navy-900:#121C2B;--navy-800:#1A2537;--navy-700:#24324a;--gold:#B99135;--gold-bright:#D9B45A;--cream:#F4EBD5;--bone:#FAF6EE;--ink:#16202F;--muted:#A9B2C0;--danger:#e08a8a;--ok:#8fc79a}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--navy-950);color:var(--bone);font:15px/1.5 Outfit,system-ui,sans-serif}
+a{color:var(--gold-bright)}
+button,input,select{font:inherit;color:inherit}
+.wrap{max-width:1240px;margin:0 auto;padding:0 16px}
+header{position:sticky;top:0;z-index:5;background:rgba(11,18,28,.92);backdrop-filter:blur(8px);border-bottom:1px solid rgba(185,145,53,.25)}
+.bar{display:flex;align-items:center;gap:8px 12px;flex-wrap:wrap;padding:12px 16px}
+@media (max-width:640px){.bar label{display:none}.marca{flex-basis:100%}}
+.marca{font-family:Playfair,serif;font-size:20px;color:var(--gold-bright);margin-right:auto;white-space:nowrap}
+.marca small{font-family:Outfit;color:var(--muted);font-size:13px;margin-left:6px}
+.badge{font-size:12px;padding:2px 8px;border-radius:99px;border:1px solid var(--gold);color:var(--gold-bright)}
+.badge.sandbox{background:#7a2b2b;border-color:#e08a8a;color:#fff}
+select,input[type=search],input[type=date],input[type=password]{background:var(--navy-800);border:1px solid var(--navy-700);border-radius:8px;padding:7px 10px;min-width:0}
+.btn{background:var(--gold);color:var(--navy-950);border:0;border-radius:8px;padding:8px 14px;font-weight:600;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--gold-bright);border:1px solid var(--gold)}
+.tabs{display:flex;gap:4px;overflow-x:auto}
+.tabs button{background:none;border:0;border-bottom:2px solid transparent;padding:10px 14px;color:var(--muted);cursor:pointer;white-space:nowrap}
+.tabs button[aria-selected=true]{color:var(--gold-bright);border-color:var(--gold)}
+main{padding:20px 0 60px}
+.aviso{background:var(--navy-800);border-left:3px solid var(--gold);padding:10px 14px;border-radius:6px;margin:0 0 16px;color:var(--cream)}
+.aviso.erro{border-color:var(--danger)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:20px}
+.kpi{background:var(--navy-900);border:1px solid var(--navy-700);border-radius:10px;padding:12px 14px}
+.kpi b{display:block;font-size:24px;font-weight:600;color:var(--bone)}
+.kpi span{color:var(--muted);font-size:13px}
+h2{font-family:Playfair,serif;font-weight:500;color:var(--gold-bright);font-size:22px;margin:26px 0 10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+.card{background:var(--navy-900);border:1px solid var(--navy-700);border-radius:10px;padding:14px 16px}
+.card h3{margin:0 0 2px;font-size:17px}
+.card .sub{color:var(--muted);font-size:13px;margin-bottom:8px}
+.tabela{overflow-x:auto;background:var(--navy-900);border:1px solid var(--navy-700);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--navy-800);white-space:nowrap}
+th{color:var(--muted);font-weight:500;font-size:12px;text-transform:uppercase;letter-spacing:.04em;background:var(--navy-900);position:sticky;top:0}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+tbody tr.linha{cursor:pointer}
+tbody tr.linha:hover{background:var(--navy-800)}
+tr.det td{white-space:normal;background:var(--navy-950);color:var(--cream)}
+.card table td,.card table th{padding:5px 0;border:0}
+.filtros{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center}
+.filtros input[type=search]{flex:1 1 220px}
+.muted{color:var(--muted)}
+.tag{display:inline-block;font-size:12px;padding:1px 7px;border-radius:99px;background:var(--navy-700);color:var(--cream)}
+.tag.site{background:#2d4a36}.tag.pag{background:#3b3550}.tag.outra{background:#4a3a2a}
+.tag.reemb{background:#5a2b2b}
+svg text{fill:var(--muted);font-size:11px}
+#login{max-width:360px;margin:12vh auto;padding:28px;background:var(--navy-900);border:1px solid var(--navy-700);border-radius:12px}
+#login h1{font-family:Playfair,serif;color:var(--gold-bright);font-weight:500;margin:0 0 16px}
+#login input{width:100%;margin-bottom:12px}
+#login .btn{width:100%}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<form id="login" hidden>
+  <h1>Painel Método REI</h1>
+  <input type="password" id="senha" placeholder="Senha do time" autocomplete="current-password" required>
+  <button class="btn">Entrar</button>
+  <p id="loginErro" class="muted" role="alert"></p>
+</form>
+
+<div id="app" hidden>
+<header>
+  <div class="wrap bar">
+    <div class="marca">Método REI <small>Painel</small></div>
+    <span id="amb" class="badge"></span>
+    <label class="muted" for="periodo">Período</label>
+    <select id="periodo">
+      <option value="7">7 dias</option><option value="30">30 dias</option><option value="90">90 dias</option>
+      <option value="ano" selected>2026 inteiro</option>
+    </select>
+    <select id="produto" aria-label="Produto"></select>
+    <button class="btn ghost" id="atualizar" title="Buscar dados novos">Atualizar</button>
+    <button class="btn ghost" id="sair">Sair</button>
+  </div>
+  <div class="wrap tabs" role="tablist">
+    <button role="tab" data-aba="vendas" aria-selected="true">Vendas</button>
+    <button role="tab" data-aba="pedidos" aria-selected="false">Pedidos</button>
+    <button role="tab" data-aba="leads" aria-selected="false">Leads</button>
+  </div>
+</header>
+
+<main class="wrap">
+  <div id="avisos"></div>
+
+  <section id="aba-vendas">
+    <div class="kpis" id="kpis"></div>
+    <h2>Por evento</h2>
+    <div class="grid" id="porEvento"></div>
+    <h2>Vendas por dia</h2>
+    <div class="card"><div id="grafico"></div></div>
+    <div id="blocoProdutos">
+      <h2>Por produto</h2>
+      <div class="tabela"><table><thead><tr><th>Produto</th><th>Origem</th><th class="n">Pedidos</th><th class="n">Bruto</th><th class="n">Reembolsos</th><th class="n">Líquido</th></tr></thead><tbody id="porProduto"></tbody></table></div>
+    </div>
+    <h2>Cupons</h2>
+    <div class="tabela"><table><thead><tr><th>Cupom</th><th class="n">Pedidos</th><th class="n">Ingressos</th><th class="n">Desconto</th></tr></thead><tbody id="cupons"></tbody></table></div>
+  </section>
+
+  <section id="aba-pedidos" hidden>
+    <div class="filtros">
+      <input type="search" id="busca" placeholder="Buscar nome, e-mail, telefone, nº ou código do ingresso">
+      <select id="fEvento" aria-label="Evento"></select>
+      <select id="fTipo" aria-label="Tipo"><option value="">Todos os tipos</option><option value="standard">Standard</option><option value="vip">VIP</option><option value="rei">REI</option></select>
+      <select id="fOrigem" aria-label="Origem"><option value="">Todas as origens</option><option value="site">Site</option><option value="pag">pag.metodorei.com</option><option value="outra">PDV / manual</option></select>
+      <button class="btn ghost" id="csvPedidos">Baixar CSV</button>
+    </div>
+    <p class="muted" id="contaPedidos"></p>
+    <div class="tabela"><table><thead><tr><th>Data</th><th>Nº</th><th>Comprador</th><th>Produto / evento</th><th>Tipo</th><th class="n">Qtd</th><th class="n">Total</th><th>Origem</th></tr></thead><tbody id="pedidos"></tbody></table></div>
+  </section>
+
+  <section id="aba-leads" hidden>
+    <div class="kpis" id="kpisLeads"></div>
+    <div class="grid" id="resumoLeads"></div>
+    <h2>Lista</h2>
+    <div class="filtros">
+      <input type="search" id="buscaLead" placeholder="Buscar nome, e-mail, telefone, cidade">
+      <select id="fInteresse" aria-label="Interesse"></select>
+      <select id="fEstadoLead" aria-label="Estado"></select>
+      <button class="btn ghost" id="csvLeads">Baixar CSV</button>
+    </div>
+    <p class="muted" id="contaLeads"></p>
+    <div class="tabela"><table><thead><tr><th>Data</th><th>Nome</th><th>E-mail</th><th>Telefone</th><th>Cidade / UF</th><th>Interesse</th><th>Idioma</th><th>Origem</th><th>Comprou?</th></tr></thead><tbody id="leads"></tbody></table></div>
+  </section>
+</main>
+</div>
+
+<script>
+(() => {
+  const $ = (s) => document.querySelector(s);
+  const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const usd = (n) => { const v = Math.round(n * 100) / 100; return (v < 0 ? "-$" : "$") + Math.abs(v).toLocaleString("en-US", { minimumFractionDigits: Number.isInteger(v) ? 0 : 2, maximumFractionDigits: 2 }); };
+  const num = (n) => n.toLocaleString("pt-BR");
+  const dataBR = (iso) => iso ? new Date(iso).toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit", year: "2-digit", timeZone: "America/New_York" }) : "";
+  const diaNY = (iso) => new Date(iso).toLocaleDateString("en-CA", { timeZone: "America/New_York" });
+  const TIPOS = { standard: "Standard", vip: "VIP", rei: "REI" };
+  const ORIGEM = { site: "Site", pag: "pag.metodorei", outra: "PDV / manual" };
+  const MR = "__mr", TODAS = "__todas";
+  let V = null, L = null, aba = "vendas";
+
+  const api = async (url, opt) => {
+    const r = await fetch(url, { credentials: "same-origin", ...opt });
+    if (r.status === 401) { mostrarLogin(); throw new Error("sessao"); }
+    return r.json();
+  };
+
+  function desde() {
+    const p = $("#periodo").value;
+    if (p === "ano") return "2026-01-01";
+    const d = new Date(Date.now() - Number(p) * 86400000);
+    return d.toISOString().slice(0, 10);
+  }
+
+  // ---------- login ----------
+  function mostrarLogin() { $("#app").hidden = true; $("#login").hidden = false; $("#senha").focus(); }
+  $("#login").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    $("#loginErro").textContent = "";
+    const r = await fetch("/api/painel/auth", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ senha: $("#senha").value }) });
+    if (!r.ok) { $("#loginErro").textContent = "Senha incorreta."; return; }
+    $("#senha").value = "";
+    iniciar();
+  });
+  $("#sair").addEventListener("click", async () => { await fetch("/api/painel/auth", { method: "DELETE" }); mostrarLogin(); });
+
+  // ---------- abas ----------
+  document.querySelectorAll("[data-aba]").forEach((b) => b.addEventListener("click", () => {
+    aba = b.dataset.aba;
+    document.querySelectorAll("[data-aba]").forEach((x) => x.setAttribute("aria-selected", x === b));
+    for (const s of ["vendas", "pedidos", "leads"]) $("#aba-" + s).hidden = s !== aba;
+    if (aba === "leads" && !L) carregarLeads();
+  }));
+
+  // ---------- dados ----------
+  async function carregar(novo) {
+    $("#avisos").innerHTML = '<p class="aviso">Carregando vendas…</p>';
+    try {
+      V = await api(`/api/painel/vendas?desde=${desde()}${novo ? "&novo=1" : ""}`);
+    } catch (e) { if (e.message !== "sessao") $("#avisos").innerHTML = '<p class="aviso erro">Não foi possível carregar as vendas.</p>'; return; }
+    if (V.erro) { $("#avisos").innerHTML = `<p class="aviso erro">Erro ao ler a Square: ${esc(V.detalhe || V.erro)}</p>`; return; }
+    montarFiltros();
+    avisos();
+    render();
+    L = null;
+    if (aba === "leads") carregarLeads(novo);
+  }
+
+  function avisos() {
+    const a = [];
+    $("#amb").textContent = V.ambiente === "production" ? "Produção" : "Sandbox (teste)";
+    $("#amb").className = "badge" + (V.ambiente === "production" ? "" : " sandbox");
+    if (V.ghl === "sem_token") a.push("As vendas de pag.metodorei.com aparecem com o nome curto do cartão (ex.: “Método Rei”), mas sem evento e tipo de ingresso. Para separar por evento, falta configurar a chave da API do Salee.ai.");
+    else if (V.ghl !== "ok") a.push("Não foi possível ler os produtos no Salee.ai agora (" + esc(V.ghl) + "). As vendas aparecem sem evento.");
+    a.push("Valores em USD, já com cupons e reembolsos descontados, antes das taxas da Square. Carrinhos abertos e cartões recusados não entram.");
+    $("#avisos").innerHTML = a.map((t) => `<p class="aviso">${esc(t)}</p>`).join("");
+  }
+
+  function montarFiltros() {
+    const atual = $("#produto").value || MR;
+    const prods = [...new Set(V.linhas.map((l) => l.produto))].sort();
+    $("#produto").innerHTML = `<option value="${MR}">Só Método REI</option><option value="${TODAS}">Todas as vendas da conta</option>` + prods.map((p) => `<option>${esc(p)}</option>`).join("");
+    $("#produto").value = [...$("#produto").options].some((o) => o.value === atual) ? atual : MR;
+    const evAtual = $("#fEvento").value;
+    $("#fEvento").innerHTML = '<option value="">Todos os eventos</option>' + V.eventos.map((e) => `<option value="${e.slug}">${esc(e.cidade)}</option>`).join("") + '<option value="__sem">Sem evento</option>';
+    $("#fEvento").value = evAtual;
+  }
+
+  const nomeEvento = (slug) => (V.eventos.find((e) => e.slug === slug) || {}).cidade || "";
+  function linhas() {
+    const p = $("#produto").value;
+    const d = desde();
+    return V.linhas.filter((l) => diaNY(l.data) >= d && (p === TODAS || (p === MR ? l.metodo_rei : l.produto === p)));
+  }
+
+  // ---------- vendas ----------
+  function soma(ls) {
+    const s = { pedidos: ls.length, ingressos: 0, bruto: 0, reembolso: 0, liquido: 0, taxa: 0, desconto: 0 };
+    for (const l of ls) { s.ingressos += l.qtd; s.bruto += l.total; s.reembolso += l.reembolso; s.liquido += l.liquido; s.taxa += l.taxa; s.desconto += l.desconto; }
+    return s;
+  }
+
+  function render() { renderVendas(); renderPedidos(); }
+
+  function renderVendas() {
+    const ls = linhas();
+    const s = soma(ls);
+    const soMR = $("#produto").value === MR;
+    $("#kpis").innerHTML = [
+      [num(s.pedidos), "pedidos pagos"],
+      [num(s.ingressos), soMR ? "ingressos" : "itens"],
+      [usd(s.liquido), "receita líquida"],
+      [usd(s.reembolso), "reembolsos"],
+      [usd(s.taxa), "taxas Square (informativo)"],
+      ...(L && !L.indisponivel ? [[num(L.linhas.filter((x) => diaNY(x.data) >= desde()).length), "leads no período"]] : []),
+    ].map(([v, t]) => `<div class="kpi"><b>${v}</b><span>${t}</span></div>`).join("");
+
+    // por evento
+    const grupos = {};
+    for (const l of ls) {
+      const k = l.evento || "__sem";
+      (grupos[k] ||= []).push(l);
+    }
+    const ordem = [...V.eventos.map((e) => e.slug), "__sem"].filter((k) => grupos[k]);
+    $("#porEvento").innerHTML = ordem.map((k) => {
+      const g = grupos[k], st = soma(g), ev = V.eventos.find((e) => e.slug === k);
+      const porTipo = {};
+      for (const l of g) { const t = l.tipo || "—"; porTipo[t] ||= { q: 0, v: 0 }; porTipo[t].q += l.qtd; porTipo[t].v += l.liquido; }
+      const titulo = ev ? `${esc(ev.cidade)}${ev.uf ? ", " + esc(ev.uf) : ""}` : "Sem evento identificado";
+      const sub = ev ? esc(ev.datas_texto || "") : "vendas de pag.metodorei.com sem detalhe do produto";
+      return `<div class="card"><h3>${titulo}</h3><div class="sub">${sub}</div>
+        <table><tbody>${Object.entries(porTipo).map(([t, x]) => `<tr><td>${esc(TIPOS[t] || t)}</td><td class="n">${num(x.q)} ingr.</td><td class="n">${usd(x.v)}</td></tr>`).join("")}
+        <tr><td><b>Total</b></td><td class="n"><b>${num(st.ingressos)}</b></td><td class="n"><b>${usd(st.liquido)}</b></td></tr></tbody></table></div>`;
+    }).join("") || '<p class="muted">Nenhuma venda no período.</p>';
+
+    // gráfico diário
+    const dias = {};
+    for (const l of ls) { const d = diaNY(l.data); dias[d] = (dias[d] || 0) + l.liquido; }
+    const ini = new Date(desde() + "T12:00:00"), fim = new Date();
+    const serie = [];
+    for (let d = new Date(ini); d <= fim; d.setDate(d.getDate() + 1)) { const k = d.toISOString().slice(0, 10); serie.push([k, dias[k] || 0]); }
+    $("#grafico").innerHTML = grafico(serie);
+
+    // por produto
+    $("#blocoProdutos").hidden = soMR;
+    const prods = {};
+    for (const l of ls) (prods[l.produto + "|" + l.origem] ||= []).push(l);
+    $("#porProduto").innerHTML = Object.entries(prods).sort((a, b) => soma(b[1]).liquido - soma(a[1]).liquido).map(([k, g]) => {
+      const st = soma(g), [nome, or] = k.split("|");
+      return `<tr><td>${esc(nome)}</td><td><span class="tag ${or}">${ORIGEM[or]}</span></td><td class="n">${num(st.pedidos)}</td><td class="n">${usd(st.bruto)}</td><td class="n">${usd(st.reembolso)}</td><td class="n">${usd(st.liquido)}</td></tr>`;
+    }).join("");
+
+    // cupons
+    const cup = {};
+    for (const l of ls) if (l.cupom) { cup[l.cupom] ||= { p: 0, q: 0, d: 0 }; cup[l.cupom].p++; cup[l.cupom].q += l.qtd; cup[l.cupom].d += l.desconto; }
+    $("#cupons").innerHTML = Object.entries(cup).map(([c, x]) => `<tr><td>${esc(c)}</td><td class="n">${x.p}</td><td class="n">${x.q}</td><td class="n">${usd(x.d)}</td></tr>`).join("") || '<tr><td colspan="4" class="muted">Nenhum cupom usado no período (cupons só existem no checkout do site).</td></tr>';
+  }
+
+  function grafico(serie) {
+    if (!serie.length) return "";
+    const W = Math.max(600, serie.length * 6), H = 180, pad = 28;
+    const max = Math.max(1, ...serie.map((s) => s[1]));
+    const bw = (W - pad) / serie.length;
+    const barras = serie.map(([d, v], i) => {
+      const h = Math.max(0, (v / max) * (H - 40));
+      return `<rect x="${pad + i * bw + 1}" y="${H - 20 - h}" width="${Math.max(1, bw - 2)}" height="${h}" fill="${v ? "#B99135" : "transparent"}"><title>${dataBR(d + "T12:00:00")}: ${usd(v)}</title></rect>`;
+    }).join("");
+    const marcas = serie.filter((_, i) => i % Math.ceil(serie.length / 8) === 0).map(([d]) => {
+      const i = serie.findIndex((s) => s[0] === d);
+      return `<text x="${pad + i * bw}" y="${H - 4}">${d.slice(8, 10)}/${d.slice(5, 7)}</text>`;
+    }).join("");
+    return `<div style="overflow-x:auto"><svg viewBox="0 0 ${W} ${H}" width="100%" style="min-width:${Math.min(W, 600)}px" role="img" aria-label="Receita líquida por dia">
+      <text x="0" y="12">${usd(max)}</text><line x1="${pad}" x2="${W}" y1="${H - 20}" y2="${H - 20}" stroke="#24324a"/>${barras}${marcas}</svg></div>`;
+  }
+
+  // ---------- pedidos ----------
+  function pedidosFiltrados() {
+    const q = $("#busca").value.trim().toLowerCase(), ev = $("#fEvento").value, ti = $("#fTipo").value, or = $("#fOrigem").value;
+    return linhas().filter((l) =>
+      (!ev || (ev === "__sem" ? !l.evento : l.evento === ev)) && (!ti || l.tipo === ti) && (!or || l.origem === or) &&
+      (!q || [l.comprador, l.email, l.telefone, l.numero, l.id, ...l.ingressos.map((i) => i.codigo + " " + i.titular)].join(" ").toLowerCase().includes(q)));
+  }
+
+  function renderPedidos() {
+    const ls = pedidosFiltrados();
+    $("#contaPedidos").textContent = `${num(ls.length)} pedidos · ${usd(soma(ls).liquido)} líquido`;
+    $("#pedidos").innerHTML = ls.slice(0, 500).map((l, i) => `<tr class="linha" data-i="${i}">
+      <td>${dataBR(l.data)}</td><td>${esc(l.numero)}</td><td>${esc(l.comprador) || '<span class="muted">—</span>'}<br><span class="muted">${esc(l.email)}</span></td>
+      <td>${esc(l.evento ? "Método REI " + nomeEvento(l.evento) : l.produto)}</td><td>${esc(TIPOS[l.tipo] || "")}</td>
+      <td class="n">${l.qtd}</td><td class="n">${usd(l.liquido)}${l.reembolso ? ' <span class="tag reemb">reemb.</span>' : ""}</td>
+      <td><span class="tag ${l.origem}">${ORIGEM[l.origem]}</span></td></tr>`).join("") +
+      (ls.length > 500 ? `<tr><td colspan="8" class="muted">Mostrando 500 de ${ls.length}. Use a busca ou baixe o CSV.</td></tr>` : "");
+    $("#pedidos").onclick = (e) => {
+      const tr = e.target.closest("tr.linha"); if (!tr) return;
+      const prox = tr.nextElementSibling;
+      if (prox && prox.classList.contains("det")) { prox.remove(); return; }
+      const l = ls[Number(tr.dataset.i)];
+      const det = document.createElement("tr");
+      det.className = "det";
+      det.innerHTML = `<td colspan="8">
+        <p><b>Pedido</b> ${esc(l.id)} · ${new Date(l.data).toLocaleString("pt-BR", { timeZone: "America/New_York" })} (horário de NY)</p>
+        <p><b>Comprador</b> ${esc(l.comprador)} · ${esc(l.email)} · ${esc(l.telefone)}${l.idioma ? " · idioma " + esc(l.idioma.toUpperCase()) : ""}</p>
+        <p><b>Valores</b> total ${usd(l.total)}${l.desconto ? " · desconto " + usd(l.desconto) : ""}${l.cupom ? " (cupom " + esc(l.cupom) + ")" : ""}${l.reembolso ? " · reembolsado " + usd(l.reembolso) : ""} · taxa Square ${usd(l.taxa)} · ${esc(l.metodo)}</p>
+        ${l.descricao_ghl ? `<p><b>Produto no Salee</b> ${esc(l.descricao_ghl)}</p>` : ""}
+        ${l.utm ? `<p><b>Origem (UTM)</b> ${esc(l.utm)}</p>` : ""}
+        ${l.ingressos.length ? `<p><b>Ingressos</b><br>${l.ingressos.map((x) => `${esc(x.codigo)} — ${esc(x.titular)}${x.email ? " · " + esc(x.email) : ""}`).join("<br>")}</p>` : ""}
+        <p>${l.recibo ? `<a href="${esc(l.recibo)}" target="_blank" rel="noopener">Recibo Square</a>` : ""}${l.link ? ` · <a href="${esc(l.link)}" target="_blank" rel="noopener">Página de confirmação / ingressos</a>` : ""}</p></td>`;
+      tr.after(det);
+    };
+  }
+  ["#busca", "#fEvento", "#fTipo", "#fOrigem"].forEach((s) => $(s).addEventListener("input", renderPedidos));
+
+  // ---------- leads ----------
+  async function carregarLeads(novo) {
+    $("#leads").innerHTML = '<tr><td colspan="9" class="muted">Carregando leads…</td></tr>';
+    try { L = await api(`/api/painel/leads?desde=${desde()}${novo ? "&novo=1" : ""}`); } catch { return; }
+    if (L.indisponivel) {
+      $("#kpisLeads").innerHTML = "";
+      $("#resumoLeads").innerHTML = '<p class="aviso">Os leads ficam no Salee.ai. Para vê-los aqui, falta configurar a chave da API do Salee.ai no site.</p>';
+      $("#leads").innerHTML = "";
+      return;
+    }
+    if (L.erro) { $("#resumoLeads").innerHTML = `<p class="aviso erro">Erro ao ler o Salee.ai: ${esc(L.detalhe || L.erro)}</p>`; $("#leads").innerHTML = ""; return; }
+    const sel = (id, campo, rotulo) => {
+      const v = [...new Set(L.linhas.map((x) => x[campo]).filter(Boolean))].sort();
+      $(id).innerHTML = `<option value="">${rotulo}</option>` + v.map((x) => `<option>${esc(x)}</option>`).join("");
+    };
+    sel("#fInteresse", "interesse", "Todo interesse");
+    sel("#fEstadoLead", "estado", "Todos os estados");
+    renderLeads();
+    renderVendas();
+  }
+
+  function leadsFiltrados() {
+    const q = $("#buscaLead").value.trim().toLowerCase(), it = $("#fInteresse").value, es = $("#fEstadoLead").value;
+    return L.linhas.filter((x) => (!it || x.interesse === it) && (!es || x.estado === es) &&
+      (!q || [x.nome, x.email, x.telefone, x.cidade, x.estado].join(" ").toLowerCase().includes(q)));
+  }
+
+  function contagem(ls, campo) {
+    const c = {};
+    for (const x of ls) { const k = x[campo] || "—"; c[k] = (c[k] || 0) + 1; }
+    return Object.entries(c).sort((a, b) => b[1] - a[1]).slice(0, 8);
+  }
+
+  function renderLeads() {
+    if (!L || L.indisponivel || L.erro) return;
+    const todos = L.linhas, ls = leadsFiltrados();
+    const semana = todos.filter((x) => Date.now() - new Date(x.data) < 7 * 86400000).length;
+    $("#kpisLeads").innerHTML = [[num(todos.length), "leads no período"], [num(semana), "últimos 7 dias"], [num(todos.filter((x) => x.comprou).length), "já compraram"]]
+      .map(([v, t]) => `<div class="kpi"><b>${v}</b><span>${t}</span></div>`).join("");
+    const bloco = (t, arr) => `<div class="card"><h3>${t}</h3><table><tbody>${arr.map(([k, v]) => `<tr><td>${esc(k)}</td><td class="n">${num(v)}</td></tr>`).join("")}</tbody></table></div>`;
+    $("#resumoLeads").innerHTML = bloco("Interesse", contagem(todos, "interesse")) + bloco("Estado", contagem(todos, "estado")) + bloco("Origem", contagem(todos, "origem"));
+    $("#contaLeads").textContent = `${num(ls.length)} leads`;
+    $("#leads").innerHTML = ls.slice(0, 1000).map((x) => `<tr><td>${dataBR(x.data)}</td><td><a href="${esc(x.link)}" target="_blank" rel="noopener">${esc(x.nome) || "—"}</a></td>
+      <td>${esc(x.email)}</td><td>${esc(x.telefone)}</td><td>${esc([x.cidade, x.estado].filter(Boolean).join(" / "))}</td><td>${esc(x.interesse)}</td>
+      <td>${esc(x.idioma)}</td><td>${esc([x.origem, x.campanha].filter(Boolean).join(" · "))}</td><td>${x.comprou ? "Sim" : ""}</td></tr>`).join("");
+  }
+  ["#buscaLead", "#fInteresse", "#fEstadoLead"].forEach((s) => $(s).addEventListener("input", renderLeads));
+
+  // ---------- CSV ----------
+  function csv(nome, cab, rows) {
+    const cel = (v) => { const s = String(v ?? ""); return /[",\n;]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
+    const txt = "﻿" + [cab, ...rows].map((r) => r.map(cel).join(",")).join("\n");
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([txt], { type: "text/csv;charset=utf-8" }));
+    a.download = nome;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  }
+  $("#csvPedidos").addEventListener("click", () => csv(`pedidos-${desde()}.csv`,
+    ["data", "pedido", "origem", "produto", "evento", "tipo", "quantidade", "total", "desconto", "cupom", "reembolso", "liquido", "taxa_square", "comprador", "email", "telefone", "idioma", "utm", "ingressos", "recibo"],
+    pedidosFiltrados().map((l) => [l.data, l.id, l.origem, l.produto, nomeEvento(l.evento), TIPOS[l.tipo] || "", l.qtd, l.total, l.desconto, l.cupom, l.reembolso, l.liquido, l.taxa, l.comprador, l.email, l.telefone, l.idioma, l.utm, l.ingressos.map((i) => `${i.codigo} ${i.titular}`).join(" | "), l.recibo])));
+  $("#csvLeads").addEventListener("click", () => L && !L.indisponivel && csv(`leads-${desde()}.csv`,
+    ["data", "nome", "email", "telefone", "cidade", "estado", "interesse", "idioma", "origem", "campanha", "comprou"],
+    leadsFiltrados().map((x) => [x.data, x.nome, x.email, x.telefone, x.cidade, x.estado, x.interesse, x.idioma, x.origem, x.campanha, x.comprou ? "sim" : ""])));
+
+  // ---------- início ----------
+  $("#periodo").addEventListener("change", () => carregar());
+  $("#produto").addEventListener("change", render);
+  $("#atualizar").addEventListener("click", () => carregar(true));
+
+  async function iniciar() {
+    $("#login").hidden = true;
+    $("#app").hidden = false;
+    carregar();
+  }
+  fetch("/api/painel/auth").then((r) => r.json()).then((s) => s.ok ? iniciar() : mostrarLogin()).catch(mostrarLogin);
+})();
+</script>
+</body>
+</html>

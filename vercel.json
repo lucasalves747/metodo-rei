@@ -91,6 +91,9 @@
     },
     "api/pedido.mjs": {
       "maxDuration": 30
+    },
+    "api/painel/*.mjs": {
+      "maxDuration": 60
     }
   }
 }
