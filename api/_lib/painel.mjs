@@ -2,6 +2,7 @@
 import crypto from "node:crypto";
 import { CATALOGO } from "./catalogo.mjs";
 import { config, square, confere, chavePedido, codigoIngresso } from "./square.mjs";
+import { storeAtivo, lerLeads } from "./leads-store.mjs";
 
 // ---------- sessão ----------
 const COOKIE = "painel";
@@ -279,21 +280,48 @@ function linhaLead(c, fonte, extra = {}) {
   };
 }
 
-// Três fontes: formulário da home, checkout do site que não terminou (tags com o código do evento)
-// e carrinhos do Salee.ai em pag.metodorei.com que não foram pagos.
-export async function leads() {
-  const [home, checkout, ghlPedidos] = await Promise.all([contatosComTag(TAG_LEAD), contatosComTag("Checkout"), pedidosGhl()]);
+// Fontes: cópia guardada pelo próprio site (formulário da home e checkout), contatos do Salee.ai com as tags
+// do site (caso a cópia ainda não existisse) e carrinhos do Salee.ai em pag.metodorei.com que não foram pagos.
+function linhaSite(l) {
+  const home = l.origem !== "checkout_site";
+  let host = "";
+  try { host = l.referrer ? new URL(l.referrer).hostname.replace(/^www\./, "") : ""; } catch {}
+  return {
+    id: l.email + l.data_envio, data: l.data_envio, nome: l.nome || "", email: l.email || "", telefone: l.telefone || "",
+    cidade: l.cidade || "", estado: l.estado || "", idioma: (l.idioma || "").toUpperCase(),
+    interesse: (l.edicao_interesse || "").replace(/^m[eé]todo rei - /i, ""),
+    fonte: home ? "Formulário da home" : "Checkout do site (não pagou)",
+    origem: l.utm_source || host || "direto", campanha: l.utm_campaign || "", profissao: l.profissao || "",
+    salee: home ? (l.salee === "ok" ? "ok" : l.salee || "") : "", link: "",
+  };
+}
+
+export async function leads(desde) {
+  const ativo = ghlAtivo();
+  const [site, home, checkout, ghlPedidos] = await Promise.all([
+    storeAtivo() ? lerLeads(desde) : [],
+    ativo ? contatosComTag(TAG_LEAD) : [],
+    ativo ? contatosComTag("Checkout") : [],
+    ativo ? pedidosGhl() : { vendas: [], carrinhos: [] },
+  ]);
   const out = new Map();
-  for (const c of home) out.set(c.id, linhaLead(c, "Formulário da home"));
+  // cópia do site: um por e-mail e fonte (o mais recente)
+  for (const l of site.sort((a, b) => String(b.data_envio).localeCompare(String(a.data_envio)))) {
+    const r = linhaSite(l);
+    const k = `${r.fonte}|${r.email}`;
+    if (!out.has(k)) out.set(k, r);
+  }
+  const emails = new Set([...out.values()].map((r) => r.email));
+  for (const c of home) if (!emails.has((c.email || "").toLowerCase())) out.set(c.id, linhaLead(c, "Formulário da home"));
   for (const c of checkout) {
-    if (out.has(c.id)) continue;
+    if (out.has(c.id) || emails.has((c.email || "").toLowerCase())) continue;
     const t = (c.tags || []).find((x) => /^m[eé]todo rei - /i.test(x) && !/lista geral|comprou/i.test(x)) || "";
     out.set(c.id, linhaLead(c, "Checkout do site (não pagou)", { interesse: t.replace(/^m[eé]todo rei - /i, "") }));
   }
   // carrinhos não pagos, sem quem acabou comprando depois
   const compradores = new Set(ghlPedidos.vendas.map((v) => v.contato_id));
   const abandonos = new Map();
-  for (const c of ghlPedidos.carrinhos) if (c.contato_id && !compradores.has(c.contato_id) && !out.has(c.contato_id) && !abandonos.has(c.contato_id)) abandonos.set(c.contato_id, c);
+  for (const c of ghlPedidos.carrinhos) if (c.contato_id && !compradores.has(c.contato_id) && !out.has(c.contato_id) && !abandonos.has(c.contato_id) && !emails.has((c.email || "").toLowerCase())) abandonos.set(c.contato_id, c);
   const contatos = await emLotes([...abandonos.values()], 8, async (c) => {
     try { return (await ghl(`/contacts/${c.contato_id}`)).contact; } catch { return null; }
   });
@@ -302,5 +330,5 @@ export async function leads() {
     const ev = listaEventos().find((e) => e.slug === c.evento);
     out.set(c.contato_id, linhaLead({ ...ct, dateAdded: c.data }, "Carrinho pag.metodorei (não pagou)", { interesse: ev ? ev.cidade : c.produto }));
   });
-  return [...out.values()].sort((a, b) => String(b.data).localeCompare(String(a.data)));
+  return [...out.values()].filter((l) => String(l.data) >= desde).sort((a, b) => String(b.data).localeCompare(String(a.data)));
 }

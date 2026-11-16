@@ -309,6 +309,11 @@
       fetch(C.lead.endpoint, { method: "POST", headers: { "Content-Type": "application/json" }, keepalive: true,
         body: JSON.stringify({ nome: nome, email: email, telefone: tel, tags: C.lead.tags, origem: "checkout", notas: "Abriu o checkout: " + C.tiers[st.tier].nome }) });
     } catch (e) {}
+    // cópia no próprio site
+    try {
+      fetch("/api/lead", { method: "POST", headers: { "Content-Type": "application/json" }, keepalive: true,
+        body: JSON.stringify({ origem: "checkout", nome: nome, email: email, telefone: tel, evento: C.slug, edicao: C.lead.tags[0], tier: st.tier, idioma: C.lang, utm: utm(), pagina_url: location.href, referrer: document.referrer }) });
+    } catch (e) {}
   }
   function ocupado(on) {
     st.busy = on;

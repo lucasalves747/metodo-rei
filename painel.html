@@ -133,7 +133,7 @@ svg text{fill:var(--muted);font-size:11px}
       <button class="btn ghost" id="csvLeads">Baixar CSV</button>
     </div>
     <p class="muted" id="contaLeads"></p>
-    <div class="tabela"><table><thead><tr><th>Data</th><th>Nome</th><th>E-mail</th><th>Telefone</th><th>Cidade / UF</th><th>Interesse</th><th>Fonte</th><th>Idioma</th><th>Origem</th></tr></thead><tbody id="leads"></tbody></table></div>
+    <div class="tabela"><table><thead><tr><th>Data</th><th>Nome</th><th>E-mail</th><th>Telefone</th><th>Cidade / UF</th><th>Interesse</th><th>Fonte</th><th>Idioma</th><th>Origem</th><th>No Salee</th></tr></thead><tbody id="leads"></tbody></table></div>
   </section>
 </main>
 </div>
@@ -390,12 +390,14 @@ svg text{fill:var(--muted);font-size:11px}
     $("#kpisLeads").innerHTML = [[num(todos.length), "leads no período"], [num(semana), "últimos 7 dias"], [num(home), "do formulário da home"]]
       .map(([v, t]) => `<div class="kpi"><b>${v}</b><span>${t}</span></div>`).join("");
     const bloco = (t, arr) => `<div class="card"><h3>${t}</h3><table><tbody>${arr.map(([k, v]) => `<tr><td>${esc(k)}</td><td class="n">${num(v)}</td></tr>`).join("")}</tbody></table></div>`;
-    $("#resumoLeads").innerHTML = (home ? "" : '<p class="aviso erro" style="grid-column:1/-1">Nenhum lead do formulário da home (nem do checkout do site) aparece no Salee.ai. O site envia, mas o workflow do webhook no Salee.ai não está criando/marcando os contatos — vale conferir a automação lá.</p>') +
+    const aviso = !L.copia_site ? "" : '<p class="aviso" style="grid-column:1/-1">Desde 16/11/2026 o site guarda uma cópia de cada lead do formulário da home e do checkout — eles aparecem aqui mesmo que o Salee.ai não os registre. Leads anteriores só aparecem se chegaram ao Salee.ai.</p>';
+    $("#resumoLeads").innerHTML = aviso +
       bloco("Fonte", contagem(todos, "fonte")) + bloco("Interesse", contagem(todos, "interesse")) + bloco("Estado", contagem(todos, "estado"));
     $("#contaLeads").textContent = `${num(ls.length)} leads`;
-    $("#leads").innerHTML = ls.slice(0, 1000).map((x) => `<tr><td>${dataBR(x.data)}</td><td><a href="${esc(x.link)}" target="_blank" rel="noopener">${esc(x.nome) || "—"}</a></td>
+    $("#leads").innerHTML = ls.slice(0, 1000).map((x) => `<tr><td>${dataBR(x.data)}</td><td>${x.link ? `<a href="${esc(x.link)}" target="_blank" rel="noopener">${esc(x.nome) || "—"}</a>` : esc(x.nome) || "—"}</td>
       <td>${esc(x.email)}</td><td>${esc(x.telefone)}</td><td>${esc([x.cidade, x.estado].filter(Boolean).join(" / "))}</td><td>${esc(x.interesse)}</td>
-      <td>${esc(x.fonte)}</td><td>${esc(x.idioma)}</td><td>${esc([x.origem, x.campanha].filter(Boolean).join(" · "))}</td></tr>`).join("");
+      <td>${esc(x.fonte)}</td><td>${esc(x.idioma)}</td><td>${esc([x.origem, x.campanha].filter(Boolean).join(" · "))}</td>
+      <td>${x.link ? "sim" : x.salee === "ok" ? "enviado" : x.salee ? '<span class="tag reemb" title="' + esc(x.salee) + '">falhou</span>' : ""}</td></tr>`).join("");
   }
   ["#buscaLead", "#fInteresse", "#fEstadoLead", "#fFonte"].forEach((s) => $(s).addEventListener("input", renderLeads));
 
