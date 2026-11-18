@@ -1,6 +1,6 @@
 // Aviso de compra enviado ao Salee.ai (GHL). Campos "planos" no topo (fáceis de mapear no GHL)
 // + listas de ingressos/convidados.
-export function montarPayload({ cfg, ev, q, t, ord, pagamento, nome, email, telefone, lang, link, ingressos, utm }) {
+export function montarPayload({ cfg, ev, q, t, ord, pagamento, nome, email, telefone, lang, link, ingressos, utm, ref = "" }) {
   const partes = nome.trim().split(/\s+/);
   const card = (pagamento && pagamento.card_details && pagamento.card_details.card) || {};
   const din = (c) => Math.round(c) / 100;
@@ -33,6 +33,7 @@ export function montarPayload({ cfg, ev, q, t, ord, pagamento, nome, email, tele
     convidados_emails: convidados.map((x) => x.email).join(", "),
     // origem
     utm_source: utm.utm_source || "", utm_medium: utm.utm_medium || "", utm_campaign: utm.utm_campaign || "", utm_content: utm.utm_content || "", utm_term: utm.utm_term || "",
-    tags: ["Método REI - Comprou", `Método REI - ${ev.cidade} ${ev.ano}`, `Método REI ${ev.cidade} - ${t.nome}`, `Idioma: ${lang.toUpperCase()}`],
+    referral_code: ref,
+    tags: [...(ref ? [`ref-${ref}`] : []), "Método REI - Comprou", `Método REI - ${ev.cidade} ${ev.ano}`, `Método REI ${ev.cidade} - ${t.nome}`, `Idioma: ${lang.toUpperCase()}`],
   };
 }

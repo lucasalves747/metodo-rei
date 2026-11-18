@@ -888,6 +888,7 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
+<script src="/assets/rei-ref.js"></script>
 </head>
 <body id="top">
 
@@ -1275,6 +1276,8 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
         telefone:(ddi.value+" "+tel.value.trim()).trim(),
         tags:LEAD_TAGS
       };
+      var ref=window.REI_REF&&window.REI_REF.get();
+      if(ref)payload.ref=ref;
       try{
         fetch(LEAD_ENDPOINT,{
           method:"POST",
@@ -1300,6 +1303,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
           u.searchParams.set("name",payload.nome);u.searchParams.set("email",payload.email);u.searchParams.set("phone",(ddi.value+tel.value.replace(/\D/g,"")));
           dest.url=u.toString();
         }catch(_){}
+        if(window.REI_REF)dest.url=window.REI_REF.decorate(dest.url);
         if(dest.target==="_blank"){window.open(dest.url,"_blank","noopener");}
         else{setTimeout(function(){window.location.href=dest.url;},250);}
       }

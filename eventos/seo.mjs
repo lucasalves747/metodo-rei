@@ -218,6 +218,8 @@ export function robots(data) {
   return `# Método REI — todos os buscadores e assistentes de IA são bem-vindos
 User-agent: *
 Allow: /
+Disallow: /painel
+Disallow: /api/
 
 Sitemap: ${data.site.url}/sitemap.xml
 `;

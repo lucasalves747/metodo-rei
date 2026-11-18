@@ -55,6 +55,7 @@ export default async function handler(req, res) {
     metadata: {
       evento: ev.slug, tipo: q.tier, idioma: lang, comprador: nome.slice(0, 255), email, telefone,
       ...(q.cupom ? { cupom: q.cupom.codigo } : {}),
+      ...(typeof b.ref === "string" && /^[A-Za-z0-9_-]{1,64}$/.test(b.ref) ? { ref: b.ref } : {}),
       ...(b.utm && b.utm.utm_source ? { utm: limpa([b.utm.utm_source, b.utm.utm_medium, b.utm.utm_campaign].filter(Boolean).join("/"), 250) } : {}),
     },
   };

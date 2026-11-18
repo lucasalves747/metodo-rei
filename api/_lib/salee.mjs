@@ -75,6 +75,7 @@ export async function payloadDoPedido(orderId) {
     nome: md.comprador || "", email: md.email || "", telefone: md.telefone || "",
     q: { tier: md.tipo, qty: itens.length, unit, subtotal: unit * itens.length, desconto, total, cupom: md.cupom ? { codigo: md.cupom } : null },
     utm: { utm_source, utm_medium, utm_campaign },
+    ref: md.ref || "",
   });
 }
 

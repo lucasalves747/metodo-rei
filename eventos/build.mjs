@@ -472,16 +472,24 @@ if (CHECK_ONLY) {
   process.exit(0);
 }
 
+// Rastreamento de afiliados (?ref=) em todas as páginas geradas.
+const REF_SCRIPT = '<script src="/assets/rei-ref.js"></script>';
+function comRef(html) {
+  if (html.includes(REF_SCRIPT)) return html;
+  if (!html.includes("</head>")) throw new Error("página sem </head>: não dá para incluir rei-ref.js");
+  return html.replace("</head>", `${REF_SCRIPT}\n</head>`);
+}
+
 for (const lang of IDIOMAS) {
   const dir = lang === "pt" ? ROOT : join(ROOT, lang);
   mkdirSync(dir, { recursive: true });
   const { rendered, home, upcoming } = porIdioma[lang];
-  for (const r of rendered) writeFileSync(join(dir, `${r.ev.slug}.html`), localizarPagina(r.html, lang, slugs));
-  writeFileSync(join(dir, "index.html"), localizarPagina(home, lang, slugs));
+  for (const r of rendered) writeFileSync(join(dir, `${r.ev.slug}.html`), comRef(localizarPagina(r.html, lang, slugs)));
+  writeFileSync(join(dir, "index.html"), comRef(localizarPagina(home, lang, slugs)));
   const pc = paginasCheckout(lang);
-  writeFileSync(join(dir, "pedido.html"), pc.pedido);
-  writeFileSync(join(dir, "politica.html"), pc.politica);
-  writeFileSync(join(dir, "creditos.html"), paginaCreditos(lang));
+  writeFileSync(join(dir, "pedido.html"), comRef(pc.pedido));
+  writeFileSync(join(dir, "politica.html"), comRef(pc.politica));
+  writeFileSync(join(dir, "creditos.html"), comRef(paginaCreditos(lang)));
   console.log(`  ✓ ${prefixo(lang) || "/"}  + ${rendered.map((r) => `${prefixo(lang)}/${r.ev.slug}`).join(", ")}  (${upcoming.length} próximos)`);
 }
 

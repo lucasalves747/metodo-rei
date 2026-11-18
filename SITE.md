@@ -16,3 +16,4 @@
 ## Change log
 
 - 2026-11-06 — cloned real source; added SITE.md
+- 2026-11-18 — affiliate tracking `?ref=CODE` (`assets/rei-ref.js`, injected by `eventos/build.mjs` into every page). GHL setup: `REF-TRACKING-GHL.md`

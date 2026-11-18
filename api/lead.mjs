@@ -3,6 +3,7 @@
 import { corpo, json, limpa, emailOk } from "./_lib/square.mjs";
 import { storeAtivo, novoCaminho, gravar } from "./_lib/leads-store.mjs";
 
+const refCampos = (r) => (typeof r === "string" && /^[A-Za-z0-9_-]{1,64}$/.test(r) ? { referral_code: r } : {});
 const CAMPOS_UTM = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "fbclid", "gclid"];
 
 export default async function handler(req, res) {
@@ -40,7 +41,9 @@ export default async function handler(req, res) {
     referrer: limpa(b.referrer, 300),
     data_envio: new Date().toISOString(),
     ...Object.fromEntries(CAMPOS_UTM.map((k) => [k, limpa(utm[k], 150)])),
+    ...refCampos(b.ref),
   };
+  if (payload.referral_code) payload.tags.push(`ref-${payload.referral_code}`);
 
   // 1) cópia no site (antes do Salee.ai, para não perder o lead se o envio falhar)
   const caminho = novoCaminho();
@@ -85,6 +88,7 @@ async function checkout(b, res) {
     ingresso_tipo: limpa(b.tier, 20), pagina_url: limpa(b.pagina_url, 500), referrer: limpa(b.referrer, 300),
     data_envio: new Date().toISOString(),
     ...Object.fromEntries(CAMPOS_UTM.map((k) => [k, limpa(utm[k], 150)])),
+    ...refCampos(b.ref),
   };
   try { await gravar(novoCaminho(), lead); } catch (e) { console.error("lead store", e.message); return json(res, 502, { erro: "envio" }); }
   json(res, 200, { ok: true });

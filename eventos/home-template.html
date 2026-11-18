@@ -371,7 +371,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
     }
     err.style.display="none";
     var payload={nome:nome,email:email.value.trim(),ddi:f("leadDdi").value,telefone:tel,cidade:cidade,estado:estado,profissao:prof,edicao_interesse:edicao,
-      idioma:(document.documentElement.lang||"pt").slice(0,2),pagina_url:window.location.href,referrer:document.referrer,utm:utms,website:f("leadWebsite").value};
+      idioma:(document.documentElement.lang||"pt").slice(0,2),pagina_url:window.location.href,referrer:document.referrer,utm:utms,ref:(window.REI_REF&&window.REI_REF.get())||"",website:f("leadWebsite").value};
     btn.disabled=true;btn.textContent="Enviando…";
     fetch("/api/lead",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)})
       .then(function(r){if(!r.ok)throw new Error(r.status);})

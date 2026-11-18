@@ -24,6 +24,7 @@
     try { new URLSearchParams(location.search).forEach(function (v, k) { if (/^utm_/.test(k)) o[k] = v.slice(0, 80); }); } catch (e) {}
     return o;
   }
+  function ref() { return (window.REI_REF && window.REI_REF.get()) || ""; }
   function store(k, v) { try { if (v === undefined) return JSON.parse(localStorage.getItem(k) || "null"); localStorage.setItem(k, JSON.stringify(v)); } catch (e) { return null; } }
   function post(url, body) {
     return fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) })
@@ -307,12 +308,12 @@
     // registra o interessado (carrinho abandonado) uma vez por e-mail
     try {
       fetch(C.lead.endpoint, { method: "POST", headers: { "Content-Type": "application/json" }, keepalive: true,
-        body: JSON.stringify({ nome: nome, email: email, telefone: tel, tags: C.lead.tags, origem: "checkout", notas: "Abriu o checkout: " + C.tiers[st.tier].nome }) });
+        body: JSON.stringify({ nome: nome, email: email, telefone: tel, tags: C.lead.tags, origem: "checkout", notas: "Abriu o checkout: " + C.tiers[st.tier].nome, ref: ref() }) });
     } catch (e) {}
     // cópia no próprio site
     try {
       fetch("/api/lead", { method: "POST", headers: { "Content-Type": "application/json" }, keepalive: true,
-        body: JSON.stringify({ origem: "checkout", nome: nome, email: email, telefone: tel, evento: C.slug, edicao: C.lead.tags[0], tier: st.tier, idioma: C.lang, utm: utm(), pagina_url: location.href, referrer: document.referrer }) });
+        body: JSON.stringify({ origem: "checkout", nome: nome, email: email, telefone: tel, evento: C.slug, edicao: C.lead.tags[0], tier: st.tier, idioma: C.lang, utm: utm(), ref: ref(), pagina_url: location.href, referrer: document.referrer }) });
     } catch (e) {}
   }
   function ocupado(on) {
@@ -350,13 +351,13 @@
       return post("/api/checkout/pay", {
         slug: C.slug, tier: st.tier, qty: st.qty, cupom: st.cupom || "", totalEsperado: qd.total, lang: C.lang,
         sourceId: r ? r.token : null, idempotencia: st.chave || (st.chave = uuid()),
-        comprador: { nome: d.nome, email: d.email, telefone: d.telefone }, convidados: d.convidados, utm: utm(),
+        comprador: { nome: d.nome, email: d.email, telefone: d.telefone }, convidados: d.convidados, utm: utm(), ref: ref(),
       });
     }).then(function (res) {
       if (res.ok && res.link) {
         if (window.fbq) try { fbq("track", "Purchase", { value: qd.total / 100, currency: "USD", content_name: "Método REI " + C.cidade + " " + C.tiers[st.tier].nome, num_items: st.qty }); } catch (e) {}
-        var u = new URL(res.link);
-        location.href = u.pathname + u.search;
+        var u = new URL(res.link), dest = u.pathname + u.search;
+        location.href = window.REI_REF ? window.REI_REF.decorate(dest) : dest;
         return;
       }
       st.chave = null; // novo pedido na próxima tentativa
