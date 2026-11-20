@@ -104,3 +104,15 @@
   .co-guest__f { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) { .co__sheet, .co__scrim, .co-toast { transition: none; } }
+
+/* Zelle (pagamento manual) */
+.co-zelle { all: unset; box-sizing: border-box; cursor: pointer; display: flex; align-items: center; justify-content: center; min-height: 50px; width: 100%; border-radius: 6px; font-weight: 700; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: #E3C78A; border: 1px solid rgba(227,199,138,.55); }
+.co-zelle:hover { background: rgba(227,199,138,.08); }
+.co-zelle:focus-visible { outline: 2px solid #E3C78A; outline-offset: 3px; }
+.co-zelle:disabled { cursor: progress; opacity: .6; }
+.co-zok { display: grid; gap: 14px; padding: 6px 0 4px; color: #E9E5DC; font-size: 15px; line-height: 1.55; }
+.co-zok h3 { margin: 0; font-size: 22px; color: #F2EEE6; }
+.co-zok__box { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 14px; border: 1px solid rgba(227,199,138,.35); border-radius: 6px; background: #121110; font-weight: 700; color: #F6E4B0; word-break: break-all; }
+.co-zok__box button { all: unset; cursor: pointer; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: #E3C78A; white-space: nowrap; }
+.co-zok__total { font-size: 28px; font-weight: 800; color: #F6E4B0; }
+.co-zok p { margin: 0; }

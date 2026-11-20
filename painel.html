@@ -55,6 +55,8 @@ tr.det td{white-space:normal;background:var(--navy-950);color:var(--cream)}
 .tag{display:inline-block;font-size:12px;padding:1px 7px;border-radius:99px;background:var(--navy-700);color:var(--cream)}
 .tag.site{background:#2d4a36}.tag.pag{background:#3b3550}.tag.outra{background:#4a3a2a}
 .tag.reemb{background:#5a2b2b}
+.tag.zelle{background:#1f4a5a}.tag.pend{background:#7a5a10}.tag.canc{background:#5a2b2b}.tag.conf{background:#2d4a36}
+.zbtn{margin:6px 8px 0 0;padding:6px 12px;border-radius:6px;border:1px solid var(--cream);background:transparent;color:var(--cream);cursor:pointer}.zbtn.ok{background:#2d4a36;border-color:#2d4a36}
 svg text{fill:var(--muted);font-size:11px}
 #login{max-width:360px;margin:12vh auto;padding:28px;background:var(--navy-900);border:1px solid var(--navy-700);border-radius:12px}
 #login h1{font-family:Playfair,serif;color:var(--gold-bright);font-weight:500;margin:0 0 16px}
@@ -114,7 +116,7 @@ svg text{fill:var(--muted);font-size:11px}
       <input type="search" id="busca" placeholder="Buscar nome, e-mail, telefone, nº ou código do ingresso">
       <select id="fEvento" aria-label="Evento"></select>
       <select id="fTipo" aria-label="Tipo"><option value="">Todos os tipos</option><option value="standard">Standard</option><option value="vip">VIP</option><option value="rei">REI</option></select>
-      <select id="fOrigem" aria-label="Origem"><option value="">Todas as origens</option><option value="site">Site</option><option value="pag">pag.metodorei.com</option><option value="outra">PDV / manual</option></select>
+      <select id="fOrigem" aria-label="Origem"><option value="">Todas as origens</option><option value="site">Site</option><option value="pag">pag.metodorei.com</option><option value="outra">PDV / manual</option><option value="zelle">Zelle</option></select>
       <button class="btn ghost" id="csvPedidos">Baixar CSV</button>
     </div>
     <p class="muted" id="contaPedidos"></p>
@@ -152,7 +154,9 @@ svg text{fill:var(--muted);font-size:11px}
   const dataBR = (iso) => iso ? new Date(iso).toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit", year: "2-digit", timeZone: "America/New_York" }) : "";
   const diaNY = (iso) => new Date(iso).toLocaleDateString("en-CA", { timeZone: "America/New_York" });
   const TIPOS = { standard: "Standard", vip: "VIP", rei: "REI" };
-  const ORIGEM = { site: "Site", pag: "pag.metodorei", outra: "PDV / manual" };
+  const ORIGEM = { site: "Site", pag: "pag.metodorei", outra: "PDV / manual", zelle: "Zelle" };
+  const ZST = { pendente: ["pend", "pagamento pendente"], confirmado: ["conf", "Zelle confirmado"], cancelado: ["canc", "cancelado"] };
+  const zTag = (l) => l.origem === "zelle" ? ` <span class="tag ${ZST[l.zelle_status][0]}">${ZST[l.zelle_status][1]}</span>` : "";
   const MR = "__mr", TODAS = "__todas";
   let V = null, L = null, aba = "vendas";
 
@@ -225,7 +229,10 @@ svg text{fill:var(--muted);font-size:11px}
     $("#fEvento").value = evAtual;
   }
 
-  const nomeEvento = (slug) => (V.eventos.find((e) => e.slug === slug) || {}).cidade || "";
+  const evDe = (slug) => V.eventos.find((e) => e.slug === slug) || {};
+  const nomeEvento = (slug) => evDe(slug).cidade || "";
+  const marcaEvento = (slug) => evDe(slug).marca || "Método REI";
+  const nomeTipo = (l) => l.tipo_nome || (evDe(l.evento).tipos || {})[l.tipo] || TIPOS[l.tipo] || "";
   function linhas() {
     const p = $("#produto").value;
     const d = desde();
@@ -326,14 +333,25 @@ svg text{fill:var(--muted);font-size:11px}
 
   function renderPedidos() {
     const ls = pedidosFiltrados();
-    $("#contaPedidos").textContent = `${num(ls.length)} pedidos · ${usd(soma(ls).liquido)} líquido`;
+    const zp = ls.filter((l) => l.zelle_status === "pendente");
+    $("#contaPedidos").textContent = `${num(ls.length)} pedidos · ${usd(soma(ls).liquido)} líquido` + (zp.length ? ` · ${zp.length} Zelle pendente${zp.length > 1 ? "s" : ""} (${usd(zp.reduce((s, l) => s + l.total, 0))})` : "");
     $("#pedidos").innerHTML = ls.slice(0, 500).map((l, i) => `<tr class="linha" data-i="${i}">
       <td>${dataBR(l.data)}</td><td>${esc(l.numero)}</td><td>${esc(l.comprador) || '<span class="muted">—</span>'}<br><span class="muted">${esc(l.email)}</span>${l.telefone ? '<br><span class="muted">' + esc(fone(l.telefone)) + "</span>" : ""}</td>
-      <td>${esc(l.evento ? "Método REI " + nomeEvento(l.evento) : l.produto)}</td><td>${esc(TIPOS[l.tipo] || "")}</td>
-      <td class="n">${l.qtd}</td><td class="n">${usd(l.liquido)}${l.reembolso ? ' <span class="tag reemb">reemb.</span>' : ""}</td>
+      <td>${esc(l.evento ? marcaEvento(l.evento) + " " + nomeEvento(l.evento) : l.produto)}</td><td>${esc(nomeTipo(l))}</td>
+      <td class="n">${l.qtd}</td><td class="n">${usd(l.origem === "zelle" ? l.total : l.liquido)}${l.reembolso ? ' <span class="tag reemb">reemb.</span>' : ""}${zTag(l)}</td>
       <td><span class="tag ${l.origem}">${ORIGEM[l.origem]}</span></td></tr>`).join("") +
       (ls.length > 500 ? `<tr><td colspan="8" class="muted">Mostrando 500 de ${ls.length}. Use a busca ou baixe o CSV.</td></tr>` : "");
-    $("#pedidos").onclick = (e) => {
+    $("#pedidos").onclick = async (e) => {
+      const zb = e.target.closest(".zbtn");
+      if (zb) {
+        zb.disabled = true;
+        try {
+          const r = await api("/api/painel/vendas", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: zb.dataset.z, status: zb.dataset.s }) });
+          if (!r.ok) throw new Error(r.erro || "erro");
+          await carregar(true);
+        } catch (err) { zb.disabled = false; alert("Não foi possível atualizar: " + err.message); }
+        return;
+      }
       const tr = e.target.closest("tr.linha"); if (!tr) return;
       const prox = tr.nextElementSibling;
       if (prox && prox.classList.contains("det")) { prox.remove(); return; }
@@ -346,6 +364,8 @@ svg text{fill:var(--muted);font-size:11px}
         <p><b>Valores</b> total ${usd(l.total)}${l.desconto ? " · desconto " + usd(l.desconto) : ""}${l.cupom ? " (cupom " + esc(l.cupom) + ")" : ""}${l.reembolso ? " · reembolsado " + usd(l.reembolso) : ""} · taxa Square ${usd(l.taxa)} · ${esc(l.metodo)}</p>
         ${l.descricao_ghl ? `<p><b>Carrinho no Salee</b> ${esc(l.descricao_ghl)}${l.square_id ? " · Square " + esc(l.square_id) : ""}</p>` : ""}
         ${l.utm ? `<p><b>Origem (UTM)</b> ${esc(l.utm)}</p>` : ""}
+        ${l.origem === "zelle" ? `<p><b>Zelle</b> status: ${ZST[l.zelle_status][1]}${l.zelle_confirmado_em ? " em " + new Date(l.zelle_confirmado_em).toLocaleString("pt-BR", { timeZone: "America/New_York" }) : ""}. Confira no banco um Zelle de ${usd(l.total)} de ${esc(l.comprador)} (código ${esc(l.numero)}).<br>
+          ${l.zelle_status !== "confirmado" ? `<button type="button" class="zbtn ok" data-z="${esc(l.id)}" data-s="confirmado">Confirmar pagamento</button>` : ""}${l.zelle_status === "pendente" ? `<button type="button" class="zbtn" data-z="${esc(l.id)}" data-s="cancelado">Cancelar reserva</button>` : ""}${l.zelle_status !== "pendente" ? `<button type="button" class="zbtn" data-z="${esc(l.id)}" data-s="pendente">Voltar para pendente</button>` : ""}</p>` : ""}
         ${l.ingressos.length ? `<p><b>Ingressos</b><br>${l.ingressos.map((x) => `${esc(x.codigo)} — ${esc(x.titular)}${x.email ? " · " + esc(x.email) : ""}`).join("<br>")}</p>` : ""}
         <p>${l.recibo ? `<a href="${esc(l.recibo)}" target="_blank" rel="noopener">Recibo Square</a>` : ""}${l.link ? ` · <a href="${esc(l.link)}" target="_blank" rel="noopener">Página de confirmação / ingressos</a>` : ""}</p></td>`;
       tr.after(det);
@@ -417,8 +437,8 @@ svg text{fill:var(--muted);font-size:11px}
     setTimeout(() => URL.revokeObjectURL(a.href), 1000);
   }
   $("#csvPedidos").addEventListener("click", () => csv(`pedidos-${desde()}.csv`,
-    ["data", "pedido", "origem", "produto", "evento", "tipo", "quantidade", "total", "desconto", "cupom", "reembolso", "liquido", "taxa_square", "comprador", "email", "telefone", "idioma", "utm", "ingressos", "recibo"],
-    pedidosFiltrados().map((l) => [l.data, l.id, l.origem, l.produto, nomeEvento(l.evento), TIPOS[l.tipo] || "", l.qtd, l.total, l.desconto, l.cupom, l.reembolso, l.liquido, l.taxa, l.comprador, l.email, l.telefone, l.idioma, l.utm, l.ingressos.map((i) => `${i.codigo} ${i.titular}`).join(" | "), l.recibo])));
+    ["data", "pedido", "origem", "produto", "evento", "tipo", "quantidade", "total", "desconto", "cupom", "reembolso", "liquido", "taxa_square", "comprador", "email", "telefone", "idioma", "utm", "ingressos", "recibo", "status_zelle"],
+    pedidosFiltrados().map((l) => [l.data, l.id, l.origem, l.produto, nomeEvento(l.evento), nomeTipo(l), l.qtd, l.total, l.desconto, l.cupom, l.reembolso, l.liquido, l.taxa, l.comprador, l.email, l.telefone, l.idioma, l.utm, l.ingressos.map((i) => `${i.codigo} ${i.titular}`).join(" | "), l.recibo, l.zelle_status || ""])));
   $("#csvLeads").addEventListener("click", () => L && !L.indisponivel && csv(`leads-${desde()}.csv`,
     ["data", "nome", "email", "telefone", "cidade", "estado", "interesse", "fonte", "idioma", "origem", "campanha"],
     leadsFiltrados().map((x) => [x.data, x.nome, x.email, x.telefone, x.cidade, x.estado, x.interesse, x.fonte, x.idioma, x.origem, x.campanha])));

@@ -175,6 +175,7 @@
           '</fieldset>' +
           '<p class="co-err" role="alert"></p>' +
           '<button type="submit" class="co-pay"><span class="co-pay__txt"></span><span class="co-spin" aria-hidden="true"></span></button>' +
+          (C.zelle ? '<button type="button" class="co-zelle">' + esc(T.zelleBtn) + '</button>' : "") +
           '<p class="co-fine"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V7a5 5 0 0110 0v3M5 10h14v11H5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>' +
             esc(T.seguro) + ' · <a href="' + esc(C.politica) + '" target="_blank" rel="noopener">' + esc(T.politica) + '</a></p>' +
           (cfg.env !== "production" ? '<p class="co-test">' + esc(T.modoTeste) + '</p>' : "") +
@@ -197,6 +198,7 @@
     $("#coCupom").addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); aplicar(); } });
     $("#coGuestsOn").addEventListener("change", function () { st.guests = this.checked; guestsRender(); });
     $(".co__body").addEventListener("submit", function (e) { e.preventDefault(); pagar("card"); });
+    if (C.zelle) $(".co-zelle").addEventListener("click", pagarZelle);
     ["coNome", "coEmail", "coTel"].forEach(function (id) {
       $("#" + id).addEventListener("input", function () { this.classList.remove("bad"); });
       $("#" + id).addEventListener("blur", salvarLead);
@@ -334,8 +336,60 @@
     st.busy = on;
     root.classList.toggle("busy", on);
     $(".co-pay").disabled = on;
+    if (C.zelle && $(".co-zelle")) $(".co-zelle").disabled = on;
     root.querySelectorAll("input,button").forEach(function (b) { if (!b.classList.contains("co-pay")) b.disabled = on; });
     if (!on) render();
+  }
+
+  // ---------- Zelle: grava a reserva (pendente) e mostra as instruções ----------
+  function pagarZelle() {
+    if (st.busy) return;
+    erro("");
+    var d = dados();
+    if (!d) return;
+    var qd = st.quote || local();
+    if (st.cupom && (!qd.cupom || qd.cupom.codigo !== st.cupom)) { erro(T.cupomErros.invalido); return; }
+    salvarLead();
+    ocupado(true);
+    post("/api/checkout/zelle", {
+      slug: C.slug, tier: st.tier, qty: st.qty, cupom: st.cupom || "", lang: C.lang,
+      comprador: { nome: d.nome, email: d.email, telefone: d.telefone }, convidados: d.convidados, utm: utm(), ref: ref(),
+    }).then(function (res) {
+      if (!res.ok) {
+        ocupado(false);
+        if (res.erro === "dados") erro(T.erroDados);
+        else if (res.erro === "cupom") erro(T.cupomErros[res.cupomErro] || T.cupomErros.invalido);
+        else if (res.erro === "esgotado") erro(T.erroEsgotado);
+        else if (res.erro === "encerrado") erro(T.erroEncerrado);
+        else erro(T.erroGeral);
+        return;
+      }
+      if (C.lead) try {
+        fetch(C.lead.endpoint, { method: "POST", headers: { "Content-Type": "application/json" }, keepalive: true,
+          body: JSON.stringify({ nome: d.nome, email: d.email, telefone: d.telefone, tags: C.lead.tags.concat(["Zelle - pendente"]), origem: "checkout",
+            notas: "Reserva Zelle " + res.id + ": " + C.tiers[st.tier].nome + " x" + st.qty + " = " + money(res.total) + " (pendente)", ref: ref() }) });
+      } catch (e) {}
+      st.busy = false;
+      root.classList.remove("busy");
+      var z = res.zelle || C.zelle, v = money(res.total);
+      var msg = T.zelleMsg.replace("{v}", v).replace("{e}", z.email).replace("{c}", res.id).replace("{n}", d.nome);
+      $(".co__body").innerHTML = '<div class="co-zok">' +
+        '<h3>' + esc(T.zelleTitulo) + ' · ' + esc(res.id) + '</h3>' +
+        '<p>' + esc(T.zelleInstr.replace("{v}", v)) + '</p>' +
+        '<div class="co-zok__total">' + v + '</div>' +
+        '<div class="co-zok__box"><span>' + esc(z.email) + '</span><button type="button" data-copy="' + esc(z.email) + '">' + esc(T.zelleCopiar) + '</button></div>' +
+        '<p>' + esc(T.zelleCodigo) + '</p>' +
+        '<div class="co-zok__box"><span>' + esc(res.id) + '</span><button type="button" data-copy="' + esc(res.id) + '">' + esc(T.zelleCopiar) + '</button></div>' +
+        '<p>' + esc(T.zelleDepois) + '</p>' +
+        (z.whatsapp ? '<a class="co-pay" href="https://wa.me/' + esc(z.whatsapp) + '?text=' + encodeURIComponent(msg) + '" target="_blank" rel="noopener">' + esc(T.zelleWa) + '</a>' : "") +
+        '</div>';
+      root.querySelectorAll("[data-copy]").forEach(function (b) {
+        b.addEventListener("click", function () {
+          try { navigator.clipboard.writeText(b.getAttribute("data-copy")); b.textContent = T.zelleCopiado; } catch (e) {}
+        });
+      });
+      if (window.fbq) try { fbq("track", "Lead", { value: res.total / 100, currency: "USD", content_name: C.eventoLinha + " Zelle" }); } catch (e) {}
+    }).catch(function () { ocupado(false); erro(T.erroGeral); });
   }
 
   function pagar(metodo) {

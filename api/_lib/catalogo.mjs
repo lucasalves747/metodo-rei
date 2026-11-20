@@ -22,6 +22,7 @@ export const CATALOGO = {
         "maps_query": "Lagoinha+Miami+Church+295+NE+59th+Terrace+Miami+FL+33137"
       },
       "marca": "Método REI",
+      "zelle": null,
       "tiers": {
         "standard": {
           "nome": "Standard",
@@ -58,6 +59,7 @@ export const CATALOGO = {
         "maps_query": "17800+Bali+Blvd+Winter+Garden+FL+34787"
       },
       "marca": "Método REI",
+      "zelle": null,
       "tiers": {
         "standard": {
           "nome": "Standard",
@@ -94,6 +96,10 @@ export const CATALOGO = {
         "maps_query": ""
       },
       "marca": "REI Experience",
+      "zelle": {
+        "email": "globalusatraining@gmail.com",
+        "whatsapp": "13053705595"
+      },
       "tiers": {
         "standard": {
           "nome": "Individual",
@@ -126,6 +132,7 @@ export const CATALOGO = {
         "maps_query": ""
       },
       "marca": "Método REI",
+      "zelle": null,
       "tiers": {
         "standard": {
           "nome": "Standard",

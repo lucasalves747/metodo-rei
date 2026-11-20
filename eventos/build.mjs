@@ -392,7 +392,7 @@ const precosEv = (ev) => ({ ...data.precos_padrao, ...(ev.precos || {}) });
 function checkoutHtml(ev, d, lang) {
   const pr = precosEv(ev);
   const cfg = {
-    lang, locale: CO[lang].locale, slug: ev.slug, cidade: ev.cidade, esgotado: !!ev.esgotado,
+    lang, locale: CO[lang].locale, slug: ev.slug, cidade: ev.cidade, esgotado: !!ev.esgotado, zelle: ev.zelle || null,
     eventoLinha: `${marca(ev)} ${ev.cidade} · ${d.curta}${d.ano ? " " + d.ano : ""}`,
     tiers: Object.fromEntries(ativos(ev).map((k) => [k, { nome: nomeTier(ev, k), preco: pr[k].por }])),
     politica: `${prefixo(lang)}/politica`,
@@ -412,6 +412,7 @@ function catalogo() {
       datas_texto: d.texto, tz: ev.fuso || FUSOS[ev.uf] || "America/New_York",
       local: { nome: /a definir/i.test((ev.local || {}).nome || "") ? "" : (ev.local || {}).nome || "", endereco: (ev.local || {}).endereco || "", endereco_exibicao: (ev.local || {}).endereco_exibicao || "", maps_query: (ev.local || {}).maps_query || "" },
       marca: marca(ev),
+      zelle: ev.zelle || null,
       tiers: Object.fromEntries(ativos(ev).map((k) => [k, { nome: nomeTier(ev, k), preco: pr[k].por }])),
       webhooks: (ev.webhooks || []).map(({ nome, url, tiers, para, corpo }) => ({ nome, url, tiers: tiers || null, para: para || "todos", corpo })),
     };

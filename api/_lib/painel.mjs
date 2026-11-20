@@ -37,7 +37,7 @@ const ANTIGOS = [
 
 export function listaEventos() {
   return [
-    ...EVENTOS.map((e) => ({ slug: e.slug, cidade: e.cidade, uf: e.uf, inicio: e.inicio, fim: e.fim, datas_texto: e.datas_texto })),
+    ...EVENTOS.map((e) => ({ slug: e.slug, marca: e.marca || "Método REI", tipos: Object.fromEntries(Object.entries(e.tiers).map(([k, t]) => [k, t.nome])), cidade: e.cidade, uf: e.uf, inicio: e.inicio, fim: e.fim, datas_texto: e.datas_texto })),
     ...ANTIGOS.map(({ apelidos, ...e }) => e),
   ];
 }

@@ -52,3 +52,24 @@ export async function lerLeads(desde) {
   }
   return blobs.map((b) => memoria.get(b.pathname)).filter(Boolean).map((m) => m.lead).filter((l) => String(l.data_envio || "") >= desde);
 }
+
+// ---------- reservas Zelle (pagamento manual, confirmado no painel) ----------
+const zelleMem = new Map();
+export const caminhoZelle = (id) => `zelle/${id}.json`;
+export async function lerZelle(id) {
+  const [b] = await listar(caminhoZelle(id));
+  if (!b) return null;
+  const r = await fetch(b.url, { headers: { authorization: `Bearer ${token()}` }, cache: "no-store" });
+  return r.ok ? r.json() : null;
+}
+export async function listarZelle() {
+  const blobs = await listar("zelle/");
+  const novos = blobs.filter((b) => { const m = zelleMem.get(b.pathname); return !m || m.etag !== b.etag; });
+  await Promise.all(novos.map(async (b) => {
+    try {
+      const r = await fetch(b.url, { headers: { authorization: `Bearer ${token()}` }, cache: "no-store" });
+      if (r.ok) zelleMem.set(b.pathname, { etag: b.etag, z: await r.json() });
+    } catch {}
+  }));
+  return blobs.map((b) => zelleMem.get(b.pathname)).filter(Boolean).map((m) => m.z);
+}
