@@ -131,6 +131,121 @@ export const CATALOGO = {
         "orlando"
       ],
       "valido_ate": "2026-11-20T13:00:00-05:00"
+    },
+    {
+      "codigo": "LEGENDARIOS",
+      "tipo": "percentual",
+      "valor": 100,
+      "eventos": [
+        "orlando",
+        "boston"
+      ],
+      "tiers": [
+        "vip"
+      ]
+    },
+    {
+      "codigo": "PATY",
+      "tipo": "percentual",
+      "valor": 100,
+      "eventos": [
+        "orlando",
+        "boston"
+      ],
+      "tiers": [
+        "vip"
+      ]
+    },
+    {
+      "codigo": "VERTEX",
+      "tipo": "fixo",
+      "valor": 172,
+      "eventos": [
+        "boston"
+      ],
+      "tiers": [
+        "standard"
+      ]
+    },
+    {
+      "codigo": "LGND",
+      "tipo": "fixo",
+      "valor": 172,
+      "eventos": [
+        "orlando",
+        "boston"
+      ]
+    },
+    {
+      "codigo": "MREIB50",
+      "tipo": "percentual",
+      "valor": 50,
+      "eventos": [
+        "boston"
+      ],
+      "tiers": [
+        "standard"
+      ]
+    },
+    {
+      "codigo": "BRASILEIRAS00F",
+      "tipo": "percentual",
+      "valor": 100,
+      "eventos": [
+        "orlando",
+        "boston"
+      ]
+    },
+    {
+      "codigo": "BRASILEIRAS",
+      "tipo": "percentual",
+      "valor": 75,
+      "eventos": [
+        "orlando",
+        "boston"
+      ]
+    },
+    {
+      "codigo": "REIDALL100",
+      "tipo": "percentual",
+      "valor": 100,
+      "eventos": [
+        "boston"
+      ],
+      "tiers": [
+        "standard"
+      ]
+    },
+    {
+      "codigo": "REIBOS100",
+      "tipo": "percentual",
+      "valor": 100,
+      "eventos": [
+        "boston"
+      ],
+      "tiers": [
+        "standard"
+      ]
+    },
+    {
+      "codigo": "REIBOS150",
+      "tipo": "fixo",
+      "valor": 150,
+      "eventos": [
+        "boston"
+      ],
+      "tiers": [
+        "standard"
+      ]
+    },
+    {
+      "codigo": "MRFREE100",
+      "tipo": "percentual",
+      "valor": 100,
+      "eventos": [
+        "orlando",
+        "boston"
+      ]
     }
   ],
   "entregas": {

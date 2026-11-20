@@ -513,9 +513,137 @@
       "codigo": "ORLANDO20",
       "tipo": "percentual",
       "valor": 20,
-      "eventos": ["orlando"],
+      "eventos": [
+        "orlando"
+      ],
       "valido_ate": "2026-11-20T13:00:00-05:00",
       "_nota": "20% em qualquer ingresso de Orlando, até 20/11/2026 13h (ET)"
+    },
+    {
+      "codigo": "LEGENDARIOS",
+      "tipo": "percentual",
+      "valor": 100,
+      "eventos": [
+        "orlando",
+        "boston"
+      ],
+      "tiers": [
+        "vip"
+      ],
+      "_nota": "copiado do Salee.ai (pag.metodorei.com) em 20/11/2026"
+    },
+    {
+      "codigo": "PATY",
+      "tipo": "percentual",
+      "valor": 100,
+      "eventos": [
+        "orlando",
+        "boston"
+      ],
+      "tiers": [
+        "vip"
+      ],
+      "_nota": "copiado do Salee.ai (pag.metodorei.com) em 20/11/2026"
+    },
+    {
+      "codigo": "VERTEX",
+      "tipo": "fixo",
+      "valor": 172,
+      "eventos": [
+        "boston"
+      ],
+      "tiers": [
+        "standard"
+      ],
+      "_nota": "copiado do Salee.ai (pag.metodorei.com) em 20/11/2026"
+    },
+    {
+      "codigo": "LGND",
+      "tipo": "fixo",
+      "valor": 172,
+      "eventos": [
+        "orlando",
+        "boston"
+      ],
+      "_nota": "copiado do Salee.ai (pag.metodorei.com) em 20/11/2026"
+    },
+    {
+      "codigo": "MREIB50",
+      "tipo": "percentual",
+      "valor": 50,
+      "eventos": [
+        "boston"
+      ],
+      "tiers": [
+        "standard"
+      ],
+      "_nota": "copiado do Salee.ai (pag.metodorei.com) em 20/11/2026"
+    },
+    {
+      "codigo": "BRASILEIRAS00F",
+      "tipo": "percentual",
+      "valor": 100,
+      "eventos": [
+        "orlando",
+        "boston"
+      ],
+      "_nota": "copiado do Salee.ai (pag.metodorei.com) em 20/11/2026"
+    },
+    {
+      "codigo": "BRASILEIRAS",
+      "tipo": "percentual",
+      "valor": 75,
+      "eventos": [
+        "orlando",
+        "boston"
+      ],
+      "_nota": "copiado do Salee.ai (pag.metodorei.com) em 20/11/2026"
+    },
+    {
+      "codigo": "REIDALL100",
+      "tipo": "percentual",
+      "valor": 100,
+      "eventos": [
+        "boston"
+      ],
+      "tiers": [
+        "standard"
+      ],
+      "_nota": "copiado do Salee.ai (pag.metodorei.com) em 20/11/2026"
+    },
+    {
+      "codigo": "REIBOS100",
+      "tipo": "percentual",
+      "valor": 100,
+      "eventos": [
+        "boston"
+      ],
+      "tiers": [
+        "standard"
+      ],
+      "_nota": "copiado do Salee.ai (pag.metodorei.com) em 20/11/2026"
+    },
+    {
+      "codigo": "REIBOS150",
+      "tipo": "fixo",
+      "valor": 150,
+      "eventos": [
+        "boston"
+      ],
+      "tiers": [
+        "standard"
+      ],
+      "_nota": "copiado do Salee.ai (pag.metodorei.com) em 20/11/2026"
+    },
+    {
+      "codigo": "MRFREE100",
+      "tipo": "percentual",
+      "valor": 100,
+      "eventos": [
+        "orlando",
+        "boston"
+      ],
+      "_nota": "copiado do Salee.ai (pag.metodorei.com) em 20/11/2026"
     }
   ],
   "entregas": {
