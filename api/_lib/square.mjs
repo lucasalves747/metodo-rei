@@ -57,7 +57,7 @@ export function cotar({ slug, tier, qty, cupom }) {
     const c = CATALOGO.cupons.find((x) => x.codigo.toUpperCase() === code);
     const hoje = new Date();
     if (!c || (c.somente_teste && ENV === "production")) cupomErro = "invalido";
-    else if (c.valido_ate && new Date(c.valido_ate + "T23:59:59-05:00") < hoje) cupomErro = "expirado";
+    else if (c.valido_ate && new Date(c.valido_ate.includes("T") ? c.valido_ate : c.valido_ate + "T23:59:59-05:00") < hoje) cupomErro = "expirado";
     else if (c.eventos && c.eventos.length && !c.eventos.includes(slug)) cupomErro = "nao_aplica";
     else if (c.tiers && c.tiers.length && !c.tiers.includes(tier)) cupomErro = "nao_aplica";
     else {

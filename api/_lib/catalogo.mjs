@@ -122,6 +122,15 @@ export const CATALOGO = {
       "codigo": "REIFREE1126",
       "tipo": "percentual",
       "valor": 100
+    },
+    {
+      "codigo": "ORLANDO20",
+      "tipo": "percentual",
+      "valor": 20,
+      "eventos": [
+        "orlando"
+      ],
+      "valido_ate": "2026-11-20T13:00:00-05:00"
     }
   ],
   "entregas": {
