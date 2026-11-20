@@ -12,7 +12,7 @@ export function montarPayload({ cfg, ev, q, t, ord, pagamento, nome, email, tele
     // comprador
     nome, primeiro_nome: partes[0], sobrenome: partes.slice(1).join(" "), email, telefone,
     // evento
-    evento_slug: ev.slug, evento_nome: `Método REI ${ev.cidade}`, evento_cidade: ev.cidade, evento_estado: ev.uf,
+    evento_slug: ev.slug, evento_nome: `${ev.marca || "Método REI"} ${ev.cidade}`, evento_cidade: ev.cidade, evento_estado: ev.uf,
     evento_data: ev.datas_texto, evento_inicio: ev.inicio, evento_fim: ev.fim, evento_horarios: (ev.horarios || []).join(" · "),
     evento_local: [ev.local.nome, ev.local.endereco].filter(Boolean).join(" · "),
     // ingresso
@@ -34,6 +34,6 @@ export function montarPayload({ cfg, ev, q, t, ord, pagamento, nome, email, tele
     // origem
     utm_source: utm.utm_source || "", utm_medium: utm.utm_medium || "", utm_campaign: utm.utm_campaign || "", utm_content: utm.utm_content || "", utm_term: utm.utm_term || "",
     referral_code: ref,
-    tags: [...(ref ? [`ref-${ref}`] : []), "Método REI - Comprou", `Método REI - ${ev.cidade} ${ev.ano}`, `Método REI ${ev.cidade} - ${t.nome}`, `Idioma: ${lang.toUpperCase()}`],
+    tags: [...(ref ? [`ref-${ref}`] : []), "Método REI - Comprou", `${ev.marca || "Método REI"} - ${ev.cidade} ${ev.ano}`, `${ev.marca || "Método REI"} ${ev.cidade} - ${t.nome}`, `Idioma: ${lang.toUpperCase()}`],
   };
 }

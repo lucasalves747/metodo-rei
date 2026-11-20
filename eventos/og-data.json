@@ -47,6 +47,24 @@
         ]
       },
       {
+        "slug": "experience-orlando",
+        "cidade": "Orlando",
+        "uf": "FL",
+        "dias": "Sábado",
+        "data": "21 de Novembro, 2026",
+        "onde": "Orlando, FL",
+        "min": 120,
+        "fotos": [
+          "assets/pv/hewerton.jpg",
+          "assets/pv/santiago.jpg",
+          "assets/alexandre-morelli.JPEG",
+          "assets/pv/eduardo-itaborahy.jpg",
+          "assets/pv/dany-rocha.jpg",
+          "assets/pv/patricia-belieny.jpg",
+          "assets/pv/jake-belieny.jpg"
+        ]
+      },
+      {
         "slug": "boston",
         "cidade": "Boston",
         "uf": "MA",
@@ -110,6 +128,24 @@
         ]
       },
       {
+        "slug": "experience-orlando",
+        "cidade": "Orlando",
+        "uf": "FL",
+        "dias": "Saturday",
+        "data": "November 21, 2026",
+        "onde": "Orlando, FL",
+        "min": 120,
+        "fotos": [
+          "assets/pv/hewerton.jpg",
+          "assets/pv/santiago.jpg",
+          "assets/alexandre-morelli.JPEG",
+          "assets/pv/eduardo-itaborahy.jpg",
+          "assets/pv/dany-rocha.jpg",
+          "assets/pv/patricia-belieny.jpg",
+          "assets/pv/jake-belieny.jpg"
+        ]
+      },
+      {
         "slug": "boston",
         "cidade": "Boston",
         "uf": "MA",
@@ -162,6 +198,24 @@
         "data": "21 de noviembre de 2026",
         "onde": "17800 Bali Blvd, Winter Garden, FL",
         "min": 60,
+        "fotos": [
+          "assets/pv/hewerton.jpg",
+          "assets/pv/santiago.jpg",
+          "assets/alexandre-morelli.JPEG",
+          "assets/pv/eduardo-itaborahy.jpg",
+          "assets/pv/dany-rocha.jpg",
+          "assets/pv/patricia-belieny.jpg",
+          "assets/pv/jake-belieny.jpg"
+        ]
+      },
+      {
+        "slug": "experience-orlando",
+        "cidade": "Orlando",
+        "uf": "FL",
+        "dias": "Sábado",
+        "data": "21 de noviembre de 2026",
+        "onde": "Orlando, FL",
+        "min": 120,
         "fotos": [
           "assets/pv/hewerton.jpg",
           "assets/pv/santiago.jpg",

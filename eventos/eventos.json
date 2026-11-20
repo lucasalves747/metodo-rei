@@ -378,6 +378,124 @@
             }
           ]
         }
+      },
+      "oculto": true
+    },
+    {
+      "slug": "experience-orlando",
+      "marca": "REI Experience",
+      "cidade": "Orlando",
+      "uf": "FL",
+      "estado": "Flórida",
+      "inicio": "2026-11-21",
+      "fim": "2026-11-21",
+      "horarios": [
+        "12pm–6pm"
+      ],
+      "local": {
+        "nome": "Local a definir"
+      },
+      "imagem": "assets/home/city-orlando.jpg",
+      "preletores": [
+        "hewerton-scheidegger",
+        "santiago-vecina",
+        "alexandre-morelli",
+        "eduardo-itaborahy",
+        "dany-rocha",
+        "patricia-belieny",
+        "jake-belieny"
+      ],
+      "prevenda": false,
+      "precos": {
+        "standard": {
+          "por": 120
+        }
+      },
+      "tiers_ativos": [
+        "standard"
+      ],
+      "nomes_ingresso": {
+        "standard": "REI Experience"
+      },
+      "sem_bonus": true,
+      "lead_tag": "REI Experience - Orlando 2026",
+      "lead_codigo": "MREIEXP211126",
+      "selo": "REI Experience",
+      "kick": "Método REI · Experiência em restaurante",
+      "destaque": {
+        "curto": "🍽️ Comida e bebidas do restaurante <b>inclusas no ingresso</b>",
+        "nota_ingresso": "Comida e bebidas<br>inclusas"
+      },
+      "duracao": {
+        "facts": "Uma tarde presencial",
+        "about": "Uma tarde presencial, num restaurante,",
+        "acesso": "Acesso completo à REI Experience"
+      },
+      "seo_descricao": "REI Experience Orlando: uma tarde do Método REI num restaurante, com os mentores, networking e comida e bebidas inclusas. Ingresso US$120.",
+      "en": {
+        "selo": "REI Experience",
+        "estado": "Florida",
+        "kick": "Método REI · Restaurant experience",
+        "destaque": {
+          "curto": "🍽️ Restaurant food and drinks <b>included with your ticket</b>",
+          "nota_ingresso": "Food and drinks<br>included"
+        },
+        "duracao": {
+          "facts": "One in-person afternoon",
+          "about": "One in-person afternoon at a restaurant",
+          "acesso": "Full access to the REI Experience"
+        },
+        "seo_descricao": "REI Experience Orlando: an afternoon of Método REI at a restaurant, with the mentors, networking, and food and drinks included. Ticket US$120."
+      },
+      "es": {
+        "selo": "REI Experience",
+        "estado": "Florida",
+        "kick": "Método REI · Experiencia en restaurante",
+        "destaque": {
+          "curto": "🍽️ Comida y bebidas del restaurante <b>incluidas en la entrada</b>",
+          "nota_ingresso": "Comida y bebidas<br>incluidas"
+        },
+        "duracao": {
+          "facts": "Una tarde presencial",
+          "about": "Una tarde presencial en un restaurante",
+          "acesso": "Acceso completo a REI Experience"
+        },
+        "seo_descricao": "REI Experience Orlando: una tarde del Método REI en un restaurante, con los mentores, networking y comida y bebidas incluidas. Entrada US$120."
+      },
+      "ingressos": {
+        "standard": {
+          "remover": [
+            "assento",
+            "apostila",
+            "material-apoio",
+            "ebook-bonus",
+            "ebook-mente",
+            "ebook-guia",
+            "plano-90-dias"
+          ],
+          "adicionar": [
+            {
+              "pt": "Comida do restaurante inclusa",
+              "en": "Restaurant food included",
+              "es": "Comida del restaurante incluida"
+            },
+            {
+              "pt": "Bebidas inclusas",
+              "en": "Drinks included",
+              "es": "Bebidas incluidas"
+            },
+            {
+              "pt": "Conteúdo ao vivo com os mentores do Método REI",
+              "en": "Live content with the Método REI mentors",
+              "es": "Contenido en vivo con los mentores del Método REI"
+            },
+            {
+              "pt": "Networking com empresários e profissionais",
+              "en": "Networking with business owners and professionals",
+              "es": "Networking con empresarios y profesionales"
+            }
+          ]
+        }
       }
     },
     {

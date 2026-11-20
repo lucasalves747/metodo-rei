@@ -45,7 +45,7 @@ export default async function handler(req, res) {
     source: { name: "metodorei.com" },
     line_items: titulares.map((p, i) => ({
       uid: `ing-${i + 1}`,
-      name: `Método REI ${ev.cidade} — ${t.nome}`,
+      name: `${ev.marca || "Método REI"} ${ev.cidade} — ${t.nome}`,
       variation_name: `Ingresso ${i + 1}`,
       quantity: "1",
       base_price_money: { amount: q.unit, currency: "USD" },
@@ -82,7 +82,7 @@ export default async function handler(req, res) {
         location_id: cfg.locationId,
         buyer_email_address: email,
         reference_id: ord.id.slice(0, 40),
-        note: `Método REI ${ev.cidade} · ${t.nome} × ${q.qty}`.slice(0, 500),
+        note: `${ev.marca || "Método REI"} ${ev.cidade} · ${t.nome} × ${q.qty}`.slice(0, 500),
         autocomplete: true,
       },
     });

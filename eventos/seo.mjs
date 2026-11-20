@@ -113,12 +113,14 @@ export function eventoSchema(data, ev, d, ids, lang, pv) {
   const quando = d.nDias === 1 ? `${d.dias.toLowerCase()}, ${d.texto}` : d.texto;
   const onde = l.endereco ? l.endereco.replace(/\s+\d{5}$/, "") : `${ev.cidade}, ${ev.uf}`;
   const duracao = d.nDias === 1 ? T.umDia : T.nDias(d.nDias);
-  const min = Math.min(precos.standard.por, precos.vip.por, precos.rei.por);
+  const ativos = ev.tiers_ativos || ["standard", "vip", "rei"];
+  const marca = ev.marca || "Método REI";
+  const min = Math.min(...ativos.map((k) => precos[k].por));
 
-  const titulo = `Método REI ${ev.cidade} · ${d.texto}${prevenda ? T.pvSufixo : ""}`;
+  const titulo = `${marca} ${ev.cidade} · ${d.texto}${prevenda ? T.pvSufixo : ""}`;
   const descricao = ev.seo_descricao || T.seoEvento({ duracao, onde, quando, nomes: nomesTxt, min });
   const imagem = ogImg(site, lang, ev.slug);
-  const alt = `Método REI ${ev.cidade} — ${d.texto}`;
+  const alt = `${marca} ${ev.cidade} — ${d.texto}`;
 
   const location = {
     "@type": "Place",
@@ -129,9 +131,9 @@ export function eventoSchema(data, ev, d, ids, lang, pv) {
   };
   const offers = [
     ["Standard", "standard"], ["VIP", "vip"], ["REI", "rei"],
-  ].map(([nome, k]) => ({
+  ].filter(([, k]) => ativos.includes(k)).map(([nome, k]) => ({
     "@type": "Offer",
-    name: T.ingresso(nome),
+    name: T.ingresso((ev.nomes_ingresso || {})[k] || nome),
     price: String(precos[k].por),
     priceCurrency: "USD",
     availability: ev.esgotado ? "https://schema.org/SoldOut" : "https://schema.org/InStock",
@@ -144,7 +146,7 @@ export function eventoSchema(data, ev, d, ids, lang, pv) {
       {
         "@type": "Event",
         "@id": `${url}#evento`,
-        name: `Método REI ${ev.cidade} ${d.ano}`,
+        name: `${marca} ${ev.cidade} ${d.ano}`,
         description: strip(descricao),
         startDate: start,
         endDate: end,
@@ -190,7 +192,7 @@ export function homeHead(data, proximos, lang, agenda = proximos) {
       {
         "@type": "ItemList",
         name: T.proximas,
-        itemListElement: proximos.map((r, i) => ({ "@type": "ListItem", position: i + 1, url: urlDe(site, lang, `/${r.ev.slug}`), name: `Método REI ${r.ev.cidade} — ${r.d.texto}` })),
+        itemListElement: proximos.map((r, i) => ({ "@type": "ListItem", position: i + 1, url: urlDe(site, lang, `/${r.ev.slug}`), name: `${r.ev.marca || "Método REI"} ${r.ev.cidade} — ${r.d.texto}` })),
       },
     ],
   };
@@ -230,7 +232,7 @@ export function llms(data, proximos, passados) {
   const site = data.site;
   const linha = (r) => {
     const s = r.seo;
-    return `- [Método REI ${r.ev.cidade} — ${r.d.texto}](${s.url}): ${s.quando}, ${s.onde}. Horário: ${r.d.horario}. Mentores: ${s.nomes.join(", ")}. Ingressos a partir de US$${s.min}.`;
+    return `- [${r.ev.marca || "Método REI"} ${r.ev.cidade} — ${r.d.texto}](${s.url}): ${s.quando}, ${s.onde}. Horário: ${r.d.horario}. Mentores: ${s.nomes.join(", ")}. Ingressos a partir de US$${s.min}.`;
   };
   const ids = [...new Set(proximos.flatMap((r) => r.ids))];
   return `# Método REI

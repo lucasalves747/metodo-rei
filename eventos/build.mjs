@@ -72,7 +72,10 @@ function datas(ev, lang) {
 
 // Campos que precisam existir em todos os idiomas (se existirem em PT).
 const CAMPOS_PRELETOR = ["funcao", "bio", "bio_completa", "destaque"];
-const CAMPOS_EVENTO = ["selo", "destaque", "estado", "seo_descricao"];
+const CAMPOS_EVENTO = ["selo", "destaque", "estado", "seo_descricao", "kick", "duracao"];
+const marca = (ev) => ev.marca || "Método REI";
+const ativos = (ev) => ev.tiers_ativos || ["standard", "vip", "rei"];
+const nomeTier = (ev, k) => (ev.nomes_ingresso || {})[k] || TIERS[k];
 const faltaIdioma = [];
 function loc(obj, lang, campos, quem) {
   if (lang === "pt") return obj;
@@ -162,7 +165,9 @@ function vendaVars(ev, d, lang) {
   const precos = { ...data.precos_padrao, ...(ev.precos || {}) };
   const destaque = ev.destaque || null; // { curto: "...", nota_ingresso: "..." }
   const pct = (p) => (p.de && p.de > p.por ? Math.round((1 - p.por / p.de) * 100) : 0);
-  const maxPct = Math.max(...["standard", "vip", "rei"].map((k) => pct(precos[k])));
+  const maxPct = Math.max(...ativos(ev).map((k) => pct(precos[k])));
+  const min = Math.min(...ativos(ev).map((k) => precos[k].por));
+  const dur = ev.duracao || {};
   const ticket = (k) => {
     const p = precos[k];
     if (prevenda && p.de) {
@@ -178,22 +183,22 @@ function vendaVars(ev, d, lang) {
   else if (prevenda && maxPct) heroSave = `<div class="hero__save reveal" data-d="3">${T.economize(maxPct)}</div>`;
   return {
     titulo_sufixo: T.tituloSufixo(prevenda),
-    preco_min: Math.min(...["standard", "vip", "rei"].map((k) => precos[k].por)),
+    preco_min: min,
     promo_bar: prevenda ? T.promo : "",
-    hero_offer: T.aPartir(Math.min(...["standard", "vip", "rei"].map((k) => precos[k].por))),
-    cta_topo: T.ctaTopo(Math.min(...["standard", "vip", "rei"].map((k) => precos[k].por))),
+    hero_offer: ativos(ev).length === 1 ? T.ctaTopo(min) : T.aPartir(min),
+    cta_topo: T.ctaTopo(min),
     cta_ver: T.verIngressos,
-    cta_standard: T.comprar("Standard"),
+    cta_standard: T.comprar(nomeTier(ev, "standard")),
     cta_vip: T.comprar("VIP"),
     cta_rei: T.comprar("REI"),
-    lead_standard: `Standard · US$${precos.standard.por} · ${ev.cidade}, ${d.curta}`,
+    lead_standard: `${nomeTier(ev, "standard")} · US$${precos.standard.por} · ${ev.cidade}, ${d.curta}`,
     lead_vip: `VIP · US$${precos.vip.por} · ${ev.cidade}, ${d.curta}`,
     lead_rei: `REI · US$${precos.rei.por} · ${ev.cidade}, ${d.curta}`,
-    buybar: `<div class="buybar"><div><b>${ev.cidade} · ${d.curta}</b><span>${T.aPartir(Math.min(...["standard", "vip", "rei"].map((k) => precos[k].por)))}</span></div><a class="btn btn-gold" href="#ingressos">${T.comprarCurto}</a></div>`,
+    buybar: `<div class="buybar"><div><b>${ev.cidade} · ${d.curta}</b><span>${ativos(ev).length === 1 ? T.ctaTopo(min) : T.aPartir(min)}</span></div><a class="btn btn-gold" href="#ingressos">${T.comprarCurto}</a></div>`,
     hero_save: heroSave,
-    dur_facts: T.durFacts(d.nDias),
-    dur_about: T.durAbout(d.nDias),
-    acesso: T.acesso(d.nDias),
+    dur_facts: dur.facts || T.durFacts(d.nDias),
+    dur_about: dur.about || T.durAbout(d.nDias),
+    acesso: dur.acesso || T.acesso(d.nDias),
     preco_standard: ticket("standard"),
     preco_vip: ticket("vip"),
     preco_rei: ticket("rei"),
@@ -234,7 +239,9 @@ function render(ev0, lang) {
     checkout_standard: checkout(ev, "standard"),
     checkout_vip: checkout(ev, "vip"),
     checkout_rei: checkout(ev, "rei"),
-    lead_tag: ev.lead_tag || `Método REI - ${ev.cidade} ${d.ano}`,
+    lead_tag: ev.lead_tag || `${marca(ev)} - ${ev.cidade} ${d.ano}`,
+    marca: marca(ev),
+    hero_kick: ev.kick || (lang === "pt" ? "Método REI · Imersão presencial" : DIC[lang]["Método REI · Imersão presencial"]),
     lead_codigo: ev.lead_codigo || datas(ev, "pt").codigo,
     palco: palcoHtml(ev, ids, lang),
     idiomas: seletor(lang, `/${ev.slug}`),
@@ -259,7 +266,7 @@ function cardEmBreve(ev, d, lang) {
 function card(ev, d, lang) {
   const T = L[lang];
   const pr = { ...data.precos_padrao, ...(ev.precos || {}) };
-  const min = Math.min(pr.standard.por, pr.vip.por, pr.rei.por);
+  const min = Math.min(...ativos(ev).map((k) => pr[k].por));
   const img = ev.imagem_card || ev.imagem || `assets/home/city-${ev.slug}.jpg`;
   const selo = ev.selo || d.diasCard.replace(" · ", " + ");
   const cls = ev.selo ? (/pr[ée]-?vent|pre-?sale/i.test(ev.selo) ? "badge-red" : "badge-gold") : "badge-line";
@@ -267,7 +274,7 @@ function card(ev, d, lang) {
   const horas = d.horario.replace(/(am|pm)/gi, (m) => m.toUpperCase());
   const local = ev.local && !localDefinir(ev.local) ? ` · ${ev.local.nome}` : "";
   return `      <article class="card" data-end="${ev.fim}"><img src="${img}" alt="${T.skyline(ev.cidade)}" loading="lazy"><div class="card-shade"></div>
-        <div style="position: relative"><span class="badge ${cls}">${selo}</span><div class="serif" style="font-size: ${tamCidade(ev.cidade)}px; line-height: .95; margin-top: 16px">${ev.cidade}</div><div style="font-size: 17px; font-weight: 600; margin-top: 10px">${quando}</div><div style="font-size: 14px; color: #9A948A; margin-top: 4px">${horas}${local}</div><div style="font-size: 15px; font-weight: 700; color: #E3C78A; margin-top: 14px">${T.aPartir(min)}</div><a class="btn btn-gold" href="/${ev.slug}" data-event="${ev.cidade}" style="margin-top: 18px; width: 100%">${T.verEvento}</a></div></article>`;
+        <div style="position: relative"><span class="badge ${cls}">${selo}</span><div class="serif" style="font-size: ${tamCidade(ev.cidade)}px; line-height: .95; margin-top: 16px">${ev.cidade}</div><div style="font-size: 17px; font-weight: 600; margin-top: 10px">${quando}</div><div style="font-size: 14px; color: #9A948A; margin-top: 4px">${horas}${local}</div><div style="font-size: 15px; font-weight: 700; color: #E3C78A; margin-top: 14px">${ativos(ev).length === 1 ? `US$${min}` : T.aPartir(min)}</div><a class="btn btn-gold" href="/${ev.slug}" data-event="${ev.cidade}" style="margin-top: 18px; width: 100%">${T.verEvento}</a></div></article>`;
 }
 
 // "No palco" da home: fixos (sempre, em cor) + quem está em algum evento futuro (P&B), sem repetir.
@@ -320,6 +327,24 @@ function validarIngressos(ev) {
 }
 function aplicarIngressos(html, ev, lang) {
   const cfg = ev.ingressos || {};
+  for (const t of TIPOS_INGRESSO.filter((k) => !ativos(ev).includes(k))) {
+    const ia = html.indexOf(`data-card="${t}"`);
+    if (ia < 0) continue;
+    const art = html.lastIndexOf("<article", ia);
+    const ini = html.lastIndexOf("<!--", art), fim = fimElemento(html, art, "article");
+    html = html.slice(0, ini) + html.slice(fim).replace(/^\s*\n/, "");
+  }
+  for (const k of ativos(ev)) if (ev.nomes_ingresso && ev.nomes_ingresso[k]) {
+    const ia = html.indexOf(`data-card="${k}"`);
+    const i = html.indexOf('<span class="ticket__n">', ia), f = html.indexOf("</span>", i);
+    html = html.slice(0, i) + `<span class="ticket__n">${ev.nomes_ingresso[k]}` + html.slice(f);
+  }
+  if (ativos(ev).length === 1) html = html.replace('<div class="tickets">', '<div class="tickets" style="grid-template-columns: minmax(0, 460px); justify-content: center">');
+  if (ev.sem_bonus) {
+    const i = html.indexOf('<div class="bonus reveal" id="bonus">');
+    if (i > 0) html = html.slice(0, html.lastIndexOf("<!--", i)) + html.slice(fimElemento(html, i, "div"));
+    html = html.replace(/<a href="#bonus">[^<]*<\/a>\s*/g, "");
+  }
   for (const t of TIPOS_INGRESSO) {
     const passos = [cfg.todos, cfg[t]].filter(Boolean);
     const ia = html.indexOf(`data-card="${t}"`);
@@ -360,10 +385,10 @@ function checkoutHtml(ev, d, lang) {
   const pr = precosEv(ev);
   const cfg = {
     lang, locale: CO[lang].locale, slug: ev.slug, cidade: ev.cidade, esgotado: !!ev.esgotado,
-    eventoLinha: `Método REI ${ev.cidade} · ${d.curta}${d.ano ? " " + d.ano : ""}`,
-    tiers: Object.fromEntries(Object.entries(TIERS).map(([k, nome]) => [k, { nome, preco: pr[k].por }])),
+    eventoLinha: `${marca(ev)} ${ev.cidade} · ${d.curta}${d.ano ? " " + d.ano : ""}`,
+    tiers: Object.fromEntries(ativos(ev).map((k) => [k, { nome: nomeTier(ev, k), preco: pr[k].por }])),
     politica: `${prefixo(lang)}/politica`,
-    lead: { endpoint: LEAD_EVENTO, tags: [ev.lead_tag || `Método REI - ${ev.cidade} ${d.ano}`, ev.lead_codigo || datas(ev, "pt").codigo, "Checkout"] },
+    lead: { endpoint: LEAD_EVENTO, tags: [ev.lead_tag || `${marca(ev)} - ${ev.cidade} ${d.ano}`, ev.lead_codigo || datas(ev, "pt").codigo, "Checkout"] },
     t: CO[lang],
   };
   return `<link rel="stylesheet" href="/assets/checkout.css">
@@ -378,7 +403,8 @@ function catalogo() {
       slug: ev.slug, cidade: ev.cidade, uf: ev.uf, inicio: ev.inicio, fim: ev.fim, ano: d.ano, esgotado: !!ev.esgotado, horarios: ev.horarios || [],
       datas_texto: d.texto, tz: ev.fuso || FUSOS[ev.uf] || "America/New_York",
       local: { nome: /a definir/i.test((ev.local || {}).nome || "") ? "" : (ev.local || {}).nome || "", endereco: (ev.local || {}).endereco || "", endereco_exibicao: (ev.local || {}).endereco_exibicao || "", maps_query: (ev.local || {}).maps_query || "" },
-      tiers: Object.fromEntries(Object.entries(TIERS).map(([k, nome]) => [k, { nome, preco: pr[k].por }])),
+      marca: marca(ev),
+      tiers: Object.fromEntries(ativos(ev).map((k) => [k, { nome: nomeTier(ev, k), preco: pr[k].por }])),
       webhooks: (ev.webhooks || []).map(({ nome, url, tiers, para, corpo }) => ({ nome, url, tiers: tiers || null, para: para || "todos", corpo })),
     };
   }

@@ -21,6 +21,7 @@ export const CATALOGO = {
         "endereco_exibicao": "",
         "maps_query": "Lagoinha+Miami+Church+295+NE+59th+Terrace+Miami+FL+33137"
       },
+      "marca": "Método REI",
       "tiers": {
         "standard": {
           "nome": "Standard",
@@ -56,6 +57,7 @@ export const CATALOGO = {
         "endereco_exibicao": "",
         "maps_query": "17800+Bali+Blvd+Winter+Garden+FL+34787"
       },
+      "marca": "Método REI",
       "tiers": {
         "standard": {
           "nome": "Standard",
@@ -68,6 +70,34 @@ export const CATALOGO = {
         "rei": {
           "nome": "REI",
           "preco": 197
+        }
+      },
+      "webhooks": []
+    },
+    "experience-orlando": {
+      "slug": "experience-orlando",
+      "cidade": "Orlando",
+      "uf": "FL",
+      "inicio": "2026-11-21",
+      "fim": "2026-11-21",
+      "ano": 2026,
+      "esgotado": false,
+      "horarios": [
+        "12pm–6pm"
+      ],
+      "datas_texto": "21 de novembro de 2026",
+      "tz": "America/New_York",
+      "local": {
+        "nome": "",
+        "endereco": "",
+        "endereco_exibicao": "",
+        "maps_query": ""
+      },
+      "marca": "REI Experience",
+      "tiers": {
+        "standard": {
+          "nome": "REI Experience",
+          "preco": 120
         }
       },
       "webhooks": []
@@ -91,6 +121,7 @@ export const CATALOGO = {
         "endereco_exibicao": "",
         "maps_query": ""
       },
+      "marca": "Método REI",
       "tiers": {
         "standard": {
           "nome": "Standard",
