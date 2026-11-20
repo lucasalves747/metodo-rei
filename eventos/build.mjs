@@ -338,12 +338,15 @@ function aplicarIngressos(html, ev, lang) {
     const ini = html.lastIndexOf("<!--", art), fim = fimElemento(html, art, "article");
     html = html.slice(0, ini) + html.slice(fim).replace(/^\s*\n/, "");
   }
-  for (const k of ativos(ev)) if (ev.nomes_ingresso && ev.nomes_ingresso[k]) {
+  const nomesIng = { ...(ev.nomes_ingresso || {}), ...((ev[lang] || {}).nomes_ingresso || {}) };
+  for (const k of ativos(ev)) if (nomesIng[k]) {
     const ia = html.indexOf(`data-card="${k}"`);
     const i = html.indexOf('<span class="ticket__n">', ia), f = html.indexOf("</span>", i);
-    html = html.slice(0, i) + `<span class="ticket__n">${ev.nomes_ingresso[k]}` + html.slice(f);
+    html = html.slice(0, i) + `<span class="ticket__n">${nomesIng[k]}` + html.slice(f);
+    const fimCard = fimElemento(html, html.lastIndexOf("<article", ia), "article");
+    html = html.slice(0, ia) + html.slice(ia, fimCard).replace(/<span class="ticket__badge">[^<]*<\/span>/, "") + html.slice(fimCard);
   }
-  if (ativos(ev).length === 1) html = html.replace('<div class="tickets">', '<div class="tickets" style="grid-template-columns: minmax(0, 460px); justify-content: center">');
+  if (ativos(ev).length < 3) html = html.replace('<div class="tickets">', `<div class="tickets tickets--${ativos(ev).length}">`);
   if (ev.sem_bonus) {
     const i = html.indexOf('<div class="bonus reveal" id="bonus">');
     if (i > 0) html = html.slice(0, html.lastIndexOf("<!--", i)) + html.slice(fimElemento(html, i, "div"));

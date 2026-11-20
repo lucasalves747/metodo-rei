@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <script>document.documentElement.className += " reveal-on";</script>
 <title>REI Experience Orlando · 21 de noviembre de 2026</title>
-<meta name="description" content="REI Experience Orlando: una tarde íntima con Hewerton Scheidegger, Dr. Santiago Vecina y Jake Belieny a la mesa de un restaurante. Sin escenario: conversación de cerca, networking, comida y bebidas incluidas. Entrada US$120." />
+<meta name="description" content="REI Experience Orlando: una tarde íntima con Hewerton Scheidegger, Dr. Santiago Vecina y Jake Belieny en el restaurante Adega Gaúcha, en Kissimmee. Sin escenario: conversación de cerca, networking, comida y bebidas incluidas. US$120 por persona o US$200 la pareja." />
 <link rel="canonical" href="https://www.metodorei.com/es/experience-orlando" />
 <link rel="alternate" hreflang="pt-BR" href="https://www.metodorei.com/experience-orlando" />
 <link rel="alternate" hreflang="en" href="https://www.metodorei.com/en/experience-orlando" />
@@ -19,14 +19,14 @@
 <meta property="og:locale:alternate" content="en_US" />
 <meta property="og:url" content="https://www.metodorei.com/es/experience-orlando" />
 <meta property="og:title" content="REI Experience Orlando · 21 de noviembre de 2026" />
-<meta property="og:description" content="REI Experience Orlando: una tarde íntima con Hewerton Scheidegger, Dr. Santiago Vecina y Jake Belieny a la mesa de un restaurante. Sin escenario: conversación de cerca, networking, comida y bebidas incluidas. Entrada US$120." />
+<meta property="og:description" content="REI Experience Orlando: una tarde íntima con Hewerton Scheidegger, Dr. Santiago Vecina y Jake Belieny en el restaurante Adega Gaúcha, en Kissimmee. Sin escenario: conversación de cerca, networking, comida y bebidas incluidas. US$120 por persona o US$200 la pareja." />
 <meta property="og:image" content="https://www.metodorei.com/assets/og/es/experience-orlando.jpg" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content="REI Experience Orlando — 21 de noviembre de 2026" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="REI Experience Orlando · 21 de noviembre de 2026" />
-<meta name="twitter:description" content="REI Experience Orlando: una tarde íntima con Hewerton Scheidegger, Dr. Santiago Vecina y Jake Belieny a la mesa de un restaurante. Sin escenario: conversación de cerca, networking, comida y bebidas incluidas. Entrada US$120." />
+<meta name="twitter:description" content="REI Experience Orlando: una tarde íntima con Hewerton Scheidegger, Dr. Santiago Vecina y Jake Belieny en el restaurante Adega Gaúcha, en Kissimmee. Sin escenario: conversación de cerca, networking, comida y bebidas incluidas. US$120 por persona o US$200 la pareja." />
 <meta name="twitter:image" content="https://www.metodorei.com/assets/og/es/experience-orlando.jpg" />
 <link rel="icon" href="/favicon.ico" sizes="32x32" />
 <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
@@ -59,9 +59,9 @@
       "@type": "Event",
       "@id": "https://www.metodorei.com/es/experience-orlando#evento",
       "name": "REI Experience Orlando 2026",
-      "description": "REI Experience Orlando: una tarde íntima con Hewerton Scheidegger, Dr. Santiago Vecina y Jake Belieny a la mesa de un restaurante. Sin escenario: conversación de cerca, networking, comida y bebidas incluidas. Entrada US$120.",
+      "description": "REI Experience Orlando: una tarde íntima con Hewerton Scheidegger, Dr. Santiago Vecina y Jake Belieny en el restaurante Adega Gaúcha, en Kissimmee. Sin escenario: conversación de cerca, networking, comida y bebidas incluidas. US$120 por persona o US$200 la pareja.",
       "startDate": "2026-11-21T12:00:00-05:00",
-      "endDate": "2026-11-21T18:00:00-05:00",
+      "endDate": "2026-11-21T17:00:00-05:00",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "inLanguage": "pt-BR",
@@ -71,11 +71,13 @@
       ],
       "location": {
         "@type": "Place",
-        "name": "Orlando, FL",
+        "name": "Adega Gaúcha",
         "address": {
           "@type": "PostalAddress",
-          "addressLocality": "Orlando",
+          "streetAddress": "7804 W Irlo Bronson Memorial Hwy",
+          "addressLocality": "Kissimmee",
           "addressRegion": "FL",
+          "postalCode": "34747",
           "addressCountry": "US"
         }
       },
@@ -102,11 +104,19 @@
       "offers": [
         {
           "@type": "Offer",
-          "name": "Entrada REI Experience",
+          "name": "Entrada Individual",
           "price": "120",
           "priceCurrency": "USD",
           "availability": "https://schema.org/InStock",
           "url": "https://www.metodorei.com/es/experience-orlando?ingresso=standard"
+        },
+        {
+          "@type": "Offer",
+          "name": "Entrada Pareja",
+          "price": "200",
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/InStock",
+          "url": "https://www.metodorei.com/es/experience-orlando?ingresso=vip"
         }
       ]
     },
@@ -382,6 +392,8 @@ a{color:inherit;text-decoration:none}
 .tickets-sec .rule{width:min(880px,100%);height:1px;background:rgba(255,255,255,.35);margin:1rem auto 0}
 .tickets-sec .when{margin-top:.9rem;color:#E9E5DC}
 .tickets{margin-top:clamp(2rem,4vw,2.8rem);display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(.7rem,1.4vw,1rem);align-items:start}
+.tickets--1{grid-template-columns:minmax(0,460px);justify-content:center}
+.tickets--2{grid-template-columns:repeat(2,minmax(0,420px));justify-content:center}
 .ticket{position:relative;border-radius:var(--radius) var(--radius) 8px 8px;overflow:hidden;background:linear-gradient(180deg,#000 0%,#000 55%,rgba(0,0,0,.55) 100%);border:1px solid rgba(230,200,120,.35)}
 .ticket--rei{background:linear-gradient(180deg,#000 0%,#2A1D05 40%,#5A3E0B 100%);border-color:var(--gold-soft)}
 .ticket__img{position:relative;aspect-ratio:16/8;overflow:hidden}
@@ -472,7 +484,7 @@ a{color:inherit;text-decoration:none}
   .nav{display:none}
   .menu-toggle{display:flex}
   .header .pill{display:none}
-  .tickets{grid-template-columns:1fr;max-width:460px;margin-inline:auto}
+  .tickets,.tickets--1,.tickets--2{grid-template-columns:1fr;max-width:460px;margin-inline:auto}
 }
 @media (max-width:860px){
   .about__grid{grid-template-columns:1fr}
@@ -902,7 +914,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
 </div>
 
 
-<div class="buybar"><div><b>Orlando · 21 nov</b><span>Entradas · US$120</span></div><a class="btn btn-gold" href="#ingressos">Comprar</a></div>
+<div class="buybar"><div><b>Orlando · 21 nov</b><span>Desde US$120</span></div><a class="btn btn-gold" href="#ingressos">Comprar</a></div>
 
 <main>
 
@@ -913,9 +925,9 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
       <div class="kick">Método REI · Experiencia íntima</div>
       <h1 class="serif">REI Experience<br><span class="champ">Orlando</span></h1>
       <p class="serif ev-date">Sábado · 21 de noviembre de 2026</p>
-      <div class="ev-venue">Orlando, FL · Lugar por confirmar</div>
+      <div class="ev-venue"><a href="https://www.google.com/maps/search/?api=1&amp;query=Adega+Ga%C3%BAcha+7804+W+Irlo+Bronson+Memorial+Hwy%2C+Kissimmee%2C+FL+34747" target="_blank" rel="noopener">Adega Gaúcha · 7804 W Irlo Bronson Memorial Hwy, Kissimmee, FL</a></div>
       <p style="font-size: 19px; line-height: 1.6; font-weight: 300; max-width: 620px; margin: 24px auto 0; color: rgba(238,233,224,.86)">Una tarde íntima con los mentores del Método REI, a la mesa de un restaurante. Sin escenario ni platea: conversación de cerca, buena comida y networking de verdad.</p>
-      <div class="ev-offer">Entradas · US$120</div>
+      <div class="ev-offer">Desde US$120</div>
       <div style="display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; justify-content: center">
         <a class="btn btn-gold" href="#ingressos">Ver entradas</a>
         <a class="btn btn-line" href="#video"><svg viewBox="0 0 24 24" width="16" height="16" fill="#E3C78A" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg>Ver el video</a>
@@ -1050,12 +1062,12 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
     <p class="spaced reveal">Entradas</p>
     <h2 class="h-mid reveal" data-d="1">Elige tu experiencia Método REI</h2>
     <div class="rule"></div>
-    <p class="when reveal" data-d="1">21 de noviembre de 2026 · Sáb 12pm–6pm · Orlando, FL</p>
-    <div class="tickets" style="grid-template-columns: minmax(0, 460px); justify-content: center">
+    <p class="when reveal" data-d="1">21 de noviembre de 2026 · Sáb 12pm–5pm · Orlando, FL</p>
+    <div class="tickets tickets--2">
       <!-- [VALIDAR: benefícios e preço Standard] -->
       <article class="ticket reveal" data-d="1">
         <div class="ticket__img"><img decoding="async" src="/assets/pv/evento-5.jpg" alt="" loading="lazy" /></div>
-        <div class="ticket__head"><span class="ticket__n">REI Experience</span><span class="ticket__x">Experiencia</span></div>
+        <div class="ticket__head"><span class="ticket__n">Individual</span><span class="ticket__x">Experiencia</span></div>
         <div class="ticket__b">
           <div class="ticket__price"><span class="ticket__amt">US$120</span></div>
           <div class="ticket__note">Comida y bebidas<br>incluidas</div>
@@ -1068,16 +1080,42 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
             
             
             
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Entrada para 1 persona</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Comida del restaurante incluida</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Bebidas incluidas</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Conversación de cerca con los mentores, a la mesa</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Networking con empresarios y profesionales</li>
           </ul>
-          <a href="?ingresso=standard#ingressos" class="pill pill--block" data-label="REI Experience · US$120 · Orlando, 21 nov" data-tier="standard">Comprar REI Experience</a>
+          <a href="?ingresso=standard#ingressos" class="pill pill--block" data-label="Individual · US$120 · Orlando, 21 nov" data-tier="standard">Comprar Individual</a>
         </div>
       </article>
 
-                </div>
+      <!-- [VALIDAR: benefícios e preço VIP] -->
+      <article class="ticket reveal" data-d="2">
+        <div class="ticket__img"><img decoding="async" src="/assets/pv/exp3.jpg" alt="" loading="lazy" /></div>
+        <div class="ticket__head"><span class="ticket__n">Pareja</span><span class="ticket__x">Experiencia</span></div>
+        <div class="ticket__b">
+          <div class="ticket__price"><span class="ticket__amt">US$200</span></div>
+          <div class="ticket__note">Comida y bebidas<br>incluidas</div>
+          <ul>
+            
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Acceso completo a REI Experience</li>
+            
+            
+            
+            
+            
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Entrada para 2 personas</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Comida del restaurante incluida</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Bebidas incluidas</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Conversación de cerca con los mentores, a la mesa</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Networking con empresarios y profesionales</li>
+          </ul>
+          <a href="?ingresso=vip#ingressos" class="pill pill--block" data-label="VIP · US$200 · Orlando, 21 nov" data-tier="vip">Comprar VIP</a>
+        </div>
+      </article>
+
+          </div>
 
     
     <p class="tickets__note">*Los asientos se asignan por orden de llegada dentro de tu sector.</p>
@@ -1266,7 +1304,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
 })();
 </script>
 <link rel="stylesheet" href="/assets/checkout.css">
-<script>window.MREI_CO={"lang":"es","locale":"es-ES","slug":"experience-orlando","cidade":"Orlando","esgotado":false,"eventoLinha":"REI Experience Orlando · 21 nov 2026","tiers":{"standard":{"nome":"REI Experience","preco":120}},"politica":"/es/politica","lead":{"endpoint":"https://contact-blossom-39.lovable.app/api/public/contatos/ck_479abcc9_479abcc9a2f98313db0a19480754dbf7abe9b3cc27b6cd889cd5d06a3d43deef","tags":["REI Experience - Orlando 2026","MREIEXP211126","Checkout"]},"t":{"locale":"es-ES","fechar":"Cerrar","tipo":"Tipo de entrada","quantidade":"Cantidad de entradas","menos":"Una entrada menos","mais":"Una entrada más","temCupom":"¿Tienes un cupón?","cupom":"Código de cupón","aplicar":"Aplicar","cupomChecando":"Verificando cupón…","cupomOk":"Cupón {c} aplicado","cupomLink":"El cupón {c} se aplicará en el pago","cupomErros":{"invalido":"Cupón no válido","expirado":"Este cupón ha caducado","nao_aplica":"Este cupón no aplica a esta entrada"},"desconto":"Descuento","total":"Total","seusDados":"Tus datos","nome":"Nombre completo","email":"Correo","telefone":"WhatsApp","telefoneDica":"+1 407 555 0100","enviarOutros":"Enviar las otras entradas a los participantes","outrosDica":"Opcional. Todas las entradas quedan a tu nombre y en tu confirmación; quien indiques recibe su propia entrada por correo.","ingresso":"Entrada","pagamento":"Pago","ouCartao":"o paga con tarjeta","carregando":"Cargando pago seguro…","erroCarregar":"No pudimos cargar el pago. Recarga la página e inténtalo de nuevo.","pagar":"Pagar {v}","confirmar":"Confirmar inscripción","seguro":"Pago seguro procesado por Square","politica":"Política de reembolso y términos","modoTeste":"Modo de prueba — usa la tarjeta 4111 1111 1111 1111, cualquier fecha futura, CVV 111 y ZIP 12345.","erroDados":"Revisa tu nombre, correo y WhatsApp.","erroCartao":"Revisa los datos de la tarjeta.","erroPreco":"El precio se actualizó. Revisa el total e inténtalo de nuevo.","esgotado":"Agotado","erroEsgotado":"Las entradas para esta edición están agotadas.","erroEncerrado":"Las ventas de esta edición están cerradas.","erroGeral":"Algo salió mal. No se hizo ningún cargo — inténtalo de nuevo en unos instantes.","erros":{"recusado":"La tarjeta fue rechazada. Prueba otra tarjeta o habla con tu banco.","saldo":"Saldo o límite insuficiente. Prueba otra tarjeta.","cvv":"El código de seguridad (CVV) no coincide.","cep":"El código postal no coincide con la tarjeta.","validade":"La fecha de vencimiento no coincide.","cartao":"Los datos de la tarjeta parecen incorrectos.","nao_suportado":"Esta tarjeta no se acepta. Prueba otra.","limite":"El monto supera el límite de la tarjeta. Prueba otra.","verificacao":"Tu banco pidió una verificación que no se completó. Inténtalo de nuevo."},"pdTitulo":"Pedido confirmado","pdOla":"¡Listo, {n}!","pdSub":"Tu lugar en el Método REI {c} está asegurado. Enviamos la confirmación a {e}.","pdCarregando":"Cargando tu pedido…","pdErro":"No encontramos este pedido. Revisa el enlace del correo de confirmación o escríbenos por WhatsApp.","pdPedido":"Pedido","pdIngressos":"Tus entradas","pdImprimirTodos":"Imprimir entradas","pdImprimir":"Imprimir","pdCalendario":"Añadir al calendario","pdMapa":"Cómo llegar","pdTitular":"Participante","pdCodigo":"Código","pdApresente":"Presenta este código QR en la entrada","pdEntregas":"Lo que recibiste","pdSemEntregas":"Los materiales de tu entrada llegarán a tu correo.","pdBaixar":"Descargar","pdAcessar":"Abrir","pdTotal":"Total pagado","pdReembolsado":"Este pedido fue reembolsado y sus entradas ya no son válidas.","pdDuvidas":"¿Dudas? Escríbenos por WhatsApp","pdVoltar":"Volver al sitio","pdIngressoDe":"Entrada {n} de {t}","politicaTitulo":"Política de reembolso y términos"}};</script>
+<script>window.MREI_CO={"lang":"es","locale":"es-ES","slug":"experience-orlando","cidade":"Orlando","esgotado":false,"eventoLinha":"REI Experience Orlando · 21 nov 2026","tiers":{"standard":{"nome":"Individual","preco":120},"vip":{"nome":"Pareja","preco":200}},"politica":"/es/politica","lead":{"endpoint":"https://contact-blossom-39.lovable.app/api/public/contatos/ck_479abcc9_479abcc9a2f98313db0a19480754dbf7abe9b3cc27b6cd889cd5d06a3d43deef","tags":["REI Experience - Orlando 2026","MREIEXP211126","Checkout"]},"t":{"locale":"es-ES","fechar":"Cerrar","tipo":"Tipo de entrada","quantidade":"Cantidad de entradas","menos":"Una entrada menos","mais":"Una entrada más","temCupom":"¿Tienes un cupón?","cupom":"Código de cupón","aplicar":"Aplicar","cupomChecando":"Verificando cupón…","cupomOk":"Cupón {c} aplicado","cupomLink":"El cupón {c} se aplicará en el pago","cupomErros":{"invalido":"Cupón no válido","expirado":"Este cupón ha caducado","nao_aplica":"Este cupón no aplica a esta entrada"},"desconto":"Descuento","total":"Total","seusDados":"Tus datos","nome":"Nombre completo","email":"Correo","telefone":"WhatsApp","telefoneDica":"+1 407 555 0100","enviarOutros":"Enviar las otras entradas a los participantes","outrosDica":"Opcional. Todas las entradas quedan a tu nombre y en tu confirmación; quien indiques recibe su propia entrada por correo.","ingresso":"Entrada","pagamento":"Pago","ouCartao":"o paga con tarjeta","carregando":"Cargando pago seguro…","erroCarregar":"No pudimos cargar el pago. Recarga la página e inténtalo de nuevo.","pagar":"Pagar {v}","confirmar":"Confirmar inscripción","seguro":"Pago seguro procesado por Square","politica":"Política de reembolso y términos","modoTeste":"Modo de prueba — usa la tarjeta 4111 1111 1111 1111, cualquier fecha futura, CVV 111 y ZIP 12345.","erroDados":"Revisa tu nombre, correo y WhatsApp.","erroCartao":"Revisa los datos de la tarjeta.","erroPreco":"El precio se actualizó. Revisa el total e inténtalo de nuevo.","esgotado":"Agotado","erroEsgotado":"Las entradas para esta edición están agotadas.","erroEncerrado":"Las ventas de esta edición están cerradas.","erroGeral":"Algo salió mal. No se hizo ningún cargo — inténtalo de nuevo en unos instantes.","erros":{"recusado":"La tarjeta fue rechazada. Prueba otra tarjeta o habla con tu banco.","saldo":"Saldo o límite insuficiente. Prueba otra tarjeta.","cvv":"El código de seguridad (CVV) no coincide.","cep":"El código postal no coincide con la tarjeta.","validade":"La fecha de vencimiento no coincide.","cartao":"Los datos de la tarjeta parecen incorrectos.","nao_suportado":"Esta tarjeta no se acepta. Prueba otra.","limite":"El monto supera el límite de la tarjeta. Prueba otra.","verificacao":"Tu banco pidió una verificación que no se completó. Inténtalo de nuevo."},"pdTitulo":"Pedido confirmado","pdOla":"¡Listo, {n}!","pdSub":"Tu lugar en el Método REI {c} está asegurado. Enviamos la confirmación a {e}.","pdCarregando":"Cargando tu pedido…","pdErro":"No encontramos este pedido. Revisa el enlace del correo de confirmación o escríbenos por WhatsApp.","pdPedido":"Pedido","pdIngressos":"Tus entradas","pdImprimirTodos":"Imprimir entradas","pdImprimir":"Imprimir","pdCalendario":"Añadir al calendario","pdMapa":"Cómo llegar","pdTitular":"Participante","pdCodigo":"Código","pdApresente":"Presenta este código QR en la entrada","pdEntregas":"Lo que recibiste","pdSemEntregas":"Los materiales de tu entrada llegarán a tu correo.","pdBaixar":"Descargar","pdAcessar":"Abrir","pdTotal":"Total pagado","pdReembolsado":"Este pedido fue reembolsado y sus entradas ya no son válidas.","pdDuvidas":"¿Dudas? Escríbenos por WhatsApp","pdVoltar":"Volver al sitio","pdIngressoDe":"Entrada {n} de {t}","politicaTitulo":"Política de reembolso y términos"}};</script>
 <script src="/assets/checkout.js" defer></script>
 </body>
 </html>

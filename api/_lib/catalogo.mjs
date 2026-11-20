@@ -83,21 +83,25 @@ export const CATALOGO = {
       "ano": 2026,
       "esgotado": false,
       "horarios": [
-        "12pm–6pm"
+        "12pm–5pm"
       ],
       "datas_texto": "21 de novembro de 2026",
       "tz": "America/New_York",
       "local": {
-        "nome": "",
-        "endereco": "",
-        "endereco_exibicao": "",
+        "nome": "Adega Gaúcha",
+        "endereco": "7804 W Irlo Bronson Memorial Hwy, Kissimmee, FL 34747",
+        "endereco_exibicao": "Adega Gaúcha · 7804 W Irlo Bronson Memorial Hwy, Kissimmee, FL",
         "maps_query": ""
       },
       "marca": "REI Experience",
       "tiers": {
         "standard": {
-          "nome": "REI Experience",
+          "nome": "Individual",
           "preco": 120
+        },
+        "vip": {
+          "nome": "Casal",
+          "preco": 200
         }
       },
       "webhooks": []

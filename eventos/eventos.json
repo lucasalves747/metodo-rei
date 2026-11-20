@@ -391,10 +391,12 @@
       "inicio": "2026-11-21",
       "fim": "2026-11-21",
       "horarios": [
-        "12pm–6pm"
+        "12pm–5pm"
       ],
       "local": {
-        "nome": "Local a definir"
+        "nome": "Adega Gaúcha",
+        "endereco": "7804 W Irlo Bronson Memorial Hwy, Kissimmee, FL 34747",
+        "endereco_exibicao": "Adega Gaúcha · 7804 W Irlo Bronson Memorial Hwy, Kissimmee, FL"
       },
       "imagem": "assets/home/city-orlando.jpg",
       "preletores": [
@@ -406,13 +408,18 @@
       "precos": {
         "standard": {
           "por": 120
+        },
+        "vip": {
+          "por": 200
         }
       },
       "tiers_ativos": [
-        "standard"
+        "standard",
+        "vip"
       ],
       "nomes_ingresso": {
-        "standard": "REI Experience"
+        "standard": "Individual",
+        "vip": "Casal"
       },
       "sem_bonus": true,
       "lead_tag": "REI Experience - Orlando 2026",
@@ -428,7 +435,7 @@
         "about": "Uma tarde íntima, num restaurante,",
         "acesso": "Acesso completo à REI Experience"
       },
-      "seo_descricao": "REI Experience Orlando: uma tarde íntima com Hewerton Scheidegger, Dr. Santiago Vecina e Jake Belieny à mesa de um restaurante. Sem palco: conversa de perto, networking e comida e bebidas inclusas. Ingresso US$120.",
+      "seo_descricao": "REI Experience Orlando: uma tarde íntima com Hewerton Scheidegger, Dr. Santiago Vecina e Jake Belieny no restaurante Adega Gaúcha, em Kissimmee. Sem palco: conversa de perto, networking e comida e bebidas inclusas. US$120 por pessoa ou US$200 o casal.",
       "en": {
         "selo": "REI Experience",
         "estado": "Florida",
@@ -442,10 +449,14 @@
           "about": "One intimate afternoon at a restaurant",
           "acesso": "Full access to the REI Experience"
         },
-        "seo_descricao": "REI Experience Orlando: an intimate afternoon with Hewerton Scheidegger, Dr. Santiago Vecina and Jake Belieny around a restaurant table. No stage: up-close conversation, networking, food and drinks included. Ticket US$120.",
+        "seo_descricao": "REI Experience Orlando: an intimate afternoon with Hewerton Scheidegger, Dr. Santiago Vecina and Jake Belieny at Adega Gaúcha restaurant in Kissimmee. No stage: up-close conversation, networking, food and drinks included. US$120 per person or US$200 per couple.",
         "hero_sub": "An intimate afternoon with the Método REI mentors around a restaurant table. No stage, no audience: up-close conversation, good food and real networking.",
         "palco_titulo": "At the table in",
-        "nav_palco": "Mentors"
+        "nav_palco": "Mentors",
+        "nomes_ingresso": {
+          "standard": "Individual",
+          "vip": "Couple"
+        }
       },
       "es": {
         "selo": "REI Experience",
@@ -460,10 +471,14 @@
           "about": "Una tarde íntima en un restaurante",
           "acesso": "Acceso completo a REI Experience"
         },
-        "seo_descricao": "REI Experience Orlando: una tarde íntima con Hewerton Scheidegger, Dr. Santiago Vecina y Jake Belieny a la mesa de un restaurante. Sin escenario: conversación de cerca, networking, comida y bebidas incluidas. Entrada US$120.",
+        "seo_descricao": "REI Experience Orlando: una tarde íntima con Hewerton Scheidegger, Dr. Santiago Vecina y Jake Belieny en el restaurante Adega Gaúcha, en Kissimmee. Sin escenario: conversación de cerca, networking, comida y bebidas incluidas. US$120 por persona o US$200 la pareja.",
         "hero_sub": "Una tarde íntima con los mentores del Método REI, a la mesa de un restaurante. Sin escenario ni platea: conversación de cerca, buena comida y networking de verdad.",
         "palco_titulo": "A la mesa en",
-        "nav_palco": "Mentores"
+        "nav_palco": "Mentores",
+        "nomes_ingresso": {
+          "standard": "Individual",
+          "vip": "Pareja"
+        }
       },
       "ingressos": {
         "standard": {
@@ -477,6 +492,48 @@
             "plano-90-dias"
           ],
           "adicionar": [
+            {
+              "pt": "Ingresso para 1 pessoa",
+              "en": "Ticket for 1 person",
+              "es": "Entrada para 1 persona"
+            },
+            {
+              "pt": "Comida do restaurante inclusa",
+              "en": "Restaurant food included",
+              "es": "Comida del restaurante incluida"
+            },
+            {
+              "pt": "Bebidas inclusas",
+              "en": "Drinks included",
+              "es": "Bebidas incluidas"
+            },
+            {
+              "pt": "Conversa de perto com os mentores, à mesa",
+              "en": "Up-close conversation with the mentors, at the table",
+              "es": "Conversación de cerca con los mentores, a la mesa"
+            },
+            {
+              "pt": "Networking com empresários e profissionais",
+              "en": "Networking with business owners and professionals",
+              "es": "Networking con empresarios y profesionales"
+            }
+          ]
+        },
+        "vip": {
+          "remover": [
+            "assento",
+            "apostila",
+            "material-apoio",
+            "plano-90-dias",
+            "ebook-bonus",
+            "ebooks"
+          ],
+          "adicionar": [
+            {
+              "pt": "Ingresso para 2 pessoas",
+              "en": "Ticket for 2 people",
+              "es": "Entrada para 2 personas"
+            },
             {
               "pt": "Comida do restaurante inclusa",
               "en": "Restaurant food included",
