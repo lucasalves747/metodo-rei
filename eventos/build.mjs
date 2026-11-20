@@ -72,7 +72,7 @@ function datas(ev, lang) {
 
 // Campos que precisam existir em todos os idiomas (se existirem em PT).
 const CAMPOS_PRELETOR = ["funcao", "bio", "bio_completa", "destaque"];
-const CAMPOS_EVENTO = ["selo", "destaque", "estado", "seo_descricao", "kick", "duracao", "hero_sub", "palco_titulo", "nav_palco"];
+const CAMPOS_EVENTO = ["selo", "destaque", "estado", "seo_descricao", "kick", "duracao", "hero_sub", "palco_titulo", "nav_palco", "nota_ingressos"];
 const marca = (ev) => ev.marca || "Método REI";
 const padrao = (lang, pt) => (lang === "pt" ? pt : DIC[lang][pt] || pt);
 const ativos = (ev) => ev.tiers_ativos || ["standard", "vip", "rei"];
@@ -246,6 +246,7 @@ function render(ev0, lang) {
     hero_sub: ev.hero_sub || padrao(lang, "Uma imersão para quem deseja governar a própria vida, prosperar com propósito e construir um legado."),
     palco_titulo: ev.palco_titulo || padrao(lang, "No palco em"),
     nav_palco: ev.nav_palco || padrao(lang, "No palco"),
+    nota_ingressos: ev.nota_ingressos || `<p class="tickets__note">${padrao(lang, "*Assentos distribuídos por ordem de chegada dentro do seu setor.")}</p>`,
     lead_codigo: ev.lead_codigo || datas(ev, "pt").codigo,
     palco: palcoHtml(ev, ids, lang),
     idiomas: seletor(lang, `/${ev.slug}`),

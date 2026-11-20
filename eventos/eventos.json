@@ -456,7 +456,8 @@
         "nomes_ingresso": {
           "standard": "Individual",
           "vip": "Couple"
-        }
+        },
+        "nota_ingressos": "<p class=\"tickets__note\"><b>Prefer to pay with Zelle?</b> Send US$120 (individual) or US$200 (couple) to <b>globalusatraining@gmail.com</b> and send the receipt, with your name and phone number, on <a href=\"https://wa.me/13053705595\" target=\"_blank\" rel=\"noopener\" style=\"color: #E3C78A; text-decoration: underline\">WhatsApp</a>.</p>"
       },
       "es": {
         "selo": "REI Experience",
@@ -478,7 +479,8 @@
         "nomes_ingresso": {
           "standard": "Individual",
           "vip": "Pareja"
-        }
+        },
+        "nota_ingressos": "<p class=\"tickets__note\"><b>¿Prefieres pagar con Zelle?</b> Envía US$120 (individual) o US$200 (pareja) a <b>globalusatraining@gmail.com</b> y manda el comprobante, con tu nombre y teléfono, por <a href=\"https://wa.me/13053705595\" target=\"_blank\" rel=\"noopener\" style=\"color: #E3C78A; text-decoration: underline\">WhatsApp</a>.</p>"
       },
       "ingressos": {
         "standard": {
@@ -559,7 +561,8 @@
       },
       "hero_sub": "Uma tarde íntima com os mentores do Método REI, à mesa de um restaurante. Sem palco e sem plateia: conversa de perto, boa comida e networking de verdade.",
       "palco_titulo": "À mesa em",
-      "nav_palco": "Mentores"
+      "nav_palco": "Mentores",
+      "nota_ingressos": "<p class=\"tickets__note\"><b>Prefere pagar por Zelle?</b> Envie US$120 (individual) ou US$200 (casal) para <b>globalusatraining@gmail.com</b> e mande o comprovante, com seu nome e telefone, pelo <a href=\"https://wa.me/13053705595\" target=\"_blank\" rel=\"noopener\" style=\"color: #E3C78A; text-decoration: underline\">WhatsApp</a>.</p>"
     },
     {
       "slug": "boston",
