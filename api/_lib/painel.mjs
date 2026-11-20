@@ -124,7 +124,7 @@ export async function vendas(desde) {
       total, desconto: din(o.total_discount_money), reembolso, taxa, liquido: Math.round((total - reembolso) * 100) / 100,
       recibo: (p && p.receipt_url) || "", ref_ghl: (p && p.reference_id) || o.reference_id || "",
       descricao: (p && p.statement_description_identifier) || itens.map((i) => i.name).filter(Boolean).join(", "),
-      metodo: p ? (p.wallet_details ? p.wallet_details.brand || "Carteira" : p.card_details ? `${p.card_details.card.card_brand} •${p.card_details.card.last_4}` : p.source_type) : "Cupom",
+      metodo: p ? (p.external_details ? p.external_details.source || "Externo" : p.wallet_details ? p.wallet_details.brand || "Carteira" : p.card_details ? `${p.card_details.card.card_brand} •${p.card_details.card.last_4}` : p.source_type) : "Cupom",
     };
     if (origem === "site") {
       linhas.push({
@@ -153,7 +153,7 @@ const GHL = "https://services.leadconnectorhq.com";
 export const ghlAtivo = () => Boolean(process.env.GHL_API_TOKEN && process.env.GHL_LOCATION_ID);
 const LOC = () => process.env.GHL_LOCATION_ID;
 
-async function ghl(path, { method = "GET", body } = {}, tentativa = 0) {
+export async function ghl(path, { method = "GET", body } = {}, tentativa = 0) {
   const r = await fetch(GHL + path, {
     method,
     headers: { Authorization: `Bearer ${process.env.GHL_API_TOKEN}`, Version: "2021-07-28", Accept: "application/json", ...(body ? { "Content-Type": "application/json" } : {}) },

@@ -72,7 +72,7 @@
         '<div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>' +
         '<div class="kick">' + esc(T.pdTitulo) + '</div>' +
         '<h1 class="serif">' + esc(fmt(T.pdOla, { n: n })) + '</h1>' +
-        '<p class="sub">' + esc(fmt(T.pdSub, { c: ev.cidade, e: d.comprador.email })) + '</p>' +
+        '<p class="sub">' + esc(fmt(T.pdSub, { c: (ev.marca || "Método REI") + " " + ev.cidade, e: d.comprador.email })) + '</p>' +
         '<div class="meta"><span>' + esc(T.pdPedido) + ' <b>' + esc(d.pedido.slice(-8).toUpperCase()) + '</b></span><span>' + esc(d.tipoNome) + ' × <b>' + d.quantidade + '</b></span><span>' + esc(T.pdTotal) + ' <b>' + money(d.total) + '</b></span></div>' +
         (d.reembolsado ? '<p class="warn">' + esc(T.pdReembolsado) + '</p>' : "") +
         '<div class="actions">' +
@@ -95,7 +95,7 @@
       });
     });
     document.getElementById("pdCal").addEventListener("click", function () { ics(ev, d); });
-    document.title = T.pdTitulo + " · Método REI " + ev.cidade;
+    document.title = T.pdTitulo + " · " + (ev.marca || "Método REI") + " " + ev.cidade;
   }
 
   // .ics com o horário local do evento
@@ -117,7 +117,7 @@
       "DTSTAMP:" + new Date().toISOString().replace(/[-:]/g, "").slice(0, 15) + "Z",
       "DTSTART;TZID=" + tz + ":" + dt(ini, hm(h[0] || "", false)),
       "DTEND;TZID=" + tz + ":" + dt(fim, hm(h[h.length - 1] || "", true)),
-      "SUMMARY:Método REI " + ev.cidade + " · " + d.tipoNome,
+      "SUMMARY:" + (ev.marca || "Método REI") + " " + ev.cidade + " · " + d.tipoNome,
       "LOCATION:" + endereco(ev).replace(/,/g, "\\,"),
       "DESCRIPTION:" + (T.pdPedido + " " + d.pedido.slice(-8).toUpperCase() + " · " + location.href).replace(/,/g, "\\,"),
       "URL:" + location.href,

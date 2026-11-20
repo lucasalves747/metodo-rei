@@ -348,6 +348,7 @@ svg text{fill:var(--muted);font-size:11px}
         try {
           const r = await api("/api/painel/vendas", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: zb.dataset.z, status: zb.dataset.s }) });
           if (!r.ok) throw new Error(r.erro || "erro");
+          if (r.email === "erro") alert("Pagamento confirmado e pedido criado, mas o e-mail não foi enviado: " + r.email_erro + ". Envie o link dos ingressos pelo WhatsApp ou tente de novo.");
           await carregar(true);
         } catch (err) { zb.disabled = false; alert("Não foi possível atualizar: " + err.message); }
         return;
@@ -365,7 +366,8 @@ svg text{fill:var(--muted);font-size:11px}
         ${l.descricao_ghl ? `<p><b>Carrinho no Salee</b> ${esc(l.descricao_ghl)}${l.square_id ? " · Square " + esc(l.square_id) : ""}</p>` : ""}
         ${l.utm ? `<p><b>Origem (UTM)</b> ${esc(l.utm)}</p>` : ""}
         ${l.origem === "zelle" ? `<p><b>Zelle</b> status: ${ZST[l.zelle_status][1]}${l.zelle_confirmado_em ? " em " + new Date(l.zelle_confirmado_em).toLocaleString("pt-BR", { timeZone: "America/New_York" }) : ""}. Confira no banco um Zelle de ${usd(l.total)} de ${esc(l.comprador)} (código ${esc(l.numero)}).<br>
-          ${l.zelle_status !== "confirmado" ? `<button type="button" class="zbtn ok" data-z="${esc(l.id)}" data-s="confirmado">Confirmar pagamento</button>` : ""}${l.zelle_status === "pendente" ? `<button type="button" class="zbtn" data-z="${esc(l.id)}" data-s="cancelado">Cancelar reserva</button>` : ""}${l.zelle_status !== "pendente" ? `<button type="button" class="zbtn" data-z="${esc(l.id)}" data-s="pendente">Voltar para pendente</button>` : ""}</p>` : ""}
+          ${l.zelle_status === "confirmado" ? `E-mail com os ingressos: ${l.email_status === "enviado" ? "enviado para " + esc(l.email) : l.email_status === "erro" ? '<b style="color:#e0796b">não enviado (' + esc(l.email_erro) + ")</b>" : "—"}<br>` : "Ao confirmar, o pedido é criado na Square como pago por Zelle e os ingressos (QR code) vão por e-mail para o comprador.<br>"}
+          ${l.zelle_status !== "confirmado" ? `<button type="button" class="zbtn ok" data-z="${esc(l.id)}" data-s="confirmado">Confirmar pagamento e enviar ingressos</button>` : ""}${l.zelle_status === "confirmado" && l.email_status !== "enviado" ? `<button type="button" class="zbtn ok" data-z="${esc(l.id)}" data-s="confirmado">Tentar enviar o e-mail de novo</button>` : ""}${l.zelle_status === "pendente" ? `<button type="button" class="zbtn" data-z="${esc(l.id)}" data-s="cancelado">Cancelar reserva</button>` : ""}${l.zelle_status === "cancelado" ? `<button type="button" class="zbtn" data-z="${esc(l.id)}" data-s="pendente">Voltar para pendente</button>` : ""}</p>` : ""}
         ${l.ingressos.length ? `<p><b>Ingressos</b><br>${l.ingressos.map((x) => `${esc(x.codigo)} — ${esc(x.titular)}${x.email ? " · " + esc(x.email) : ""}`).join("<br>")}</p>` : ""}
         <p>${l.recibo ? `<a href="${esc(l.recibo)}" target="_blank" rel="noopener">Recibo Square</a>` : ""}${l.link ? ` · <a href="${esc(l.link)}" target="_blank" rel="noopener">Página de confirmação / ingressos</a>` : ""}</p></td>`;
       tr.after(det);

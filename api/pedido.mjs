@@ -25,7 +25,7 @@ export default async function handler(req, res) {
     criado: ord.created_at,
     reembolsado,
     comprador: { nome: md.comprador, email: md.email },
-    evento: ev ? { slug: ev.slug, cidade: ev.cidade, uf: ev.uf, inicio: ev.inicio, fim: ev.fim, horarios: ev.horarios, local: ev.local, tz: ev.tz } : { slug: md.evento },
+    evento: ev ? { slug: ev.slug, marca: ev.marca || "Método REI", cidade: ev.cidade, uf: ev.uf, inicio: ev.inicio, fim: ev.fim, horarios: ev.horarios, local: ev.local, tz: ev.tz } : { slug: md.evento },
     tipo: tier,
     tipoNome: ev && ev.tiers[tier] ? ev.tiers[tier].nome : tier,
     quantidade: itens.length,
