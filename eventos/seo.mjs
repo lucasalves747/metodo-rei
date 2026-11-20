@@ -135,7 +135,7 @@ export function eventoSchema(data, ev, d, ids, lang, pv) {
     price: String(precos[k].por),
     priceCurrency: "USD",
     availability: "https://schema.org/InStock",
-    url: (ev.checkout && ev.checkout[k]) || `https://pag.metodorei.com/${{ standard: `cart-${ev.slug}`, vip: `cart-vip-${ev.slug}`, rei: `cart-${ev.slug}-rei` }[k]}`,
+    url: (ev.checkout && ev.checkout[k]) || `${url}?ingresso=${k}`,
   }));
   const schema = {
     "@context": "https://schema.org",

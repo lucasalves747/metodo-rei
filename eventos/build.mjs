@@ -152,8 +152,7 @@ function heroLocal(ev, lang) {
 function checkout(ev, tipo) {
   const c = ev.checkout || {};
   if (c[tipo]) return c[tipo];
-  const base = "https://pag.metodorei.com/";
-  return { standard: `${base}cart-${ev.slug}`, vip: `${base}cart-vip-${ev.slug}`, rei: `${base}cart-${ev.slug}-rei` }[tipo];
+  return `?ingresso=${tipo}#ingressos`;
 }
 
 // Textos que dependem de duração (1 dia × 2+ dias), pré-venda e preços.

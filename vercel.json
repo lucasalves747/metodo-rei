@@ -14,42 +14,42 @@
     },
     {
       "source": "/cart-vip-boston",
-      "destination": "https://pag.metodorei.com/cart-vip-boston",
+      "destination": "/boston?ingresso=vip#ingressos",
       "permanent": false
     },
     {
       "source": "/cart-boston",
-      "destination": "https://pag.metodorei.com/cart-boston",
+      "destination": "/boston?ingresso=standard#ingressos",
       "permanent": false
     },
     {
       "source": "/cart-miami",
-      "destination": "https://pag.metodorei.com/cart-miami",
+      "destination": "/",
       "permanent": false
     },
     {
       "source": "/cart-vip-miami",
-      "destination": "https://pag.metodorei.com/cart-vip-miami",
+      "destination": "/",
       "permanent": false
     },
     {
       "source": "/cart-orlando",
-      "destination": "https://pag.metodorei.com/cart-orlando",
+      "destination": "/orlando?ingresso=standard#ingressos",
       "permanent": false
     },
     {
       "source": "/cart-vip-orlando",
-      "destination": "https://pag.metodorei.com/cart-vip-orlando",
+      "destination": "/orlando?ingresso=vip#ingressos",
       "permanent": false
     },
     {
       "source": "/cart-dl",
-      "destination": "https://pag.metodorei.com/cart-dl",
+      "destination": "/",
       "permanent": false
     },
     {
       "source": "/cart-vip",
-      "destination": "https://pag.metodorei.com/cart-vip",
+      "destination": "/",
       "permanent": false
     },
     {
@@ -70,6 +70,21 @@
     {
       "source": "/es/prevenda-dallas",
       "destination": "/es",
+      "permanent": false
+    },
+    {
+      "source": "/cart-orlando-rei",
+      "destination": "/orlando?ingresso=rei#ingressos",
+      "permanent": false
+    },
+    {
+      "source": "/cart-boston-rei",
+      "destination": "/boston?ingresso=rei#ingressos",
+      "permanent": false
+    },
+    {
+      "source": "/cart-:resto*",
+      "destination": "/",
       "permanent": false
     }
   ],

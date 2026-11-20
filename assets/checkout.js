@@ -45,6 +45,8 @@
       abrir(a.getAttribute("data-tier"));
     }, true);
     if (st.cupom) aviso(T.cupomLink.replace("{c}", st.cupom));
+    var ing = (q("ingresso") || "").toLowerCase();
+    if (C.tiers[ing]) abrir(ing);
   }).catch(function () {});
 
   function aviso(txt) {
