@@ -306,8 +306,9 @@
     if (!nome || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return;
     var prev = store("mrei_lead") || {};
     store("mrei_lead", { nome: nome, email: email, telefone: tel });
-    if (prev.email === email || !C.lead) return;
-    // registra o interessado (carrinho abandonado) uma vez por e-mail
+    var temTel = tel.replace(/\D/g, "").length >= 7;
+    if (!C.lead || (prev.email === email && (!temTel || prev.telefone === tel))) return;
+    // registra o interessado (carrinho abandonado) uma vez por e-mail, e de novo quando o telefone chega
     try {
       fetch(C.lead.endpoint, { method: "POST", headers: { "Content-Type": "application/json" }, keepalive: true,
         body: JSON.stringify({ nome: nome, email: email, telefone: tel, tags: C.lead.tags, origem: "checkout", notas: "Abriu o checkout: " + C.tiers[st.tier].nome, ref: ref() }) });
