@@ -153,12 +153,16 @@ const GHL = "https://services.leadconnectorhq.com";
 export const ghlAtivo = () => Boolean(process.env.GHL_API_TOKEN && process.env.GHL_LOCATION_ID);
 const LOC = () => process.env.GHL_LOCATION_ID;
 
-async function ghl(path, { method = "GET", body } = {}) {
+async function ghl(path, { method = "GET", body } = {}, tentativa = 0) {
   const r = await fetch(GHL + path, {
     method,
     headers: { Authorization: `Bearer ${process.env.GHL_API_TOKEN}`, Version: "2021-07-28", Accept: "application/json", ...(body ? { "Content-Type": "application/json" } : {}) },
     body: body ? JSON.stringify(body) : undefined,
   });
+  if (r.status === 429 && tentativa < 4) {
+    await new Promise((ok) => setTimeout(ok, 1500 * (tentativa + 1)));
+    return ghl(path, { method, body }, tentativa + 1);
+  }
   const data = await r.json().catch(() => ({}));
   if (!r.ok) throw new Error(`ghl ${path.split("?")[0]} ${r.status} ${(data && data.message) || ""}`.trim());
   return data;
@@ -181,10 +185,21 @@ async function emLotes(itens, n, fn) {
   return out;
 }
 
+const FONES = new Map(); // telefone por contato do Salee.ai, guardado enquanto a função estiver quente
+
 const doMetodoRei = (o) => /metodorei\.com/i.test((o.sourceMeta && o.sourceMeta.domain) || "");
 
 // Pedidos dos carrinhos do Salee.ai em (pag.)metodorei.com: pagos viram vendas; não pagos viram leads de carrinho.
-export async function pedidosGhl() {
+let pedidosCache = { ate: 0, p: null };
+export function pedidosGhl() {
+  if (pedidosCache.p && pedidosCache.ate > Date.now()) return pedidosCache.p;
+  const p = carregarPedidosGhl();
+  pedidosCache = { ate: Date.now() + 60000, p };
+  p.catch(() => { pedidosCache = { ate: 0, p: null }; });
+  return p;
+}
+
+async function carregarPedidosGhl() {
   const [ordens, transacoes] = await Promise.all([ghlLista("orders"), ghlLista("transactions")]);
   const txPorPedido = {};
   for (const t of transacoes) (txPorPedido[t.entityId] ||= []).push(t);
@@ -198,11 +213,14 @@ export async function pedidosGhl() {
       qtd[o._id] = (d.items || []).filter((i) => !i.bumpProduct).reduce((s, i) => s + (Number(i.qty) || 1), 0) || 1;
     } catch { qtd[o._id] = o.totalProducts; }
   });
-  const ids = [...new Set(mr.filter((o) => o.paymentStatus === "paid" && o.contactId).map((o) => o.contactId))];
-  const fones = {};
-  await emLotes(ids, 8, async (id) => {
-    try { fones[id] = telefoneContato((await ghl(`/contacts/${id}`)).contact || {}); } catch { fones[id] = ""; }
-  });
+  const ids = [...new Set(mr.filter((o) => o.paymentStatus === "paid" && o.contactId).map((o) => o.contactId))].filter((id) => !FONES.has(id));
+  for (let i = 0; i < ids.length; i += 5) {
+    await Promise.all(ids.slice(i, i + 5).map(async (id) => {
+      try { FONES.set(id, telefoneContato((await ghl(`/contacts/${id}`)).contact || {})); } catch {}
+    }));
+    if (i + 5 < ids.length) await new Promise((ok) => setTimeout(ok, 600));
+  }
+  const fones = Object.fromEntries(FONES);
   const vendas = [], carrinhos = [];
   for (const o of mr) {
     const meta = o.sourceMeta || {};
