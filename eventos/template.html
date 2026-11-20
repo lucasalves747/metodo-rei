@@ -757,7 +757,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
 <header class="ev-head">
   <div class="wrap nav-in">
     <a href="/" class="brandmark" aria-label="Método REI — início"><img src="assets/logo-h-96.webp" alt="Método REI" width="258" height="44" class="logo-h"></a>
-    <nav class="nav-links" aria-label="Principal"><a href="#sobre">Sobre</a><a href="#metodo">O Método</a><a href="#mentores">No palco</a><a href="#bonus">Bônus</a></nav>
+    <nav class="nav-links" aria-label="Principal"><a href="#sobre">Sobre</a><a href="#metodo">O Método</a><a href="#mentores">{{nav_palco}}</a><a href="#bonus">Bônus</a></nav>
     <div style="display: flex; align-items: center; gap: 10px">
       {{idiomas}}
       <a href="#ingressos" class="btn btn-gold" style="min-height: 44px; padding: 0 20px; font-size: 11px">{{cta_topo}}</a>
@@ -770,7 +770,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
   <button class="close" id="drawerClose" aria-label="Fechar menu">×</button>
   <a href="#sobre">Sobre</a>
   <a href="#metodo">O Método</a>
-  <a href="#mentores">No palco</a>
+  <a href="#mentores">{{nav_palco}}</a>
   <a href="#ingressos">Ingressos</a>
   <a href="#bonus">Bônus</a>
   <a href="/">Todas as edições</a>
@@ -789,7 +789,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
       <h1 class="serif">{{marca}}<br><span class="champ">{{cidade}}</span></h1>
       <p class="serif ev-date">{{dias}} · {{datas_hero}}</p>
       <div class="ev-venue">{{hero_local}}</div>
-      <p style="font-size: 19px; line-height: 1.6; font-weight: 300; max-width: 620px; margin: 24px auto 0; color: rgba(238,233,224,.86)">Uma imersão para quem deseja governar a própria vida, prosperar com propósito e construir um legado.</p>
+      <p style="font-size: 19px; line-height: 1.6; font-weight: 300; max-width: 620px; margin: 24px auto 0; color: rgba(238,233,224,.86)">{{hero_sub}}</p>
       <div class="ev-offer">{{hero_offer}}</div>
       <div style="display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; justify-content: center">
         <a class="btn btn-gold" href="#ingressos">{{cta_ver}}</a>
@@ -843,7 +843,7 @@ src="https://www.facebook.com/tr?id=1643323880139413&ev=PageView&noscript=1"
 <section class="mentors-sec" id="mentores">
   <div class="wrap">
     <div class="split" style="display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; margin-bottom: 8px">
-      <h2 class="serif h2" style="font-size: 88px; line-height: .95; margin: 0">No palco em <span class="champ">{{cidade}}</span></h2>
+      <h2 class="serif h2" style="font-size: 88px; line-height: .95; margin: 0">{{palco_titulo}} <span class="champ">{{cidade}}</span></h2>
       <p style="max-width: 380px; margin: 0; font-size: 17px; line-height: 1.6; color: #9A948A">Quem vive o que ensina.</p>
     </div>
 {{palco}}

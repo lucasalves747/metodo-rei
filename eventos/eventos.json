@@ -379,7 +379,8 @@
           ]
         }
       },
-      "oculto": true
+      "oculto": true,
+      "cancelado": true
     },
     {
       "slug": "experience-orlando",
@@ -399,10 +400,6 @@
       "preletores": [
         "hewerton-scheidegger",
         "santiago-vecina",
-        "alexandre-morelli",
-        "eduardo-itaborahy",
-        "dany-rocha",
-        "patricia-belieny",
         "jake-belieny"
       ],
       "prevenda": false,
@@ -421,46 +418,52 @@
       "lead_tag": "REI Experience - Orlando 2026",
       "lead_codigo": "MREIEXP211126",
       "selo": "REI Experience",
-      "kick": "Método REI · Experiência em restaurante",
+      "kick": "Método REI · Experiência intimista",
       "destaque": {
         "curto": "🍽️ Comida e bebidas do restaurante <b>inclusas no ingresso</b>",
         "nota_ingresso": "Comida e bebidas<br>inclusas"
       },
       "duracao": {
         "facts": "Uma tarde presencial",
-        "about": "Uma tarde presencial, num restaurante,",
+        "about": "Uma tarde íntima, num restaurante,",
         "acesso": "Acesso completo à REI Experience"
       },
-      "seo_descricao": "REI Experience Orlando: uma tarde do Método REI num restaurante, com os mentores, networking e comida e bebidas inclusas. Ingresso US$120.",
+      "seo_descricao": "REI Experience Orlando: uma tarde íntima com Hewerton Scheidegger, Dr. Santiago Vecina e Jake Belieny à mesa de um restaurante. Sem palco: conversa de perto, networking e comida e bebidas inclusas. Ingresso US$120.",
       "en": {
         "selo": "REI Experience",
         "estado": "Florida",
-        "kick": "Método REI · Restaurant experience",
+        "kick": "Método REI · Intimate experience",
         "destaque": {
           "curto": "🍽️ Restaurant food and drinks <b>included with your ticket</b>",
           "nota_ingresso": "Food and drinks<br>included"
         },
         "duracao": {
           "facts": "One in-person afternoon",
-          "about": "One in-person afternoon at a restaurant",
+          "about": "One intimate afternoon at a restaurant",
           "acesso": "Full access to the REI Experience"
         },
-        "seo_descricao": "REI Experience Orlando: an afternoon of Método REI at a restaurant, with the mentors, networking, and food and drinks included. Ticket US$120."
+        "seo_descricao": "REI Experience Orlando: an intimate afternoon with Hewerton Scheidegger, Dr. Santiago Vecina and Jake Belieny around a restaurant table. No stage: up-close conversation, networking, food and drinks included. Ticket US$120.",
+        "hero_sub": "An intimate afternoon with the Método REI mentors around a restaurant table. No stage, no audience: up-close conversation, good food and real networking.",
+        "palco_titulo": "At the table in",
+        "nav_palco": "Mentors"
       },
       "es": {
         "selo": "REI Experience",
         "estado": "Florida",
-        "kick": "Método REI · Experiencia en restaurante",
+        "kick": "Método REI · Experiencia íntima",
         "destaque": {
           "curto": "🍽️ Comida y bebidas del restaurante <b>incluidas en la entrada</b>",
           "nota_ingresso": "Comida y bebidas<br>incluidas"
         },
         "duracao": {
           "facts": "Una tarde presencial",
-          "about": "Una tarde presencial en un restaurante",
+          "about": "Una tarde íntima en un restaurante",
           "acesso": "Acceso completo a REI Experience"
         },
-        "seo_descricao": "REI Experience Orlando: una tarde del Método REI en un restaurante, con los mentores, networking y comida y bebidas incluidas. Entrada US$120."
+        "seo_descricao": "REI Experience Orlando: una tarde íntima con Hewerton Scheidegger, Dr. Santiago Vecina y Jake Belieny a la mesa de un restaurante. Sin escenario: conversación de cerca, networking, comida y bebidas incluidas. Entrada US$120.",
+        "hero_sub": "Una tarde íntima con los mentores del Método REI, a la mesa de un restaurante. Sin escenario ni platea: conversación de cerca, buena comida y networking de verdad.",
+        "palco_titulo": "A la mesa en",
+        "nav_palco": "Mentores"
       },
       "ingressos": {
         "standard": {
@@ -485,9 +488,9 @@
               "es": "Bebidas incluidas"
             },
             {
-              "pt": "Conteúdo ao vivo com os mentores do Método REI",
-              "en": "Live content with the Método REI mentors",
-              "es": "Contenido en vivo con los mentores del Método REI"
+              "pt": "Conversa de perto com os mentores, à mesa",
+              "en": "Up-close conversation with the mentors, at the table",
+              "es": "Conversación de cerca con los mentores, a la mesa"
             },
             {
               "pt": "Networking com empresários e profissionais",
@@ -496,7 +499,10 @@
             }
           ]
         }
-      }
+      },
+      "hero_sub": "Uma tarde íntima com os mentores do Método REI, à mesa de um restaurante. Sem palco e sem plateia: conversa de perto, boa comida e networking de verdade.",
+      "palco_titulo": "À mesa em",
+      "nav_palco": "Mentores"
     },
     {
       "slug": "boston",

@@ -72,8 +72,9 @@ function datas(ev, lang) {
 
 // Campos que precisam existir em todos os idiomas (se existirem em PT).
 const CAMPOS_PRELETOR = ["funcao", "bio", "bio_completa", "destaque"];
-const CAMPOS_EVENTO = ["selo", "destaque", "estado", "seo_descricao", "kick", "duracao"];
+const CAMPOS_EVENTO = ["selo", "destaque", "estado", "seo_descricao", "kick", "duracao", "hero_sub", "palco_titulo", "nav_palco"];
 const marca = (ev) => ev.marca || "Método REI";
+const padrao = (lang, pt) => (lang === "pt" ? pt : DIC[lang][pt] || pt);
 const ativos = (ev) => ev.tiers_ativos || ["standard", "vip", "rei"];
 const nomeTier = (ev, k) => (ev.nomes_ingresso || {})[k] || TIERS[k];
 const faltaIdioma = [];
@@ -241,7 +242,10 @@ function render(ev0, lang) {
     checkout_rei: checkout(ev, "rei"),
     lead_tag: ev.lead_tag || `${marca(ev)} - ${ev.cidade} ${d.ano}`,
     marca: marca(ev),
-    hero_kick: ev.kick || (lang === "pt" ? "Método REI · Imersão presencial" : DIC[lang]["Método REI · Imersão presencial"]),
+    hero_kick: ev.kick || padrao(lang, "Método REI · Imersão presencial"),
+    hero_sub: ev.hero_sub || padrao(lang, "Uma imersão para quem deseja governar a própria vida, prosperar com propósito e construir um legado."),
+    palco_titulo: ev.palco_titulo || padrao(lang, "No palco em"),
+    nav_palco: ev.nav_palco || padrao(lang, "No palco"),
     lead_codigo: ev.lead_codigo || datas(ev, "pt").codigo,
     palco: palcoHtml(ev, ids, lang),
     idiomas: seletor(lang, `/${ev.slug}`),

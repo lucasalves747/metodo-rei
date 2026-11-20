@@ -3,6 +3,21 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/orlando",
+      "destination": "/experience-orlando",
+      "permanent": false
+    },
+    {
+      "source": "/en/orlando",
+      "destination": "/en/experience-orlando",
+      "permanent": false
+    },
+    {
+      "source": "/es/orlando",
+      "destination": "/es/experience-orlando",
+      "permanent": false
+    },
+    {
       "source": "/dallas",
       "destination": "/",
       "permanent": false
@@ -34,12 +49,12 @@
     },
     {
       "source": "/cart-orlando",
-      "destination": "/orlando?ingresso=standard#ingressos",
+      "destination": "/experience-orlando?ingresso=standard#ingressos",
       "permanent": false
     },
     {
       "source": "/cart-vip-orlando",
-      "destination": "/orlando?ingresso=vip#ingressos",
+      "destination": "/experience-orlando?ingresso=standard#ingressos",
       "permanent": false
     },
     {
@@ -74,7 +89,7 @@
     },
     {
       "source": "/cart-orlando-rei",
-      "destination": "/orlando?ingresso=rei#ingressos",
+      "destination": "/experience-orlando?ingresso=standard#ingressos",
       "permanent": false
     },
     {
