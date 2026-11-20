@@ -141,6 +141,11 @@ svg text{fill:var(--muted);font-size:11px}
 <script>
 (() => {
   const $ = (s) => document.querySelector(s);
+  const fone = (t) => {
+    const d = String(t || "").replace(/\D/g, "");
+    const us = d.length === 10 ? d : d.length === 11 && d[0] === "1" ? d.slice(1) : "";
+    return us ? `+1 (${us.slice(0, 3)}) ${us.slice(3, 6)}-${us.slice(6)}` : d ? "+" + d : "";
+  };
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const usd = (n) => { const v = Math.round(n * 100) / 100; return (v < 0 ? "-$" : "$") + Math.abs(v).toLocaleString("en-US", { minimumFractionDigits: Number.isInteger(v) ? 0 : 2, maximumFractionDigits: 2 }); };
   const num = (n) => n.toLocaleString("pt-BR");
@@ -323,7 +328,7 @@ svg text{fill:var(--muted);font-size:11px}
     const ls = pedidosFiltrados();
     $("#contaPedidos").textContent = `${num(ls.length)} pedidos · ${usd(soma(ls).liquido)} líquido`;
     $("#pedidos").innerHTML = ls.slice(0, 500).map((l, i) => `<tr class="linha" data-i="${i}">
-      <td>${dataBR(l.data)}</td><td>${esc(l.numero)}</td><td>${esc(l.comprador) || '<span class="muted">—</span>'}<br><span class="muted">${esc(l.email)}</span></td>
+      <td>${dataBR(l.data)}</td><td>${esc(l.numero)}</td><td>${esc(l.comprador) || '<span class="muted">—</span>'}<br><span class="muted">${esc(l.email)}</span>${l.telefone ? '<br><span class="muted">' + esc(fone(l.telefone)) + "</span>" : ""}</td>
       <td>${esc(l.evento ? "Método REI " + nomeEvento(l.evento) : l.produto)}</td><td>${esc(TIPOS[l.tipo] || "")}</td>
       <td class="n">${l.qtd}</td><td class="n">${usd(l.liquido)}${l.reembolso ? ' <span class="tag reemb">reemb.</span>' : ""}</td>
       <td><span class="tag ${l.origem}">${ORIGEM[l.origem]}</span></td></tr>`).join("") +
@@ -395,7 +400,7 @@ svg text{fill:var(--muted);font-size:11px}
       bloco("Fonte", contagem(todos, "fonte")) + bloco("Interesse", contagem(todos, "interesse")) + bloco("Estado", contagem(todos, "estado"));
     $("#contaLeads").textContent = `${num(ls.length)} leads`;
     $("#leads").innerHTML = ls.slice(0, 1000).map((x) => `<tr><td>${dataBR(x.data)}</td><td>${x.link ? `<a href="${esc(x.link)}" target="_blank" rel="noopener">${esc(x.nome) || "—"}</a>` : esc(x.nome) || "—"}</td>
-      <td>${esc(x.email)}</td><td>${esc(x.telefone)}</td><td>${esc([x.cidade, x.estado].filter(Boolean).join(" / "))}</td><td>${esc(x.interesse)}</td>
+      <td>${esc(x.email)}</td><td style="white-space:nowrap">${esc(fone(x.telefone))}</td><td>${esc([x.cidade, x.estado].filter(Boolean).join(" / "))}</td><td>${esc(x.interesse)}</td>
       <td>${esc(x.fonte)}</td><td>${esc(x.idioma)}</td><td>${esc([x.origem, x.campanha].filter(Boolean).join(" · "))}</td>
       <td>${x.link ? "sim" : x.salee === "ok" ? "enviado" : x.salee ? '<span class="tag reemb" title="' + esc(x.salee) + '">falhou</span>' : ""}</td></tr>`).join("");
   }

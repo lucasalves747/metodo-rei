@@ -198,6 +198,11 @@ export async function pedidosGhl() {
       qtd[o._id] = (d.items || []).filter((i) => !i.bumpProduct).reduce((s, i) => s + (Number(i.qty) || 1), 0) || 1;
     } catch { qtd[o._id] = o.totalProducts; }
   });
+  const ids = [...new Set(mr.filter((o) => o.paymentStatus === "paid" && o.contactId).map((o) => o.contactId))];
+  const fones = {};
+  await emLotes(ids, 8, async (id) => {
+    try { fones[id] = telefoneContato((await ghl(`/contacts/${id}`)).contact || {}); } catch { fones[id] = ""; }
+  });
   const vendas = [], carrinhos = [];
   for (const o of mr) {
     const meta = o.sourceMeta || {};
@@ -217,7 +222,7 @@ export async function pedidosGhl() {
         reembolso: txs.reduce((s, t) => s + (Number(t.amountRefunded) || 0), 0), taxa: 0,
         qtd: qtd[o._id] || 1, recibo: "", ref_ghl: o._id, descricao: o.sourceName || "", descricao_ghl: `${o.sourceName || ""} · ${base.carrinho}`,
         metodo: ok ? (ok.paymentProviderType === "square" ? "Cartão (Square)" : Number(o.amount) ? "Manual" : "Cupom / gratuito") : "—",
-        telefone: "", utm: "", idioma: "", ingressos: [], link: "",
+        telefone: fones[o.contactId] || "", utm: "", idioma: "", ingressos: [], link: "",
       });
     } else {
       carrinhos.push(base);
@@ -238,7 +243,7 @@ export function juntar(linhasSquare, vendasGhl) {
     if (!v) { resto.push(l); continue; }
     Object.assign(v, {
       reembolso: l.reembolso || v.reembolso, taxa: l.taxa, recibo: l.recibo, metodo: l.metodo, square_id: l.id,
-      comprador: v.comprador || l.comprador, email: v.email || l.email, telefone: l.telefone,
+      comprador: v.comprador || l.comprador, email: v.email || l.email, telefone: l.telefone || v.telefone,
     });
     v.liquido = Math.round((v.total - v.reembolso) * 100) / 100;
   }
@@ -265,6 +270,14 @@ async function contatosComTag(tag) {
   return out;
 }
 
+// Alguns formulários do Salee.ai gravam o telefone num campo personalizado em vez do campo "phone".
+const pareceFone = (v) => typeof v === "string" && /^[\d\s().+-]{8,25}$/.test(v.trim()) && v.replace(/\D/g, "").length >= 8;
+function telefoneContato(c) {
+  if (c.phone) return c.phone;
+  const cf = (c.customFields || []).find((f) => pareceFone(f.value));
+  return cf ? cf.value.replace(/^\+\d+\s+\+/, "+").trim() : "";
+}
+
 const linkContato = (id) => `${(process.env.GHL_APP_URL || "https://app.gohighlevel.com").replace(/\/$/, "")}/v2/location/${LOC()}/contacts/detail/${id}`;
 
 function linhaLead(c, fonte, extra = {}) {
@@ -273,7 +286,7 @@ function linhaLead(c, fonte, extra = {}) {
   const att = c.attributionSource || c.lastAttributionSource || {};
   return {
     id: c.id, data: c.dateAdded, nome: [c.firstName, c.lastName].filter(Boolean).join(" ") || c.contactName || "",
-    email: c.email || "", telefone: c.phone || "", cidade: c.city || "", estado: c.state || "",
+    email: c.email || "", telefone: telefoneContato(c), cidade: c.city || "", estado: c.state || "",
     idioma: tag("Idioma:").toUpperCase(), interesse: tag("Interesse:"), fonte,
     origem: att.utmSource || att.sessionSource || c.source || "", campanha: att.campaign || att.utmCampaign || "",
     comprou: tags.some((t) => sem(t) === sem("Método REI - Comprou")), link: linkContato(c.id), ...extra,
