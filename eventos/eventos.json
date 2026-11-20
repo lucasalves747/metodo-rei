@@ -299,6 +299,7 @@
     },
     {
       "slug": "orlando",
+      "esgotado": true,
       "cidade": "Orlando",
       "uf": "FL",
       "estado": "Flórida",

@@ -45,6 +45,7 @@ export function evento(slug) {
 export function cotar({ slug, tier, qty, cupom }) {
   const ev = evento(slug);
   if (!ev) return { erro: "evento" };
+  if (ev.esgotado) return { erro: "esgotado" };
   if (new Date(ev.fim + "T23:59:59-05:00") < new Date()) return { erro: "encerrado" };
   const t = ev.tiers[tier];
   if (!t) return { erro: "tier" };

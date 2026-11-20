@@ -359,7 +359,7 @@ const precosEv = (ev) => ({ ...data.precos_padrao, ...(ev.precos || {}) });
 function checkoutHtml(ev, d, lang) {
   const pr = precosEv(ev);
   const cfg = {
-    lang, locale: CO[lang].locale, slug: ev.slug, cidade: ev.cidade,
+    lang, locale: CO[lang].locale, slug: ev.slug, cidade: ev.cidade, esgotado: !!ev.esgotado,
     eventoLinha: `Método REI ${ev.cidade} · ${d.curta}${d.ano ? " " + d.ano : ""}`,
     tiers: Object.fromEntries(Object.entries(TIERS).map(([k, nome]) => [k, { nome, preco: pr[k].por }])),
     politica: `${prefixo(lang)}/politica`,
@@ -375,7 +375,7 @@ function catalogo() {
   for (const ev of PAGINAS) {
     const d = datas(ev, "pt"), pr = precosEv(ev);
     eventos[ev.slug] = {
-      slug: ev.slug, cidade: ev.cidade, uf: ev.uf, inicio: ev.inicio, fim: ev.fim, ano: d.ano, horarios: ev.horarios || [],
+      slug: ev.slug, cidade: ev.cidade, uf: ev.uf, inicio: ev.inicio, fim: ev.fim, ano: d.ano, esgotado: !!ev.esgotado, horarios: ev.horarios || [],
       datas_texto: d.texto, tz: ev.fuso || FUSOS[ev.uf] || "America/New_York",
       local: { nome: /a definir/i.test((ev.local || {}).nome || "") ? "" : (ev.local || {}).nome || "", endereco: (ev.local || {}).endereco || "", endereco_exibicao: (ev.local || {}).endereco_exibicao || "", maps_query: (ev.local || {}).maps_query || "" },
       tiers: Object.fromEntries(Object.entries(TIERS).map(([k, nome]) => [k, { nome, preco: pr[k].por }])),

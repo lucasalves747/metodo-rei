@@ -33,6 +33,17 @@
 
   st.cupom = (q("cupom") || q("code") || q("coupon") || "").trim().toUpperCase();
 
+  if (C.esgotado) {
+    document.querySelectorAll("a[data-tier]").forEach(function (a) {
+      a.textContent = T.esgotado; a.removeAttribute("href");
+      a.setAttribute("aria-disabled", "true"); a.style.opacity = ".5"; a.style.pointerEvents = "none";
+    });
+    document.addEventListener("click", function (e) {
+      if (e.target.closest && e.target.closest("a[data-tier]")) { e.preventDefault(); e.stopImmediatePropagation(); }
+    }, true);
+    return;
+  }
+
   // ---------- ativa só se o servidor estiver configurado ----------
   fetch("/api/checkout/config").then(function (r) { return r.json(); }).then(function (c) {
     if (!c || !c.enabled) return;
@@ -369,6 +380,7 @@
       else if (res.erro === "cupom") erro(T.cupomErros[res.cupomErro] || T.cupomErros.invalido);
       else if (res.erro === "dados") erro(T.erroDados);
       else if (res.erro === "encerrado") erro(T.erroEncerrado);
+      else if (res.erro === "esgotado") erro(T.erroEsgotado);
       else erro(T.erroGeral);
       ocupado(false);
     }).catch(function (e) {

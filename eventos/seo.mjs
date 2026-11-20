@@ -134,7 +134,7 @@ export function eventoSchema(data, ev, d, ids, lang, pv) {
     name: T.ingresso(nome),
     price: String(precos[k].por),
     priceCurrency: "USD",
-    availability: "https://schema.org/InStock",
+    availability: ev.esgotado ? "https://schema.org/SoldOut" : "https://schema.org/InStock",
     url: (ev.checkout && ev.checkout[k]) || `${url}?ingresso=${k}`,
   }));
   const schema = {

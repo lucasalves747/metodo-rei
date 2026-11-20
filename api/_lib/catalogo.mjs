@@ -8,6 +8,7 @@ export const CATALOGO = {
       "inicio": "2026-10-23",
       "fim": "2026-10-24",
       "ano": 2026,
+      "esgotado": false,
       "horarios": [
         "6:30pm–11pm",
         "8:30am–8pm"
@@ -43,6 +44,7 @@ export const CATALOGO = {
       "inicio": "2026-11-21",
       "fim": "2026-11-21",
       "ano": 2026,
+      "esgotado": true,
       "horarios": [
         "8:30am–5:30pm"
       ],
@@ -77,6 +79,7 @@ export const CATALOGO = {
       "inicio": "2026-12-05",
       "fim": "2026-12-05",
       "ano": 2026,
+      "esgotado": false,
       "horarios": [
         "8:30am–7pm"
       ],
